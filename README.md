@@ -1,79 +1,93 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 2024-2 Capstone
 
-# Getting Started
+## Preferred Dev Environment
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Node 20
 
-## Step 1: Start the Metro Server
+## Install instruction
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
+1. install depenency
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+$ yarn install
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+2. ios
 
 ```bash
-# using npm
-npm run android
+$ cd ios
+/ios $ pod install
+/ios $ cd ..
+$ yarn ios
 
-# OR using Yarn
-yarn android
+or
+
+$ yarn start
+i
 ```
 
-### For iOS
+3. android
 
 ```bash
-# using npm
-npm run ios
+$ yarn android
 
-# OR using Yarn
-yarn ios
+or
+
+$ yarn start
+i
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## 커밋 컨벤션
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+[Conventional Commits](https://www.conventionalcommits.org/ko/v1.0.0/)를 따른다.
 
-## Step 3: Modifying your App
+### 커밋 메세지 구조
 
-Now that you have successfully run the app, let's modify it.
+커밋 메시지는 다음과 같은 구조로 되어야 한다.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+```bash
+<타입>[적용 범위(선택 사항)]: <설명>
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+[본문(선택 사항)]
 
-## Congratulations! :tada:
+[꼬리말(선택 사항)]
+```
 
-You've successfully run and modified your React Native App. :partying_face:
+### 커밋 타입
 
-### Now what?
+커밋 타입은 다음과 같다.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+- `fix`: 코드베이스에서 버그를 패치
+- `feat`: 코드베이스에서 새 기능이 추가됨
+- `BREAKING CHANGE`: 단절적 API 변경(breaking API change). 타입/스코프 뒤에 !를 붙이기도 함
+- `build`: 빌드 관련 커밋
+- `ci`: ci 관련 커밋
+- `cd`: cd 관련 커밋
+- `chore`: 코드와 관련없는 설정들을 변경했을 때의 커밋
+- `docs`: 문서 변경 커밋
+- `revert`: 커밋을 되돌렸을 때
+- `style`: 단순히 코드를 포맷팅 했을 때
+- `test`: 테스트 관련 커밋
+- `perf`: 성능개선에 대한 커밋
 
-# Troubleshooting
+## 브랜치 컨벤션
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- `git-flow` 전략을 사용한다.
+- `Create a merge commit` 으로 머지한다.
+- branch prefix
+  - `feature`: 기능 개발
+  - `bugfix`: 버그 수정
+  - `release`: 릴리즈
+  - `hotfix`: 릴리즈 후 핫 픽스
+  - `doce`: README.md 등 문서
+  - `chore`: CI/CD, build, dependency 등의 수정
 
-# Learn More
+## 코드 컨벤션
 
-To learn more about React Native, take a look at the following resources:
+- `prettier` 에서 제공하는 컨벤션을 따른다.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 구성인원
+
+- [김도현](https://github.com/l-lyun)
+- [김영민](https://github.com/99mini)
+- [이승민](https://github.com/itslitulinchpin2)

@@ -8,14 +8,17 @@ type HomeScreenProps = {
 };
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
-  const goToDetailScreen = () => {
-    navigation.navigate('Profile', {userId: '123'});
-  };
-
   return (
     <View>
       <Text>Welcome to the Home Screen!</Text>
-      <Button title="Go to Detail Screen" onPress={goToDetailScreen} />
+      <Button
+        title="Go to MyPage Screen"
+        onPress={() => navigation.navigate('MyPage', {userId: '123'})}
+      />
+      <Button
+        title="Go to Detail Screen"
+        onPress={() => navigation.navigate('Detail', {itemId: 100})}
+      />
     </View>
   );
 };

@@ -3,7 +3,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 type RootStackParamList = {
   Home: undefined;
-  Profile: {userId: string};
+  MyPage: {userId: string};
+  Detail: {itemId: number};
 };
 
 type RootStackNavigationProp<T extends keyof RootStackParamList> =

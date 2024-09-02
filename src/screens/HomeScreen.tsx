@@ -1,19 +1,23 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../types/RootStackParamList';
+import {IntegrationStackParamList} from '../types/StackParamList';
 
-type HomeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+type Props = {
+  navigation: StackNavigationProp<IntegrationStackParamList, 'Home'>;
 };
 
-const HomeScreen = ({navigation}: HomeScreenProps) => {
+const HomeScreen = ({navigation}: Props) => {
   return (
     <View>
       <Text>Welcome to the Home Screen!</Text>
       <Button
+        title="Go to Login"
+        onPress={() => navigation.navigate('Register')}
+      />
+      <Button
         title="Go to MyPage Screen"
-        onPress={() => navigation.navigate('MyPage', {userId: '123'})}
+        onPress={() => navigation.navigate('MyPage')}
       />
       <Button
         title="Go to Detail Screen"

@@ -1,10 +1,10 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {View, TextInput, Button, StyleSheet} from 'react-native';
-import {IntegrationStackParamList} from '../../types/StackParamList';
+import {RootStackParamList} from '../../types/StackParamList';
 
 type Props = {
-  navigation: StackNavigationProp<IntegrationStackParamList, 'Login'>;
+  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
 
 const LoginScreen = ({navigation}: Props) => {
@@ -13,7 +13,7 @@ const LoginScreen = ({navigation}: Props) => {
 
   const handleLogin = () => {
     // Implement your login logic here
-    navigation.navigate('Home');
+    navigation.navigate('Home', {screen: 'Feed'});
   };
 
   return (
@@ -32,7 +32,10 @@ const LoginScreen = ({navigation}: Props) => {
         onChangeText={setPassword}
       />
       <Button title="Login" onPress={handleLogin} />
-      <Button title="Signup" onPress={() => navigation.navigate('Signup')} />
+      <Button
+        title="Signup"
+        onPress={() => navigation.navigate('Register', {screen: 'Signup'})}
+      />
     </View>
   );
 };

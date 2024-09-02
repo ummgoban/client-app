@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {IntegrationStackParamList} from '../types/StackParamList';
+import {RootStackParamList} from '../types/StackParamList';
 
 type Props = {
-  navigation: StackNavigationProp<IntegrationStackParamList, 'Home'>;
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
 const HomeScreen = ({navigation}: Props) => {
@@ -13,15 +13,17 @@ const HomeScreen = ({navigation}: Props) => {
       <Text>Welcome to the Home Screen!</Text>
       <Button
         title="Go to Login"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
       />
       <Button
         title="Go to MyPage Screen"
-        onPress={() => navigation.navigate('MyPage')}
+        onPress={() => navigation.navigate('Home', {screen: 'MyPage'})}
       />
       <Button
         title="Go to Detail Screen"
-        onPress={() => navigation.navigate('Detail', {itemId: 100})}
+        onPress={() =>
+          navigation.navigate('Home', {screen: 'Detail', params: {itemId: 100}})
+        }
       />
     </View>
   );

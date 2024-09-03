@@ -5,32 +5,30 @@ import {HomeStackParamList} from '../../types/StackNavigationType';
 
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
-    name: string;
+    label: string;
     icon: string;
   };
 };
 
 const tabBarData: TabBarComponentType = {
   Feed: {
-    name: '홈',
+    label: '홈',
     icon: 'https://legacy.reactjs.org/logo-og.png',
   },
   MyPage: {
-    name: '마이 페이지',
+    label: '마이 페이지',
     icon: 'https://legacy.reactjs.org/logo-og.png',
   },
 };
 
 // TODO: resolve inline style
-const TabBarIcon = ({icon}: {icon: string}) => {
-  return <Image source={{uri: icon}} style={{width: 24, height: 24}} />;
-};
-
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
   return (
     <View style={{flexDirection: 'row'}}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
+
+        const {label, icon} = tabBarData[route.name];
 
         const isFocused = state.index === index;
 
@@ -63,10 +61,8 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{flex: 1}}>
-            <TabBarIcon icon={tabBarData[route.name].icon} />
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>
-              {tabBarData[route.name].name}
-            </Text>
+            <Image source={{uri: icon}} style={{width: 24, height: 24}} />
+            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
           </TouchableOpacity>
         );
       })}

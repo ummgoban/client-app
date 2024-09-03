@@ -61,8 +61,19 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{flex: 1}}>
-            <Image source={{uri: icon}} style={{width: 24, height: 24}} />
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+            <View style={{marginHorizontal: 'auto'}}>
+              <Image
+                source={{uri: icon}}
+                style={{width: 24, height: 24, marginHorizontal: 'auto'}}
+              />
+              <Text
+                style={{
+                  color: isFocused ? '#673ab7' : '#222',
+                  textAlign: 'center',
+                }}>
+                {label}
+              </Text>
+            </View>
           </TouchableOpacity>
         );
       })}

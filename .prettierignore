@@ -1,0 +1,12 @@
+# native files
+ios/
+android/
+
+# markdown files
+**/*.md
+
+# yarn
+.yarn/
+
+# .github
+.github/

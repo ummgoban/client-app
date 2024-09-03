@@ -7,6 +7,15 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
     <View style={{flexDirection: 'row'}}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
+
+        const Icon = options.tabBarIcon
+          ? options.tabBarIcon({
+              focused: state.index === index,
+              color: '#673ab7',
+              size: 24,
+            })
+          : null;
+
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
@@ -44,6 +53,7 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{flex: 1}}>
+            {Icon}
             <Text style={{color: isFocused ? '#673ab7' : '#222'}}>
               {typeof label === 'string' ? label : null}
             </Text>

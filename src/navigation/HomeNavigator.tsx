@@ -15,6 +15,7 @@ const HomeNavigator = () => {
       }}>
       <Tab.Screen name="Feed" component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
+      {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
       {/* Add more screens here */}
     </Tab.Navigator>
   );

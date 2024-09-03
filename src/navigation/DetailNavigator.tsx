@@ -11,7 +11,9 @@ const DetailNavigator = () => {
       initialRouteName="Store"
       screenOptions={{headerShown: true}}>
       <Stack.Screen name="Store" component={StoreScreen} />
-      {/* Add more screens here if needed */}
+      {/* <Stack.Screen name="Order" component={OrderScreen} /> */}
+      {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
+      {/* <Stack.Screen name="OrderDone" component={OrderDoneScreen} /> */}
     </Stack.Navigator>
   );
 };

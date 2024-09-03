@@ -11,7 +11,6 @@ const RegisterNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: true}}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
-      {/* Add more screens here if needed */}
     </Stack.Navigator>
   );
 };

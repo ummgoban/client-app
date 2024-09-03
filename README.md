@@ -73,7 +73,8 @@ i
 ## 브랜치 컨벤션
 
 - `git-flow` 전략을 사용한다.
-- `Create a merge commit` 으로 머지한다.
+- `Squash and merge` 으로 머지한다.
+- 본인 PR은 구성원의 approve 후 본인이 머지한다.
 - branch prefix
   - `feature`: 기능 개발
   - `bugfix`: 버그 수정

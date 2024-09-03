@@ -6,7 +6,6 @@ type StackParamType<T> = {
 export type HomeStackParamList = {
   Feed: undefined;
   MyPage: undefined;
-  Detail: {itemId: number};
 };
 
 export type RegisterStackParamList = {
@@ -14,7 +13,12 @@ export type RegisterStackParamList = {
   Login: undefined;
 };
 
+export type DetailStackParamList = {
+  Store: {storeId: number};
+};
+
 export type RootStackParamList = {
   Home: StackParamType<HomeStackParamList>;
   Register: StackParamType<RegisterStackParamList>;
+  Detail: StackParamType<DetailStackParamList>;
 };

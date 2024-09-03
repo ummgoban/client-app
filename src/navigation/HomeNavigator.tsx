@@ -1,8 +1,7 @@
 import React from 'react';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/FeedScreen';
 import MyPageScreen from '../screens/MyPageScreen';
 import {HomeStackParamList} from '../types/StackNavigationType';
-import DetailScreen from '../screens/DetailScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // Create a stack navigator
@@ -16,11 +15,6 @@ const HomeNavigator = () => {
       }}>
       <Tab.Screen name="Feed" component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
-      <Tab.Screen
-        name="Detail"
-        component={DetailScreen}
-        initialParams={{itemId: 123}}
-      />
       {/* Add more screens here */}
     </Tab.Navigator>
   );

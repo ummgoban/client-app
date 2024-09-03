@@ -1,14 +1,24 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Text, View} from 'react-native';
-import {HomeStackParamList} from '../types/StackNavigationType';
+import {Button, Text, View} from 'react-native';
+import {
+  HomeStackParamList,
+  RootStackParamList,
+} from '../types/StackNavigationType';
 
-type Props = StackScreenProps<HomeStackParamList, 'MyPage'>;
+type Props = StackScreenProps<
+  HomeStackParamList & RootStackParamList,
+  'MyPage'
+>;
 
-const MyPageScreen = ({}: Props) => {
+const MyPageScreen = ({navigation}: Props) => {
   return (
     <View>
       <Text>MyPage Screen</Text>
+      <Button
+        title="Go to Login"
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+      />
     </View>
   );
 };

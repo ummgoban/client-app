@@ -33,6 +33,7 @@ const HomeNavigator = () => {
         headerShown: true,
         tabBarIcon: () => {
           // TODO: render image icon
+          // declare and implement image icon component (component/common/Icon.tsx)
           return <Text>{tabBarData[route.name].icon}</Text>;
         },
         tabBarLabel: tabBarData[route.name].name,

@@ -21,6 +21,7 @@ const tabBarData: TabBarComponentType = {
   },
 };
 
+// TODO: resolve inline style
 const TabBarIcon = ({icon}: {icon: string}) => {
   return <Image source={{uri: icon}} style={{width: 24, height: 24}} />;
 };

@@ -9,11 +9,7 @@ const Tab = createBottomTabNavigator<HomeStackParamList>();
 
 const HomeNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={() => ({
-        headerShown: true,
-      })}
-      tabBar={TabBar}>
+    <Tab.Navigator screenOptions={{headerShown: true}} tabBar={TabBar}>
       <Tab.Screen name="Feed" component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
       {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}

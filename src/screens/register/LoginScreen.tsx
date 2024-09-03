@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {View, TextInput, Button, StyleSheet} from 'react-native';
-import {RootStackParamList} from '../../types/StackParamList';
+import {RootStackParamList} from '../../types/StackNavigationType';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Register'>;

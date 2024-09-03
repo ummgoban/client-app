@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import MyPageScreen from '../screens/MyPageScreen';
-import {HomeStackParamList} from '../types/StackParamList';
+import {HomeStackParamList} from '../types/StackNavigationType';
 import DetailScreen from '../screens/DetailScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 

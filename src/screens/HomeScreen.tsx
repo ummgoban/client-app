@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../types/StackParamList';
+import {RootStackParamList} from '../types/StackNavigationType';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;

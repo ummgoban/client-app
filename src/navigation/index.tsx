@@ -1,5 +1,5 @@
 import React from 'react';
-import {RootStackParamList} from '../types/StackParamList';
+import {RootStackParamList} from '../types/StackNavigationType';
 import HomeNavigator from './HomeNavigator';
 import {createStackNavigator} from '@react-navigation/stack';
 import RegisterNavigator from './RegisterNavigator';

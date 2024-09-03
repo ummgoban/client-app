@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignupScreen from '../screens/register/SignupScreen';
 import LoginScreen from '../screens/register/LoginScreen';
-import {RegisterStackParamList} from '../types/StackParamList';
+import {RegisterStackParamList} from '../types/StackNavigationType';
 
 const Stack = createStackNavigator<RegisterStackParamList>();
 

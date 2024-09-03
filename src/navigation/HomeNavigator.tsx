@@ -6,6 +6,24 @@ import MyPageScreen from '../screens/MyPageScreen';
 import {HomeStackParamList} from '../types/StackNavigationType';
 import {Text} from 'react-native';
 
+type TabBarComponentType = {
+  [route in keyof HomeStackParamList]: {
+    name: string;
+    icon: string;
+  };
+};
+
+const tabBarData: TabBarComponentType = {
+  Feed: {
+    name: '홈',
+    icon: 'feed_icon.png',
+  },
+  MyPage: {
+    name: '마이 페이지',
+    icon: 'mypage_icon.png',
+  },
+};
+
 const Tab = createBottomTabNavigator<HomeStackParamList>();
 
 const HomeNavigator = () => {
@@ -14,8 +32,10 @@ const HomeNavigator = () => {
       screenOptions={({route}) => ({
         headerShown: true,
         tabBarIcon: () => {
-          return <Text>{route.name} + icon</Text>;
+          // TODO: render image icon
+          return <Text>{tabBarData[route.name].icon}</Text>;
         },
+        tabBarLabel: tabBarData[route.name].name,
       })}
       tabBar={TabBar}>
       <Tab.Screen name="Feed" component={HomeScreen} />

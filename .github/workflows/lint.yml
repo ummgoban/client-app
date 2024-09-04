@@ -44,9 +44,6 @@ jobs:
             yarn install
           fi
 
-      - name: Install the project dependencies
-        run: yarn install
-
       - name: Lint check
         run: yarn lint
 

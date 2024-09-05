@@ -73,7 +73,8 @@ i
 ## 브랜치 컨벤션
 
 - `git-flow` 전략을 사용한다.
-- `Create a merge commit` 으로 머지한다.
+- `Squash and merge` 으로 머지한다.
+- 본인 PR은 구성원의 approve 후 본인이 머지한다.
 - branch prefix
   - `feature`: 기능 개발
   - `bugfix`: 버그 수정
@@ -85,6 +86,33 @@ i
 ## 코드 컨벤션
 
 - `prettier` 에서 제공하는 컨벤션을 따른다.
+
+## 주석 컨벤션
+
+VSC `Todo Tree` Extension에서 제공하는 TODO 리스트 관리를 합니다.
+
+```bash
+Name: Todo Tree
+Id: Gruntfuggly.todo-tree
+Description: Show TODO, FIXME, etc. comment tags in a tree view
+Version: 0.0.226
+Publisher: Gruntfuggly
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree
+```
+
+해당 익스텐션을 설치하지 않더라도 인라인에 주석은 아래의 tag를 이용하여 주석을 기록합니다
+
+- `TODO`: 예정되어 있는 구현. 리펙토링 필요
+  - `TODO`: 카카오톡 로그인 로직 연결하기`
+  - `TODO`: 절차지향 for 문을 함수형 고차함수로 리펙토링
+- `FIXME`: 수정이 필요한 버그, 오류, 또는 잘못된 동작
+  - `FIXME`: 상품이 존재하지 않을 때 예외 처리
+- `HACK`: workaround. 임시방편으로 동작하는 코드. FIXME 보다 시급도가 낮은 경우
+  - `HACK` : 응급조치로 우선 하드코딩을 적용하였습니다
+- `XXX`": 코드나 문서를 검토할 때 주의해야 할 부분을 강조하는 데 사용되며 주로 버그 또는 잠재적인 문제를 가리키는 데 사용되며 개선이 필요한 부분을 의미합니다.
+  - `XXX`: 상품 정보가 많아 질 때, 해당 코드에서 오류가 발생할 가능성이 있습니다.
+- `[ ]`: 단순한 체크박스를 남길 때 사용합니다.
+  - `[ ] 가게 정보 표시하기`
 
 ## 구성인원
 

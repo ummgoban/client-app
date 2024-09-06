@@ -6,6 +6,7 @@ import {
   HomeStackParamList,
   RootStackParamList,
 } from '../types/StackNavigationType';
+import {format} from '../utils/date';
 
 type Props = StackScreenProps<
   HomeStackParamList & RootStackParamList,
@@ -116,7 +117,7 @@ const OrderHistory = () => {
                 />
                 <View style={{display: 'flex', flexDirection: 'column'}}>
                   <Text>{order.store.name}</Text>
-                  <Text>{order.createdAt}</Text>
+                  <Text>{format(order.createdAt)}</Text>
                   <Text>{description}</Text>
                 </View>
               </View>

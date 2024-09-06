@@ -1,0 +1,54 @@
+name: Lint & Prettier & Typecheck
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Set Yarn Version
+        id: set-version
+        run: |
+          yarn set version 3.6.4
+          echo "YARN_VERSION=$(yarn -v)" >> $GITHUB_OUTPUT
+
+      - name: Get cache dir path
+        id: yarn-cache-dir-path
+        run: echo "CACHE_DIR=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.CACHE_DIR }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ steps.set-version.outputs.YARN_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: Install dependencies
+        run: |
+          CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
+          NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")
+          if [[ "$CACHE_HIT" != 'true' || "$NODE_MODULES_EXISTS" == 'false' ]]; then
+            yarn install
+          fi
+
+      - name: Lint check
+        run: yarn lint
+
+      - name: Prettier check
+        run: yarn format:check
+
+      - name: TS check
+        run: yarn tsc

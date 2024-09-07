@@ -77,6 +77,8 @@ const StoreName = styled.Text`
   font-size: 20px;
   line-height: 26px;
   font-weight: 600;
+
+  max-width: 70%;
 `;
 
 const OrderDetailButtonContainer = styled.View`
@@ -112,6 +114,9 @@ const CreatedAt = styled.Text`
 const Description = styled.Text`
   font-size: 14px;
   line-height: 20px;
+
+  word-wrap: break-word;
+  word-break: keep-all;
 `;
 
 const HistoryTimelineContainer = styled.View`

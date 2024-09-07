@@ -38,7 +38,7 @@ const MyPageScreen = ({navigation}: Props) => {
       id: 1,
       store: {
         id: 1,
-        name: 'store1',
+        name: 'very long store name very long store name',
         image: 'https://legacy.reactjs.org/logo-og.png',
       },
       product: [
@@ -70,7 +70,7 @@ const MyPageScreen = ({navigation}: Props) => {
       product: [
         {
           id: 2,
-          name: 'product2',
+          name: '띄어쓰기가없는엄청나게긴음식이름은어떻게해야될까요없는엄청나게긴음식이름은어떻게해야될까요',
           price: 2000,
           count: 1,
         },
@@ -90,7 +90,7 @@ const MyPageScreen = ({navigation}: Props) => {
       product: [
         {
           id: 3,
-          name: 'product3',
+          name: 'very long product name + very long product name, very long product name, very long product name',
           price: 3000,
           count: 1,
         },

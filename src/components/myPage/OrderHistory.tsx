@@ -5,13 +5,33 @@ import {format} from '../../utils/date';
 import HistoryTimeline from './HistoryTimeline';
 import S from './OrderHistory.style';
 
+const DESCRIPTION_MAX_LENGTH = 30;
+
 const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
   return (
     <S.OrderContainer>
       <S.Title>진행중인 주문</S.Title>
       <S.HistoryList>
         {historyList.map(order => {
-          const representProduct = order.product[0].name;
+          const representProduct = (name => {
+            if (name.length > DESCRIPTION_MAX_LENGTH) {
+              const lastIndexOfSpace = name.lastIndexOf(
+                ' ',
+                DESCRIPTION_MAX_LENGTH,
+              );
+
+              if (lastIndexOfSpace > 0) {
+                return `${name.slice(
+                  0,
+                  name.lastIndexOf(' ', DESCRIPTION_MAX_LENGTH),
+                )}...`;
+              }
+
+              return `${name.slice(0, DESCRIPTION_MAX_LENGTH)}...`;
+            }
+            return name;
+          })(order.product[0].name);
+
           const productLength = order.product.length;
 
           const sumOfPrice = order.product
@@ -45,7 +65,9 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                 />
                 <S.ItemInfo>
                   <S.InfoHeader>
-                    <S.StoreName>{order.store.name}</S.StoreName>
+                    <S.StoreName numberOfLines={1}>
+                      {order.store.name}
+                    </S.StoreName>
                     <S.OrderDetailButtonContainer>
                       <S.OrderDetailButton
                         onPress={() => Alert.alert('주문 상세 바로가기')}>
@@ -58,7 +80,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                   <S.CreatedAt>{`${format(order.createdAt)}${
                     status != null ? ` · ${status}` : ''
                   }`}</S.CreatedAt>
-                  <S.Description>{description}</S.Description>
+                  <S.Description numberOfLines={2}>{description}</S.Description>
                 </S.ItemInfo>
               </S.HistoryItemSummary>
               <S.HistoryTimelineContainer>

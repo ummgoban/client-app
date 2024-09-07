@@ -1,6 +1,5 @@
 import React from 'react';
 import {Alert} from 'react-native';
-import {Title} from 'react-native-paper';
 import {OrderType} from '../../types/OrderType';
 import {format} from '../../utils/date';
 import HistoryTimeline from './HistoryTimeline';
@@ -9,7 +8,7 @@ import S from './OrderHistory.style';
 const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
   return (
     <S.OrderContainer>
-      <Title>진행중인 주문</Title>
+      <S.Title>진행중인 주문</S.Title>
       <S.HistoryList>
         {historyList.map(order => {
           const representProduct = order.product[0].name;
@@ -67,7 +66,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                   title="예약 접수"
                   timestamp={order.createdAt}
                   description={
-                    order.pendingAt != null
+                    order.pendingAt == null
                       ? '픽업 예약이 완료되었습니다.'
                       : null
                   }
@@ -77,7 +76,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                     title="픽업 대기"
                     timestamp={order.pendingAt}
                     description={
-                      order.doneAt != null
+                      order.doneAt == null
                         ? `${format(
                             order.pickupAt,
                             'HH시 mm분',

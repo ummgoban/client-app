@@ -15,9 +15,7 @@ type Props = StackScreenProps<
   'MyPage'
 >;
 
-const MyPageContainer = styled.View`
-  margin: 0 24px;
-`;
+const MyPageContainer = styled.ScrollView``;
 
 const MyPageScreen = ({navigation}: Props) => {
   // TODO: fetch user session

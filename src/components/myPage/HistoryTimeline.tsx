@@ -1,7 +1,9 @@
 import React from 'react';
-import S from './HistoryTimeline.style';
-import {Text} from 'react-native-paper';
 import {format} from '../../utils/date';
+import S from './HistoryTimeline.style';
+
+// TODO: 이미지 경로 수정
+const checkImageSrc = 'https://cdn-icons-png.freepik.com/512/5610/5610944.png';
 
 const HistoryTimeline = ({
   title,
@@ -14,9 +16,15 @@ const HistoryTimeline = ({
 }) => {
   return (
     <S.HistoryTimelineItem>
-      <Text>{title}</Text>
-      <Text>{format(timestamp, 'HH시 mm분')}</Text>
-      {description != null && <Text>{description}</Text>}
+      <S.TitleLayout>
+        <S.CheckIcon source={{uri: checkImageSrc}} width={24} height={24} />
+        <S.Title>{title}</S.Title>
+        <S.Timestamp>{format(timestamp, 'HH시 mm분')}</S.Timestamp>
+      </S.TitleLayout>
+      <S.DescriptionLayout>
+        <S.DashedLine />
+        {description && <S.Description>{description}</S.Description>}
+      </S.DescriptionLayout>
     </S.HistoryTimelineItem>
   );
 };

@@ -2,9 +2,76 @@ import styled from '@emotion/native';
 
 const HistoryTimelineItem = styled.View`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 
-const S = {HistoryTimelineItem};
+const TitleLayout = styled.View`
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+`;
+
+const CheckIcon = styled.Image`
+  width: 24px;
+  height: 24px;
+
+  margin-right: 12px;
+`;
+
+const Title = styled.Text`
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 130%;
+
+  margin-right: 12px;
+`;
+
+const Timestamp = styled.Text`
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 160%;
+
+  color: #b5b5b5;
+`;
+
+const DescriptionLayout = styled.View`
+  display: flex;
+  flex-direction: row;
+
+  min-height: 16px;
+`;
+
+const DashedLine = styled.View`
+  margin: 0 11.5px;
+
+  height: 100%;
+
+  border-width: 1px;
+  border-color: #b5b5b5;
+
+  border-style: dashed;
+`;
+
+const Description = styled.Text`
+  margin: 10px 0 10px 20px;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 160%;
+
+  color: #545454;
+`;
+
+const S = {
+  HistoryTimelineItem,
+  TitleLayout,
+  CheckIcon,
+  Title,
+  Timestamp,
+  DescriptionLayout,
+  DashedLine,
+  Description,
+};
 
 export default S;

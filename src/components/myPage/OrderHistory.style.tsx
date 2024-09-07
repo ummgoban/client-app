@@ -1,8 +1,12 @@
 import styled from '@emotion/native';
 
+// TODO: 각 씬의 margin horizontal을 24px로 설정
+// programmatic하게 margin을 주기
+
 const OrderContainer = styled.View`
   display: flex;
-  margin: 20px 0;
+
+  padding: 20px 0;
 `;
 
 const Title = styled.Text`
@@ -10,7 +14,7 @@ const Title = styled.Text`
   line-height: 28.5px;
   font-weight: 600;
 
-  margin-bottom: 12px;
+  margin: 0 24px 12px;
 `;
 
 const HistoryList = styled.View`
@@ -21,6 +25,18 @@ const HistoryList = styled.View`
 const HistoryItem = styled.View`
   display: flex;
   gap: 24px;
+
+  padding: 20px 24px;
+  background-color: #ffffff;
+
+  box-shadow: 0px 4px;
+  box-shadow-color: rgba(0, 0, 0, 0.08);
+
+  shadow-radius: 4px;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.08;
+
+  elevation: 11;
 `;
 
 const HistoryItemSummary = styled.View`
@@ -57,7 +73,7 @@ const StoreName = styled.Text`
 `;
 
 const OrderDetailButtonContainer = styled.View`
-  width: max-content;
+  width: auto;
   height: 26px;
 
   box-sizing: border-box;

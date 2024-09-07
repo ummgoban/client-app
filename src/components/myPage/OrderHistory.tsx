@@ -1,7 +1,7 @@
 import React from 'react';
 import {Alert, Image} from 'react-native';
 import {OrderType} from '../../types/OrderType';
-import {format} from '../../utils/date';
+import date from '../../utils/date';
 import HistoryTimeline from './HistoryTimeline';
 import S from './OrderHistory.style';
 
@@ -90,7 +90,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                       </S.OrderDetailButton>
                     </S.OrderDetailButtonContainer>
                   </S.InfoHeader>
-                  <S.CreatedAt>{`${format(order.createdAt)}${
+                  <S.CreatedAt>{`${date.format(order.createdAt)}${
                     status != null ? ` · ${status}` : ''
                   }`}</S.CreatedAt>
                   <S.Description numberOfLines={2}>{description}</S.Description>
@@ -112,7 +112,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                     timestamp={order.pendingAt}
                     description={
                       order.doneAt == null
-                        ? `${format(
+                        ? `${date.format(
                             order.pickupAt,
                             'HH시 mm분',
                           )}까지 가게로 방문해주세요.`
@@ -124,7 +124,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                   <HistoryTimeline
                     title="픽업 완료"
                     timestamp={order.doneAt}
-                    description={`${format(
+                    description={`${date.format(
                       order.doneAt,
                       'HH시 mm분',
                     )}에 픽업이 완료되었습니다.`}

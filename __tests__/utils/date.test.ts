@@ -1,5 +1,5 @@
 import {it, expect} from '@jest/globals';
-import * as date from '../../src/utils/date';
+import date from '../../src/utils/date';
 
 it('should return format date', () => {
   const timestamp = 1618225200000;

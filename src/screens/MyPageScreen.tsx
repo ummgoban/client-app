@@ -2,15 +2,15 @@ import styled from '@emotion/native';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
 import {Alert, View} from 'react-native';
+import {RefreshControl} from 'react-native-gesture-handler';
 import {Button} from 'react-native-paper';
 import {OrderHistory, Profile} from '../components/myPage';
+import usePullDownRefresh from '../hooks/usePullDownRefresh';
 import {OrderType} from '../types/OrderType';
 import {
   HomeStackParamList,
   RootStackParamList,
 } from '../types/StackNavigationType';
-import usePullDownRefresh from '../hooks/usePullDownRefresh';
-import {RefreshControl} from 'react-native-gesture-handler';
 
 type Props = StackScreenProps<
   HomeStackParamList & RootStackParamList,

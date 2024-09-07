@@ -38,15 +38,11 @@ const HistoryItem = styled.View`
   ${HistoryItemCSS}
 
   ${Platform.OS === 'ios'
-    ? `  shadow-radius: 4px;
-  shadow-offset: 0px 4px;
-  shadow-opacity: 0.08;
-    `
+    ? `shadow-radius: 4px;
+      shadow-offset: 0px 4px;
+      shadow-opacity: 0.08;`
     : Platform.OS === 'android'
-    ? `
-    elevation: 11;
-
-    `
+    ? 'elevation: 11;'
     : ''}
 `;
 

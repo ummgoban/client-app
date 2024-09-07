@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import {Platform} from 'react-native';
 
 // TODO: 각 씬의 margin horizontal을 24px로 설정
 // programmatic하게 margin을 주기
@@ -11,7 +12,7 @@ const OrderContainer = styled.View`
 
 const Title = styled.Text`
   font-size: 20px;
-  line-height: 28.5px;
+  line-height: 30px;
   font-weight: 600;
 
   margin: 0 24px 12px;
@@ -32,11 +33,17 @@ const HistoryItem = styled.View`
   box-shadow: 0px 4px;
   box-shadow-color: rgba(0, 0, 0, 0.08);
 
-  shadow-radius: 4px;
+  ${Platform.OS === 'ios'
+    ? `  shadow-radius: 4px;
   shadow-offset: 0px 4px;
   shadow-opacity: 0.08;
+    `
+    : Platform.OS === 'android'
+    ? `
+    elevation: 11;
 
-  elevation: 11;
+    `
+    : ''}
 `;
 
 const HistoryItemSummary = styled.View`
@@ -68,7 +75,7 @@ const InfoHeader = styled.View`
 
 const StoreName = styled.Text`
   font-size: 20px;
-  line-height: 130%;
+  line-height: 26px;
   font-weight: 600;
 `;
 
@@ -97,14 +104,14 @@ const OrderDetailButtonText = styled.Text`
 const CreatedAt = styled.Text`
   font-size: 14px;
   font-weight: 400;
-  line-height: 130%;
+  line-height: 20px;
 
   color: #b5b5b5;
 `;
 
 const Description = styled.Text`
   font-size: 14px;
-  line-height: 130%;
+  line-height: 20px;
 `;
 
 const HistoryTimelineContainer = styled.View`

@@ -22,7 +22,7 @@ const CheckIcon = styled.Image`
 const Title = styled.Text`
   font-size: 14px;
   font-weight: 400;
-  line-height: 130%;
+  line-height: 20px;
 
   margin-right: 12px;
 `;
@@ -30,7 +30,7 @@ const Title = styled.Text`
 const Timestamp = styled.Text`
   font-size: 12px;
   font-weight: 400;
-  line-height: 160%;
+  line-height: 18px;
 
   color: #b5b5b5;
 `;
@@ -58,7 +58,7 @@ const Description = styled.Text`
 
   font-size: 12px;
   font-weight: 400;
-  line-height: 160%;
+  line-height: 18px;
 
   color: #545454;
 `;

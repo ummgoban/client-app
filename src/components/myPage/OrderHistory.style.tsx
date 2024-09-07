@@ -73,12 +73,20 @@ const InfoHeader = styled.View`
   justify-content: space-between;
 `;
 
+const TouchableStoreName = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  gap: 4px;
+
+  max-width: 60%;
+`;
+
 const StoreName = styled.Text`
   font-size: 20px;
-  line-height: 26px;
+  line-height: 24px;
   font-weight: 600;
-
-  max-width: 70%;
 `;
 
 const OrderDetailButtonContainer = styled.View`
@@ -133,6 +141,7 @@ const S = {
   ItemInfo,
   StoreImage,
   InfoHeader,
+  TouchableStoreName,
   StoreName,
   OrderDetailButtonContainer,
   OrderDetailButton,

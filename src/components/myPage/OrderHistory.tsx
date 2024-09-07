@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert} from 'react-native';
+import {Alert, Image} from 'react-native';
 import {OrderType} from '../../types/OrderType';
 import {format} from '../../utils/date';
 import HistoryTimeline from './HistoryTimeline';
@@ -20,14 +20,12 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                 DESCRIPTION_MAX_LENGTH,
               );
 
-              if (lastIndexOfSpace > 0) {
-                return `${name.slice(
-                  0,
-                  name.lastIndexOf(' ', DESCRIPTION_MAX_LENGTH),
-                )}...`;
-              }
-
-              return `${name.slice(0, DESCRIPTION_MAX_LENGTH)}...`;
+              return `${name.slice(
+                0,
+                lastIndexOfSpace > 0
+                  ? lastIndexOfSpace
+                  : DESCRIPTION_MAX_LENGTH,
+              )}...`;
             }
             return name;
           })(order.product[0].name);
@@ -65,12 +63,27 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                 />
                 <S.ItemInfo>
                   <S.InfoHeader>
-                    <S.StoreName numberOfLines={1}>
-                      {order.store.name}
-                    </S.StoreName>
+                    <S.TouchableStoreName
+                      onPress={() =>
+                        Alert.alert(`go to store: ${order.store.id}`)
+                      }>
+                      <S.StoreName numberOfLines={1}>
+                        {order.store.name}
+                      </S.StoreName>
+                      <Image
+                        source={{
+                          // TODO: replace with chevron-right icon
+                          uri: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/chevron-right-1667908-2039431.png?f=webp&w=256',
+                        }}
+                        width={24}
+                        height={24}
+                      />
+                    </S.TouchableStoreName>
                     <S.OrderDetailButtonContainer>
                       <S.OrderDetailButton
-                        onPress={() => Alert.alert('주문 상세 바로가기')}>
+                        onPress={() =>
+                          Alert.alert(`주문 상세 바로가기: ${order.id}`)
+                        }>
                         <S.OrderDetailButtonText>
                           주문 상세
                         </S.OrderDetailButtonText>

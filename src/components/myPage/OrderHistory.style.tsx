@@ -1,4 +1,4 @@
-import styled from '@emotion/native';
+import styled, {css} from '@emotion/native';
 import {Platform} from 'react-native';
 
 // TODO: 각 씬의 margin horizontal을 24px로 설정
@@ -23,7 +23,7 @@ const HistoryList = styled.View`
   gap: 12px;
 `;
 
-const HistoryItem = styled.View`
+const HistoryItemCSS = css`
   display: flex;
   gap: 24px;
 
@@ -32,6 +32,10 @@ const HistoryItem = styled.View`
 
   box-shadow: 0px 4px;
   box-shadow-color: rgba(0, 0, 0, 0.08);
+`;
+
+const HistoryItem = styled.View`
+  ${HistoryItemCSS}
 
   ${Platform.OS === 'ios'
     ? `  shadow-radius: 4px;
@@ -44,6 +48,12 @@ const HistoryItem = styled.View`
 
     `
     : ''}
+`;
+
+const HistoryItemSkeleton = styled.View`
+  ${HistoryItemCSS}
+
+  min-height: 200px;
 `;
 
 const HistoryItemSummary = styled.View`
@@ -137,6 +147,7 @@ const S = {
   Title,
   HistoryList,
   HistoryItem,
+  HistoryItemSkeleton,
   HistoryItemSummary,
   ItemInfo,
   StoreImage,

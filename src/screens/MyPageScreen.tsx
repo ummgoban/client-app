@@ -98,7 +98,9 @@ const fetchOrderHistory = (): Promise<OrderType[] | null> => {
 };
 
 const UserMyPage = () => {
-  const [historyList, setHistoryList] = React.useState<OrderType[]>([]);
+  const [historyList, setHistoryList] = React.useState<OrderType[] | null>(
+    null,
+  );
 
   const {refreshing, onRefresh} = usePullDownRefresh(async () => {
     console.log('refreshing start');

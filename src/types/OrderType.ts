@@ -14,7 +14,9 @@ export type OrderType = {
     price: number;
     count: number;
   }[];
+  pickupAt: number;
   createdAt: number;
-  doneAt: number;
+  pendingAt?: number;
+  doneAt?: number;
   status: 'ORDERED' | 'PENDING' | 'DONE' | 'CANCEL';
 };

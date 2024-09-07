@@ -81,6 +81,8 @@ const ItemInfo = styled.View`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  flex: 1;
 `;
 
 const StoreImage = styled.Image`
@@ -90,10 +92,38 @@ const StoreImage = styled.Image`
   border-radius: 32px;
 `;
 
+const InfoHeader = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 const StoreName = styled.Text`
   font-size: 20px;
   line-height: 130%;
   font-weight: 600;
+`;
+
+const OrderDetailButtonContainer = styled.View`
+  width: max-content;
+  height: 26px;
+
+  box-sizing: border-box;
+
+  border-radius: 15px;
+  border: 1px solid #ebebeb;
+`;
+
+const OrderDetailButton = styled.TouchableOpacity``;
+
+const OrderDetailButtonText = styled.Text`
+  padding: 2px 10px;
+  color: #222222;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.408px;
 `;
 
 const CreatedAt = styled.Text`
@@ -108,6 +138,34 @@ const Description = styled.Text`
   font-size: 14px;
   line-height: 130%;
 `;
+
+const HistoryTimelineContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+`;
+
+const HistoryTimelineItem = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
+const HistoryTimeline = ({
+  title,
+  timestamp,
+  description,
+}: {
+  title: string;
+  timestamp: number;
+  description: string | null;
+}) => {
+  return (
+    <HistoryTimelineItem>
+      <Text>{title}</Text>
+      <Text>{format(timestamp, 'HH시 mm분')}</Text>
+      {description != null && <Text>{description}</Text>}
+    </HistoryTimelineItem>
+  );
+};
 
 const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
   return (
@@ -148,13 +206,56 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                   height={64}
                 />
                 <ItemInfo>
-                  <StoreName>{order.store.name}</StoreName>
+                  <InfoHeader>
+                    <StoreName>{order.store.name}</StoreName>
+                    <OrderDetailButtonContainer>
+                      <OrderDetailButton
+                        onPress={() => Alert.alert('주문 상세 바로가기')}>
+                        <OrderDetailButtonText>주문 상세</OrderDetailButtonText>
+                      </OrderDetailButton>
+                    </OrderDetailButtonContainer>
+                  </InfoHeader>
                   <CreatedAt>{`${format(order.createdAt)}${
                     status != null ? ` · ${status}` : ''
                   }`}</CreatedAt>
                   <Description>{description}</Description>
                 </ItemInfo>
               </HistoryItemSummary>
+              <HistoryTimelineContainer>
+                <HistoryTimeline
+                  title="예약 접수"
+                  timestamp={order.createdAt}
+                  description={
+                    order.pendingAt != null
+                      ? '픽업 예약이 완료되었습니다.'
+                      : null
+                  }
+                />
+                {order.pendingAt != null && (
+                  <HistoryTimeline
+                    title="픽업 대기"
+                    timestamp={order.pendingAt}
+                    description={
+                      order.doneAt != null
+                        ? `${format(
+                            order.pickupAt,
+                            'HH시 mm분',
+                          )}까지 가게로 방문해주세요.`
+                        : null
+                    }
+                  />
+                )}
+                {order.doneAt != null && (
+                  <HistoryTimeline
+                    title="픽업 완료"
+                    timestamp={order.doneAt}
+                    description={`${format(
+                      order.doneAt,
+                      'HH시 mm분',
+                    )}에 픽업이 완료되었습니다.`}
+                  />
+                )}
+              </HistoryTimelineContainer>
             </HistoryItem>
           );
         })}
@@ -205,9 +306,30 @@ const MyPageScreen = ({navigation}: Props) => {
           count: 1,
         },
       ],
-      createdAt: 1609545600000,
-      doneAt: 1609545600000,
+      pickupAt: 1719545600000,
+      createdAt: 1709545600000,
       status: 'ORDERED',
+    },
+
+    {
+      id: 2,
+      store: {
+        id: 2,
+        name: 'store2',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+      },
+      product: [
+        {
+          id: 2,
+          name: 'product2',
+          price: 2000,
+          count: 1,
+        },
+      ],
+      pickupAt: 1614639000000,
+      createdAt: 1610639000000,
+      pendingAt: 1612639000000,
+      status: 'PENDING',
     },
     {
       id: 3,
@@ -224,28 +346,11 @@ const MyPageScreen = ({navigation}: Props) => {
           count: 1,
         },
       ],
+      pickupAt: 1610718400000,
       createdAt: 1609718400000,
-      doneAt: 1609718400000,
+      pendingAt: 1609718400000,
+      doneAt: 1611718400000,
       status: 'DONE',
-    },
-    {
-      id: 2,
-      store: {
-        id: 2,
-        name: 'store2',
-        image: 'https://legacy.reactjs.org/logo-og.png',
-      },
-      product: [
-        {
-          id: 2,
-          name: 'product2',
-          price: 2000,
-          count: 1,
-        },
-      ],
-      createdAt: 1610639000000,
-      doneAt: 1615649000000,
-      status: 'PENDING',
     },
   ];
 

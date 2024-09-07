@@ -42,15 +42,14 @@ const DescriptionLayout = styled.View`
   min-height: 16px;
 `;
 
-const DashedLine = styled.View`
+const DashedLine = styled.View<{dashline?: boolean}>`
   margin: 0 11.5px;
 
   height: 100%;
 
   border-width: 1px;
-  border-color: #b5b5b5;
-
   border-style: dashed;
+  border-color: ${props => (props.dashline ? '#b5b5b5;' : 'transparent;')};
 `;
 
 const Description = styled.Text`

@@ -9,10 +9,12 @@ const HistoryTimeline = ({
   title,
   timestamp,
   description,
+  dashline = true,
 }: {
   title: string;
   timestamp: number;
   description: string | null;
+  dashline?: boolean;
 }) => {
   return (
     <S.HistoryTimelineItem>
@@ -22,7 +24,7 @@ const HistoryTimeline = ({
         <S.Timestamp>{format(timestamp, 'HH시 mm분')}</S.Timestamp>
       </S.TitleLayout>
       <S.DescriptionLayout>
-        <S.DashedLine />
+        <S.DashedLine dashline={dashline} />
         {description && <S.Description>{description}</S.Description>}
       </S.DescriptionLayout>
     </S.HistoryTimelineItem>

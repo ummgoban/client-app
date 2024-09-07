@@ -115,6 +115,7 @@ const OrderHistory = ({historyList}: {historyList: OrderType[]}) => {
                       order.doneAt,
                       'HH시 mm분',
                     )}에 픽업이 완료되었습니다.`}
+                    dashline={false}
                   />
                 )}
               </S.HistoryTimelineContainer>

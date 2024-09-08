@@ -1,5 +1,5 @@
 import React from 'react';
-import date from '../../utils/date';
+import date from '@utils/date';
 import S from './HistoryTimeline.style';
 
 // TODO: 이미지 경로 수정

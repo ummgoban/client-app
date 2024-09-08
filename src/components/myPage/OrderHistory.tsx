@@ -1,7 +1,7 @@
 import React from 'react';
 import {Alert, Image} from 'react-native';
-import {OrderType} from '../../types/OrderType';
-import date from '../../utils/date';
+import {OrderType} from '@/types/OrderType';
+import date from '@utils/date';
 import HistoryTimeline from './HistoryTimeline';
 import S from './OrderHistory.style';
 

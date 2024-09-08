@@ -1,12 +1,12 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
-import {getUserProfile} from '../../apis/User';
 import {
   HomeStackParamList,
   RootStackParamList,
-} from '../../types/StackNavigationType';
-import {UserType} from '../../types/UserType';
+} from '@/types/StackNavigationType';
+import {UserType} from '@/types/UserType';
+import {getUserProfile} from '@apis/User';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect} from 'react';
+import {Alert} from 'react-native';
 import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 

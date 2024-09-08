@@ -1,10 +1,10 @@
+import {OrderType} from '@/types/OrderType';
+import {UserType} from '@/types/UserType';
+import {getOrderHistory} from '@apis/Order';
+import {OrderHistory, Profile} from '@components/myPage';
+import usePullDownRefresh from '@hooks/usePullDownRefresh';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, RefreshControl} from 'react-native';
-import {getOrderHistory} from '../../apis';
-import {OrderHistory, Profile} from '../../components/myPage';
-import usePullDownRefresh from '../../hooks/usePullDownRefresh';
-import {OrderType} from '../../types/OrderType';
-import {UserType} from '../../types/UserType';
 import S from './UserMyPage.style';
 
 const UserMyPage = ({profile}: {profile: UserType}) => {

@@ -1,9 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {TabBar} from '../components/common';
-import HomeScreen from '../screens/FeedScreen';
-import MyPageScreen from '../screens/MyPageScreen';
-import {HomeStackParamList} from '../types/StackNavigationType';
+import {TabBar} from '@components/common';
+import HomeScreen from '@screens/FeedScreen';
+import MyPageScreen from '@screens/MyPageScreen';
+import {HomeStackParamList} from '@/types/StackNavigationType';
 
 const Tab = createBottomTabNavigator<HomeStackParamList>();
 

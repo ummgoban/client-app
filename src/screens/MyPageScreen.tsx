@@ -6,7 +6,7 @@ import {RefreshControl} from 'react-native-gesture-handler';
 import {Button} from 'react-native-paper';
 import {getOrderHistory} from '../apis/Order';
 import {getUserProfile} from '../apis/User';
-import {OrderHistory, Profile} from '../components/MyPage';
+import {OrderHistory, Profile} from '../components/myPage';
 import usePullDownRefresh from '../hooks/usePullDownRefresh';
 import {OrderType} from '../types/OrderType';
 import {

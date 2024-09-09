@@ -1,8 +1,9 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {View, TextInput, Button, StyleSheet} from 'react-native';
+import {View, TextInput, Button, StyleSheet, Image, Text} from 'react-native';
 import {RootStackParamList} from '../../types/StackNavigationType';
-
+import styled from '@emotion/native'; // styled를 추가로 import
+import S from './LoginScreen.style';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
@@ -18,24 +19,24 @@ const LoginScreen = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Signup"
-        onPress={() => navigation.navigate('Register', {screen: 'Signup'})}
-      />
+      <S.LogoImg source={require('../../assets/logo.png')} />
+      <S.Description>
+        <S.TitleText>마감 세일 상품을</S.TitleText>
+        <S.TitleText>서프라이즈 백으로 만나보세요</S.TitleText>
+      </S.Description>
+      <S.LoginButtonContainer>
+        <S.LoginButtonWrapper>
+          {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
+          <S.KakaoButton>
+            <S.LoginText platform="kakao">카카오 로그인 시작하기</S.LoginText>
+          </S.KakaoButton>
+        </S.LoginButtonWrapper>
+        <S.LoginButtonWrapper>
+          <S.NaverButton>
+            <S.LoginText platform="naver">네이버 로그인 시작하기</S.LoginText>
+          </S.NaverButton>
+        </S.LoginButtonWrapper>
+      </S.LoginButtonContainer>
     </View>
   );
 };

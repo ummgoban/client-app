@@ -10,7 +10,8 @@
       "@navigation/*": ["src/navigation/*"],
       "@screens/*": ["src/screens/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@apis/*": ["src/apis/*"]
       // "@types/*": ["src/types/*"] // @types is typescript library, so use @/types/* instead of @types/*
     }
   }

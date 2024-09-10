@@ -50,12 +50,12 @@ const OrderHistory = ({historyList}: {historyList: OrderType[] | null}) => {
                 order.status === 'ORDERED'
                   ? '예약완료'
                   : order.status === 'PENDING'
-                  ? '픽업대기'
-                  : order.status === 'DONE'
-                  ? '픽업완료'
-                  : order.status === 'CANCEL'
-                  ? '주문취소'
-                  : null; // not reachable
+                    ? '픽업대기'
+                    : order.status === 'DONE'
+                      ? '픽업완료'
+                      : order.status === 'CANCEL'
+                        ? '주문취소'
+                        : null; // not reachable
 
               return (
                 <S.HistoryItem key={order.id}>

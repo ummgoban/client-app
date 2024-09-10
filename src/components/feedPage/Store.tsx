@@ -1,6 +1,5 @@
 import S from './Store.style';
 import {StoreType} from '@/types/StoreType';
-import {ScrollView} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import date from '@utils/date';

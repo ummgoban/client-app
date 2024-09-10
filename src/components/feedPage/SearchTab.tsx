@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, Alert, Text} from 'react-native';
+import {Image, Alert} from 'react-native';
 import S from './SearchTab.style';
 import useDebounce from '@/hooks/useDebounce';
 
@@ -18,7 +18,7 @@ const SearchTab = () => {
       <S.SearchWrapper>
         <S.SearchInput
           placeholder="검색어를 입력하세요."
-          value={searchQuery}
+          value={debouncedSearchQuery}
           onChangeText={setSearchQuery}
         />
         <S.SearchButton onPress={handleSearch}>

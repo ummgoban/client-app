@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {StoreType} from '@/types/StoreType';
 
 const dummyStoreList: StoreType[] = [

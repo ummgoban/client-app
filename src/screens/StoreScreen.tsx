@@ -9,8 +9,8 @@ const StoreScreen = ({route}: Props) => {
   const {storeId} = route.params;
   return (
     <View>
-      <Text>StoreScreen Screen</Text>
-      <Text>storeId ID: {storeId}</Text>
+      <Text>StoreScreen </Text>
+      <Text>storeId: {storeId}</Text>
     </View>
   );
 };

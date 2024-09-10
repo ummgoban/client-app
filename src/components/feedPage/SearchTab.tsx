@@ -1,40 +1,33 @@
-import {Searchbar} from 'react-native-paper';
-import {useState} from 'react';
-import {Alert} from 'react-native';
-
+import React, {useState} from 'react';
+import {Image, Alert} from 'react-native';
+import S from './SearchTab.style';
+//TODO : 검색시 searchHandler 로직 구현 (논의 필요) + 엔터시 onKeyPress넣을지?
 const SearchTab = () => {
-  //TODO: onChangeSearch에서 useDebounce 기능 추가
-  //TODO : 검색시 searchHandler 로직 구현 (논의 필요) + 엔터시 onKeyPress넣을지?
-  //FIXME : 검색 아이콘 띄우기 (현재 아이콘이 ? 로 뜨는 상태) -> 이미지로
-
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const onChangeSearch = (query: string) => setSearchQuery(query);
-  const searchHandler = (searchQuery: string): void => {
+
+  const handleSearch = () => {
+    Alert.alert('검색로직구현...', `검색어: ${searchQuery}`);
     setSearchQuery('');
-    Alert.alert(`searchHandler logic.. ${searchQuery}`);
   };
 
   return (
-    <Searchbar
-      placeholder={'검색어를 입력하세요.'}
-      mode="bar"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-      onTraileringIconPress={e => {
-        Alert.alert('kdsjfa;lkdj');
-      }}
-      onIconPress={() => searchHandler(searchQuery)}
-      style={{
-        height: 30,
-        borderColor: 'lightblue',
-        borderWidth: 1,
-        backgroundColor: 'white',
-        marginBottom: 6,
-      }}
-      inputStyle={{
-        minHeight: 0,
-      }}
-    />
+    <S.Container>
+      <S.SearchWrapper>
+        <S.SearchInput
+          placeholder="검색어를 입력하세요."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <S.SearchButton onPress={handleSearch}>
+          <Image
+            source={{
+              uri: 'https://webstockreview.net/images/search-icon-png-4.png',
+            }}
+            style={{width: 24, height: 24}}
+          />
+        </S.SearchButton>
+      </S.SearchWrapper>
+    </S.Container>
   );
 };
 

@@ -45,7 +45,7 @@ const FeedScreen = ({navigation}: Props) => {
         <SearchTab />
       </View>
       <ScrollView
-        style={{marginTop: 27}}
+        style={{marginTop: 50}}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>

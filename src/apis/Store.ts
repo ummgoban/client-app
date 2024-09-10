@@ -3,26 +3,27 @@ import {StoreType} from '@/types/StoreType';
 
 const dummyStoreList: StoreType[] = [
   {
-    id: '1',
+    id: 1,
     name: '반찬가게1',
-    pickupTime: '오후 06:00 ~ 10:00',
+    pickupStartAt: 1609718400000,
+    pickupEndAt: 1609728400000,
     products: [
       {
-        id: '1',
+        id: 1,
         name: '김치',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '10000',
         discountPrice: '7000',
       },
       {
-        id: '2',
+        id: 2,
         name: '깻잎',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '5000',
         discountPrice: '3000',
       },
       {
-        id: '3',
+        id: 3,
         name: '간장게장',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '20000',
@@ -31,26 +32,27 @@ const dummyStoreList: StoreType[] = [
     ],
   },
   {
-    id: '2',
+    id: 2,
     name: '반찬가게2',
-    pickupTime: '오후 07:00 ~ 10:00',
+    pickupStartAt: 1609718400000,
+    pickupEndAt: 1609728400000,
     products: [
       {
-        id: '4',
+        id: 4,
         name: '겉절이',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '80000',
         discountPrice: '6000',
       },
       {
-        id: '2',
+        id: 2,
         name: '깻잎',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '5000',
         discountPrice: '3000',
       },
       {
-        id: '5',
+        id: 5,
         name: '된장',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '10000',
@@ -59,26 +61,27 @@ const dummyStoreList: StoreType[] = [
     ],
   },
   {
-    id: '3',
+    id: 3,
     name: '반찬가게3',
-    pickupTime: '오후 05:00 ~ 09:00',
+    pickupStartAt: 1609718400000,
+    pickupEndAt: 1609728400000,
     products: [
       {
-        id: '1',
+        id: 1,
         name: '김치',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '10000',
         discountPrice: '7000',
       },
       {
-        id: '2',
+        id: 2,
         name: '깻잎',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '5000',
         discountPrice: '3000',
       },
       {
-        id: '3',
+        id: 3,
         name: '간장게장',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '20000',
@@ -87,26 +90,27 @@ const dummyStoreList: StoreType[] = [
     ],
   },
   {
-    id: '4',
+    id: 4,
     name: '반찬가게4',
-    pickupTime: '오후 06:00 ~ 10:00',
+    pickupStartAt: 1609718400000,
+    pickupEndAt: 1609728400000,
     products: [
       {
-        id: '1',
+        id: 1,
         name: '김치',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '10000',
         discountPrice: '7000',
       },
       {
-        id: '2',
+        id: 2,
         name: '깻잎',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '5000',
         discountPrice: '3000',
       },
       {
-        id: '3',
+        id: 3,
         name: '간장게장',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: '20000',

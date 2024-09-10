@@ -1,8 +1,9 @@
 import {ProductType} from './ProductType';
 
 export type StoreType = {
-  id: string;
+  id: number;
   name: string;
-  pickupTime: string;
+  pickupStartAt: number;
+  pickupEndAt: number;
   products: ProductType[];
 };

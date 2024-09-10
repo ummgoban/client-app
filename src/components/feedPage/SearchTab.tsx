@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import {Image, Alert} from 'react-native';
+import {Image, Alert, Text} from 'react-native';
 import S from './SearchTab.style';
-//TODO : 검색시 searchHandler 로직 구현 (논의 필요) + 엔터시 onKeyPress넣을지?
+import useDebounce from '@/hooks/useDebounce';
+
+//TODO : 검색시 searchHandler 로직 구현 + 엔터시 onKeyPress넣을지?
 const SearchTab = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const handleSearch = () => {
     Alert.alert('검색로직구현...', `검색어: ${searchQuery}`);

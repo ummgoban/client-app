@@ -10,7 +10,7 @@ const Store = ({store, onPress}: Props) => {
   return (
     <S.StoreWrapper onPress={() => onPress(store.id)}>
       <S.StoreImageContainer>
-        {store!.products.map((product, index) => (
+        {store.products.map((product, index) => (
           <S.StoreImageBox key={index}>
             <S.StoreImage source={{uri: product.image}} />
             <S.PriceLabel>
@@ -19,7 +19,7 @@ const Store = ({store, onPress}: Props) => {
           </S.StoreImageBox>
         ))}
       </S.StoreImageContainer>
-      <S.StoreTitle>{store!.name}</S.StoreTitle>
+      <S.StoreTitle>{store.name}</S.StoreTitle>
       <S.StorePickupTime>
         {`픽업: ${date.format(
           store.pickupStartAt,

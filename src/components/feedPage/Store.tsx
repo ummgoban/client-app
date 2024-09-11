@@ -22,9 +22,9 @@ const Store = ({store, onPress}: Props) => {
       <S.StoreTitle>{store!.name}</S.StoreTitle>
       <S.StorePickupTime>
         {`픽업: ${date.format(
-          store!.pickupStartAt,
+          store.pickupStartAt,
           'HH시 mm분',
-        )} ~ ${date.format(store!.pickupEndAt, 'HH시 mm분')}`}
+        )} ~ ${date.format(store.pickupEndAt, 'HH시 mm분')}`}
       </S.StorePickupTime>
     </S.StoreWrapper>
   );

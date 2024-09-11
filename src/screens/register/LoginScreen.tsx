@@ -1,15 +1,15 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
-import {View, TextInput, Button, StyleSheet, Image, Text} from 'react-native';
-import {RootStackParamList} from '../../types/StackNavigationType';
+// import {StackNavigationProp} from '@react-navigation/stack';
+// import {RootStackParamList} from '../../types/StackNavigationType';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
 import S from './LoginScreen.style';
 import {signInWithKakao, signInWithNaver} from './LoginLogic';
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-};
+// type Props = {
+//   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
+// };
 
-const LoginScreen = ({navigation}: Props) => {
+const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <S.LogoImg source={require('../../assets/logo.png')} />

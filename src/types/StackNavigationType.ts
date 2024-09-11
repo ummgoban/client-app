@@ -16,7 +16,7 @@ export interface RegisterStackParamList extends ParamListBase {
 }
 
 export interface DetailStackParamList extends ParamListBase {
-  Store: {storeId: number};
+  Market: {marketId: number};
 }
 
 export interface RootStackParamList extends ParamListBase {

@@ -1,5 +1,4 @@
-// TODO: declare store type
-// TODO: declare product type
+// TODO: store, product type 확정 이후 order타입도 수정
 
 export type OrderType = {
   id: number;

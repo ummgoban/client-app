@@ -10,8 +10,8 @@ const Store = ({store, onPress}: Props) => {
   return (
     <S.StoreWrapper onPress={() => onPress(store.id)}>
       <S.StoreImageContainer>
-        {store.products.map((product, index) => (
-          <S.StoreImageBox key={index}>
+        {store.products.map(product => (
+          <S.StoreImageBox key={store.id}>
             <S.StoreImage source={{uri: product.image}} />
             <S.PriceLabel>
               {product.name}: {product.discountPrice.toLocaleString()}원

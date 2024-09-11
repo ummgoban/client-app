@@ -2,21 +2,14 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {View, TextInput, Button, StyleSheet, Image, Text} from 'react-native';
 import {RootStackParamList} from '../../types/StackNavigationType';
-import styled from '@emotion/native'; // styled를 추가로 import
 import S from './LoginScreen.style';
+import {signInWithKakao, signInWithNaver} from './LoginLogic';
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
 
 const LoginScreen = ({navigation}: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    // Implement your login logic here
-    navigation.navigate('Home', {screen: 'Feed'});
-  };
-
   return (
     <View style={styles.container}>
       <S.LogoImg source={require('../../assets/logo.png')} />
@@ -26,13 +19,12 @@ const LoginScreen = ({navigation}: Props) => {
       </S.Description>
       <S.LoginButtonContainer>
         <S.LoginButtonWrapper>
-          {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
-          <S.KakaoButton>
+          <S.KakaoButton onPress={signInWithKakao}>
             <S.LoginText platform="kakao">카카오 로그인 시작하기</S.LoginText>
           </S.KakaoButton>
         </S.LoginButtonWrapper>
         <S.LoginButtonWrapper>
-          <S.NaverButton>
+          <S.NaverButton onPress={signInWithNaver}>
             <S.LoginText platform="naver">네이버 로그인 시작하기</S.LoginText>
           </S.NaverButton>
         </S.LoginButtonWrapper>

@@ -1,19 +1,16 @@
-import axios from 'axios';
+// import axios from 'axios';
 import {LoginRequestType} from './types';
-import {
-  login,
-  logout,
-  getProfile as getKakaoProfile,
-  shippingAddresses as getKakaoShippingAddresses,
-  unlink,
-} from '@react-native-seoul/kakao-login';
+import {login} from '@react-native-seoul/kakao-login';
 
 const axiosSocialLogin = async (request: LoginRequestType): Promise<void> => {
   try {
     const token = await login();
     // TODO: api 확정 시 변경 필요
+    console.log(request);
     // const response = await axios.post('api/login', request);
+
     // console.log('Login success', response.data);
+    console.log(token);
   } catch (error) {
     // console.error('Login fail', error);
   }
@@ -29,6 +26,7 @@ export const signInWithKakao = async (): Promise<void> => {
       rolesType: 'ROLE_USER',
       token: token.accessToken,
     };
+    console.log(request);
     // await axiosSocialLogin(request);
   } catch (err) {
     console.log('error');

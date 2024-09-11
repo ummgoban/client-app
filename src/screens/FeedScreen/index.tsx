@@ -1,15 +1,13 @@
-import React from 'react';
-import {View, Alert, Text} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {useState, useEffect} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import {StoreType} from '@/types/StoreType';
 import {getStoreList} from '@/apis';
 import {SearchTab, Store} from '@/components/feedPage';
-import {useCallback} from 'react';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import {RefreshControl} from 'react-native';
+import {RootStackParamList} from '@/types/StackNavigationType';
+import {StoreType} from '@/types/StoreType';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import S from './SearchBar.style';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
@@ -24,6 +22,13 @@ const FeedScreen = ({navigation}: Props) => {
     }
     setStoreList(res);
   }, []);
+
+  const onPressStore = (storeId: number) => {
+    navigation.navigate('Detail', {
+      screen: 'Store',
+      params: {storeId},
+    });
+  };
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
@@ -40,20 +45,20 @@ const FeedScreen = ({navigation}: Props) => {
   }
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{position: 'absolute', top: 0, width: '100%', zIndex: 1}}>
+    <S.Container>
+      <S.SearchWrapper>
         <SearchTab />
-      </View>
+      </S.SearchWrapper>
       <ScrollView
         style={{marginTop: 50}}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {storeList.map((store, index) => (
-          <Store key={index} navigation={navigation} store={store} />
+        {storeList.map(store => (
+          <Store key={store.id} onPress={onPressStore} store={store} />
         ))}
       </ScrollView>
-    </View>
+    </S.Container>
   );
 };
 export default FeedScreen;

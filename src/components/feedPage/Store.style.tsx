@@ -11,7 +11,8 @@ const StoreWrapper = styled.TouchableOpacity`
 const StoreImageContainer = styled.View`
 flex-direction: row;
 justify-content : space-between
-padding: 10px`;
+padding: 10px
+`;
 
 const StoreImageBox = styled.View`
   position: relative;

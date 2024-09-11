@@ -1,6 +1,6 @@
-import {StoreType} from '@/types/StoreType';
+import {MarketType} from '@/types/Market';
 
-const dummyStoreList: StoreType[] = [
+const dummyMarketList: MarketType[] = [
   {
     id: 1,
     name: '반찬가게1',
@@ -120,16 +120,16 @@ const dummyStoreList: StoreType[] = [
 ];
 
 // TODO: fetch store lists
-export const getStoreList = async (): Promise<StoreType[] | null> => {
+export const getMarketList = async (): Promise<MarketType[] | null> => {
   try {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(dummyStoreList);
-        console.log('fetch store lists');
+        resolve(dummyMarketList);
+        console.log('fetch market lists');
       }, 500);
     });
   } catch (error) {
-    console.error('Error fetching store list:', error);
+    console.error('Error fetching market list:', error);
     return null;
   }
 };

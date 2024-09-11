@@ -11,9 +11,14 @@ const SearchWrapper = styled.View`
   z-index: 1;
 `;
 
+const MarketWrapper = styled.ScrollView`
+  margin-top: 50;
+`;
+
 const S = {
   Container,
   SearchWrapper,
+  MarketWrapper,
 };
 
 export default S;

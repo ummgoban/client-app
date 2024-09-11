@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 
-const StoreWrapper = styled.TouchableOpacity`
+const MarketWrapper = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
   border: 1px solid white;
@@ -8,18 +8,18 @@ const StoreWrapper = styled.TouchableOpacity`
   background-color: white;
   margin-bottom: 10px;
 `;
-const StoreImageContainer = styled.View`
+const MarketImageContainer = styled.View`
 flex-direction: row;
 justify-content : space-between
 padding: 10px
 `;
 
-const StoreImageBox = styled.View`
+const MarketImageBox = styled.View`
   position: relative;
   flex: 1;
 `;
 
-const StoreImage = styled.Image`
+const MarketImage = styled.Image`
   flex: 1;
   aspect-ratio: 1;
   margin-right: 10px;
@@ -38,26 +38,26 @@ const PriceLabel = styled.Text`
   font-weight: bold;
 `;
 
-const StoreTitle = styled.Text`
+const MarketTitle = styled.Text`
 font-size: 18px;
 font-weight:800
 padding: 0px 10px 5px 10px;
 `;
 
-const StorePickupTime = styled.Text`
+const MarketPickupTime = styled.Text`
   font-size: 12px;
   font-weight: 400;
   padding-left: 10px;
 `;
 
 const S = {
-  StoreWrapper,
-  StoreImageContainer,
-  StoreImageBox,
-  StoreImage,
+  MarketWrapper,
+  MarketImageContainer,
+  MarketImageBox,
+  MarketImage,
   PriceLabel,
-  StoreTitle,
-  StorePickupTime,
+  MarketTitle,
+  MarketPickupTime,
 };
 
 export default S;

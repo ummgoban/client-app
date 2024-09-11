@@ -1,6 +1,6 @@
 import {ProductType} from './ProductType';
 
-export type StoreType = {
+export type MarketType = {
   id: number;
   name: string;
   pickupStartAt: number;

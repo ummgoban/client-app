@@ -19,3 +19,13 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+// 여기에 allprojects 블록 추가
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' } // 추가
+    }
+}

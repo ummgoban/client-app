@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1540"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <PreActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "cp &quot;${PROJECT_DIR}/../.env&quot; &#10;&quot;${SRCROOT}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildXCConfig.rb&quot; &quot;${SRCROOT}/..&quot; &quot;${SRCROOT}/tmp.xcconfig&quot;&#10;&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "ClientApp.app"
-                     BlueprintName = "ClientApp"
-                     ReferencedContainer = "container:ClientApp.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -44,19 +36,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ClientAppTests.xctest"
-               BlueprintName = "ClientAppTests"
-               ReferencedContainer = "container:ClientApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

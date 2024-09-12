@@ -74,5 +74,4 @@ const Menu = ({product, cart, onCountChange}: Props) => {
     </S.MenuWrapper>
   );
 };
-
 export default Menu;

@@ -1,7 +1,7 @@
 import PaymentScreen from '@/screens/PaymentScreen';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {createStackNavigator} from '@react-navigation/stack';
-import MarketDetailScreen from '@screens/MarketScreen';
+import MarketDetailScreen from '@/screens/MarketDetailScreen';
 import React from 'react';
 
 const Stack = createStackNavigator<DetailStackParamList>();

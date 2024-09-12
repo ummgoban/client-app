@@ -4,11 +4,11 @@ import date from '@utils/date';
 import React from 'react';
 type Props = {
   market: MarketType;
-  onPress: (marketId: number) => void;
+  onPress: (market: MarketType) => void;
 };
 const Market = ({market, onPress}: Props) => {
   return (
-    <S.MarketWrapper onPress={() => onPress(market.id)}>
+    <S.MarketWrapper onPress={() => onPress(market)}>
       <S.MarketImageContainer>
         {market.products.map(product => (
           <S.MarketImageBox key={product.id}>

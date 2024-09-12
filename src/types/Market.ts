@@ -5,5 +5,6 @@ export type MarketType = {
   name: string;
   pickupStartAt: number;
   pickupEndAt: number;
+  address: string;
   products: ProductType[];
 };

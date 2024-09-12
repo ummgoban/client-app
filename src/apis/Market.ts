@@ -6,6 +6,7 @@ const dummyMarketList: MarketType[] = [
     name: '반찬가게1',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 휘경동',
     products: [
       {
         id: 1,
@@ -35,6 +36,7 @@ const dummyMarketList: MarketType[] = [
     name: '반찬가게2',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 전농동',
     products: [
       {
         id: 4,
@@ -62,6 +64,7 @@ const dummyMarketList: MarketType[] = [
   {
     id: 3,
     name: '반찬가게3',
+    address: '서울특별시 동대문구 전농동',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
     products: [
@@ -93,6 +96,7 @@ const dummyMarketList: MarketType[] = [
     name: '반찬가게4',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 전농동',
     products: [
       {
         id: 1,

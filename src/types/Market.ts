@@ -6,4 +6,6 @@ export type MarketType = {
   pickupStartAt: number;
   pickupEndAt: number;
   products: ProductType[];
+  images: string[];
+  address: string;
 };

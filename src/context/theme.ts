@@ -1,5 +1,6 @@
 import {MD3LightTheme as DefaultTheme} from 'react-native-paper';
 
+// TODO: 각종 공통 테마 적용하기
 const theme = {
   ...DefaultTheme,
   colors: {

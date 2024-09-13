@@ -51,6 +51,7 @@ const Divider = styled.View`
   height: 8px;
   background: #ecf3f1;
 `;
+
 const ReserveButton = styled.TouchableOpacity`
   margin-top: 15px;
   display: flex;

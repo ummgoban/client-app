@@ -1,7 +1,4 @@
-import {
-  HomeStackParamList,
-  RootStackParamList,
-} from '@/types/StackNavigationType';
+import {RootStackParamList} from '@/types/StackNavigationType';
 import {UserType} from '@/types/UserType';
 import {getUserProfile} from '@apis/User';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -10,10 +7,7 @@ import {Alert} from 'react-native';
 import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 
-type Props = StackScreenProps<
-  HomeStackParamList & RootStackParamList,
-  'MyPage'
->;
+type Props = StackScreenProps<RootStackParamList, 'MyPage'>;
 
 const MyPageScreen = ({navigation}: Props) => {
   const [profile, setProfile] = React.useState<UserType | null>(null);

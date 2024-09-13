@@ -4,23 +4,35 @@ import {OrderType} from '../types/OrderType';
 const dummyHistoryList: OrderType[] = [
   {
     id: 1,
-    store: {
+    market: {
       id: 1,
-      name: 'very long store name very long store name',
-      image: 'https://legacy.reactjs.org/logo-og.png',
+      name: 'very long market name very long market name',
+      images: ['https://legacy.reactjs.org/logo-og.png'],
     },
-    product: [
+    products: [
       {
         id: 1,
-        name: 'product1',
-        price: 1000,
+        name: '김치',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 10000,
+        discountPrice: 7000,
         count: 3,
       },
       {
         id: 2,
-        name: 'product2',
-        price: 2000,
-        count: 1,
+        name: '깻잎',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 5000,
+        discountPrice: 3000,
+        count: 3,
+      },
+      {
+        id: 3,
+        name: '간장게장',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
+        count: 3,
       },
     ],
     pickupAt: 1719545600000,
@@ -29,17 +41,19 @@ const dummyHistoryList: OrderType[] = [
   },
   {
     id: 2,
-    store: {
+    market: {
       id: 2,
-      name: 'store2',
-      image: 'https://legacy.reactjs.org/logo-og.png',
+      name: 'market2',
+      images: ['https://legacy.reactjs.org/logo-og.png'],
     },
-    product: [
+    products: [
       {
         id: 2,
         name: '띄어쓰기가없는엄청나게긴음식이름은어떻게해야될까요없는엄청나게긴음식이름은어떻게해야될까요',
-        price: 2000,
-        count: 1,
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
+        count: 3,
       },
     ],
     pickupAt: 1614639000000,
@@ -49,16 +63,18 @@ const dummyHistoryList: OrderType[] = [
   },
   {
     id: 3,
-    store: {
+    market: {
       id: 3,
-      name: 'store3',
-      image: 'https://legacy.reactjs.org/logo-og.png',
+      name: 'market3',
+      images: ['https://legacy.reactjs.org/logo-og.png'],
     },
-    product: [
+    products: [
       {
         id: 3,
         name: 'very long product name + very long product name, very long product name, very long product name',
-        price: 3000,
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
         count: 1,
       },
     ],

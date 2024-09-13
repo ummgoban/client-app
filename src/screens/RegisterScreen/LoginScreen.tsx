@@ -1,23 +1,23 @@
+import {RootStackParamList} from '@/types/StackNavigationType';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import {RegisterStackParamList} from '../../types/StackNavigationType';
+import {Button, StyleSheet, TextInput, View} from 'react-native';
 
 type Props = {
-  navigation: StackNavigationProp<RegisterStackParamList, 'Signup'>;
+  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
-const SignupScreen = ({navigation}: Props) => {
+
+const LoginScreen = ({navigation}: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = () => {
-    // Implement your signup logic here
-    navigation.navigate('Login');
+  const handleLogin = () => {
+    // Implement your login logic here
+    navigation.navigate('Home', {screen: 'Feed'});
   };
 
   return (
     <View style={styles.container}>
-      <Text>Signup Screen</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -31,7 +31,11 @@ const SignupScreen = ({navigation}: Props) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Signup" onPress={handleSignup} />
+      <Button title="Login" onPress={handleLogin} />
+      <Button
+        title="Signup"
+        onPress={() => navigation.navigate('Register', {screen: 'Signup'})}
+      />
     </View>
   );
 };
@@ -41,15 +45,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 16,
   },
   input: {
-    width: '80%',
+    width: '100%',
     height: 40,
-    borderWidth: 1,
     borderColor: 'gray',
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 8,
   },
 });
 
-export default SignupScreen;
+export default LoginScreen;

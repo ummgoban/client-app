@@ -29,12 +29,15 @@ const dummyMarketList: MarketType[] = [
         discountPrice: 17000,
       },
     ],
+    address: '서울특별시 동대문구 휘경동',
+    images: ['https://legacy.reactjs.org/logo-og.png'],
   },
   {
     id: 2,
     name: '반찬가게2',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 휘경동',
     products: [
       {
         id: 4,
@@ -58,12 +61,14 @@ const dummyMarketList: MarketType[] = [
         discountPrice: 7000,
       },
     ],
+    images: ['https://legacy.reactjs.org/logo-og.png'],
   },
   {
     id: 3,
     name: '반찬가게3',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 휘경동',
     products: [
       {
         id: 1,
@@ -87,12 +92,14 @@ const dummyMarketList: MarketType[] = [
         discountPrice: 17000,
       },
     ],
+    images: ['https://legacy.reactjs.org/logo-og.png'],
   },
   {
     id: 4,
     name: '반찬가게4',
     pickupStartAt: 1609718400000,
     pickupEndAt: 1609728400000,
+    address: '서울특별시 동대문구 휘경동',
     products: [
       {
         id: 1,
@@ -116,6 +123,7 @@ const dummyMarketList: MarketType[] = [
         discountPrice: 17000,
       },
     ],
+    images: ['https://legacy.reactjs.org/logo-og.png'],
   },
 ];
 

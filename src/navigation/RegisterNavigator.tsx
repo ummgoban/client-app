@@ -1,8 +1,8 @@
-import React from 'react';
+import {RegisterStackParamList} from '@/types/StackNavigationType';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignupScreen from '../screens/register/SignupScreen';
-import LoginScreen from '../screens/register/LoginScreen';
-import {RegisterStackParamList} from '../types/StackNavigationType';
+import LoginScreen from '@screens/RegisterScreen/LoginScreen';
+import SignupScreen from '@screens/RegisterScreen/SignupScreen';
+import React from 'react';
 
 const Stack = createStackNavigator<RegisterStackParamList>();
 

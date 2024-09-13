@@ -1,11 +1,14 @@
 import React from 'react';
 import NavigationProvider from './NavigationProvider';
 import ReactNativePaperProvider from './ReactNativePaperProvider';
+import EmotionProvider from './EmotionProvider';
 
 const RootProvider = ({children}: {children: React.ReactNode}) => {
   return (
     <NavigationProvider>
-      <ReactNativePaperProvider>{children}</ReactNativePaperProvider>
+      <EmotionProvider>
+        <ReactNativePaperProvider>{children}</ReactNativePaperProvider>
+      </EmotionProvider>
     </NavigationProvider>
   );
 };

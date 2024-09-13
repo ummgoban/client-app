@@ -8,10 +8,11 @@ const MarketWrapper = styled.TouchableOpacity`
   background-color: white;
   margin-bottom: 10px;
 `;
+
 const MarketImageContainer = styled.View`
-flex-direction: row;
-justify-content : space-between
-padding: 10px
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
 `;
 
 const MarketImageBox = styled.View`
@@ -39,9 +40,9 @@ const PriceLabel = styled.Text`
 `;
 
 const MarketTitle = styled.Text`
-font-size: 18px;
-font-weight:800
-padding: 0px 10px 5px 10px;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 0px 10px 5px 10px;
 `;
 
 const MarketPickupTime = styled.Text`

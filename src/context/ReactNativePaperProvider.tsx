@@ -1,14 +1,6 @@
 import React from 'react';
-import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'tomato',
-    secondary: 'yellow',
-  },
-};
+import {PaperProvider} from 'react-native-paper';
+import theme from './theme';
 
 const ReactNativePaperProvider = ({children}: {children: React.ReactNode}) => {
   return <PaperProvider theme={theme}>{children}</PaperProvider>;

@@ -14,8 +14,40 @@ type CartItem = {
   count: number;
 };
 const MarketDetailScreen = ({route}: Props) => {
+  console.log(route.params.market);
+  const marketSampleData = {
+    id: 1,
+    name: '반찬가게1',
+    pickupStartAt: 1609718400000,
+    pickupEndAt: 1609728400000,
+    products: [
+      {
+        id: 1,
+        name: '김치',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 10000,
+        discountPrice: 7000,
+      },
+      {
+        id: 2,
+        name: '깻잎',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 5000,
+        discountPrice: 3000,
+      },
+      {
+        id: 3,
+        name: '간장게장',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
+      },
+    ],
+    address: '서울특별시 동대문구 휘경동',
+    images: ['https://legacy.reactjs.org/logo-og.png'],
+  };
   const {name, pickupStartAt, pickupEndAt, address, products} =
-    route.params.market;
+    marketSampleData;
 
   const [cart, setCart] = useState<CartItem[]>([]);
 

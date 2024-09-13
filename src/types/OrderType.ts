@@ -1,18 +1,10 @@
-// TODO: store, product type 확정 이후 order타입도 수정
+import {MarketType} from './Market';
+import {ProductType} from './ProductType';
 
 export type OrderType = {
   id: number;
-  store: {
-    id: number;
-    name: string;
-    image: string;
-  };
-  product: {
-    id: number;
-    name: string;
-    price: number;
-    count: number;
-  }[];
+  market: Pick<MarketType, 'id' | 'images' | 'name'>;
+  products: (ProductType & {count: number})[];
   pickupAt: number;
   createdAt: number;
   pendingAt?: number;

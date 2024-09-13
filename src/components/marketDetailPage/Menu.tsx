@@ -32,6 +32,7 @@ const Menu = ({product, onCountChange}: Props) => {
       return newCount;
     });
   };
+
   return (
     <S.MenuWrapper>
       <S.MenuBoxLeft>
@@ -52,6 +53,10 @@ const Menu = ({product, onCountChange}: Props) => {
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
           <S.MenuCounterButtonWrapper onPress={menuCountButtonAdder}>
+            <S.MenuCounterButton>-</S.MenuCounterButton>
+          </S.MenuCounterButtonWrapper>
+          <S.MenuCounterButton>0개</S.MenuCounterButton>
+          <S.MenuCounterButtonWrapper>
             <S.MenuCounterButton>+</S.MenuCounterButton>
           </S.MenuCounterButtonWrapper>
         </S.MenuCounter>

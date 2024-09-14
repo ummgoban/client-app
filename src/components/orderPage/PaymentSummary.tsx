@@ -28,7 +28,9 @@ const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
     <S.PaymentSummaryContainer>
       <S.Header>
         <S.HeaderText>결제금액</S.HeaderText>
-        <S.HeaderText>{`${(originalPrice - discountPrice).toLocaleString()}원`}</S.HeaderText>
+        <S.HeaderText>{`${(
+          originalPrice - discountPrice
+        ).toLocaleString()}원`}</S.HeaderText>
       </S.Header>
       <S.PaymentSummaryItemList>
         <PaymentSummaryItem

@@ -1,6 +1,43 @@
 import axios from 'axios';
 import {OrderType} from '../types/OrderType';
 
+const dummyCart: OrderType = {
+  id: 1,
+  market: {
+    id: 1,
+    name: 'market1',
+    images: ['https://legacy.reactjs.org/logo-og.png'],
+  },
+  products: [
+    {
+      id: 1,
+      name: '김치',
+      image: 'https://legacy.reactjs.org/logo-og.png',
+      originalPrice: 10000,
+      discountPrice: 7000,
+      count: 3,
+    },
+    {
+      id: 2,
+      name: '깻잎',
+      image: 'https://legacy.reactjs.org/logo-og.png',
+      originalPrice: 5000,
+      discountPrice: 3000,
+      count: 3,
+    },
+    {
+      id: 3,
+      name: '간장게장',
+      image: 'https://legacy.reactjs.org/logo-og.png',
+      originalPrice: 20000,
+      discountPrice: 17000,
+      count: 3,
+    },
+  ],
+  pickupAt: 1719545600000,
+  status: 'ORDERED',
+};
+
 const dummyHistoryList: OrderType[] = [
   {
     id: 1,
@@ -100,6 +137,20 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
       await new Promise(_ => setTimeout(_, 1000));
       console.log('fetch order history');
       resolve(dummyHistoryList);
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+// TODO: fetch cart
+export const getCart = async (): Promise<OrderType | null> => {
+  try {
+    return new Promise(async resolve => {
+      await new Promise(_ => setTimeout(_, 1000));
+      console.log('fetch cart');
+      resolve(dummyCart);
     });
   } catch (error) {
     console.error(error);

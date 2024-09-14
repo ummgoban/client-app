@@ -1,12 +1,17 @@
+import {PropsOf} from '@emotion/react';
 import React from 'react';
-import {Button} from 'react-native-paper';
+import S from './BottomButton.style';
 
-type Props = {
-  children?: React.ReactNode;
-};
+type Props = PropsOf<typeof S.Button>;
 
-const BottomButton = ({children}: Props) => {
-  return <Button>{children}</Button>;
+const BottomButton = (props: Props) => {
+  return (
+    <S.FloatingContainer>
+      <S.Button {...props} mode="contained">
+        {props.children}
+      </S.Button>
+    </S.FloatingContainer>
+  );
 };
 
 export default BottomButton;

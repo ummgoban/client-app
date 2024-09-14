@@ -6,7 +6,7 @@ type Props = {
   onPress: () => void;
 };
 
-const EmptyCart = ({onPress}: Props) => {
+const EmptyCartPage = ({onPress}: Props) => {
   return (
     <View>
       <Text>장바구니가 비어있습니다.</Text>
@@ -15,4 +15,4 @@ const EmptyCart = ({onPress}: Props) => {
   );
 };
 
-export default EmptyCart;
+export default EmptyCartPage;

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {OrderType} from '../types/OrderType';
+import {CartType, OrderType} from '../types/OrderType';
 
-const dummyCart: OrderType = {
+const dummyCart: CartType = {
   id: 1,
   market: {
     id: 1,
@@ -34,8 +34,6 @@ const dummyCart: OrderType = {
       count: 3,
     },
   ],
-  pickupAt: 1719545600000,
-  status: 'ORDERED',
 };
 
 const dummyHistoryList: OrderType[] = [
@@ -145,7 +143,7 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
 };
 
 // TODO: fetch cart
-export const getCart = async (): Promise<OrderType | null> => {
+export const getCart = async (): Promise<CartType | null> => {
   try {
     return new Promise(async resolve => {
       await new Promise(_ => setTimeout(_, 1000));

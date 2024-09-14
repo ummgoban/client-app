@@ -16,6 +16,7 @@ const PaymentMethod = () => {
           onValueChange={value => setMethod(value as PaymentMethodKind)}
           value={method}>
           <RadioButton.Item label="토스" value="toss" />
+          <RadioButton.Item label="카카오" value="kakao" />
         </RadioButton.Group>
       </Card.Content>
     </Card>

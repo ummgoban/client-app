@@ -1,27 +1,34 @@
 import styled from '@emotion/native';
+import {Card} from 'react-native-paper';
 
-const PaymentSummaryContainer = styled.View`
+const PaymentSummaryContainer = styled(Card)`
   padding: 16px;
+  margin: 8px;
 
   display: flex;
   flex-direction: column;
 
-  border: 1px solid #b5b5b5;
+  background-color: white;
 `;
 
 const Header = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   margin-bottom: 16px;
+
+  border-bottom-width: 1px;
+  border-bottom-color: #b5b5b5;
 `;
 
 const HeaderText = styled.Text`
-  font-size: 20px;
-  line-height: 34px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 600;
-
   color: black;
+
+  padding-bottom: 16px;
 `;
 
 const PaymentSummaryItemList = styled.View`

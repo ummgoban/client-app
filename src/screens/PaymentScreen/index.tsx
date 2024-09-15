@@ -1,6 +1,6 @@
-import {getCart} from '@/apis';
 import {CartType} from '@/types/OrderType';
 import {DetailStackParamList} from '@/types/StackNavigationType';
+import {getCart} from '@/apis';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import EmptyCartPage from './EmptyCartPage';

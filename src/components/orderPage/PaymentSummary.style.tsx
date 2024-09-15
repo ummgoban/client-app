@@ -1,15 +1,4 @@
 import styled from '@emotion/native';
-import {Card} from 'react-native-paper';
-
-const PaymentSummaryContainer = styled(Card)`
-  padding: 16px;
-  margin: 8px;
-
-  display: flex;
-  flex-direction: column;
-
-  background-color: white;
-`;
 
 const Header = styled.View`
   display: flex;
@@ -20,15 +9,6 @@ const Header = styled.View`
 
   border-bottom-width: 1px;
   border-bottom-color: #b5b5b5;
-`;
-
-const HeaderText = styled.Text`
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 600;
-  color: black;
-
-  padding-bottom: 16px;
 `;
 
 const PaymentSummaryItemList = styled.View`
@@ -52,11 +32,9 @@ const ItemText = styled.Text<{primary?: boolean}>`
 `;
 
 const S = {
-  PaymentSummaryContainer,
   PaymentSummaryItemContainer,
   PaymentSummaryItemList,
   Header,
-  HeaderText,
   ItemText,
 };
 

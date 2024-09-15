@@ -1,4 +1,5 @@
 import React from 'react';
+import Common from './Common';
 import S from './PaymentSummary.style';
 
 const PaymentSummaryItem = ({
@@ -25,10 +26,10 @@ type Props = {
 
 const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
   return (
-    <S.PaymentSummaryContainer>
+    <Common.Card>
       <S.Header>
-        <S.HeaderText>결제금액</S.HeaderText>
-        <S.HeaderText>{`${discountPrice.toLocaleString()}원`}</S.HeaderText>
+        <Common.HeaderText>결제금액</Common.HeaderText>
+        <Common.HeaderText>{`${discountPrice.toLocaleString()}원`}</Common.HeaderText>
       </S.Header>
       <S.PaymentSummaryItemList>
         <PaymentSummaryItem
@@ -41,7 +42,7 @@ const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
           primary
         />
       </S.PaymentSummaryItemList>
-    </S.PaymentSummaryContainer>
+    </Common.Card>
   );
 };
 

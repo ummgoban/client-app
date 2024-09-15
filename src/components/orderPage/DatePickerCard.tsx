@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 
-const DatePicker = () => {
+const DatePickerCard = () => {
   return <View></View>;
 };
 
-export default DatePicker;
+export default DatePickerCard;

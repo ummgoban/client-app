@@ -1,8 +1,8 @@
+import {CartType} from '@/types/OrderType';
 import {BottomButton} from '@components/common';
-import DatePicker from '@components/orderPage/DatePicker';
+import DatePickerCard from '@components/orderPage/DatePickerCard';
 import PaymentMethod from '@components/orderPage/PaymentMethod';
 import PaymentSummary from '@components/orderPage/PaymentSummary';
-import {CartType} from '@/types/OrderType';
 import React, {useMemo, useState} from 'react';
 import {Alert} from 'react-native';
 import S from './PaymentPage.style';
@@ -34,7 +34,7 @@ const PaymentPage = ({cart}: Props) => {
   return (
     <S.PaymentPage>
       <S.ScrollView>
-        <DatePicker />
+        <DatePickerCard />
         <PaymentMethod
           value={method}
           onChange={setMethod}
@@ -46,7 +46,7 @@ const PaymentPage = ({cart}: Props) => {
         />
       </S.ScrollView>
       <BottomButton onPress={() => Alert.alert(`${method}로 결제하기로 이동`)}>
-        결제하기
+        {`${discountPrice.toLocaleString()}원 결제하기`}
       </BottomButton>
     </S.PaymentPage>
   );

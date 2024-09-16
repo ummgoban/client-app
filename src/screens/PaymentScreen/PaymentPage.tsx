@@ -1,8 +1,10 @@
 import {CartType} from '@/types/OrderType';
 import {BottomButton} from '@components/common';
-import DatePickerCard from '@components/orderPage/DatePickerCard';
-import PaymentMethod from '@components/orderPage/PaymentMethod';
-import PaymentSummary from '@components/orderPage/PaymentSummary';
+import {
+  DatePickerCard,
+  PaymentMethod,
+  PaymentSummary,
+} from '@components/orderPage';
 import React, {useMemo, useState} from 'react';
 import {Alert} from 'react-native';
 import S from './PaymentPage.style';

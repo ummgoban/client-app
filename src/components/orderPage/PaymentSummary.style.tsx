@@ -1,4 +1,8 @@
 import styled from '@emotion/native';
+import C from './Common.style';
+
+const Card = styled(C.CommonCard)``;
+const HeaderText = styled(C.HeaderText)``;
 
 const Header = styled.View`
   display: flex;
@@ -32,6 +36,8 @@ const ItemText = styled.Text<{primary?: boolean}>`
 `;
 
 const S = {
+  Card,
+  HeaderText,
   PaymentSummaryItemContainer,
   PaymentSummaryItemList,
   Header,

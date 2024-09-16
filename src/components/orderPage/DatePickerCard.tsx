@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {DatePicker} from '@components/common';
-import Common from './Common';
+import S from './DatePickerCard.style';
 
 const DatePickerCard = () => {
   const [reservedAt, setReservedAt] = useState({hour: 0, minute: 0});
@@ -13,15 +13,15 @@ const DatePickerCard = () => {
   };
 
   return (
-    <Common.Card>
-      <Common.HeaderText>픽업 시간</Common.HeaderText>
+    <S.Card>
+      <S.HeaderText>픽업 시간</S.HeaderText>
       <DatePicker
         onChange={onChange}
         hour={reservedAt.hour}
         minute={reservedAt.minute}
         range={marketPickupAt}
       />
-    </Common.Card>
+    </S.Card>
   );
 };
 

@@ -2,7 +2,6 @@ import React from 'react';
 import {View} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import S from './PaymentMethod.style';
-import Common from './Common';
 
 const PaymentMethod = <T extends string>({
   value,
@@ -16,8 +15,8 @@ const PaymentMethod = <T extends string>({
   };
 }) => {
   return (
-    <Common.Card>
-      <Common.HeaderText>결제수단</Common.HeaderText>
+    <S.Card>
+      <S.HeaderText>결제수단</S.HeaderText>
       <View>
         <RadioButton.Group
           onValueChange={newValue => onChange(newValue as T)}
@@ -32,7 +31,7 @@ const PaymentMethod = <T extends string>({
           ))}
         </RadioButton.Group>
       </View>
-    </Common.Card>
+    </S.Card>
   );
 };
 

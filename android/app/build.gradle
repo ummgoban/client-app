@@ -71,7 +71,6 @@ def enableProguardInReleaseBuilds = false
  * this variant is about 6MiB larger per architecture than default.
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -85,10 +84,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
-        // resValue로 두 개의 값을 strings.xml로 전달
-        resValue "string", "build_config_package", "com.clientapp"
-        
     }
     signingConfigs {
         debug {

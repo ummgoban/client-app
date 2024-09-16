@@ -20,30 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	 <key>CFBundleURLTypes</key>
- <array>
- <dict>
-   <key>CFBundleTypeRole</key>
-   <string>Editor</string>
-  <key>CFBundleURLSchemes</key>
-   <array>
-	 <!-- 여기는 kakao앱키로 넣으시면 됩니다 -->
-     <string>{kakao_APP_KEY}</string>
-   </array>
- </dict>
- </array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>KAKAO_APP_KEY</key>
-	<!-- 여기 앱키 넣으시면 되고 -->
- <string>{APP_KEY}</string>
- <key>LSApplicationQueriesSchemes</key>
- <array>
-	<string>kakao0123456789</string>
-   <string>kakaokompassauth</string>
-   <string>storykompassauth</string>
-   <string>kakaolink</string>
- </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

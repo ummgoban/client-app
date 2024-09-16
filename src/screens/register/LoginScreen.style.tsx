@@ -19,8 +19,6 @@ const Description = styled.View`
   width: 234px;
   height: 57px;
   gap: 5px;
-  margin-top: 25px;
-  margin-bottom: 35px;
 `;
 
 const LoginButtonContainer = styled.View`

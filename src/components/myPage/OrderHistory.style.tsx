@@ -42,8 +42,8 @@ const HistoryItem = styled.View`
       shadow-offset: 0px 4px;
       shadow-opacity: 0.08;`
     : Platform.OS === 'android'
-    ? 'elevation: 11;'
-    : ''}
+      ? 'elevation: 11;'
+      : ''}
 `;
 
 const HistoryItemSkeleton = styled.View`

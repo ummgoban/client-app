@@ -7,7 +7,12 @@ import S from './OrderHistory.style';
 
 const DESCRIPTION_MAX_LENGTH = 30;
 
-const OrderHistory = ({historyList}: {historyList: OrderType[] | null}) => {
+type Props = {
+  historyList: OrderType[] | null;
+  onPressMarket: (marketId: number) => void;
+};
+
+const OrderHistory = ({historyList, onPressMarket}: Props) => {
   return (
     <S.OrderContainer>
       <S.Title>진행중인 주문</S.Title>
@@ -32,47 +37,45 @@ const OrderHistory = ({historyList}: {historyList: OrderType[] | null}) => {
                   )}...`;
                 }
                 return name;
-              })(order.product[0].name);
+              })(order.products[0].name);
 
-              const productLength = order.product.length;
+              const productLength = order.products.length;
 
-              const sumOfPrice = order.product
-                .reduce((acc, curr) => acc + curr.price, 0)
+              const sumOfPrice = order.products
+                .reduce((acc, curr) => acc + curr.discountPrice, 0)
                 .toLocaleString();
 
               const description = `${representProduct} ${
                 productLength > 1
                   ? `외 ${productLength - 1}개`
-                  : `${order.product[0].count}개`
+                  : `${order.products[0].count}개`
               } ${sumOfPrice}원`;
 
               const status =
                 order.status === 'ORDERED'
                   ? '예약완료'
                   : order.status === 'PENDING'
-                  ? '픽업대기'
-                  : order.status === 'DONE'
-                  ? '픽업완료'
-                  : order.status === 'CANCEL'
-                  ? '주문취소'
-                  : null; // not reachable
+                    ? '픽업대기'
+                    : order.status === 'DONE'
+                      ? '픽업완료'
+                      : order.status === 'CANCEL'
+                        ? '주문취소'
+                        : null; // not reachable
 
               return (
                 <S.HistoryItem key={order.id}>
                   <S.HistoryItemSummary>
                     <S.StoreImage
-                      source={{uri: order.store.image}}
+                      source={{uri: order.market.images[0]}}
                       width={64}
                       height={64}
                     />
                     <S.ItemInfo>
                       <S.InfoHeader>
                         <S.TouchableStoreName
-                          onPress={() =>
-                            Alert.alert(`go to store: ${order.store.id}`)
-                          }>
+                          onPress={() => onPressMarket(order.market.id)}>
                           <S.StoreName numberOfLines={1}>
-                            {order.store.name}
+                            {order.market.name}
                           </S.StoreName>
                           <Image
                             source={{

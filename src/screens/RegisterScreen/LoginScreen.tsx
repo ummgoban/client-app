@@ -1,9 +1,17 @@
+<<<<<<< HEAD:src/screens/register/LoginScreen.tsx
 // import {StackNavigationProp} from '@react-navigation/stack';
 // import {RootStackParamList} from '../../types/StackNavigationType';
 import styled from '@emotion/native'; // styled를 추가로 import
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import S from './LoginScreen.style';
+=======
+import {RootStackParamList} from '@/types/StackNavigationType';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useState} from 'react';
+import {Button, StyleSheet, TextInput, View} from 'react-native';
+
+>>>>>>> main:src/screens/RegisterScreen/LoginScreen.tsx
 type Props = {
   // navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };

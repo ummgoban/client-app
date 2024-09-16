@@ -1,7 +1,7 @@
+import {RegisterStackParamList} from '@/types/StackNavigationType';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import {RegisterStackParamList} from '../../types/StackNavigationType';
 
 type Props = {
   navigation: StackNavigationProp<RegisterStackParamList, 'Signup'>;

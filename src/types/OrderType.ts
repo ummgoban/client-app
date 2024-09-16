@@ -1,19 +1,10 @@
-// TODO: declare store type
-// TODO: declare product type
+import {MarketType} from './Market';
+import {ProductType} from './ProductType';
 
 export type OrderType = {
   id: number;
-  store: {
-    id: number;
-    name: string;
-    image: string;
-  };
-  product: {
-    id: number;
-    name: string;
-    price: number;
-    count: number;
-  }[];
+  market: Pick<MarketType, 'id' | 'images' | 'name'>;
+  products: (ProductType & {count: number})[];
   pickupAt: number;
   createdAt: number;
   pendingAt?: number;

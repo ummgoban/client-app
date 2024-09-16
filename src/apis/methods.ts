@@ -1,9 +1,10 @@
 import axios, {AxiosResponse} from 'axios';
+import {SERVER_URL} from '@env';
 
 // TODO: Interceptor 이용 토큰 헤더 추가 필요
 const client = axios.create({
-  // TODO: 실제 서버 URL 명시 필요
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  // TODO: 실제 URL 명시 필요
+  baseURL: SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
   },

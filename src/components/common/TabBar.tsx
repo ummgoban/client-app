@@ -2,7 +2,7 @@ import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import {HomeStackParamList} from '@/types/StackNavigationType';
-
+ 
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
     label: string;
@@ -17,6 +17,10 @@ const tabBarData: TabBarComponentType = {
   },
   MyPage: {
     label: '마이 페이지',
+    icon: 'https://legacy.reactjs.org/logo-og.png',
+  },
+  Cart: {
+    label: '장바구니',
     icon: 'https://legacy.reactjs.org/logo-og.png',
   },
 };

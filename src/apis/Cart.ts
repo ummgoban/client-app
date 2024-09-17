@@ -37,16 +37,16 @@ const dummyCartList: CartType[] = [
   }
 ];
 
-export const getOrderHistory = async (): Promise<CartType[] | null> => {
+export const getCartHistory = async (): Promise<CartType[] | null> => {
   try {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(dummyCartList);
-        console.log('fetch market lists');
+        console.log('fetch getCartHistory lists');
       }, 500);
     });
   } catch (error) {
-    console.error('Error fetching market list:', error);
+    console.error('Error fetching getCartHistory list:', error);
     return null;
   }
 };

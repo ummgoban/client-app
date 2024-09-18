@@ -1,18 +1,19 @@
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../types/StackNavigationType';
+// import {StackNavigationProp} from '@react-navigation/stack';
+// import {RootStackParamList} from '../../types/StackNavigationType';
 import {CartType} from '@/types/OrderType';
 import {Alert, Text} from 'react-native';
 import PaymentSummary from '@/components/orderPage/PaymentSummary';
 import {getCartHistory} from '@/apis/Cart';
 import S from './ShoppingCartScreen.style';
 import {ProductType} from '@/types/ProductType';
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'Cart'>;
-};
+// type Props = {
+//   navigation: StackNavigationProp<RootStackParamList, 'Cart'>;
+// };
 import MarketInfo from '@/components/CartPage/MarketInfo';
 
-const ShoppingCartScreen = ({navigation}: Props) => {
+// TODO: navigation: Cart 추가
+const ShoppingCartScreen = () => {
   // TODO: 결제 페이지로 이동 props 버튼
   const [cartData, setCartData] = useState<CartType | null>(null);
   const [products, setProducts] = useState<(ProductType & {count: number})[]>(
@@ -27,7 +28,6 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     }
     setCartData(res[0]);
     setProducts(res[0].products);
-    console.log(cartData);
   }, []);
 
   const {originalPrice, discountPrice} = useMemo(

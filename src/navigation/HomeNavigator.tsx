@@ -3,7 +3,7 @@ import React from 'react';
 import {TabBar} from '@components/common';
 import HomeScreen from '@screens/FeedScreen';
 import MyPageScreen from '@screens/MyPageScreen';
-import ShoppingCartScreen from '@/screens/ShoppingCart/ShoppingCartScreen';
+import ShoppingCartScreen from '@/screens/ShoppingCart';
 import {HomeStackParamList} from '@/types/StackNavigationType';
 
 const Tab = createBottomTabNavigator<HomeStackParamList>();
@@ -13,8 +13,8 @@ const HomeNavigator = () => {
     <Tab.Navigator screenOptions={{headerShown: true}} tabBar={TabBar}>
       <Tab.Screen name="Feed" component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
-      <Tab.Screen name="Cart" component={ShoppingCartScreen}/>
-            {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
+      <Tab.Screen name="Cart" component={ShoppingCartScreen} />
+      {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
       {/* Add more screens here */}
     </Tab.Navigator>
   );

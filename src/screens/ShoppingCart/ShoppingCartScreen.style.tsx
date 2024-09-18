@@ -5,41 +5,79 @@ const CartPage = styled.View`
   flex: 1;
   margin: 0 16px;
 `;
+const ScrollView = styled.ScrollView``;
 const CardContainer = styled.View`
   display: flex;
-  border: 1px solid black;
+  flex-direction: row;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 8px 0;
+  background-color: white;
+`;
+
+const ProductImageWrapper = styled.View`
+  flex: 0.3;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  margin: 8px 0px;
+`;
+
+const ProductInfoWrapper = styled.View`
+  flex: 0.7;
+  padding-left: 12px;
 `;
 
 const ProductImage = styled.Image`
-  width: 25px;
-  height: 25px;
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
 `;
 
-const flexRowWrapper = styled.View`
-  flex: 1;
+const HeaderText = styled(Common.HeaderText)`
+  margin-bottom: 4px;
+`;
+
+const DetailText = styled(Common.BodyText)`
+  color: #757575;
+`;
+
+const PriceText = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 8px;
+`;
+
+const ButtonWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-top: 12px;
 `;
 
-const CountButton = styled.Button``;
+const Button = styled.TouchableOpacity`
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0 8px;
+`;
 
-const HeaderText = styled(Common.HeaderText)``;
-const DetailText = styled(Common.BodyText)``;
-const ScrollView = styled.ScrollView``;
+const CountText = styled.Text`
+  font-size: 16px;
+  font-weight: 500;
+`;
 
 const S = {
-  ProductImage,
   CartPage,
-  ScrollView,
   CardContainer,
+  ProductImageWrapper,
+  ProductInfoWrapper,
+  ProductImage,
   HeaderText,
   DetailText,
-  flexRowWrapper,
-  CountButton,
+  PriceText,
+  ButtonWrapper,
+  Button,
+  CountText,
+  ScrollView,
 };
 
 export default S;

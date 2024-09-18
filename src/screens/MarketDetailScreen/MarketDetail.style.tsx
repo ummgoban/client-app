@@ -17,7 +17,6 @@ const MarKetName = styled.Text`
   text-align: center;
   font-size: 24px;
   font-weight: 700;
-  line-height: 28.5px;
 `;
 const MarketDescription = styled.Text`
   color: #2d3e39;
@@ -25,8 +24,6 @@ const MarketDescription = styled.Text`
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%;
-  letter-spacing: -0.12px;
 `;
 
 const MarketSideInfoWrapper = styled.View`
@@ -44,7 +41,6 @@ const MarketSideInfo = styled.Text`
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
 `;
 
 const SideTagBarScrollView = styled.ScrollView`

@@ -22,21 +22,19 @@ const MenuName = styled.Text`
   color: #2d3e39;
   font-size: 18px;
   font-weight: 600;
-  line-height: 150%;
 `;
 
 const MenuOriginalPrice = styled.Text`
   color: var(--gray-gray5, #979797);
   font-size: 13px;
   font-weight: 400;
-  line-height: normal;
+
   text-decoration-line: line-through;
 `;
 const MenuDiscountPrice = styled.Text`
   color: #2d3e39;
   font-size: 16px;
   font-weight: 700;
-  line-height: 150%;
 `;
 const MenuBoxRight = styled.View`
   display: flex;
@@ -56,7 +54,7 @@ const MenuTimeText = styled.Text`
   color: green;
   font-size: 13px;
   font-weight: 600;
-  line-height: 150%;
+
   letter-spacing: -0.065px;
 `;
 

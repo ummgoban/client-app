@@ -1,4 +1,5 @@
 import styled from '@emotion/native';
+import S from './Common.style';
 
 const MarketInfoWrapper = styled.View`
   display: flex;
@@ -7,20 +8,21 @@ const MarketInfoWrapper = styled.View`
   border-radius: 8px;
   margin: 0 16px;
   align-items: center;
-`
+  justify-content: center;
+`;
 
-const MarketInfoText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
+const MarketInfoText = styled(S.HeaderText)`
   margin-left: 16px;
-  `
+`;
 
-  const MarketInfoImage = styled.Image`
-    width: 25px;
-    height: 25px;
-    margin-left: 8px;
-  `
+const MarketInfoImage = styled.Image`
+  width: 25px;
+  height: 25px;
+`;
 
-  const S = {MarketInfoImage, MarketInfoText, MarketInfoWrapper}
+const HeaderText = styled(S.HeaderText)``;
+const BodyText = styled(S.BodyText)``;
 
-  export default S;
+const MarketInfo = {MarketInfoImage, MarketInfoText, MarketInfoWrapper};
+
+export default MarketInfo;

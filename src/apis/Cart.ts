@@ -1,17 +1,17 @@
-import { CartType } from "@/types/OrderType";
+import {CartType} from '@/types/OrderType';
 
 const dummyCartList: CartType[] = [
   {
     id: 1,
     market: {
       id: 1,
-      name: '배고픕니다살려주세요로그인싫어요',
+      name: '채찍으로따낸김상익형님의사과집',
       images: ['https://legacy.reactjs.org/logo-og.png'],
     },
     products: [
       {
         id: 1,
-        name: '김치',
+        name: '충주꿀사과',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
@@ -19,7 +19,7 @@ const dummyCartList: CartType[] = [
       },
       {
         id: 2,
-        name: '깻잎',
+        name: '대충키우는자두',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
@@ -27,14 +27,22 @@ const dummyCartList: CartType[] = [
       },
       {
         id: 3,
-        name: '간장게장',
+        name: '걍 맛있는 복숭아',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
+        count: 3,
+      },
+      {
+        id: 4,
+        name: '3그루 있는 배',
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 20000,
         discountPrice: 17000,
         count: 3,
       },
     ],
-  }
+  },
 ];
 
 export const getCartHistory = async (): Promise<CartType[] | null> => {

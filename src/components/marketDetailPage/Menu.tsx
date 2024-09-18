@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ProductType} from '@/types/ProductType';
 import S from './Menu.style';
 
+//TODO: 픽업 시작 만료까지 남은 시간 구체화해서 표현 (S.MenuTimeText)
 type CartItem = {
   productId: number;
   productName: string;

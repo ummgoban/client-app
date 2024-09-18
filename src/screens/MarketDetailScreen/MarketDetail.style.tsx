@@ -46,12 +46,38 @@ const MarketSideInfo = styled.Text`
   line-height: normal;
 `;
 
+const SideTagBarScrollView = styled.ScrollView`
+  padding-bottom: 50px;
+`;
+
+const SideBarView = styled.View<{selected: boolean}>`
+  width: 100px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: ${({selected}) => (selected ? 'gray' : 'lightgray')};
+  margin: 5px;
+  border-radius: 10px;
+`;
+const SideBarText = styled.Text<{selected: boolean}>`
+  color: ${({selected}) => (selected ? 'white' : 'black')};
+  font-size: 14px;
+  font-weight: bold;
+`;
 const Divider = styled.View`
   width: 390px;
   height: 8px;
   background: #ecf3f1;
 `;
 
+const MenuView = styled.View``;
+
+const MenuText = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 15px;
+`;
 const ReserveButton = styled.TouchableOpacity`
   margin-top: 15px;
   display: flex;
@@ -75,7 +101,12 @@ const S = {
   MarketDescription,
   MarketSideInfo,
   MarketSideInfoWrapper,
+  SideTagBarScrollView,
+  SideBarView,
+  SideBarText,
   Divider,
+  MenuView,
+  MenuText,
   ReserveButton,
   ButtonText,
 };

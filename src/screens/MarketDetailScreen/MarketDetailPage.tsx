@@ -1,10 +1,20 @@
 import React, {useRef, useState, useCallback, useEffect} from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  LayoutChangeEvent,
+} from 'react-native';
 import date from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
-import {ScrollView} from 'react-native-gesture-handler';
 import S from './MarketDetail.style';
 import {MarketType} from '@/types/Market';
+import {ProductType} from '@/types/ProductType';
+
+//TODO: 장바구니 타입 확정 후 네비게이션
 
 type CartItem = {
   productId: number;
@@ -13,16 +23,14 @@ type CartItem = {
 };
 
 const MarketDetailPage = ({detail}: {detail: MarketType}) => {
-  const {name, pickupStartAt, pickupEndAt, address, products} = detail;
-
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
-
   const scrollViewRef = useRef<ScrollView>(null);
   const tagScrollViewRef = useRef<ScrollView>(null);
   const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>(
     {},
   );
+  const {name, pickupStartAt, pickupEndAt, address, products} = detail;
 
   const handleCart = (
     productId: number,
@@ -44,7 +52,7 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
   };
 
   const productsByTags = products.reduce(
-    (acc: {[key: string]: any[]}, product) => {
+    (acc: {[key: string]: ProductType[]}, product) => {
       product.tags.forEach(tag => {
         if (!acc[tag]) {
           acc[tag] = [];
@@ -94,6 +102,35 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
     [productsByTags],
   );
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const contentOffsetY = event.nativeEvent.contentOffset.y;
+    Object.keys(sectionOffsets).forEach(tag => {
+      if (
+        contentOffsetY >= sectionOffsets[tag] &&
+        contentOffsetY < sectionOffsets[tag] + 100
+      ) {
+        setSelectedTag(tag);
+      }
+    });
+  };
+  const updateSectionOffsets = () => {
+    let offsetY = 0;
+    const newOffsets: {[key: string]: number} = {};
+    Object.keys(productsByTags).forEach(tag => {
+      newOffsets[tag] = offsetY;
+      offsetY += 200;
+    });
+    setSectionOffsets(newOffsets);
+  };
+
+  const handleLayout = (tag: string) => (event: LayoutChangeEvent) => {
+    const {y} = event.nativeEvent.layout;
+    setSectionOffsets(prevOffsets => ({
+      ...prevOffsets,
+      [tag]: y,
+    }));
+  };
+
   useEffect(() => {
     if (selectedTag) {
       scrollToSidebarTag(selectedTag);
@@ -138,38 +175,13 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
 
       <S.Divider />
 
-      <ScrollView
+      <S.MenuScrollView
         ref={scrollViewRef}
-        onScroll={event => {
-          const contentOffsetY = event.nativeEvent.contentOffset.y;
-          Object.keys(sectionOffsets).forEach(tag => {
-            if (
-              contentOffsetY >= sectionOffsets[tag] &&
-              contentOffsetY < sectionOffsets[tag] + 100
-            ) {
-              setSelectedTag(tag);
-            }
-          });
-        }}
-        onLayout={() => {
-          let offsetY = 0;
-          Object.keys(productsByTags).forEach(tag => {
-            sectionOffsets[tag] = offsetY;
-            offsetY += 200;
-          });
-          setSectionOffsets({...sectionOffsets});
-        }}>
+        onScroll={handleScroll}
+        onLayout={() => updateSectionOffsets()}>
         {Object.keys(productsByTags).map(tag => (
-          <View
-            key={tag}
-            onLayout={event => {
-              const {y} = event.nativeEvent.layout;
-              setSectionOffsets(prevOffsets => ({
-                ...prevOffsets,
-                [tag]: y,
-              }));
-            }}>
-            <S.MenuView>
+          <S.MenuView key={tag} onLayout={handleLayout(tag)}>
+            <View>
               <S.MenuText>{tag}</S.MenuText>
               {productsByTags[tag].map(product => (
                 <Menu
@@ -179,10 +191,10 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
                   onCountChange={handleCart}
                 />
               ))}
-            </S.MenuView>
-          </View>
+            </View>
+          </S.MenuView>
         ))}
-      </ScrollView>
+      </S.MenuScrollView>
 
       <S.ReserveButton onPress={handleCheckout}>
         <S.ButtonText>예약하기 ({cart.length})</S.ButtonText>

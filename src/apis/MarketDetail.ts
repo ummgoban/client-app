@@ -43,7 +43,7 @@ const dummyMarketDetail: MarketType = {
   images: ['https://legacy.reactjs.org/logo-og.png'],
 };
 
-// TODO: fetch market detail
+// TODO: fetch market detail data
 export const getMarketDetail = async (
   marketId: number,
 ): Promise<MarketType | null> => {

@@ -7,6 +7,8 @@ import {MarketType} from '@/types/Market';
 import React from 'react';
 import MarketDetailPage from './MarketDetailPage';
 
+// TODO : getMarketDetail
+
 type Props = StackScreenProps<DetailStackParamList, 'Market'>;
 
 const MarketDetailScreen = ({route}: Props) => {

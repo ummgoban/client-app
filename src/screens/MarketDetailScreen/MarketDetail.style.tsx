@@ -72,6 +72,7 @@ const Divider = styled.View`
   background: #ecf3f1;
 `;
 
+const MenuScrollView = styled.ScrollView``;
 const MenuView = styled.View``;
 
 const MenuText = styled.Text`
@@ -107,6 +108,7 @@ const S = {
   SideBarView,
   SideBarText,
   Divider,
+  MenuScrollView,
   MenuView,
   MenuText,
   ReserveButton,

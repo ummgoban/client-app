@@ -1,17 +1,34 @@
+import React, {useEffect, useState} from 'react';
 import {ProductType} from '@/types/ProductType';
-import React from 'react';
 import S from './Menu.style';
-import {useState} from 'react';
+
+type CartItem = {
+  productId: number;
+  productName: string;
+  count: number;
+};
+
 type Props = {
   product: ProductType;
+  cart: CartItem[];
   onCountChange: (
     productId: number,
     productName: string,
     count: number,
   ) => void;
 };
-const Menu = ({product, onCountChange}: Props) => {
+
+const Menu = ({product, cart, onCountChange}: Props) => {
   const [menuCount, setMenuCount] = useState(0);
+
+  useEffect(() => {
+    const cartItem = cart.find(item => item.productId === product.id);
+    if (cartItem) {
+      setMenuCount(cartItem.count);
+    } else {
+      setMenuCount(0);
+    }
+  }, [cart, product.id]);
 
   const menuCountButtonAdder = () => {
     setMenuCount(prevCount => {
@@ -23,11 +40,7 @@ const Menu = ({product, onCountChange}: Props) => {
 
   const menuCountButtonReducer = () => {
     setMenuCount(prevCount => {
-      const newCount = prevCount - 1;
-      if (newCount < 0) {
-        setMenuCount(0);
-        return 0;
-      }
+      const newCount = Math.max(prevCount - 1, 0);
       onCountChange(product.id, product.name, newCount);
       return newCount;
     });
@@ -60,4 +73,5 @@ const Menu = ({product, onCountChange}: Props) => {
     </S.MenuWrapper>
   );
 };
+
 export default Menu;

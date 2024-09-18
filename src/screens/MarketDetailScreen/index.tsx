@@ -1,20 +1,21 @@
-import React from 'react';
+import React, {useRef, useState, useCallback, useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Alert, Text, TouchableOpacity} from 'react-native';
+import {Alert, Text, TouchableOpacity, View} from 'react-native';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import date from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
 import {ScrollView} from 'react-native-gesture-handler';
 import S from './MarketDetail.style';
-import {useState} from 'react';
+
 type Props = StackScreenProps<DetailStackParamList, 'Market'>;
 type CartItem = {
   productId: number;
   productName: string;
   count: number;
 };
+
 const MarketDetailScreen = ({route}: Props) => {
-  console.log(route.params.market);
+  console.log(route);
   const marketSampleData = {
     id: 1,
     name: '반찬가게1',
@@ -57,10 +58,18 @@ const MarketDetailScreen = ({route}: Props) => {
     address: '서울특별시 동대문구 휘경동',
     images: ['https://legacy.reactjs.org/logo-og.png'],
   };
+
   const {name, pickupStartAt, pickupEndAt, address, products} =
     marketSampleData;
 
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const tagScrollViewRef = useRef<ScrollView>(null);
+  const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>(
+    {},
+  );
 
   const handleCart = (
     productId: number,
@@ -80,8 +89,6 @@ const MarketDetailScreen = ({route}: Props) => {
       }
     });
   };
-
-  const [selectedTag, setSelectedTag] = useState<string | null>('추천메뉴');
 
   const productsByTags = products.reduce(
     (acc: {[key: string]: any[]}, product) => {
@@ -109,6 +116,37 @@ const MarketDetailScreen = ({route}: Props) => {
     Alert.alert('장바구니로 이동합니다', cartSummary);
   };
 
+  const scrollToSection = useCallback(
+    (tag: string) => {
+      if (scrollViewRef.current && sectionOffsets[tag] !== undefined) {
+        scrollViewRef.current.scrollTo({
+          x: 0,
+          y: sectionOffsets[tag],
+          animated: true,
+        });
+      }
+    },
+    [sectionOffsets],
+  );
+
+  const scrollToSidebarTag = useCallback(
+    (tag: string) => {
+      if (tagScrollViewRef.current) {
+        tagScrollViewRef.current.scrollTo({
+          x: 100 * Object.keys(productsByTags).indexOf(tag),
+          animated: true,
+        });
+      }
+    },
+    [productsByTags],
+  );
+
+  useEffect(() => {
+    if (selectedTag) {
+      scrollToSidebarTag(selectedTag);
+    }
+  }, [selectedTag, scrollToSidebarTag]);
+
   return (
     <S.MarketDetailInfoView>
       <Text>...Market Image..</Text>
@@ -127,9 +165,17 @@ const MarketDetailScreen = ({route}: Props) => {
         <S.MarketSideInfo>{address}</S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
 
-      <S.SideTagBarScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <S.SideTagBarScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        ref={tagScrollViewRef}>
         {Object.keys(productsByTags).map(tag => (
-          <TouchableOpacity key={tag} onPress={() => setSelectedTag(tag)}>
+          <TouchableOpacity
+            key={tag}
+            onPress={() => {
+              setSelectedTag(tag);
+              scrollToSection(tag);
+            }}>
             <S.SideBarView selected={selectedTag === tag}>
               <S.SideBarText selected={selectedTag === tag}>
                 {tag}
@@ -141,34 +187,50 @@ const MarketDetailScreen = ({route}: Props) => {
 
       <S.Divider />
 
-      <ScrollView>
-        {selectedTag && productsByTags[selectedTag] && (
-          <S.MenuView>
-            <S.MenuText>{selectedTag}</S.MenuText>
-            {productsByTags[selectedTag].map(product => (
-              <Menu
-                key={product.id}
-                product={product}
-                onCountChange={handleCart}
-              />
-            ))}
-          </S.MenuView>
-        )}
-
-        {Object.keys(productsByTags)
-          .filter(tag => tag !== selectedTag)
-          .map(tag => (
-            <S.MenuView key={tag}>
+      <ScrollView
+        ref={scrollViewRef}
+        onScroll={event => {
+          const contentOffsetY = event.nativeEvent.contentOffset.y;
+          Object.keys(sectionOffsets).forEach(tag => {
+            if (
+              contentOffsetY >= sectionOffsets[tag] &&
+              contentOffsetY < sectionOffsets[tag] + 100
+            ) {
+              setSelectedTag(tag);
+            }
+          });
+        }}
+        onLayout={() => {
+          let offsetY = 0;
+          Object.keys(productsByTags).forEach(tag => {
+            sectionOffsets[tag] = offsetY;
+            offsetY += 200;
+          });
+          setSectionOffsets({...sectionOffsets});
+        }}>
+        {Object.keys(productsByTags).map(tag => (
+          <View
+            key={tag}
+            onLayout={event => {
+              const {y} = event.nativeEvent.layout;
+              setSectionOffsets(prevOffsets => ({
+                ...prevOffsets,
+                [tag]: y,
+              }));
+            }}>
+            <S.MenuView>
               <S.MenuText>{tag}</S.MenuText>
               {productsByTags[tag].map(product => (
                 <Menu
                   key={product.id}
                   product={product}
+                  cart={cart}
                   onCountChange={handleCart}
                 />
               ))}
             </S.MenuView>
-          ))}
+          </View>
+        ))}
       </ScrollView>
 
       <S.ReserveButton onPress={handleCheckout}>

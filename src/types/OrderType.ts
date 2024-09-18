@@ -11,3 +11,8 @@ export type OrderType = {
   doneAt?: number;
   status: 'ORDERED' | 'PENDING' | 'DONE' | 'CANCEL';
 };
+
+export type CartType = Omit<
+  OrderType,
+  'createdAt' | 'pickupAt' | 'pendingAt' | 'doneAt' | 'status'
+>;

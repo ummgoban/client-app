@@ -1,6 +1,6 @@
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Alert, Text} from 'react-native';
+import {Alert, Text, TouchableOpacity} from 'react-native';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import date from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
@@ -27,6 +27,7 @@ const MarketDetailScreen = ({route}: Props) => {
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
+        tags: ['추천메뉴', '김치류'],
       },
       {
         id: 2,
@@ -34,6 +35,7 @@ const MarketDetailScreen = ({route}: Props) => {
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
+        tags: ['깻잎류'],
       },
       {
         id: 3,
@@ -41,6 +43,15 @@ const MarketDetailScreen = ({route}: Props) => {
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 20000,
         discountPrice: 17000,
+        tags: ['추천메뉴', '게장류'],
+      },
+      {
+        id: 4,
+        name: '양념게장',
+        image: 'https://legacy.reactjs.org/logo-og.png',
+        originalPrice: 20000,
+        discountPrice: 17000,
+        tags: ['게장류'],
       },
     ],
     address: '서울특별시 동대문구 휘경동',
@@ -69,6 +80,21 @@ const MarketDetailScreen = ({route}: Props) => {
       }
     });
   };
+
+  const [selectedTag, setSelectedTag] = useState<string | null>('추천메뉴');
+
+  const productsByTags = products.reduce(
+    (acc: {[key: string]: any[]}, product) => {
+      product.tags.forEach(tag => {
+        if (!acc[tag]) {
+          acc[tag] = [];
+        }
+        acc[tag].push(product);
+      });
+      return acc;
+    },
+    {},
+  );
 
   const handleCheckout = () => {
     if (cart.length === 0) {
@@ -101,15 +127,50 @@ const MarketDetailScreen = ({route}: Props) => {
         <S.MarketSideInfo>{address}</S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
 
-      <S.Divider />
-      <Text>...Sliding TabBar....</Text>
-      <S.Divider />
-      <S.Divider />
-      <ScrollView>
-        {products.map(product => (
-          <Menu key={product.id} product={product} onCountChange={handleCart} />
+      <S.SideTagBarScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {Object.keys(productsByTags).map(tag => (
+          <TouchableOpacity key={tag} onPress={() => setSelectedTag(tag)}>
+            <S.SideBarView selected={selectedTag === tag}>
+              <S.SideBarText selected={selectedTag === tag}>
+                {tag}
+              </S.SideBarText>
+            </S.SideBarView>
+          </TouchableOpacity>
         ))}
+      </S.SideTagBarScrollView>
+
+      <S.Divider />
+
+      <ScrollView>
+        {selectedTag && productsByTags[selectedTag] && (
+          <S.MenuView>
+            <S.MenuText>{selectedTag}</S.MenuText>
+            {productsByTags[selectedTag].map(product => (
+              <Menu
+                key={product.id}
+                product={product}
+                onCountChange={handleCart}
+              />
+            ))}
+          </S.MenuView>
+        )}
+
+        {Object.keys(productsByTags)
+          .filter(tag => tag !== selectedTag)
+          .map(tag => (
+            <S.MenuView key={tag}>
+              <S.MenuText>{tag}</S.MenuText>
+              {productsByTags[tag].map(product => (
+                <Menu
+                  key={product.id}
+                  product={product}
+                  onCountChange={handleCart}
+                />
+              ))}
+            </S.MenuView>
+          ))}
       </ScrollView>
+
       <S.ReserveButton onPress={handleCheckout}>
         <S.ButtonText>예약하기</S.ButtonText>
       </S.ReserveButton>

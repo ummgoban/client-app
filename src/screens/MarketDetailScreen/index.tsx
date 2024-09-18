@@ -15,7 +15,7 @@ type CartItem = {
 };
 
 const MarketDetailScreen = ({route}: Props) => {
-  console.log(route);
+  console.log(route.params.marketId);
   const marketSampleData = {
     id: 1,
     name: '반찬가게1',

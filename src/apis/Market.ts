@@ -13,6 +13,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
+        tags: ['추천메뉴', '김치류'],
       },
       {
         id: 2,
@@ -20,6 +21,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
+        tags: ['깻잎류'],
       },
       {
         id: 3,
@@ -27,6 +29,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 20000,
         discountPrice: 17000,
+        tags: ['추천메뉴', '게장류'],
       },
     ],
     address: '서울특별시 동대문구 휘경동',
@@ -45,6 +48,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 80000,
         discountPrice: 6000,
+        tags: ['추천메뉴', '겉절이류'],
       },
       {
         id: 2,
@@ -52,6 +56,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
+        tags: ['깻잎류'],
       },
       {
         id: 5,
@@ -59,6 +64,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
+        tags: ['추천메뉴', '장류'],
       },
     ],
     images: ['https://legacy.reactjs.org/logo-og.png'],
@@ -77,6 +83,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
+        tags: ['추천메뉴', '김치류'],
       },
       {
         id: 2,
@@ -84,6 +91,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
+        tags: ['깻잎류'],
       },
       {
         id: 3,
@@ -91,6 +99,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 20000,
         discountPrice: 17000,
+        tags: ['추천메뉴', '게장류'],
       },
     ],
     images: ['https://legacy.reactjs.org/logo-og.png'],
@@ -108,6 +117,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 10000,
         discountPrice: 7000,
+        tags: ['추천메뉴', '김치류'],
       },
       {
         id: 2,
@@ -115,6 +125,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 5000,
         discountPrice: 3000,
+        tags: ['깻잎류'],
       },
       {
         id: 3,
@@ -122,6 +133,7 @@ const dummyMarketList: MarketType[] = [
         image: 'https://legacy.reactjs.org/logo-og.png',
         originalPrice: 20000,
         discountPrice: 17000,
+        tags: ['추천메뉴', '게장류'],
       },
     ],
     images: ['https://legacy.reactjs.org/logo-og.png'],

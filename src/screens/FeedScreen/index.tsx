@@ -23,10 +23,10 @@ const FeedScreen = ({navigation}: Props) => {
     setMarketList(res);
   }, []);
 
-  const onPressStore = (market: MarketType) => {
+  const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
       screen: 'Market',
-      params: {market},
+      params: {marketId: marketId},
     });
   };
 

@@ -1,5 +1,4 @@
 import {ParamListBase} from '@react-navigation/native';
-import { MarketType } from './Market';
 
 type StackParamType<T> = {
   screen?: keyof T;
@@ -17,7 +16,7 @@ export interface RegisterStackParamList extends ParamListBase {
 }
 
 export interface DetailStackParamList extends ParamListBase {
-  Market: {market: MarketType};
+  Market: {marketId: number};
 }
 
 export interface RootStackParamList extends ParamListBase {

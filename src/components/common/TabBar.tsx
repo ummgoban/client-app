@@ -2,7 +2,7 @@ import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import {HomeStackParamList} from '@/types/StackNavigationType';
- 
+
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
     label: string;

@@ -1,5 +1,5 @@
-import React from 'react'
-import S from './MarketInfo.style'
+import React from 'react';
+import S from './MarketInfo.style';
 
 type MarketInfoProps = {
   market: {
@@ -15,7 +15,7 @@ const MarketInfo = ({market}: MarketInfoProps) => {
       <S.MarketInfoImage source={{uri: market.images[0]}} />
       <S.MarketInfoText>{market.name}</S.MarketInfoText>
     </S.MarketInfoWrapper>
-  )
-}
+  );
+};
 
-export default MarketInfo
+export default MarketInfo;

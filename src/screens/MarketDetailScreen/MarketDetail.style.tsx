@@ -11,6 +11,7 @@ const MarketMainInfoWrapper = styled.View`
   gap: 8px;
   align-self: stretch;
 `;
+const SpecialView = styled.View``;
 const MarKetName = styled.Text`
   color: #2d3e39;
   text-align: center;
@@ -88,13 +89,14 @@ const ReserveButton = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text`
-  padding-top: 10px;
+  padding-top: 7px;
   font-size: 20px;
   font-weight: 200;
   color: blue;
 `;
 
 const S = {
+  SpecialView,
   MarketDetailInfoView,
   MarketMainInfoWrapper,
   MarKetName,

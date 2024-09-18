@@ -1,6 +1,6 @@
 import React, {useRef, useState, useCallback, useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Alert, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import date from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
@@ -149,8 +149,7 @@ const MarketDetailScreen = ({route}: Props) => {
 
   return (
     <S.MarketDetailInfoView>
-      <Text>...Market Image..</Text>
-      <S.Divider />
+      {/* <MarketImageSlider /> */}
       <S.MarketMainInfoWrapper>
         <S.MarKetName>{name} </S.MarKetName>
         <S.MarketDescription>
@@ -164,7 +163,6 @@ const MarketDetailScreen = ({route}: Props) => {
         )} ~ ${date.format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
         <S.MarketSideInfo>{address}</S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
-
       <S.SideTagBarScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -234,7 +232,7 @@ const MarketDetailScreen = ({route}: Props) => {
       </ScrollView>
 
       <S.ReserveButton onPress={handleCheckout}>
-        <S.ButtonText>예약하기</S.ButtonText>
+        <S.ButtonText>예약하기 ({cart.length})</S.ButtonText>
       </S.ReserveButton>
     </S.MarketDetailInfoView>
   );

@@ -38,24 +38,21 @@ const LoginButtonWrapper = styled.View`
   justify-content: center;
 `;
 
-const KakaoButton = styled.TouchableOpacity`
+const OauthLoginButton = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%; // 버튼이 가득 차도록 설정
-  height: 100%; // 버튼이 가득 차도록 설정
-  background-color: #fee500;
+  width: 100%;
+  height: 100%;
   border-radius: 12px;
 `;
 
-const NaverButton = styled.TouchableOpacity`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%; // 버튼이 가득 차도록 설정
-  height: 100%; // 버튼이 가득 차도록 설정
+const KakaoButton = styled(OauthLoginButton)`
+  background-color: #fee500;
+`;
+
+const NaverButton = styled(OauthLoginButton)`
   background-color: #03c75a;
-  border-radius: 12px;
 `;
 
 const LoginText = styled.Text<LoginPlatformProps>`

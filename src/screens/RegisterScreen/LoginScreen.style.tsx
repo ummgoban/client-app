@@ -1,5 +1,4 @@
 import styled from '@emotion/native';
-import {LoginPlatformProps} from './types';
 
 const LogoImg = styled.Image`
   width: 82px;
@@ -55,17 +54,24 @@ const NaverButton = styled(OauthLoginButton)`
   background-color: #03c75a;
 `;
 
-const LoginText = styled.Text<LoginPlatformProps>`
+const OauthLoginButtonText = styled.Text`
   font-size: 16px;
-  // TODO: 소셜로그인 디자인 논의 후 재정비 필요
-  color: ${props => (props.platform === 'kakao' ? '#000' : '#fff')};
 `;
+
+const KakaoButtonText = styled(OauthLoginButtonText)`
+  color: #000;
+`;
+const NaverButtonText = styled(OauthLoginButtonText)`
+  color: #fff;
+`;
+
 const S = {
   LoginButtonContainer,
   LoginButtonWrapper,
   KakaoButton,
   NaverButton,
-  LoginText,
+  NaverButtonText,
+  KakaoButtonText,
   Description,
   TitleText,
   LogoImg,

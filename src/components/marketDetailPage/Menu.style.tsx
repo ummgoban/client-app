@@ -22,31 +22,18 @@ const MenuName = styled.Text`
   color: #2d3e39;
   font-size: 18px;
   font-weight: 600;
-<<<<<<< HEAD
-=======
-  line-height: 150%;
->>>>>>> af9c374 (fix: 메뉴 컴포넌트 기본 UI)
 `;
 
 const MenuOriginalPrice = styled.Text`
   color: var(--gray-gray5, #979797);
   font-size: 13px;
   font-weight: 400;
-<<<<<<< HEAD
-
-=======
-  line-height: normal;
->>>>>>> af9c374 (fix: 메뉴 컴포넌트 기본 UI)
   text-decoration-line: line-through;
 `;
 const MenuDiscountPrice = styled.Text`
   color: #2d3e39;
   font-size: 16px;
   font-weight: 700;
-<<<<<<< HEAD
-=======
-  line-height: 150%;
->>>>>>> af9c374 (fix: 메뉴 컴포넌트 기본 UI)
 `;
 const MenuBoxRight = styled.View`
   display: flex;
@@ -66,11 +53,6 @@ const MenuTimeText = styled.Text`
   color: green;
   font-size: 13px;
   font-weight: 600;
-<<<<<<< HEAD
-
-=======
-  line-height: 150%;
->>>>>>> af9c374 (fix: 메뉴 컴포넌트 기본 UI)
   letter-spacing: -0.065px;
 `;
 

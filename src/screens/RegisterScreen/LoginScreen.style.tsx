@@ -1,5 +1,10 @@
 import styled from '@emotion/native';
 
+const LoginPageContainer = styled.View`
+  flex: 1;
+  margin: 150px 0px;
+`;
+
 const LogoImg = styled.Image`
   width: 82px;
   height: 102px;
@@ -22,6 +27,7 @@ const Description = styled.View`
 
 const LoginButtonContainer = styled.View`
   display: flex;
+  align-items: center;
   gap: 15px;
   marign: 45px;
   width: 300px
@@ -75,6 +81,7 @@ const S = {
   Description,
   TitleText,
   LogoImg,
+  LoginPageContainer,
 };
 
 export default S;

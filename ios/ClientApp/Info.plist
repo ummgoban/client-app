@@ -20,27 +20,49 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	 <key>CFBundleURLTypes</key>
- <array>
- <dict>
-   <key>CFBundleTypeRole</key>
-   <string>Editor</string>
-  <key>CFBundleURLSchemes</key>
-   <array>
-	 <!-- 여기는 kakao앱키로 넣으시면 됩니다 -->
-     <string>{kakao_APP_KEY}</string>
-   </array>
- </dict>
- </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+			<!-- 카카오앱키 kakao~-->
+				<string>kakao앱키</string> 
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>naver</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+			<!-- 네이버클라이언트앱 영어 소문자 그대로 타이핑 -->
+				<string>네이버</string> 
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>KAKAO_APP_KEY</key>
+<!-- 카카오앱키 그냥 -->
+	<string>앱키</string> 
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>naversearchapp</string>
+		<string>naversearchthirdlogin</string>
+		<string>kakao0123456789</string> <!-- 카카오 관련 scheme -->
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>

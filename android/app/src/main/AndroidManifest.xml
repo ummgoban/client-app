@@ -31,8 +31,9 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+        <!-- kakao앱키 kakao~-->
         <data android:host="oauth"
-            android:scheme="kakao{카카오 네이티브 앱 key를 입력해주세요}" />
+            android:scheme="kakao~" />
       </intent-filter>
     </activity>
 

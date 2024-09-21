@@ -24,6 +24,7 @@ PODS:
     - KakaoSDKCommon/Common (= 2.22.0)
   - KakaoSDKUser (2.22.0):
     - KakaoSDKAuth (= 2.22.0)
+  - naveridlogin-sdk-ios (4.2.1)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1537,6 +1538,28 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNNaverLogin (4.0.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - naveridlogin-sdk-ios (= 4.2.1)
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.34.0):
     - DoubleConversion
     - glog
@@ -1650,6 +1673,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNNaverLogin (from `../node_modules/@react-native-seoul/naver-login`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1660,6 +1684,7 @@ SPEC REPOS:
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
+    - naveridlogin-sdk-ios
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1792,6 +1817,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNNaverLogin:
+    :path: "../node_modules/@react-native-seoul/naver-login"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -1811,6 +1838,7 @@ SPEC CHECKSUMS:
   KakaoSDKAuth: 569b377eda622d93d4575240b8031cd658163eef
   KakaoSDKCommon: d57127c339fc79e73aa8b236a4c77211c29924f1
   KakaoSDKUser: 043bcd7e91454ebf3bf64f150c430e6f65f0a08d
+  naveridlogin-sdk-ios: d5f9d92905a7e964976ebfdd665bee5fb75845c5
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 34cbf122b623037ea9facad2e92e53434c5c7422
   RCTRequired: 24c446d7bcd0f517d516b6265d8df04dc3eb1219
@@ -1868,6 +1896,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 60973d382704c793c605b9be0fc7f31cb279442f
   ReactCommon: 6ef348087d250257c44c0204461c03f036650e9b
   RNGestureHandler: 3b6fa2bfa341c413d3d08444b838515b58e48ee7
+  RNNaverLogin: 206d48ef556757fbd4ae65adcff0b81ec64b04e1
   RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
   RNVectorIcons: ef957b2a1cd5efb71e53397257ec4ccffa34d0c4
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d

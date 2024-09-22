@@ -36,14 +36,14 @@ const naverLogin = (): Promise<NaverLoginResponse> => {
   return RNNaverLogin.login();
 };
 
+// TODO: 이 객체 입니다
 const naverLoginParams = {
-  appName: '이 객체',
-  consumerKey: '지우고',
-  consumerSecret: '복붙',
-  serviceUrlSchemeIOS: '하시면됩니다',
+  appName: '이거 객체 지우시고',
+  consumerKey: '슬랙 객체 복붙',
+  consumerSecret: '하시면',
+  serviceUrlSchemeIOS: '된답니다',
   disableNaverAppAuthIOS: false,
 };
-
 // 네이버 로그인 함수
 export const signInWithNaver = async () => {
   initializeNaver(naverLoginParams);

@@ -27,8 +27,8 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<!-- 카카오앱키 kakao~-->
-				<string>kakao앱키</string> 
+			<!-- TODO: 카카오앱키 -->
+				<string>kakao앱키</string>
 			</array>
 		</dict>
 		<dict>
@@ -38,21 +38,21 @@
 			<string>naver</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<!-- 네이버클라이언트앱 영어 소문자 그대로 타이핑 -->
-				<string>네이버</string> 
+			<!-- TODO: 네이버클라이언트앱 영어그대로 -->
+				<string>네이버클라이언트앱</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>KAKAO_APP_KEY</key>
-<!-- 카카오앱키 그냥 -->
-	<string>앱키</string> 
+	<!-- TODO: 그냥앱키복붙 -->
+	<string>앱키</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>naversearchapp</string>
 		<string>naversearchthirdlogin</string>
-		<string>kakao0123456789</string> <!-- 카카오 관련 scheme -->
+		<string>kakao0123456789</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
@@ -65,6 +65,15 @@
 		<true/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+		<!-- TODO: 서버URL입력 -->
+			<key>서버URL</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>

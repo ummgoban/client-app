@@ -8,7 +8,7 @@ const MarketMainInfoWrapper = styled.View`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: 4px;
   align-self: stretch;
 `;
 const SpecialView = styled.View``;
@@ -25,10 +25,17 @@ const MarketDescription = styled.Text`
   font-style: normal;
   font-weight: 500;
 `;
+const MarketTimeDescription = styled.Text`
+  color: red;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+`;
 
 const MarketSideInfoWrapper = styled.View`
   display: flex;
-  padding: 16px 0px;
+  padding: 8px 0px;
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
@@ -98,6 +105,7 @@ const S = {
   MarketMainInfoWrapper,
   MarKetName,
   MarketDescription,
+  MarketTimeDescription,
   MarketSideInfo,
   MarketSideInfoWrapper,
   SideTagBarScrollView,

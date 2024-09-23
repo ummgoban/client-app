@@ -26,7 +26,7 @@ const FeedScreen = ({navigation}: Props) => {
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
       screen: 'Market',
-      params: {marketId: marketId},
+      params: {marketId},
     });
   };
 

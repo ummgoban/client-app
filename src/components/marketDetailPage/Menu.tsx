@@ -31,7 +31,7 @@ const Menu = ({product, cart, onCountChange}: Props) => {
     }
   }, [cart, product.id]);
 
-  const menuCountButtonAdder = () => {
+  const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
       onCountChange(product.id, product.name, newCount);
@@ -39,7 +39,7 @@ const Menu = ({product, cart, onCountChange}: Props) => {
     });
   };
 
-  const menuCountButtonReducer = () => {
+  const decreaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = Math.max(prevCount - 1, 0);
       onCountChange(product.id, product.name, newCount);
@@ -60,13 +60,12 @@ const Menu = ({product, cart, onCountChange}: Props) => {
       </S.MenuBoxLeft>
       <S.MenuBoxRight>
         <S.MenuImage source={{uri: product.image}} />
-        <S.MenuTimeText>예약 마감 2시간 13분 전</S.MenuTimeText>
         <S.MenuCounter>
-          <S.MenuCounterButtonWrapper onPress={menuCountButtonReducer}>
+          <S.MenuCounterButtonWrapper onPress={decreaseMenuCount}>
             <S.MenuCounterButton>-</S.MenuCounterButton>
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
-          <S.MenuCounterButtonWrapper onPress={menuCountButtonAdder}>
+          <S.MenuCounterButtonWrapper onPress={increaseMenuCount}>
             <S.MenuCounterButton>+</S.MenuCounterButton>
           </S.MenuCounterButtonWrapper>
         </S.MenuCounter>

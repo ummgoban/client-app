@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {
   Alert,
   TouchableOpacity,
@@ -30,6 +30,10 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
   const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>(
     {},
   );
+  const [sectionHeights, setSectionHeights] = useState<{[key: string]: number}>(
+    {},
+  );
+  const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
   const {name, pickupStartAt, pickupEndAt, address, products} = detail;
 
   const handleCart = (
@@ -92,51 +96,78 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
 
   const scrollToSidebarTag = useCallback(
     (tag: string) => {
-      if (tagScrollViewRef.current) {
+      if (tagScrollViewRef.current && tagWidths[tag] !== undefined) {
+        const tagIndex = Object.keys(productsByTags).indexOf(tag);
+        const tagWidth = tagWidths[tag];
         tagScrollViewRef.current.scrollTo({
-          x: 100 * Object.keys(productsByTags).indexOf(tag),
+          x: tagWidth * tagIndex,
           animated: true,
         });
       }
     },
-    [productsByTags],
+    [productsByTags, tagWidths],
   );
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
+
     Object.keys(sectionOffsets).forEach(tag => {
+      const sectionHeight = sectionHeights[tag] || 0;
+      const sectionOffset = sectionOffsets[tag];
+
       if (
-        contentOffsetY >= sectionOffsets[tag] &&
-        contentOffsetY < sectionOffsets[tag] + 100
+        contentOffsetY >= sectionOffset - sectionHeight / 2 &&
+        contentOffsetY < sectionOffset + sectionHeight / 2
       ) {
-        setSelectedTag(tag);
+        if (selectedTag !== tag) {
+          setSelectedTag(tag);
+          scrollToSidebarTag(tag);
+        }
       }
     });
   };
-  const updateSectionOffsets = () => {
-    let offsetY = 0;
-    const newOffsets: {[key: string]: number} = {};
-    Object.keys(productsByTags).forEach(tag => {
-      newOffsets[tag] = offsetY;
-      offsetY += 200;
-    });
-    setSectionOffsets(newOffsets);
-  };
 
-  const handleLayout = (tag: string) => (event: LayoutChangeEvent) => {
-    const {y} = event.nativeEvent.layout;
-    setSectionOffsets(prevOffsets => ({
-      ...prevOffsets,
-      [tag]: y,
+  const updateSectionOffsets = useCallback(() => {
+    const newOffsets: {[key: string]: number} = {};
+    let currentOffset = 0;
+
+    Object.keys(productsByTags).forEach(tag => {
+      newOffsets[tag] = currentOffset;
+      currentOffset += sectionHeights[tag] || 0;
+    });
+
+    setSectionOffsets(newOffsets);
+  }, [productsByTags, sectionHeights]);
+
+  const handleTagLayout = (tag: string) => (event: LayoutChangeEvent) => {
+    const {width} = event.nativeEvent.layout;
+    setTagWidths(prevWidths => ({
+      ...prevWidths,
+      [tag]: width,
     }));
   };
 
-  useEffect(() => {
-    if (selectedTag) {
-      scrollToSidebarTag(selectedTag);
-    }
-  }, [selectedTag, scrollToSidebarTag]);
+  const handleLayout = (tag: string) => (event: LayoutChangeEvent) => {
+    const {height} = event.nativeEvent.layout;
+    setSectionHeights(prevHeights => ({
+      ...prevHeights,
+      [tag]: height,
+    }));
+    updateSectionOffsets();
+  };
 
+  const getTimeRemaining = (endTime: number) => {
+    const now = new Date();
+    const end = new Date(endTime);
+
+    const diff = end.getTime() - now.getTime();
+    const remainingHours = Math.floor(diff / (1000 * 60 * 60));
+    const remainingMinutes = Math.floor(
+      (diff % (1000 * 60 * 60)) / (1000 * 60),
+    );
+
+    return `픽업 마감까지 ${remainingHours}시간 ${remainingMinutes}분 남았습니다!`;
+  };
   return (
     <S.MarketDetailInfoView>
       {/* <MarketImageSlider /> */}
@@ -145,6 +176,9 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
         <S.MarketDescription>
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
+        <S.MarketTimeDescription>
+          {getTimeRemaining(pickupEndAt)}
+        </S.MarketTimeDescription>
       </S.MarketMainInfoWrapper>
       <S.MarketSideInfoWrapper>
         <S.MarketSideInfo>{`픽업: ${date.format(
@@ -160,9 +194,11 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
         {Object.keys(productsByTags).map(tag => (
           <TouchableOpacity
             key={tag}
+            onLayout={handleTagLayout(tag)}
             onPress={() => {
               setSelectedTag(tag);
               scrollToSection(tag);
+              scrollToSidebarTag(tag);
             }}>
             <S.SideBarView selected={selectedTag === tag}>
               <S.SideBarText selected={selectedTag === tag}>
@@ -178,7 +214,7 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
-        onLayout={() => updateSectionOffsets()}>
+        onLayout={updateSectionOffsets}>
         {Object.keys(productsByTags).map(tag => (
           <S.MenuView key={tag} onLayout={handleLayout(tag)}>
             <View>

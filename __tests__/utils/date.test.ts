@@ -1,9 +1,5 @@
 import {it, expect} from '@jest/globals';
-<<<<<<< HEAD
-import date from '../../src/utils/date';
-=======
 import date from '@utils/date';
->>>>>>> main
 
 it('should return format date', () => {
   const timestamp = 1618225200000;
@@ -13,8 +9,6 @@ it('should return format date', () => {
     '2021년 4월 12일 (월)',
   );
 });
-<<<<<<< HEAD
-=======
 
 it('should return decimal to time', () => {
   expect(date.decimalToTime(1.5)).toEqual([1, 30]);
@@ -30,4 +24,3 @@ it('should return is after', () => {
   expect(date.isAfter(new Date(Date.now() - 10000))).toBe(true);
   expect(date.isAfter(new Date(Date.now() + 10000))).toBe(false);
 });
->>>>>>> main

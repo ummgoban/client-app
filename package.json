@@ -7,11 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "tsc": "tsc",
-    "tsc": "tsc",
     "start": "react-native start",
-    "test": "jest",
-    "format:check": "prettier --check --ignore-path .prettierignore .",
-    "format:fix": "prettier --write --ignore-path .prettierignore ."
     "test": "jest",
     "format:check": "prettier --check --ignore-path .prettierignore .",
     "format:fix": "prettier --write --ignore-path .prettierignore ."

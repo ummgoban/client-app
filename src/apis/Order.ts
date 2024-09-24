@@ -1,7 +1,4 @@
 import axios from 'axios';
-<<<<<<< HEAD
-import {OrderType} from '../types/OrderType';
-=======
 import {CartType, OrderType} from '../types/OrderType';
 
 const dummyCart: CartType = {
@@ -38,7 +35,6 @@ const dummyCart: CartType = {
     },
   ],
 };
->>>>>>> main
 
 const dummyHistoryList: OrderType[] = [
   {
@@ -145,8 +141,6 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
     return null;
   }
 };
-<<<<<<< HEAD
-=======
 
 // TODO: fetch cart
 export const getCart = async (): Promise<CartType | null> => {
@@ -161,4 +155,3 @@ export const getCart = async (): Promise<CartType | null> => {
     return null;
   }
 };
->>>>>>> main

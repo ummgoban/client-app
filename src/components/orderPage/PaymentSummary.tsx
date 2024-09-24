@@ -25,17 +25,10 @@ type Props = {
 
 const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
   return (
-<<<<<<< HEAD
-    <S.PaymentSummaryContainer>
-      <S.Header>
-        <S.HeaderText>결제금액</S.HeaderText>
-        <S.HeaderText>{`${(originalPrice - discountPrice).toLocaleString()}원`}</S.HeaderText>
-=======
     <S.Card>
       <S.Header>
         <S.HeaderText>결제금액</S.HeaderText>
         <S.HeaderText>{`${discountPrice.toLocaleString()}원`}</S.HeaderText>
->>>>>>> main
       </S.Header>
       <S.PaymentSummaryItemList>
         <PaymentSummaryItem
@@ -44,19 +37,11 @@ const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
         />
         <PaymentSummaryItem
           title="할인금액"
-<<<<<<< HEAD
-          price={`-${discountPrice.toLocaleString()}원`}
-          primary
-        />
-      </S.PaymentSummaryItemList>
-    </S.PaymentSummaryContainer>
-=======
           price={`-${(originalPrice - discountPrice).toLocaleString()}원`}
           primary
         />
       </S.PaymentSummaryItemList>
     </S.Card>
->>>>>>> main
   );
 };
 

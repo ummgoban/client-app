@@ -17,10 +17,7 @@ export interface RegisterStackParamList extends ParamListBase {
 
 export interface DetailStackParamList extends ParamListBase {
   Market: {marketId: number};
-<<<<<<< HEAD
-=======
   Payment: undefined;
->>>>>>> main
 }
 
 export interface RootStackParamList extends ParamListBase {

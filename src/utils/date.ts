@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
-<<<<<<< HEAD
-=======
 /**
  * @description 타임스탬프를 원하는 형식으로 변환합니다.
  * @param timestamp 타임스탬프
@@ -10,7 +8,6 @@ import 'dayjs/locale/ko';
  * @returns 변환된 날짜
  * @example format(1627772400000) // '2021. 07. 31. (토)'
  */
->>>>>>> main
 function format(timestamp: number, template?: string): string {
   const date = new Date(timestamp);
 
@@ -19,10 +16,6 @@ function format(timestamp: number, template?: string): string {
     .format(template ?? 'YYYY. MM. DD. (dd)');
 }
 
-<<<<<<< HEAD
-const date = {
-  format,
-=======
 /**
  * @description 10진수 float값을 시간으로 변환합니다.
  * @param decimal 10진수 float값
@@ -61,7 +54,6 @@ const date = {
   decimalToTime,
   zeroPad,
   isAfter,
->>>>>>> main
 };
 
 export default date;

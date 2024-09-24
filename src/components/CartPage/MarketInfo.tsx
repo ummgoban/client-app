@@ -1,17 +1,14 @@
 import React from 'react';
 import S from './MarketInfo.style';
+import {MarketType} from '@/types/Market';
 
 type MarketInfoProps = {
-  market: {
-    id: number;
-    name: string;
-    images: string[];
-  };
+  market: MarketType;
+  onPress: () => void;
 };
-
-const MarketInfo = ({market}: MarketInfoProps) => {
+const MarketInfo = ({market, onPress}: MarketInfoProps) => {
   return (
-    <S.MarketInfoWrapper>
+    <S.MarketInfoWrapper onPress={onPress}>
       <S.MarketInfoImage source={{uri: market.images[0]}} />
       <S.MarketInfoText>{market.name}</S.MarketInfoText>
     </S.MarketInfoWrapper>

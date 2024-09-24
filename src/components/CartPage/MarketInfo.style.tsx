@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import S from './Common.style';
 
-const MarketInfoWrapper = styled.View`
+const MarketInfoWrapper = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   border: 1px solid #e0e0e0;

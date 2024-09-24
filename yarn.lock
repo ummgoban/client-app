@@ -8658,17 +8658,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-dotenv@npm:^3.4.11":
-  version: 3.4.11
-  resolution: "react-native-dotenv@npm:3.4.11"
-  dependencies:
-    dotenv: ^16.4.5
-  peerDependencies:
-    "@babel/runtime": ^7.20.6
-  checksum: 3ebac2c2ed79dd7e4920fd3fc2da9187413b7190231618e4858b46c47833677838b96d531afe7bd5c4b0a60454dba40cb8708722210df5d522e30aefbf41da05
-  languageName: node
-  linkType: hard
-
 "react-native-gesture-handler@npm:^2.18.1":
   version: 2.19.0
   resolution: "react-native-gesture-handler@npm:2.19.0"

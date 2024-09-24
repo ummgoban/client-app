@@ -1,40 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ProductType} from '@/types/ProductType';
 import S from './Menu.style';
 
-//TODO: 픽업 시작 만료까지 남은 시간 구체화해서 표현 (S.MenuTimeText)
-type CartItem = {
-  productId: number;
-  productName: string;
-  count: number;
-};
-
 type Props = {
   product: ProductType;
-  cart: CartItem[];
-  onCountChange: (
-    productId: number,
-    productName: string,
-    count: number,
-  ) => void;
+  initCount: number;
+  onCountChange: (productId: number, count: number) => void;
 };
 
-const Menu = ({product, cart, onCountChange}: Props) => {
-  const [menuCount, setMenuCount] = useState(0);
+const Menu = ({product, initCount, onCountChange}: Props) => {
+  const [menuCount, setMenuCount] = useState(initCount);
 
   useEffect(() => {
-    const cartItem = cart.find(item => item.productId === product.id);
-    if (cartItem) {
-      setMenuCount(cartItem.count);
-    } else {
-      setMenuCount(0);
-    }
-  }, [cart, product.id]);
+    setMenuCount(initCount);
+  }, [initCount]);
 
   const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
-      onCountChange(product.id, product.name, newCount);
+      onCountChange(product.id, newCount);
       return newCount;
     });
   };
@@ -42,7 +26,7 @@ const Menu = ({product, cart, onCountChange}: Props) => {
   const decreaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = Math.max(prevCount - 1, 0);
-      onCountChange(product.id, product.name, newCount);
+      onCountChange(product.id, newCount);
       return newCount;
     });
   };

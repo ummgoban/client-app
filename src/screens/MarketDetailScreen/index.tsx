@@ -32,7 +32,15 @@ const MarketDetailScreen = ({route}: Props) => {
     return <Text>가게 상세정보를 불러오는데 실패했습니다.</Text>;
   }
 
-  return <MarketDetailPage detail={marketDetail} />;
+  return (
+    <MarketDetailPage
+      name={marketDetail.name}
+      pickupStartAt={marketDetail.pickupStartAt}
+      pickupEndAt={marketDetail.pickupEndAt}
+      address={marketDetail.address}
+      products={marketDetail.products}
+    />
+  );
 };
 
 export default MarketDetailScreen;

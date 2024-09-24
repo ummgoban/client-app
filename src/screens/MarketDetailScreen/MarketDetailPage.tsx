@@ -22,7 +22,13 @@ type CartItem = {
   count: number;
 };
 
-const MarketDetailPage = ({detail}: {detail: MarketType}) => {
+const MarketDetailPage = ({
+  name,
+  pickupStartAt,
+  pickupEndAt,
+  address,
+  products,
+}: Omit<MarketType, 'id' | 'images'>) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
   const scrollViewRef = useRef<ScrollView>(null);
@@ -34,14 +40,23 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
     {},
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
-  const {name, pickupStartAt, pickupEndAt, address, products} = detail;
 
+  const handleCountChange = (productId: number, newCount: number) => {
+    handleCart(
+      productId,
+      products.find(product => product.id === productId)?.name || '',
+      newCount,
+    );
+  };
   const handleCart = (
     productId: number,
     productName: string,
     count: number,
   ) => {
     setCart(prevCart => {
+      if (count === 0) {
+        return prevCart.filter(item => item.productId !== productId);
+      }
       const existingItemIndex = prevCart.findIndex(
         item => item.productId === productId,
       );
@@ -54,7 +69,6 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
       }
     });
   };
-
   const productsByTags = products.reduce(
     (acc: {[key: string]: ProductType[]}, product) => {
       product.tags.forEach(tag => {
@@ -156,18 +170,6 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
     updateSectionOffsets();
   };
 
-  const getTimeRemaining = (endTime: number) => {
-    const now = new Date();
-    const end = new Date(endTime);
-
-    const diff = end.getTime() - now.getTime();
-    const remainingHours = Math.floor(diff / (1000 * 60 * 60));
-    const remainingMinutes = Math.floor(
-      (diff % (1000 * 60 * 60)) / (1000 * 60),
-    );
-
-    return `픽업 마감까지 ${remainingHours}시간 ${remainingMinutes}분 남았습니다!`;
-  };
   return (
     <S.MarketDetailInfoView>
       {/* <MarketImageSlider /> */}
@@ -177,7 +179,8 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
         <S.MarketTimeDescription>
-          {getTimeRemaining(pickupEndAt)}
+          픽업 마감까지 {date.format(pickupEndAt - Date.now(), 'HH시간 mm분')}{' '}
+          남았습니다!
         </S.MarketTimeDescription>
       </S.MarketMainInfoWrapper>
       <S.MarketSideInfoWrapper>
@@ -223,8 +226,10 @@ const MarketDetailPage = ({detail}: {detail: MarketType}) => {
                 <Menu
                   key={product.id}
                   product={product}
-                  cart={cart}
-                  onCountChange={handleCart}
+                  initCount={
+                    cart.find(item => item.productId === product.id)?.count || 0
+                  }
+                  onCountChange={handleCountChange}
                 />
               ))}
             </View>

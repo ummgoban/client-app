@@ -1,24 +1,25 @@
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
-// import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 // import {RootStackParamList} from '../../types/StackNavigationType';
 import {CartType} from '@/types/OrderType';
 import {Alert, Text} from 'react-native';
 import PaymentSummary from '@/components/orderPage/PaymentSummary';
 import {getCartHistory} from '@/apis/Cart';
 import S from './ShoppingCartScreen.style';
-import {ProductType} from '@/types/ProductType';
 // type Props = {
 //   navigation: StackNavigationProp<RootStackParamList, 'Cart'>;
 // };
 import MarketInfo from '@/components/CartPage/MarketInfo';
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+};
 
 // TODO: navigation: Cart 추가
-const ShoppingCartScreen = () => {
+const ShoppingCartScreen = ({navigation}: Props) => {
   // TODO: 결제 페이지로 이동 props 버튼
   const [cartData, setCartData] = useState<CartType | null>(null);
-  const [products, setProducts] = useState<(ProductType & {count: number})[]>(
-    [],
-  );
 
   const fetchDummyData = useCallback(async () => {
     const res = await getCartHistory();
@@ -27,29 +28,44 @@ const ShoppingCartScreen = () => {
       return;
     }
     setCartData(res[0]);
-    setProducts(res[0].products);
   }, []);
 
-  const {originalPrice, discountPrice} = useMemo(
-    () =>
-      products.reduce(
-        (acc, cur) => ({
-          originalPrice: acc.originalPrice + cur.originalPrice * cur.count,
-          discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
-        }),
-        {originalPrice: 0, discountPrice: 0},
-      ),
-    [products],
-  );
+  const {originalPrice, discountPrice} = useMemo(() => {
+    if (!cartData) {
+      return {originalPrice: 0, discountPrice: 0};
+    }
+
+    return cartData.products.reduce(
+      (acc, cur) => ({
+        originalPrice: acc.originalPrice + cur.originalPrice * cur.count,
+        discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
+      }),
+      {originalPrice: 0, discountPrice: 0},
+    );
+  }, [cartData]);
 
   const updateProductCount = (id: number, changeTerm: number) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product.id === id
-          ? {...product, count: Math.max(1, product.count + changeTerm)}
-          : product,
-      ),
-    );
+    if (!cartData) return;
+    setCartData(prevCartData => {
+      if (!prevCartData) return prevCartData;
+
+      const updatedProducts = prevCartData.products
+        .map(product =>
+          product.id === id
+            ? {...product, count: Math.max(0, product.count + changeTerm)}
+            : product,
+        )
+        .filter(product => product.count > 0);
+      console.log(cartData);
+      return {...prevCartData, products: updatedProducts};
+    });
+  };
+
+  const onPressStore = (marketId: number) => {
+    navigation.navigate('Detail', {
+      screen: 'Market',
+      params: {marketId},
+    });
   };
 
   useEffect(() => {
@@ -61,8 +77,11 @@ const ShoppingCartScreen = () => {
       <S.ScrollView>
         {cartData ? (
           <>
-            <MarketInfo market={cartData.market} />
-            {products.map(product => (
+            <MarketInfo
+              onPress={() => onPressStore(cartData.market.id)}
+              market={cartData.market}
+            />
+            {cartData.products.map(product => (
               <S.CardContainer key={product.id}>
                 <S.ProductImageWrapper>
                   <S.ProductImage source={{uri: product.image}} />
@@ -79,10 +98,17 @@ const ShoppingCartScreen = () => {
                     <S.Button>
                       <S.DetailText>옵션 변경</S.DetailText>
                     </S.Button>
-                    <S.Button
-                      onPress={() => updateProductCount(product.id, -1)}>
-                      <S.CountText>-</S.CountText>
-                    </S.Button>
+                    {product.count > 1 ? (
+                      <S.Button
+                        onPress={() => updateProductCount(product.id, -1)}>
+                        <S.CountText>-</S.CountText>
+                      </S.Button>
+                    ) : (
+                      <S.Button
+                        onPress={() => updateProductCount(product.id, -1)}>
+                        <S.CountText>삭제</S.CountText>
+                      </S.Button>
+                    )}
                     <S.CountText>{product.count}</S.CountText>
                     <S.Button onPress={() => updateProductCount(product.id, 1)}>
                       <S.CountText>+</S.CountText>

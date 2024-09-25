@@ -40,7 +40,7 @@ const MarketDetailPage = ({
     {},
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
-
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
       productId,
@@ -81,6 +81,19 @@ const MarketDetailPage = ({
     },
     {},
   );
+  const sortedProductsByTags = Object.entries(productsByTags)
+    .sort(([tagA, productsA], [tagB, productsB]) => {
+      if (tagA === '추천메뉴') return -1;
+      if (tagB === '추천메뉴') return 1;
+      return productsA.length - productsB.length;
+    })
+    .reduce(
+      (acc: Record<string, ProductType[]>, [tag, productList]) => {
+        acc[tag] = productList;
+        return acc;
+      },
+      {} as Record<string, ProductType[]>,
+    );
 
   const handleCheckout = () => {
     if (cart.length === 0) {
@@ -111,7 +124,7 @@ const MarketDetailPage = ({
   const scrollToSidebarTag = useCallback(
     (tag: string) => {
       if (tagScrollViewRef.current && tagWidths[tag] !== undefined) {
-        const tagIndex = Object.keys(productsByTags).indexOf(tag);
+        const tagIndex = Object.keys(sortedProductsByTags).indexOf(tag);
         const tagWidth = tagWidths[tag];
         tagScrollViewRef.current.scrollTo({
           x: tagWidth * tagIndex,
@@ -119,39 +132,59 @@ const MarketDetailPage = ({
         });
       }
     },
-    [productsByTags, tagWidths],
+    [sortedProductsByTags, tagWidths],
   );
-
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
 
-    Object.keys(sectionOffsets).forEach(tag => {
+    let newSelectedTag = selectedTag;
+
+    const sectionTags = Object.keys(sectionOffsets);
+    const lastTag = sectionTags[sectionTags.length - 1];
+
+    sectionTags.forEach(tag => {
       const sectionHeight = sectionHeights[tag] || 0;
       const sectionOffset = sectionOffsets[tag];
+      const sectionEndOffset = sectionOffset + sectionHeight;
 
       if (
-        contentOffsetY >= sectionOffset - sectionHeight / 2 &&
-        contentOffsetY < sectionOffset + sectionHeight / 2
+        contentOffsetY >= sectionOffset &&
+        contentOffsetY < sectionEndOffset
       ) {
-        if (selectedTag !== tag) {
-          setSelectedTag(tag);
-          scrollToSidebarTag(tag);
-        }
+        newSelectedTag = tag;
       }
     });
+
+    if (
+      newSelectedTag !== lastTag &&
+      contentOffsetY >= sectionOffsets[lastTag]
+    ) {
+      newSelectedTag = lastTag;
+    }
+
+    if (newSelectedTag !== selectedTag) {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        setSelectedTag(newSelectedTag);
+        scrollToSidebarTag(newSelectedTag);
+      }, 10);
+    }
   };
 
   const updateSectionOffsets = useCallback(() => {
     const newOffsets: {[key: string]: number} = {};
     let currentOffset = 0;
 
-    Object.keys(productsByTags).forEach(tag => {
+    Object.keys(sortedProductsByTags).forEach(tag => {
       newOffsets[tag] = currentOffset;
       currentOffset += sectionHeights[tag] || 0;
     });
 
     setSectionOffsets(newOffsets);
-  }, [productsByTags, sectionHeights]);
+  }, [sortedProductsByTags, sectionHeights]);
 
   const handleTagLayout = (tag: string) => (event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
@@ -170,6 +203,17 @@ const MarketDetailPage = ({
     updateSectionOffsets();
   };
 
+  const handleTagPress = (tag: string) => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      setSelectedTag(tag);
+      scrollToSection(tag);
+      scrollToSidebarTag(tag);
+    }, 300);
+  };
   return (
     <S.MarketDetailInfoView>
       {/* <MarketImageSlider /> */}
@@ -193,11 +237,12 @@ const MarketDetailPage = ({
         horizontal
         showsHorizontalScrollIndicator={false}
         ref={tagScrollViewRef}>
-        {Object.keys(productsByTags).map(tag => (
+        {Object.keys(sortedProductsByTags).map(tag => (
           <TouchableOpacity
             key={tag}
             onLayout={handleTagLayout(tag)}
             onPress={() => {
+              handleTagPress(tag);
               setSelectedTag(tag);
               scrollToSection(tag);
               scrollToSidebarTag(tag);
@@ -217,7 +262,7 @@ const MarketDetailPage = ({
         ref={scrollViewRef}
         onScroll={handleScroll}
         onLayout={updateSectionOffsets}>
-        {Object.entries(productsByTags).map(([tag, productsByTag]) => (
+        {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
           <S.MenuView key={tag} onLayout={handleLayout(tag)}>
             <View>
               <S.MenuText>{tag}</S.MenuText>

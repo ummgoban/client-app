@@ -179,8 +179,7 @@ const MarketDetailPage = ({
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
         <S.MarketTimeDescription>
-          픽업 마감까지 {date.format(pickupEndAt - Date.now(), 'HH시간 mm분')}{' '}
-          남았습니다!
+          {`픽업 마감까지 ${date.format(pickupEndAt - Date.now(), 'HH시간 mm분')} 남았습니다!`}
         </S.MarketTimeDescription>
       </S.MarketMainInfoWrapper>
       <S.MarketSideInfoWrapper>
@@ -218,11 +217,11 @@ const MarketDetailPage = ({
         ref={scrollViewRef}
         onScroll={handleScroll}
         onLayout={updateSectionOffsets}>
-        {Object.keys(productsByTags).map(tag => (
+        {Object.entries(productsByTags).map(([tag, productsByTag]) => (
           <S.MenuView key={tag} onLayout={handleLayout(tag)}>
             <View>
               <S.MenuText>{tag}</S.MenuText>
-              {productsByTags[tag].map(product => (
+              {productsByTag.map(product => (
                 <Menu
                   key={product.id}
                   product={product}

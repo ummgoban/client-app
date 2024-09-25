@@ -59,7 +59,7 @@ const SideBarView = styled.View<{selected: boolean}>`
   height: 35px;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   background-color: ${({selected}) => (selected ? 'gray' : 'lightgray')};
   margin: 5px;
   border-radius: 10px;
@@ -68,6 +68,7 @@ const SideBarText = styled.Text<{selected: boolean}>`
   color: ${({selected}) => (selected ? 'white' : 'black')};
   font-size: 14px;
   font-weight: bold;
+  text-align-vertical: center;
 `;
 const Divider = styled.View`
   width: 390px;

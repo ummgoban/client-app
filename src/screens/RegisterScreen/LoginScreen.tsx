@@ -1,14 +1,39 @@
-// import {StackNavigationProp} from '@react-navigation/stack';
-// import {RootStackParamList} from '../../types/StackNavigationType';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../types/StackNavigationType';
+import {useNavigation} from '@react-navigation/native';
+import {Alert} from 'react-native';
 import React from 'react';
 import S from './LoginScreen.style';
 import {signInWithKakao, signInWithNaver} from '@/apis/Login';
 
-// type Props = {
-//   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-// };
-
 const LoginScreen = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, 'Home'>>();
+  const handleKakaoLogin = async () => {
+    const isLogin = await signInWithKakao();
+    if (isLogin) {
+      console.log('로그인 성공');
+      navigation.navigate('Home', {
+        screen: 'Feed',
+      });
+    } else {
+      // 로그인 실패 처리
+      Alert.alert('로그인 실패', '카카오 로그인이 실패하였습니다.');
+    }
+  };
+
+  const handleNaverLogin = async () => {
+    const isLogin = await signInWithNaver();
+    if (isLogin) {
+      console.log('로그인 성공');
+      navigation.navigate('Home', {
+        screen: 'Feed',
+      });
+    } else {
+      Alert.alert('로그인 실패', '네이버 로그인이 실패하였습니다.');
+    }
+  };
+
   return (
     <S.LoginPageContainer>
       <S.LoginButtonContainer>
@@ -19,13 +44,12 @@ const LoginScreen = () => {
         </S.Description>
         <S.LoginButtonContainer>
           <S.LoginButtonWrapper>
-            {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
-            <S.KakaoButton onPress={signInWithKakao}>
+            <S.KakaoButton onPress={handleKakaoLogin}>
               <S.KakaoButtonText>카카오 로그인 시작하기</S.KakaoButtonText>
             </S.KakaoButton>
           </S.LoginButtonWrapper>
           <S.LoginButtonWrapper>
-            <S.NaverButton onPress={signInWithNaver}>
+            <S.NaverButton onPress={handleNaverLogin}>
               <S.NaverButtonText>네이버 로그인 시작하기</S.NaverButtonText>
             </S.NaverButton>
           </S.LoginButtonWrapper>

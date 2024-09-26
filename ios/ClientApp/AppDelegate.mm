@@ -11,7 +11,7 @@
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   // Naver
   // TODO: 네이버클라이언트앱 소문자 그대로
-  if ([url.scheme isEqualToString:@"네이버클라이언트앱"]) {
+  if ([url.scheme isEqualToString:@"${NAVER_APP_NAME}"]) {
     return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
   }
 

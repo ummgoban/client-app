@@ -23,6 +23,7 @@ const LoginScreen = () => {
   };
 
   const handleNaverLogin = async () => {
+    console.log('asdf');
     const isLogin = await signInWithNaver();
     if (isLogin) {
       console.log('로그인 성공');

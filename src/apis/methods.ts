@@ -49,8 +49,6 @@ export const post = async <T>(
   body?: unknown,
 ): Promise<T | null> => {
   try {
-    console.log('url: ', url);
-    console.log('body: ', body);
     const res: AxiosResponse = await client.post(url, body);
     return res.data;
   } catch (error) {

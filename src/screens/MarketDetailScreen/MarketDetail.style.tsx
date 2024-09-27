@@ -60,12 +60,13 @@ const SideBarView = styled.View<{selected: boolean}>`
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background-color: ${({selected}) => (selected ? 'gray' : 'lightgray')};
+  background-color: ${({selected}) =>
+    selected ? 'skyblue' : 'rgb(154, 211, 232)'};
   margin: 5px;
   border-radius: 10px;
 `;
 const SideBarText = styled.Text<{selected: boolean}>`
-  color: ${({selected}) => (selected ? 'white' : 'black')};
+  color: ${({selected}) => (selected ? 'black' : 'white')};
   font-size: 14px;
   font-weight: bold;
   text-align-vertical: center;

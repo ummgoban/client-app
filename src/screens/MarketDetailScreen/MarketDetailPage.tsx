@@ -113,7 +113,7 @@ const MarketDetailPage = ({
       if (scrollViewRef.current && sectionOffsets[tag] !== undefined) {
         scrollViewRef.current.scrollTo({
           x: 0,
-          y: sectionOffsets[tag],
+          y: sectionOffsets[tag] + 1,
           animated: true,
         });
       }
@@ -166,11 +166,10 @@ const MarketDetailPage = ({
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
-
+      setSelectedTag(newSelectedTag);
       scrollTimeoutRef.current = setTimeout(() => {
-        setSelectedTag(newSelectedTag);
         scrollToSidebarTag(newSelectedTag);
-      }, 10);
+      }, 300);
     }
   };
 
@@ -204,15 +203,8 @@ const MarketDetailPage = ({
   };
 
   const handleTagPress = (tag: string) => {
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
-
-    scrollTimeoutRef.current = setTimeout(() => {
-      setSelectedTag(tag);
-      scrollToSection(tag);
-      scrollToSidebarTag(tag);
-    }, 300);
+    setSelectedTag(tag);
+    scrollToSection(tag);
   };
   return (
     <S.MarketDetailInfoView>
@@ -243,9 +235,6 @@ const MarketDetailPage = ({
             onLayout={handleTagLayout(tag)}
             onPress={() => {
               handleTagPress(tag);
-              setSelectedTag(tag);
-              scrollToSection(tag);
-              scrollToSidebarTag(tag);
             }}>
             <S.SideBarView selected={selectedTag === tag}>
               <S.SideBarText selected={selectedTag === tag}>
@@ -261,7 +250,8 @@ const MarketDetailPage = ({
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
-        onLayout={updateSectionOffsets}>
+        onLayout={updateSectionOffsets}
+        decelerationRate="fast">
         {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
           <S.MenuView key={tag} onLayout={handleLayout(tag)}>
             <View>

@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import Common from '@/components/CartPage/Common.style';
-
+import {Button as RNPButton} from 'react-native-paper';
 const CartPage = styled.View`
   flex: 1;
   margin: 0 16px;
@@ -65,6 +65,23 @@ const CountText = styled.Text`
   font-weight: 500;
 `;
 
+const PaymentButtonContainer = styled.View({
+  padding: 16,
+  backgroundColor: '#fff',
+});
+
+const PaymentButton = styled(RNPButton)`
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 16px;
+`;
+
+const PaymentButtonText = styled.Text({
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+});
+
 const S = {
   CartPage,
   CardContainer,
@@ -78,6 +95,9 @@ const S = {
   Button,
   CountText,
   ScrollView,
+  PaymentButtonContainer,
+  PaymentButton,
+  PaymentButtonText,
 };
 
 export default S;

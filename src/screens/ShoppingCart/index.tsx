@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 // import {RootStackParamList} from '../../types/StackNavigationType';
-import {CartType} from '@/types/OrderType';
+import {BucketType} from '@/types/Bucket';
 import {Alert, Text} from 'react-native';
 import PaymentSummary from '@/components/orderPage/PaymentSummary';
 import {getCartHistory} from '@/apis/Cart';
@@ -11,6 +11,7 @@ import S from './ShoppingCartScreen.style';
 // };
 import MarketInfo from '@/components/CartPage/MarketInfo';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import {Menu} from '@/components/marketDetailPage';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -19,7 +20,7 @@ type Props = {
 // TODO: navigation: Cart 추가
 const ShoppingCartScreen = ({navigation}: Props) => {
   // TODO: 결제 페이지로 이동 props 버튼
-  const [cartData, setCartData] = useState<CartType | null>(null);
+  const [cartData, setCartData] = useState<BucketType | null>(null);
 
   const fetchDummyData = useCallback(async () => {
     const res = await getCartHistory();
@@ -44,19 +45,15 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     );
   }, [cartData]);
 
-  const updateProductCount = (id: number, changeTerm: number) => {
-    if (!cartData) return;
+  const updateProductCount = (id: number, newCount: number) => {
     setCartData(prevCartData => {
       if (!prevCartData) return prevCartData;
 
       const updatedProducts = prevCartData.products
         .map(product =>
-          product.id === id
-            ? {...product, count: Math.max(0, product.count + changeTerm)}
-            : product,
+          product.id === id ? {...product, count: newCount} : product,
         )
         .filter(product => product.count > 0);
-      console.log(cartData);
       return {...prevCartData, products: updatedProducts};
     });
   };
@@ -82,44 +79,18 @@ const ShoppingCartScreen = ({navigation}: Props) => {
               market={cartData.market}
             />
             {cartData.products.map(product => (
-              <S.CardContainer key={product.id}>
-                <S.ProductImageWrapper>
-                  <S.ProductImage source={{uri: product.image}} />
-                </S.ProductImageWrapper>
-                <S.ProductInfoWrapper>
-                  <S.HeaderText>{product.name}</S.HeaderText>
-                  <S.DetailText>
-                    할인 가격: {product.discountPrice.toLocaleString()}원
-                  </S.DetailText>
-                  <S.DetailText>
-                    기존 가격: {product.originalPrice.toLocaleString()}원
-                  </S.DetailText>
-                  <S.ButtonWrapper>
-                    <S.Button>
-                      <S.DetailText>옵션 변경</S.DetailText>
-                    </S.Button>
-                    {product.count > 1 ? (
-                      <S.Button
-                        onPress={() => updateProductCount(product.id, -1)}>
-                        <S.CountText>-</S.CountText>
-                      </S.Button>
-                    ) : (
-                      <S.Button
-                        onPress={() => updateProductCount(product.id, -1)}>
-                        <S.CountText>삭제</S.CountText>
-                      </S.Button>
-                    )}
-                    <S.CountText>{product.count}</S.CountText>
-                    <S.Button onPress={() => updateProductCount(product.id, 1)}>
-                      <S.CountText>+</S.CountText>
-                    </S.Button>
-                  </S.ButtonWrapper>
-                </S.ProductInfoWrapper>
-              </S.CardContainer>
+              <Menu
+                key={product.id}
+                product={product}
+                initCount={product.count}
+                onCountChange={(productId, count) =>
+                  updateProductCount(productId, count)
+                }
+              />
             ))}
             <PaymentSummary
               originalPrice={originalPrice}
-              discountPrice={originalPrice - discountPrice}
+              discountPrice={discountPrice}
             />
           </>
         ) : (

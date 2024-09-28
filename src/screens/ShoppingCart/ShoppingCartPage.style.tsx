@@ -1,6 +1,4 @@
 import styled from '@emotion/native';
-import Common from '@/components/CartPage/Common.style';
-import {Button as RNPButton} from 'react-native-paper';
 const CartPage = styled.View`
   flex: 1;
   margin: 0 16px;

@@ -1,7 +1,10 @@
 import {MarketType} from './Market';
 import {ProductType} from './ProductType';
 
-export type OrderType = CartType & {
+export type OrderType = {
+  id: number;
+  market: Pick<MarketType, 'id' | 'images' | 'name'>;
+  products: (ProductType & {count: number})[];
   pickupAt: number;
   createdAt: number;
   pendingAt?: number;
@@ -9,8 +12,7 @@ export type OrderType = CartType & {
   status: 'ORDERED' | 'PENDING' | 'DONE' | 'CANCEL';
 };
 
-export type CartType = {
-  id: number;
-  market: MarketType;
-  products: (ProductType & {count: number})[];
-};
+export type CartType = Omit<
+  OrderType,
+  'createdAt' | 'pickupAt' | 'pendingAt' | 'doneAt' | 'status'
+>;

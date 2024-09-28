@@ -1,8 +1,6 @@
-import {CartType} from '@/types/OrderType';
-
-const dummyCartList: CartType[] = [
+import {BucketType} from '@/types/Bucket';
+const dummyCartList: BucketType[] = [
   {
-    id: 1,
     market: {
       id: 1,
       name: '가게이름이너무나길면두줄이찍히는데설마',
@@ -16,6 +14,7 @@ const dummyCartList: CartType[] = [
         originalPrice: 10000,
         discountPrice: 7000,
         count: 3,
+        tags: ['예시'],
       },
       {
         id: 2,
@@ -24,6 +23,7 @@ const dummyCartList: CartType[] = [
         originalPrice: 5000,
         discountPrice: 3000,
         count: 3,
+        tags: ['예시'],
       },
       {
         id: 3,
@@ -32,12 +32,13 @@ const dummyCartList: CartType[] = [
         originalPrice: 20000,
         discountPrice: 17000,
         count: 3,
+        tags: ['예시'],
       },
     ],
   },
 ];
 
-export const getCartHistory = async (): Promise<CartType[] | null> => {
+export const getCartHistory = async (): Promise<BucketType[] | null> => {
   try {
     return new Promise(resolve => {
       setTimeout(() => {

@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
+import {Alert} from 'react-native';
 import {ProductType} from '@/types/ProductType';
 import S from './Menu.style';
-
 type Props = {
   product: ProductType;
   initCount: number;
   onCountChange: (productId: number, count: number) => void;
+  isCart?: boolean;
 };
 
-const Menu = ({product, initCount, onCountChange}: Props) => {
+const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const [menuCount, setMenuCount] = useState(initCount);
 
   useEffect(() => {
@@ -25,10 +26,32 @@ const Menu = ({product, initCount, onCountChange}: Props) => {
 
   const decreaseMenuCount = () => {
     setMenuCount(prevCount => {
-      const newCount = Math.max(prevCount - 1, 0);
+      const minCount = isCart ? 1 : 0;
+      const newCount = Math.max(prevCount - 1, minCount);
       onCountChange(product.id, newCount);
       return newCount;
     });
+  };
+
+  const deleteMenu = () => {
+    Alert.alert(
+      '메뉴 삭제',
+      '메뉴를 삭제하시겠습니까?',
+      [
+        {
+          text: '예',
+          onPress: () => {
+            setMenuCount(0);
+            onCountChange(product.id, 0);
+          },
+        },
+        {
+          text: '아니오',
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   return (
@@ -41,6 +64,11 @@ const Menu = ({product, initCount, onCountChange}: Props) => {
         <S.MenuDiscountPrice>
           할인가: {product.discountPrice.toLocaleString()}원
         </S.MenuDiscountPrice>
+        {isCart && (
+          <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
+            <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>
+          </S.MenuDeleteButtonWrapper>
+        )}
       </S.MenuBoxLeft>
       <S.MenuBoxRight>
         <S.MenuImage source={{uri: product.image}} />

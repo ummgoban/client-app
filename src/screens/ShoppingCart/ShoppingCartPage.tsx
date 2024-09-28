@@ -7,6 +7,7 @@ import S from './ShoppingCartPage.style';
 import MarketInfo from '@/components/CartPage/MarketInfo';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {Menu} from '@/components/marketDetailPage';
+import {BottomButton} from '@/components/common';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -36,7 +37,7 @@ const ShoppingCartPage = ({
     });
   };
 
-  const moveToPayment = () => {
+  const onPressPayment = () => {
     // TODO: 장바구니 담기 post 추가
     navigation.navigate('Detail', {
       screen: 'Payment',
@@ -59,17 +60,16 @@ const ShoppingCartPage = ({
             onCountChange={(productId, count) =>
               updateProductCount(productId, count)
             }
+            isCart={true}
           />
         ))}
         <PaymentSummary
           originalPrice={originalPrice}
           discountPrice={discountPrice}
         />
-        <S.PaymentButton onPress={moveToPayment}>
-          <S.PaymentButtonText>
-            {`${discountPrice.toLocaleString()}원 결제하기`}
-          </S.PaymentButtonText>
-        </S.PaymentButton>
+        <BottomButton onPress={onPressPayment}>
+          {`${discountPrice.toLocaleString()}원 결제하기`}
+        </BottomButton>
       </S.ScrollView>
     </S.CartPage>
   );

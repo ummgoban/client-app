@@ -1,30 +1,28 @@
 // EmptyCartPage.style.ts
 import styled from '@emotion/native';
 
-const EmptyCartContainer = styled.View({
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: 20,
-});
+const EmptyCartContainer = styled.View`
+  flex: 1;
+  justify-content: 'center';
+  align-items: 'center';
+  padding: 20px;
+`;
 
-const MessageText = styled.Text({
-  fontSize: 18,
-  color: '#333',
-  marginBottom: 20,
-});
+const MessageText = styled.Text`
+  font-size: 18;
+  font-color: #333;
+  margin-bottom: 20px;
+`;
 
-const GoShoppingButton = styled.TouchableOpacity({
-  backgroundColor: '#ff7f50',
-  paddingVertical: 10,
-  paddingHorizontal: 20,
-  borderRadius: 5,
-});
+const GoShoppingButton = styled.TouchableOpacity`
+  background-color: powderblue;
+  border-radius: 5px;
+`;
 
-const GoShoppingText = styled.Text({
-  color: '#fff',
-  fontSize: 16,
-});
+const GoShoppingText = styled.Text`
+  font-size: 16;
+  font-color: #fff;
+`;
 
 const S = {
   EmptyCartContainer,

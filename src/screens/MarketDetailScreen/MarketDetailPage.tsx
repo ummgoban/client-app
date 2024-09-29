@@ -13,8 +13,11 @@ import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
 import {MarketType} from '@/types/Market';
 import {ProductType} from '@/types/ProductType';
+// import {useNavigation} from '@react-navigation/native';
+// import {StackNavigationProp} from '@react-navigation/stack';
+// import {RootStackParamList} from '@/types/StackNavigationType';
 
-//TODO: 장바구니 타입 확정 후 네비게이션
+//TODO: 장바구니 페이지 머지 후 cart로 네비게이트, 현재 주석처리중
 
 type CartItem = {
   productId: number;
@@ -29,6 +32,7 @@ const MarketDetailPage = ({
   address,
   products,
 }: Omit<MarketType, 'id' | 'images'>) => {
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
   const scrollViewRef = useRef<ScrollView>(null);
@@ -99,13 +103,18 @@ const MarketDetailPage = ({
     if (cart.length === 0) {
       Alert.alert('장바구니가 비어 있습니다.');
       return;
+    } else {
+      const cartSummary = cart
+        .map(item => `${item.productName} 수량: ${item.count}`)
+        .join('\n');
+
+      // navigation.navigate('Home', {
+      //   screen: 'Cart',
+      //   params: {cart},
+      // });
+
+      Alert.alert('장바구니로 이동합니다', cartSummary);
     }
-
-    const cartSummary = cart
-      .map(item => `${item.productName} 수량: ${item.count}`)
-      .join('\n');
-
-    Alert.alert('장바구니로 이동합니다', cartSummary);
   };
 
   const scrollToSection = useCallback(
@@ -206,6 +215,29 @@ const MarketDetailPage = ({
     setSelectedTag(tag);
     scrollToSection(tag);
   };
+
+  const navigatePage = () => {
+    Alert.alert(
+      `장바구니로 이동하시겠습니까?`,
+      `취소시 장바구니가 초기화됩니다.`,
+      [
+        {
+          text: '예',
+          onPress: () => {
+            handleCheckout();
+          },
+        },
+        {
+          text: '취소',
+          onPress: () => {
+            setCart([]);
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   return (
     <S.MarketDetailInfoView>
       {/* <MarketImageSlider /> */}
@@ -271,7 +303,7 @@ const MarketDetailPage = ({
         ))}
       </S.MenuScrollView>
 
-      <S.ReserveButton onPress={handleCheckout}>
+      <S.ReserveButton onPress={navigatePage}>
         <S.ButtonText>예약하기 ({cart.length})</S.ButtonText>
       </S.ReserveButton>
     </S.MarketDetailInfoView>

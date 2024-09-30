@@ -1,12 +1,14 @@
 import {CartType} from '@/types/OrderType';
+import {RootStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@components/common';
 import {
   DatePickerCard,
   PaymentMethod,
   PaymentSummary,
 } from '@components/orderPage';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useMemo, useState} from 'react';
-import {Alert} from 'react-native';
 import S from './PaymentPage.style';
 
 const paymentMethodKind = {
@@ -20,6 +22,7 @@ type Props = {cart: CartType};
 
 const PaymentPage = ({cart}: Props) => {
   const [method, setMethod] = useState<PaymentMethodKindKeyType>('toss');
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const {originalPrice, discountPrice} = useMemo(
     () =>
@@ -47,7 +50,13 @@ const PaymentPage = ({cart}: Props) => {
           discountPrice={discountPrice}
         />
       </S.ScrollView>
-      <BottomButton onPress={() => Alert.alert(`${method}로 결제하기로 이동`)}>
+      <BottomButton
+        onPress={() =>
+          navigation.navigate('Detail', {
+            screen: 'OrderDone',
+            params: {orderId: 1},
+          })
+        }>
         {`${discountPrice.toLocaleString()}원 결제하기`}
       </BottomButton>
     </S.PaymentPage>

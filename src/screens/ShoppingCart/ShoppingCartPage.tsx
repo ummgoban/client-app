@@ -1,4 +1,3 @@
-// ShoppingCartPage.tsx
 import React, {useMemo} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {BucketType} from '@/types/Bucket';
@@ -8,7 +7,6 @@ import MarketInfo from '@/components/CartPage/MarketInfo';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {Menu} from '@/components/marketDetailPage';
 import {BottomButton} from '@/components/common';
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
   cartData: BucketType;
@@ -30,10 +28,10 @@ const ShoppingCartPage = ({
     );
   }, [cartData]);
 
-  const onPressStore = (marketId: number) => {
+  const onPressStore = () => {
     navigation.navigate('Detail', {
       screen: 'Market',
-      params: {marketId},
+      params: {marketId: cartData.market.id},
     });
   };
 
@@ -48,10 +46,7 @@ const ShoppingCartPage = ({
   return (
     <S.CartPage>
       <S.ScrollView>
-        <MarketInfo
-          onPress={() => onPressStore(cartData.market.id)}
-          market={cartData.market}
-        />
+        <MarketInfo onPress={onPressStore} market={cartData.market} />
         {cartData.products.map(product => (
           <Menu
             key={product.id}
@@ -60,7 +55,7 @@ const ShoppingCartPage = ({
             onCountChange={(productId, count) =>
               updateProductCount(productId, count)
             }
-            isCart={true}
+            isCart
           />
         ))}
         <PaymentSummary

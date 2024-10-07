@@ -84,11 +84,8 @@ const MenuCounterButton = styled.Text`
 `;
 
 const MenuDeleteButtonWrapper = styled.TouchableOpacity`
-  border-radius: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
+  width: 70px;
   text-align: center;
 `;
 

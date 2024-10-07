@@ -16,6 +16,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(initCount);
   }, [initCount]);
 
+  //TODO: 갯수 증가, 차감시 api 호출
   const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;

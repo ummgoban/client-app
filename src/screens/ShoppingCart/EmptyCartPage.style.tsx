@@ -1,4 +1,3 @@
-// EmptyCartPage.style.ts
 import styled from '@emotion/native';
 
 const EmptyCartContainer = styled.View`
@@ -20,7 +19,7 @@ const GoShoppingButton = styled.TouchableOpacity`
 `;
 
 const GoShoppingText = styled.Text`
-  font-size: 16;
+  font-size: 16px;
   font-color: #fff;
 `;
 

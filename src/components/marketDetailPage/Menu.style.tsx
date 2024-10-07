@@ -83,6 +83,18 @@ const MenuCounterButton = styled.Text`
   color: black;
 `;
 
+const MenuDeleteButtonWrapper = styled.TouchableOpacity`
+  display: flex;
+  width: 70px;
+  text-align: center;
+`;
+
+const MenuDeleteText = styled.Text`
+  font-size: 16px;
+  font-color: #e2e2e2;
+  font-weight: 100;
+`;
+
 const S = {
   MenuWrapper,
   MenuBoxLeft,
@@ -95,6 +107,8 @@ const S = {
   MenuCounter,
   MenuCounterButtonWrapper,
   MenuCounterButton,
+  MenuDeleteButtonWrapper,
+  MenuDeleteText,
 };
 
 export default S;

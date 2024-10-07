@@ -54,6 +54,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       {cancelable: false},
     );
   };
+  const isDecrease = isCart && menuCount === 1;
 
   return (
     <S.MenuWrapper>
@@ -74,7 +75,10 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       <S.MenuBoxRight>
         <S.MenuImage source={{uri: product.image}} />
         <S.MenuCounter>
-          <S.MenuCounterButtonWrapper onPress={decreaseMenuCount}>
+          {/* TODO: 디자인 적용시 disabled 명시 필요 */}
+          <S.MenuCounterButtonWrapper
+            disabled={isDecrease}
+            onPress={decreaseMenuCount}>
             <S.MenuCounterButton>-</S.MenuCounterButton>
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>

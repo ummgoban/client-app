@@ -19,12 +19,12 @@ const ShoppingCartScreen = ({navigation}: Props) => {
   const fetchDummyData = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await getCartHistory();
-      if (!res || res.length === 0) {
+      const response = await getCartHistory();
+      if (!response) {
         setCartData(null);
         return;
       } else {
-        setCartData(res[0]);
+        setCartData(response);
       }
     } catch (error) {
       console.error(error);

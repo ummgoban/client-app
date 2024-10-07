@@ -45,8 +45,8 @@ const ShoppingCartPage = ({
 
   return (
     <S.CartPage>
+      <MarketInfo onPress={onPressStore} market={cartData.market} />
       <S.ScrollView>
-        <MarketInfo onPress={onPressStore} market={cartData.market} />
         {cartData.products.map(product => (
           <Menu
             key={product.id}

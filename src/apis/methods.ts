@@ -1,15 +1,38 @@
-import axios, {AxiosResponse} from 'axios';
-import {SERVER_URL} from '@env';
+import axios, {AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import Config from 'react-native-config';
 
 // TODO: Interceptor 이용 토큰 헤더 추가 필요
+let JWTToken: string | null = null;
+
 const client = axios.create({
-  // TODO: 실제 URL 명시 필요
-  baseURL: SERVER_URL,
+  baseURL: Config.SERVER_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
-// TODO: Error handling 명시 및 반환 타입 정비 필요
+
+client.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    if (JWTToken) {
+      config.headers.Authorization = `Bearer ${JWTToken}`;
+    }
+    return config;
+  },
+  error => Promise.reject(error),
+);
+
+// 응답 인터셉터: 응답에서 토큰을 받아 저장
+client.interceptors.response.use(
+  (response: AxiosResponse) => {
+    if (response.data && response.data.token) {
+      JWTToken = response.data.token; // 토큰 갱신
+      console.log('토큰 갱신:', JWTToken);
+    }
+    return response;
+  },
+  error => Promise.reject(error),
+);
+
 export const get = async <T>(url: string): Promise<T | null> => {
   try {
     const res: AxiosResponse = await client.get(url);

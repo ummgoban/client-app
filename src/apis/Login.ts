@@ -3,7 +3,7 @@ import {post} from './methods';
 import {NativeModules, Platform} from 'react-native';
 import {NaverLoginInitParams} from '@/types/Login';
 import {NaverLoginResponse} from '@/types/Login';
-
+import Config from 'react-native-config';
 //TODO: 토큰 스토리지 저장 flow
 
 // 네이버 로그인 관련 설정
@@ -38,10 +38,10 @@ const naverLogin = (): Promise<NaverLoginResponse> => {
 
 // TODO: 이 객체 입니다
 const naverLoginParams = {
-  appName: '이거 객체 지우시고',
-  consumerKey: '슬랙 객체 복붙',
-  consumerSecret: '하시면',
-  serviceUrlSchemeIOS: '된답니다',
+  appName: Config.NAVER_APP_NAME,
+  consumerKey: Config.NAVER_CONSUMER_KEY,
+  consumerSecret: Config.NAVER_CONSUMER_SECRET_KEY,
+  serviceUrlSchemeIOS: Config.NAVER_URL_SCHEME,
   disableNaverAppAuthIOS: false,
 };
 // 네이버 로그인 함수

@@ -2,6 +2,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <RNKakaoLogins.h>
 #import <NaverThirdPartyLogin/NaverThirdPartyLogin.h> // Naver SDK 헤더 추가
+#import "RNCConfig.h" // RNCConfig 헤더 추가
 
 @implementation AppDelegate
 
@@ -9,9 +10,9 @@
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+              NSString *naverUrlScheme = [RNCConfig envFor:@"NAVER_URL_SCHEME"];
   // Naver
-  // TODO: 네이버클라이언트앱 소문자 그대로
-  if ([url.scheme isEqualToString:@"네이버클라이언트앱"]) {
+  if ([url.scheme isEqualToString:naverUrlScheme]) {
     return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
   }
 
@@ -28,6 +29,10 @@
   self.moduleName = @"ClientApp";
   // 초기 props 설정
   self.initialProps = @{};
+
+  NSString *apiUrl = [RNCConfig envFor:@"API_URL"];
+
+  NSDictionary *config = [RNCConfig env];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

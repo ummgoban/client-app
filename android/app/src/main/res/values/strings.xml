@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">ClientApp</string>
-    <!-- TODO: 카카오앱키 그냥-->
-    <string name="kakao_app_key">그냥앱키복붙</string>
+    <string name="kakao_app_key">@string/KAKAO_KEY</string>
 </resources>

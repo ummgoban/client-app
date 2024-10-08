@@ -27,8 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<!-- TODO: 카카오앱키 -->
-				<string>kakao앱키</string>
+				<string>$(KAKAO_NATIVE_KEY)</string>
 			</array>
 		</dict>
 		<dict>
@@ -38,16 +37,14 @@
 			<string>naver</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<!-- TODO: 네이버클라이언트앱 영어그대로 -->
-				<string>네이버클라이언트앱</string>
+				<string>$(NAVER_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>KAKAO_APP_KEY</key>
-	<!-- TODO: 그냥앱키복붙 -->
-	<string>앱키</string>
+	<string>$(KAKAO_KEY)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>naversearchapp</string>
@@ -67,8 +64,7 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-		<!-- TODO: 서버URL입력 -->
-			<key>서버URL</key>
+			<key>$(SERVER_URL)</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>

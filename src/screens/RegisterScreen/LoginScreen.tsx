@@ -1,60 +1,38 @@
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
+// import {StackNavigationProp} from '@react-navigation/stack';
+// import {RootStackParamList} from '../../types/StackNavigationType';
+import React from 'react';
+import S from './LoginScreen.style';
+import {signInWithKakao, signInWithNaver} from '@/apis/Login';
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-};
+// type Props = {
+//   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
+// };
 
-const LoginScreen = ({navigation}: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    // Implement your login logic here
-    navigation.navigate('Home', {screen: 'Feed'});
-  };
-
+const LoginScreen = () => {
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Signup"
-        onPress={() => navigation.navigate('Register', {screen: 'Signup'})}
-      />
-    </View>
+    <S.LoginPageContainer>
+      <S.LoginButtonContainer>
+        <S.LogoImg source={require('../../assets/logo.png')} />
+        <S.Description>
+          <S.TitleText>마감 세일 상품을</S.TitleText>
+          <S.TitleText>서프라이즈 백으로 만나보세요</S.TitleText>
+        </S.Description>
+        <S.LoginButtonContainer>
+          <S.LoginButtonWrapper>
+            {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
+            <S.KakaoButton onPress={signInWithKakao}>
+              <S.KakaoButtonText>카카오 로그인 시작하기</S.KakaoButtonText>
+            </S.KakaoButton>
+          </S.LoginButtonWrapper>
+          <S.LoginButtonWrapper>
+            <S.NaverButton onPress={signInWithNaver}>
+              <S.NaverButtonText>네이버 로그인 시작하기</S.NaverButtonText>
+            </S.NaverButton>
+          </S.LoginButtonWrapper>
+        </S.LoginButtonContainer>
+      </S.LoginButtonContainer>
+    </S.LoginPageContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-  },
-});
 
 export default LoginScreen;

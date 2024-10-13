@@ -13,11 +13,11 @@ import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
 import {MarketType} from '@/types/Market';
 import {ProductType} from '@/types/ProductType';
-// import {useNavigation} from '@react-navigation/native';
-// import {StackNavigationProp} from '@react-navigation/stack';
-// import {RootStackParamList} from '@/types/StackNavigationType';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '@/types/StackNavigationType';
 
-//TODO: 장바구니 페이지 머지 후 cart로 네비게이트, 현재 주석처리중
+//TODO: 현재 params로 cart를 넘겨주는 방식 논의 필요
 
 type CartItem = {
   productId: number;
@@ -32,7 +32,7 @@ const MarketDetailPage = ({
   address,
   products,
 }: Omit<MarketType, 'id' | 'images'>) => {
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
   const scrollViewRef = useRef<ScrollView>(null);
@@ -108,10 +108,10 @@ const MarketDetailPage = ({
         .map(item => `${item.productName} 수량: ${item.count}`)
         .join('\n');
 
-      // navigation.navigate('Home', {
-      //   screen: 'Cart',
-      //   params: {cart},
-      // });
+      navigation.navigate('Home', {
+        screen: 'Cart',
+        params: {cart},
+      });
 
       Alert.alert('장바구니로 이동합니다', cartSummary);
     }

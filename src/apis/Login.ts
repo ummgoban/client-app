@@ -1,7 +1,7 @@
 import {NaverLoginInitParams, NaverLoginResponse} from '@/types/Login';
 import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
-import {getStorage, setStorage} from '@/utils/session';
+import {getStorage, setStorage} from '@/utils/storage';
 import {
   getProfile as getKakaoProfile,
   login as kakaoLogin,
@@ -139,6 +139,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
+// TODO: 로그인 후 리프레쉬
 export const login = async (
   OAuthProvider: SessionType['OAuthProvider'],
 ): Promise<boolean> => {
@@ -159,6 +160,7 @@ export const login = async (
   return false;
 };
 
+// TODO: 로그아웃 후 리프레쉬
 export const logout = async (): Promise<boolean> => {
   try {
     const storageRes: SessionType | null = await getStorage('session');

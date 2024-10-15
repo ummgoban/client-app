@@ -1,3 +1,5 @@
+import {SessionType} from '@/types/Session';
+import {getStorage} from '@/utils/storage';
 import axios, {AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import Config from 'react-native-config';
 
@@ -12,10 +14,15 @@ const client = axios.create({
 });
 
 client.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
+    const session: SessionType | null = await getStorage('session');
+
+    JWTToken = session?.accessToken ?? null;
+
     if (JWTToken) {
       config.headers.Authorization = `Bearer ${JWTToken}`;
     }
+
     return config;
   },
   error => Promise.reject(error),
@@ -36,7 +43,12 @@ client.interceptors.response.use(
 export const get = async <T>(url: string): Promise<T | null> => {
   try {
     const res: AxiosResponse = await client.get(url);
-    return res.data;
+
+    if (res.data.code === 200 && res.data.data) {
+      return res.data.data;
+    }
+
+    return null;
   } catch (error) {
     console.error(error);
     return null;

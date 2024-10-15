@@ -20,7 +20,7 @@ const FeedScreen = ({navigation}: Props) => {
       Alert.alert('가게내역받아오기실패.');
       return;
     }
-    setMarketList(res);
+    setMarketList(res.markets);
   }, []);
 
   const onPressStore = (marketId: number) => {
@@ -37,6 +37,7 @@ const FeedScreen = ({navigation}: Props) => {
   }, [fetchData]);
 
   if (!marketList) {
+    console.log(marketList);
     return (
       <View>
         <Text>가게목록을 불러오는데 실패했습니다.</Text>

@@ -105,7 +105,6 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
   try {
     // Oauth 토큰 생성
     const token = await kakaoLogin();
-    console.log('Kakao Token:', token);
     // JWT 토큰
     const response = await post('/auth/login', {
       provider: 'KAKAO',
@@ -115,7 +114,6 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
 
     if (response) {
       console.log('카카오 로그인 성공:', response);
-      console.log(token);
 
       return {
         accessToken: token.accessToken,

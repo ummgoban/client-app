@@ -56,9 +56,14 @@ const FeedScreen = ({navigation}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {marketList.map(market => (
-          <Market key={market.id} onPress={onPressStore} market={market} />
-        ))}
+        {marketList.length === 0 ? (
+          // TODO: 상품이 없을 때 렌더링
+          <Text>상품이 없습니다.</Text>
+        ) : (
+          marketList.map(market => (
+            <Market key={market.id} onPress={onPressStore} market={market} />
+          ))
+        )}
       </S.MarketWrapper>
     </S.Container>
   );

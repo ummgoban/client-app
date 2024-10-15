@@ -205,7 +205,10 @@ export const getProfile = async () => {
         storageRes.accessToken,
       );
 
-      if (naverProfileRes.resultcode === '200') {
+      if (
+        naverProfileRes.message === 'success' &&
+        naverProfileRes.resultcode === '00'
+      ) {
         res = {
           id: naverProfileRes.response.id,
           name: naverProfileRes.response.name,

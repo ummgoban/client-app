@@ -1,3 +1,6 @@
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl} from 'react-native';
+
 import {OrderType} from '@/types/OrderType';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {UserType} from '@/types/UserType';
@@ -6,8 +9,7 @@ import {OrderHistory, Profile} from '@components/myPage';
 import usePullDownRefresh from '@hooks/usePullDownRefresh';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl} from 'react-native';
+
 import S from './UserMyPage.style';
 
 const UserMyPage = ({profile}: {profile: UserType}) => {

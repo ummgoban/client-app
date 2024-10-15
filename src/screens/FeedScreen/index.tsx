@@ -1,11 +1,13 @@
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl, Text, View} from 'react-native';
+
 import {getMarketList} from '@/apis';
 import {Market, SearchTab} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl, Text, View} from 'react-native';
+
 import S from './SearchBar.style';
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 };
 
 const FeedScreen = ({navigation}: Props) => {
+  // TODO: cursor pagination 무한 스크롤 구현
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
   const fetchData = useCallback(async () => {
     const res = await getMarketList();
@@ -37,7 +40,6 @@ const FeedScreen = ({navigation}: Props) => {
   }, [fetchData]);
 
   if (!marketList) {
-    console.log(marketList);
     return (
       <View>
         <Text>가게목록을 불러오는데 실패했습니다.</Text>

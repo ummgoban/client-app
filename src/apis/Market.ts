@@ -1,7 +1,6 @@
 import {MarketType} from '@/types/Market';
 import {get} from './methods';
 
-// TODO: fetch store lists
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,

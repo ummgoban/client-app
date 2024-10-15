@@ -2,7 +2,7 @@ import React from 'react';
 import {Alert} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import S from './Profile.style';
-import {logout} from '@react-native-seoul/kakao-login';
+import {logout} from '@/apis/Login';
 
 const Profile = ({name, image}: {name: string; image?: string}) => {
   return (

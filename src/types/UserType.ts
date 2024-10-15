@@ -1,6 +1,6 @@
 // TODO: Define UserType
 export type UserType = {
-  id: number;
+  id: number | string;
   name: string;
-  image?: string;
+  image: string;
 };

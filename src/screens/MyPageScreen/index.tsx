@@ -3,7 +3,6 @@ import {UserType} from '@/types/UserType';
 import {getUserProfile} from '@apis/User';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
 import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 
@@ -15,8 +14,9 @@ const MyPageScreen = ({navigation}: Props) => {
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await getUserProfile();
+      console.log(res);
+
       if (!res) {
-        Alert.alert('프로필을 불러오는데 실패했습니다.');
         return;
       }
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import {Alert} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import S from './Profile.style';
+import {logout} from '@react-native-seoul/kakao-login';
 
 const Profile = ({name, image}: {name: string; image?: string}) => {
   return (
@@ -29,6 +30,8 @@ const Profile = ({name, image}: {name: string; image?: string}) => {
               <S.LinkText>프로필</S.LinkText>
             </S.Link>
           </S.LinkContainer>
+          {/* TODO: 로그아웃 */}
+          <Button onPress={() => logout()}>로그아웃</Button>
         </S.LinkLayout>
       </S.ProfileInfo>
     </S.ProfileContainer>

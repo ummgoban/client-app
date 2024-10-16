@@ -43,7 +43,6 @@ const MarketSideInfoWrapper = styled.View`
 
 const MarketSideInfo = styled.Text`
   color: #78827f;
-
   font-family: Pretendard;
   font-size: 13px;
   font-style: normal;

@@ -100,21 +100,16 @@ const MarketDetailPage = ({
     );
 
   const handleCheckout = () => {
-    if (cart.length === 0) {
-      Alert.alert('장바구니가 비어 있습니다.');
-      return;
-    } else {
-      const cartSummary = cart
-        .map(item => `${item.productName} 수량: ${item.count}`)
-        .join('\n');
+    const cartSummary = cart
+      .map(item => `${item.productName} 수량: ${item.count}`)
+      .join('\n');
 
-      navigation.navigate('Home', {
-        screen: 'Cart',
-        params: {cart},
-      });
+    navigation.navigate('Home', {
+      screen: 'Cart',
+      params: {cart},
+    });
 
-      Alert.alert('장바구니로 이동합니다', cartSummary);
-    }
+    Alert.alert('장바구니로 이동합니다', cartSummary);
   };
 
   const scrollToSection = useCallback(
@@ -217,6 +212,10 @@ const MarketDetailPage = ({
   };
 
   const navigatePage = () => {
+    if (cart.length === 0) {
+      Alert.alert('장바구니가 비어 있습니다.');
+      return;
+    }
     Alert.alert(
       `장바구니로 이동하시겠습니까?`,
       `취소시 장바구니가 초기화됩니다.`,

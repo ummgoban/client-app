@@ -22,6 +22,10 @@ export interface DetailStackParamList extends ParamListBase {
   OrderDone: {orderId: number};
 }
 
+export interface CartStackParamList extends ParamListBase {
+  Cart: undefined;
+}
+
 export interface RootStackParamList extends ParamListBase {
   Home: StackParamType<HomeStackParamList>;
   Register: StackParamType<RegisterStackParamList>;

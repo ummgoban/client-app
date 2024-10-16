@@ -1,8 +1,10 @@
 // import {StackNavigationProp} from '@react-navigation/stack';
 // import {RootStackParamList} from '../../types/StackNavigationType';
 import React from 'react';
+
+import {login} from '@/apis/Login';
+
 import S from './LoginScreen.style';
-import {signInWithKakao, signInWithNaver} from '@/apis/Login';
 
 // type Props = {
 //   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
@@ -20,12 +22,12 @@ const LoginScreen = () => {
         <S.LoginButtonContainer>
           <S.LoginButtonWrapper>
             {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
-            <S.KakaoButton onPress={signInWithKakao}>
+            <S.KakaoButton onPress={() => login('KAKAO')}>
               <S.KakaoButtonText>카카오 로그인 시작하기</S.KakaoButtonText>
             </S.KakaoButton>
           </S.LoginButtonWrapper>
           <S.LoginButtonWrapper>
-            <S.NaverButton onPress={signInWithNaver}>
+            <S.NaverButton onPress={() => login('NAVER')}>
               <S.NaverButtonText>네이버 로그인 시작하기</S.NaverButtonText>
             </S.NaverButton>
           </S.LoginButtonWrapper>

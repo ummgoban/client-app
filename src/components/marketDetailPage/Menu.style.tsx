@@ -35,6 +35,11 @@ const MenuDiscountPrice = styled.Text`
   font-size: 16px;
   font-weight: 700;
 `;
+const MenuStockCount = styled.Text`
+  color: green;
+  font-size: 16px;
+  font-weight: 700;
+`;
 const MenuBoxRight = styled.View`
   display: flex;
   flex-direction: column;
@@ -101,6 +106,7 @@ const S = {
   MenuName,
   MenuOriginalPrice,
   MenuDiscountPrice,
+  MenuStockCount,
   MenuBoxRight,
   MenuImage,
   MenuTimeText,

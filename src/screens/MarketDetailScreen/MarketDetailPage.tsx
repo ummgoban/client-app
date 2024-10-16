@@ -17,8 +17,6 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-//TODO: 현재 params로 cart를 넘겨주는 방식 논의 필요
-
 type CartItem = {
   productId: number;
   productName: string;
@@ -239,7 +237,6 @@ const MarketDetailPage = ({
 
   return (
     <S.MarketDetailInfoView>
-      {/* <MarketImageSlider /> */}
       <S.MarketMainInfoWrapper>
         <S.MarKetName>{name} </S.MarKetName>
         <S.MarketDescription>

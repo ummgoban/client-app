@@ -36,7 +36,7 @@ const MenuDiscountPrice = styled.Text`
   font-weight: 700;
 `;
 const MenuStockCount = styled.Text`
-  color: red;
+  color: green;
   font-size: 16px;
   font-weight: 700;
 `;

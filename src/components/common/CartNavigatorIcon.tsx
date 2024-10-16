@@ -1,8 +1,8 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '@/types/StackNavigationType';
-
+import Icon from 'react-native-vector-icons/Feather';
+import S from './CartNaviagtorIcon.style';
 const CartIcon = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -11,9 +11,9 @@ const CartIcon = () => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      style={{marginRight: 15}}></TouchableOpacity>
+    <S.IconContainer onPress={handlePress}>
+      <Icon name="shopping-cart" size={24} color="black" />
+    </S.IconContainer>
   );
 };
 

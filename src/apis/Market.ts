@@ -1,5 +1,5 @@
 import {MarketType} from '@/types/Market';
-import {get} from './methods';
+import apiClient from './ApiClient';
 
 export const getMarketList = async (
   cursorId: number = 0,
@@ -9,7 +9,7 @@ export const getMarketList = async (
   hasNext: boolean;
 } | null> => {
   try {
-    const res = await get<{
+    const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
     } | null>(`/market/paging?cursorId=${cursorId}&size=${size}`);

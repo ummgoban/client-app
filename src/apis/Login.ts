@@ -10,7 +10,7 @@ import {
 import NaverLogin from '@react-native-seoul/naver-login';
 import {NativeModules, Platform} from 'react-native';
 import Config from 'react-native-config';
-import {post} from './methods';
+import apiClient from './ApiClient';
 
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
@@ -66,7 +66,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
         loginResult.successResponse;
       console.log('Naver Access Token:', accessToken);
       // JWT 토큰
-      const response = await post('/auth/login', {
+      const response = await apiClient.post('/auth/login', {
         provider: 'NAVER',
         roles: 'ROLE_USER',
         accessToken,
@@ -106,7 +106,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     // Oauth 토큰 생성
     const token = await kakaoLogin();
     // JWT 토큰
-    const response = await post('/auth/login', {
+    const response = await apiClient.post('/auth/login', {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,

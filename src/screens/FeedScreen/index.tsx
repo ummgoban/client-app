@@ -1,11 +1,13 @@
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl, Text, View} from 'react-native';
+
 import {getMarketList} from '@/apis';
 import {Market, SearchTab} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl, Text, View} from 'react-native';
+
 import S from './SearchBar.style';
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 };
 
 const FeedScreen = ({navigation}: Props) => {
+  // TODO: cursor pagination 무한 스크롤 구현
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
   const fetchData = useCallback(async () => {
     const res = await getMarketList();
@@ -20,7 +23,7 @@ const FeedScreen = ({navigation}: Props) => {
       Alert.alert('가게내역받아오기실패.');
       return;
     }
-    setMarketList(res);
+    setMarketList(res.markets);
   }, []);
 
   const onPressStore = (marketId: number) => {
@@ -53,9 +56,14 @@ const FeedScreen = ({navigation}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {marketList.map(market => (
-          <Market key={market.id} onPress={onPressStore} market={market} />
-        ))}
+        {marketList.length === 0 ? (
+          // TODO: 상품이 없을 때 렌더링
+          <Text>상품이 없습니다.</Text>
+        ) : (
+          marketList.map(market => (
+            <Market key={market.id} onPress={onPressStore} market={market} />
+          ))
+        )}
       </S.MarketWrapper>
     </S.Container>
   );

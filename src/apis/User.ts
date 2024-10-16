@@ -1,23 +1,33 @@
-import axios from 'axios';
 import {UserType} from '../types/UserType';
-
-// TODO: fetch user profile
-const dummyProfile = {
-  id: 1,
-  name: '김영민',
-  image: 'https://legacy.reactjs.org/logo-og.png',
-};
+import {getProfile as getKakaoProfile} from '@react-native-seoul/kakao-login';
+import NaverLogin from '@react-native-seoul/naver-login';
 
 export const getUserProfile = async (): Promise<UserType | null> => {
   try {
-    // TODO: uri 수정
-    const res = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+    const kakaoRes = await getKakaoProfile();
+    const naverRes = await NaverLogin.getProfile('').then(res => res.response);
 
-    if (!res) {
+    if (!kakaoRes || !naverRes) {
       return null;
     }
 
-    return dummyProfile;
+    let userProfile: UserType | null = null;
+
+    if (kakaoRes) {
+      userProfile = {
+        id: kakaoRes.id,
+        name: kakaoRes.nickname,
+        image: kakaoRes.profileImageUrl,
+      };
+    } else if (naverRes) {
+      userProfile = {
+        id: naverRes.id.toString(),
+        name: naverRes.name,
+        image: naverRes.profile_image ?? '',
+      };
+    }
+
+    return userProfile;
   } catch (e) {
     console.error(e);
     return null;

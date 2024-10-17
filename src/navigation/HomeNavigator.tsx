@@ -15,8 +15,8 @@ const screenOptions = {
 
 const HomeNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={screenOptions} tabBar={TabBar}>
-      <Tab.Screen name="Feed" component={HomeScreen} />
+    <Tab.Navigator tabBar={TabBar}>
+      <Tab.Screen name="Feed" options={screenOptions} component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
       {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
       {/* Add more screens here */}

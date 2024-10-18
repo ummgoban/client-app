@@ -1588,7 +1588,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNVectorIcons (10.1.0):
+  - RNVectorIcons (10.2.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1912,7 +1912,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 3b6fa2bfa341c413d3d08444b838515b58e48ee7
   RNNaverLogin: 206d48ef556757fbd4ae65adcff0b81ec64b04e1
   RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
-  RNVectorIcons: ef957b2a1cd5efb71e53397257ec4ccffa34d0c4
+  RNVectorIcons: 6382277afab3c54658e9d555ee0faa7a37827136
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: a1d7895431387402a674fd0d1c04ec85e87909b8
 

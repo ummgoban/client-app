@@ -66,6 +66,8 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         <S.MenuDiscountPrice>
           할인가: {product.discountPrice.toLocaleString()}원
         </S.MenuDiscountPrice>
+        {/* TODO: API연결 후 재고 값 넣기 */}
+        <S.MenuStockCount>재고: 1</S.MenuStockCount>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>

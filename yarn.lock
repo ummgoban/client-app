@@ -2877,6 +2877,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tosspayments/tosspayments-sdk@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@tosspayments/tosspayments-sdk@npm:2.3.2"
+  checksum: 0a2fc16fd7cbf975ad47c5f00acc91134c2b0e22bfd52fb076c1479ba3e87a2e285aba641c338211b528864d91e39085b6a5fa65fd524c10ce8c7cedc19e9016
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -3340,6 +3347,7 @@ __metadata:
     "@react-navigation/bottom-tabs": ^6.6.1
     "@react-navigation/native": ^6.1.18
     "@react-navigation/stack": ^6.4.1
+    "@tosspayments/tosspayments-sdk": ^2.3.2
     "@types/react": ^18.2.6
     "@types/react-native-vector-icons": ^6.4.18
     "@types/react-test-renderer": ^18.0.0

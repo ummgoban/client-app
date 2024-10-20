@@ -1,7 +1,3 @@
-import {NaverLoginInitParams, NaverLoginResponse} from '@/types/Login';
-import {SessionType} from '@/types/Session';
-import {UserType} from '@/types/UserType';
-import {getStorage, setStorage} from '@/utils/storage';
 import {
   getProfile as getKakaoProfile,
   login as kakaoLogin,
@@ -10,6 +6,11 @@ import {
 import NaverLogin from '@react-native-seoul/naver-login';
 import {NativeModules, Platform} from 'react-native';
 import Config from 'react-native-config';
+
+import {NaverLoginInitParams, NaverLoginResponse} from '@/types/Login';
+import {SessionType} from '@/types/Session';
+import {UserType} from '@/types/UserType';
+import {getStorage, setStorage} from '@/utils/storage';
 import apiClient from './ApiClient';
 
 // 네이버 로그인 관련 설정
@@ -171,6 +172,8 @@ export const logout = async (): Promise<boolean> => {
     } else if (storageRes.OAuthProvider === 'NAVER') {
       await NaverLogin.logout();
     }
+
+    await setStorage('session', {});
 
     return true;
   } catch (error) {

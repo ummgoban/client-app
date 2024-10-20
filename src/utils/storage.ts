@@ -1,6 +1,6 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-import {StorageKeyType} from '@/types/Session';
+import {StorageKeyType} from '@/types/Storage';
 
 export const setStorage = async <T extends Object>(
   key: StorageKeyType,

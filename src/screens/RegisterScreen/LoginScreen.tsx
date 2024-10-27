@@ -1,16 +1,13 @@
-// import {StackNavigationProp} from '@react-navigation/stack';
-// import {RootStackParamList} from '../../types/StackNavigationType';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 
 import {login} from '@/apis/Login';
+import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './LoginScreen.style';
 
-// type Props = {
-//   navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-// };
-
 const LoginScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <S.LoginPageContainer>
       <S.LoginButtonContainer>
@@ -22,12 +19,24 @@ const LoginScreen = () => {
         <S.LoginButtonContainer>
           <S.LoginButtonWrapper>
             {/* TODO: 애플 로그인 적용 시 props로 분기 필요 */}
-            <S.KakaoButton onPress={() => login('KAKAO')}>
+            <S.KakaoButton
+              onPress={async () => {
+                const res = await login('KAKAO');
+                if (res) {
+                  navigation.navigate('Home', {screen: 'Feed'});
+                }
+              }}>
               <S.KakaoButtonText>카카오 로그인 시작하기</S.KakaoButtonText>
             </S.KakaoButton>
           </S.LoginButtonWrapper>
           <S.LoginButtonWrapper>
-            <S.NaverButton onPress={() => login('NAVER')}>
+            <S.NaverButton
+              onPress={async () => {
+                const res = await login('NAVER');
+                if (res) {
+                  navigation.navigate('Home', {screen: 'Feed'});
+                }
+              }}>
               <S.NaverButtonText>네이버 로그인 시작하기</S.NaverButtonText>
             </S.NaverButton>
           </S.LoginButtonWrapper>

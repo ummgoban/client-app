@@ -3,6 +3,7 @@ import React from 'react';
 import {TabBar} from '@components/common';
 import HomeScreen from '@screens/FeedScreen';
 import MyPageScreen from '@screens/MyPageScreen';
+import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import {HomeStackParamList} from '@/types/StackNavigationType';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 
@@ -18,6 +19,7 @@ const HomeNavigator = () => {
     <Tab.Navigator tabBar={TabBar}>
       <Tab.Screen name="Feed" options={screenOptions} component={HomeScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
+      <Tab.Screen name="OrderHistory" component={OrderHistoryScreen} />
       {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
       {/* Add more screens here */}
     </Tab.Navigator>

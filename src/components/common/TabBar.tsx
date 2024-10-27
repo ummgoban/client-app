@@ -19,6 +19,10 @@ const tabBarData: TabBarComponentType = {
     label: '마이 페이지',
     icon: 'https://legacy.reactjs.org/logo-og.png',
   },
+  OrderHistory: {
+    label: '주문 내역',
+    icon: 'https://legacy.reactjs.org/logo-og.png',
+  },
 };
 
 // TODO: resolve inline style

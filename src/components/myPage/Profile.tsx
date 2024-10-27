@@ -28,15 +28,16 @@ const Profile = ({name, image}: {name: string; image?: string}) => {
         <Text>{`${name} 님`}</Text>
         <S.LinkLayout>
           <S.LinkContainer>
-            <S.Link onPress={() => Alert.alert('주문 내역으로 이동')}>
+            <S.Link
+              onPress={() =>
+                navigation.navigate('Home', {
+                  screen: 'OrderHistory',
+                })
+              }>
               <S.LinkText>주문 내역</S.LinkText>
             </S.Link>
           </S.LinkContainer>
-          <S.LinkContainer>
-            <S.Link onPress={() => Alert.alert('프로필로 이동')}>
-              <S.LinkText>프로필</S.LinkText>
-            </S.Link>
-          </S.LinkContainer>
+
           <Button
             onPress={async () => {
               const res = await logout();

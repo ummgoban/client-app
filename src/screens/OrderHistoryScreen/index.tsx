@@ -1,22 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl} from 'react-native';
-import {OrderType} from '@/types/OrderType';
+import React, {useState, useEffect, useCallback} from 'react';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import {UserType} from '@/types/UserType';
-import {getOrderHistory} from '@apis/Order';
-import {Profile} from '@components/myPage';
-import usePullDownRefresh from '@hooks/usePullDownRefresh';
+import {OrderType} from '@/types/OrderType';
+import {getOrderHistory} from '@/apis';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {Alert, RefreshControl} from 'react-native';
+import S from './OrderHistory.style';
+import OrderHistory from '@/components/orderHistory/OrderHistory';
 
-import S from './UserMyPage.style';
-
-const UserMyPage = ({profile}: {profile: UserType}) => {
+const OrderHistoryScreen = () => {
   const [historyList, setHistoryList] = useState<OrderType[] | null>(null);
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
-
   const fetchData = useCallback(async () => {
     const res = await getOrderHistory();
     if (!res) {
@@ -34,14 +31,21 @@ const UserMyPage = ({profile}: {profile: UserType}) => {
   }, [fetchData]);
 
   return (
-    <S.MyPageContainer
-      // TODO: 영민이형 컨펌 이후 리프레쉬 로직 지우기
+    <S.OrderHistoryContainer
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <Profile name={profile.name} image={profile.image} />
-    </S.MyPageContainer>
+      <OrderHistory
+        historyList={historyList}
+        onPressMarket={marketId =>
+          navigation.navigate('Detail', {
+            screen: 'Market',
+            params: {marketId: marketId},
+          })
+        }
+      />
+    </S.OrderHistoryContainer>
   );
 };
 
-export default UserMyPage;
+export default OrderHistoryScreen;

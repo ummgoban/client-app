@@ -1,23 +1,24 @@
 import styled from '@emotion/native';
 
+const ProfileScrollWrapper = styled.ScrollView``;
+
 const ProfileContainer = styled.View`
   display: flex;
-  flex-direction: row;
-  gap: 12px;
-
-  margin: 24px 24px 0;
+  align-items: center;
+  width: 100%;
 `;
 
 const ProfileImage = styled.Image`
-  width: 64px;
-  height: 64px;
+  width: 82px;
+  height: 82px;
 
-  border-radius: 32px;
+  border-radius: 41px;
 `;
 
 const ProfileInfo = styled.View`
   display: flex;
   flex-direction: column;
+  width: 90%;
   gap: 8px;
 `;
 
@@ -43,6 +44,7 @@ const LinkText = styled.Text`
 `;
 
 const S = {
+  ProfileScrollWrapper,
   ProfileContainer,
   ProfileImage,
   ProfileInfo,

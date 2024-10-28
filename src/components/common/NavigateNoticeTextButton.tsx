@@ -28,10 +28,6 @@ const NavigateNoticeTextButton = ({
       <TouchableOpacity onPress={onPress}>
         <Icon name="right" size={iconSize} color={fontColor} />
       </TouchableOpacity>
-      {/* <Image
-       source={iconSource}
-         style={{width: iconWidth, height: iconHeight}}
-       /> */}
     </S.TouchableNavigateWrapper>
   );
 };

@@ -1,15 +1,13 @@
 import React from 'react';
 import S from './ListBox.style';
-import NavigateNoticeTextButton from './NavigateNoticeTextButton';
-import NavigateTextButton from './NavigateTextButton';
-type ListBoxItemProps = {
-  label: string;
-  value: string;
-  onPress?: () => void;
-};
+import NavigationTextButton from './NavigateTextButton';
 
 type ListBoxProps = {
-  items: ListBoxItemProps[];
+  items: {
+    label: string;
+    value?: string;
+    onPress?: () => void;
+  }[];
 };
 
 const ListBox = ({items}: ListBoxProps) => {
@@ -23,7 +21,7 @@ const ListBox = ({items}: ListBoxProps) => {
             <S.ItemLabel>{item.label}</S.ItemLabel>
             {item.value &&
               (item.onPress ? (
-                <NavigateNoticeTextButton
+                <NavigationTextButton
                   text={item.value}
                   onPress={item.onPress}
                   fontColor="#888"
@@ -31,10 +29,11 @@ const ListBox = ({items}: ListBoxProps) => {
                   iconSize={20}
                 />
               ) : (
-                <NavigateTextButton
+                <NavigationTextButton
                   text={item.value}
                   fontColor="#888"
                   fontSize="16px"
+                  isNotice={false}
                 />
               ))}
           </S.ListItem>

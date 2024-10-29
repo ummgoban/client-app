@@ -1,29 +1,34 @@
 import React from 'react';
-import S from './NavigateButton.style';
-import {TouchableOpacity} from 'react-native';
+import S from './NavigateTextButton.style';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-type NavigateTextButtonProps = {
+type NavigationTextButtonProps = {
   text: string;
   onPress?: () => void;
   fontColor?: string;
   fontSize?: string;
+  iconSize?: number;
+  isNotice?: boolean;
 };
 
-const NavigateTextButton = ({
+const NavigationTextButton = ({
   text,
   onPress,
   fontColor = '#000',
   fontSize = '16px',
-}: NavigateTextButtonProps) => {
+  iconSize = 16,
+  isNotice = true,
+}: NavigationTextButtonProps) => {
   return (
-    <S.TouchableButtonContainer>
-      <TouchableOpacity onPress={onPress}>
+    <S.TouchableButtonContainer onPress={onPress} disabled={!Boolean(onPress)}>
+      <S.TouchableWrapper>
         <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
           {text}
         </S.NoticeText>
-      </TouchableOpacity>
+        {isNotice && <Icon name="right" size={iconSize} color={fontColor} />}
+      </S.TouchableWrapper>
     </S.TouchableButtonContainer>
   );
 };
 
-export default NavigateTextButton;
+export default NavigationTextButton;

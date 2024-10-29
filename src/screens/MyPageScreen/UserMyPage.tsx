@@ -6,9 +6,9 @@ import {logout} from '@/apis/Login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ListBox from '@/components/common/ListBox';
-import NavigateTextButton from '@/components/common/NavigateTextButton';
 import S from './UserMyPage.style';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import NavigationTextButton from '@/components/common/NavigateTextButton';
 
 type UserMyPageProps = {
   profile: UserType;
@@ -35,49 +35,56 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
       </S.ProfileImageSection>
       <ListBox
         items={[
-          {label: '이름', value: `${profile.name}`, onPress: handlePress},
+          {
+            label: '이름',
+            value: `${profile.name}`,
+          },
           {
             label: '이메일',
             value: `test@example.com`,
-            onPress: handlePress,
           },
-          {label: '전화번호', value: `010-1234-5678`, onPress: handlePress},
+          {label: '전화번호', value: `010-1234-5678`},
         ]}
       />
       <S.NoticeSection>
         <S.NoticeSectionTitle>문의 및 알림</S.NoticeSectionTitle>
         <S.ButtonContainer>
-          <NavigateTextButton
+          <NavigationTextButton
             text="공지사항"
             fontSize="20px"
             onPress={handlePress}
+            isNotice={false}
           />
-          <NavigateTextButton
+          <NavigationTextButton
             text="약관 및 정책"
             fontSize="20px"
             onPress={handlePress}
+            isNotice={false}
           />
         </S.ButtonContainer>
         <S.ButtonContainer>
-          <NavigateTextButton
+          <NavigationTextButton
             text="공지사항"
             fontSize="20px"
             onPress={handlePress}
+            isNotice={false}
           />
-          <NavigateTextButton
+          <NavigationTextButton
             text="약관 및 정책"
             fontSize="20px"
             onPress={handlePress}
+            isNotice={false}
           />
         </S.ButtonContainer>
       </S.NoticeSection>
       <S.BottomSectionContainer>
         <S.BottomSection>
           <S.ButtonContainer>
-            <NavigateTextButton
+            <NavigationTextButton
               text="로그아웃"
               fontSize="12px"
               fontColor="#888"
+              isNotice={false}
               onPress={async () => {
                 const res = await logout();
                 if (res) {
@@ -94,10 +101,11 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             />
             <S.VerticalDivider />
             {/* TODO: 회원탈퇴 로직 적용 */}
-            <NavigateTextButton
+            <NavigationTextButton
               text="회원탈퇴"
               fontSize="12px"
               fontColor="#888"
+              isNotice={false}
               onPress={() => Alert.alert('회원탈퇴')}
             />
           </S.ButtonContainer>

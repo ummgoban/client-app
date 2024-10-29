@@ -1,7 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {getProfile} from '@/apis/Login';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {UserType} from '@/types/UserType';
@@ -15,13 +15,14 @@ const MyPageScreen = ({navigation}: Props) => {
 
   const isFocused = useIsFocused();
 
+  const fetchProfile = async () => {
+    const res = await getProfile();
+    setProfile(res);
+  };
+
+  const {refreshing, onRefresh} = usePullDownRefresh(fetchProfile);
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      const res = await getProfile();
-
-      setProfile(res);
-    };
-
     if (isFocused) {
       fetchProfile();
     }
@@ -35,7 +36,13 @@ const MyPageScreen = ({navigation}: Props) => {
     );
   }
 
-  return <UserMyPage profile={profile} />;
+  return (
+    <UserMyPage
+      profile={profile}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+    />
+  );
 };
 
 export default MyPageScreen;

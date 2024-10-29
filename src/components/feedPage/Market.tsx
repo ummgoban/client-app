@@ -1,12 +1,13 @@
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
-import date from '@utils/date';
+// import date from '@utils/date';
 import React from 'react';
 type Props = {
   market: MarketType;
   onPress: (marketId: number) => void;
 };
 const Market = ({market, onPress}: Props) => {
+  console.log('현재 가게 정보: ', market);
   return (
     <S.MarketWrapper onPress={() => onPress(market.id)}>
       <S.MarketImageContainer>
@@ -21,10 +22,12 @@ const Market = ({market, onPress}: Props) => {
       </S.MarketImageContainer>
       <S.MarketTitle>{market.name}</S.MarketTitle>
       <S.MarketPickupTime>
-        {`픽업: ${date.format(
+        {/* {`픽업: ${date.format(
           market.pickupStartAt,
           'HH시 mm분',
         )} ~ ${date.format(market.pickupEndAt, 'HH시 mm분')}`}
+         */}
+        {`픽업: ${market.pickupStartAt} ~ ${market.pickupEndAt}`}
       </S.MarketPickupTime>
     </S.MarketWrapper>
   );

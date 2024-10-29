@@ -24,7 +24,6 @@ type CartItem = {
 };
 
 const MarketDetailPage = ({
-  name,
   pickupStartAt,
   pickupEndAt,
   address,
@@ -238,13 +237,12 @@ const MarketDetailPage = ({
   return (
     <S.MarketDetailInfoView>
       <S.MarketMainInfoWrapper>
-        <S.MarKetName>{name} </S.MarKetName>
         <S.MarketDescription>
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
-        <S.MarketTimeDescription>
+        {/* <S.MarketTimeDescription>
           {`픽업 마감까지 ${date.format(pickupEndAt - Date.now(), 'HH시간 mm분')} 남았습니다!`}
-        </S.MarketTimeDescription>
+        </S.MarketTimeDescription> */}
       </S.MarketMainInfoWrapper>
       <S.MarketSideInfoWrapper>
         <S.MarketSideInfo>{`픽업: ${date.format(

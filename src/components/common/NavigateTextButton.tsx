@@ -20,7 +20,7 @@ const NavigationTextButton = ({
   isNotice = true,
 }: NavigationTextButtonProps) => {
   return (
-    <S.TouchableButtonContainer onPress={onPress} disabled={!Boolean(onPress)}>
+    <S.TouchableButtonContainer onPress={onPress} disabled={!onPress}>
       <S.TouchableWrapper>
         <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
           {text}

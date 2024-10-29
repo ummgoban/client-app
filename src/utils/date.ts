@@ -8,7 +8,7 @@ import 'dayjs/locale/ko';
  * @returns 변환된 날짜
  * @example format(1627772400000) // '2021. 07. 31. (토)'
  */
-function format(timestamp: number, template?: string): string {
+export function format(timestamp: number, template?: string): string {
   const date = new Date(timestamp);
 
   return dayjs(date)
@@ -22,7 +22,7 @@ function format(timestamp: number, template?: string): string {
  * @returns `[hour, minute]`
  * @example decimalToTime(1.5) // [1, 30]
  */
-function decimalToTime(decimal: number): [number, number] {
+export function decimalToTime(decimal: number): [number, number] {
   const hour = Math.floor(decimal);
   const minute = Math.floor((decimal - hour) * 60);
 
@@ -35,7 +35,7 @@ function decimalToTime(decimal: number): [number, number] {
  * @returns `string` 2자리 숫자
  * @example zeroPad(1) // '01'
  */
-function zeroPad(num: number): string {
+export function zeroPad(num: number): string {
   return num.toString().padStart(2, '0');
 }
 
@@ -45,15 +45,6 @@ function zeroPad(num: number): string {
  * @returns `boolean` 현재 시간이 target 시간 이후인지 여부
  * @example isAfter(new Date()) // true
  */
-function isAfter(target: Date): boolean {
+export function isAfter(target: Date): boolean {
   return dayjs().isAfter(target);
 }
-
-const date = {
-  format,
-  decimalToTime,
-  zeroPad,
-  isAfter,
-};
-
-export default date;

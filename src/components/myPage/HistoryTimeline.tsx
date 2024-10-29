@@ -1,5 +1,5 @@
 import React from 'react';
-import date from '@utils/date';
+import {format} from '@utils/date';
 import S from './HistoryTimeline.style';
 
 // TODO: 이미지 경로 수정
@@ -21,7 +21,7 @@ const HistoryTimeline = ({
       <S.TitleLayout>
         <S.CheckIcon source={{uri: checkImageSrc}} width={24} height={24} />
         <S.Title>{title}</S.Title>
-        <S.Timestamp>{date.format(timestamp, 'HH시 mm분')}</S.Timestamp>
+        <S.Timestamp>{format(timestamp, 'HH시 mm분')}</S.Timestamp>
       </S.TitleLayout>
       <S.DescriptionLayout>
         <S.DashedLine dashline={dashline} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import S from './NavigateButton.style';
-import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 type NavigateNoticeTextButtonProps = {

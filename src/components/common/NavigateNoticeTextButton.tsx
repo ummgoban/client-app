@@ -8,11 +8,9 @@ type NavigateNoticeTextButtonProps = {
   onPress: () => void;
   fontColor?: string;
   fontSize?: string;
-  iconSource?: {uri: string};
   iconSize?: number;
 };
 
-// TODO: Icon 색상 변경
 const NavigateNoticeTextButton = ({
   text,
   onPress,
@@ -21,14 +19,14 @@ const NavigateNoticeTextButton = ({
   iconSize = 16,
 }: NavigateNoticeTextButtonProps) => {
   return (
-    <S.TouchableNavigateWrapper>
-      <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
-        {text}
-      </S.NoticeText>
-      <TouchableOpacity onPress={onPress}>
+    <S.TouchableButtonContainer onPress={onPress}>
+      <S.TouchableWrapper>
+        <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
+          {text}
+        </S.NoticeText>
         <Icon name="right" size={iconSize} color={fontColor} />
-      </TouchableOpacity>
-    </S.TouchableNavigateWrapper>
+      </S.TouchableWrapper>
+    </S.TouchableButtonContainer>
   );
 };
 

@@ -20,49 +20,60 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
 
+  // TODO: 실제 navigate 적용
+  const handlePress = () => {
+    Alert.alert('실제 navigate 로직 적용 필요');
+  };
+
   return (
     <S.MyPageContainer
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <Profile image={profile.image} />
+      <S.ProfileImageSection>
+        <Profile image={profile.image} />
+      </S.ProfileImageSection>
       <ListBox
         items={[
-          {label: '이름', value: `${profile.name}`},
-          {label: '이메일', value: `test@example.com`},
-          {label: '전화번호', value: `010-1234-5678`},
+          {label: '이름', value: `${profile.name}`, onPress: handlePress},
+          {
+            label: '이메일',
+            value: `test@example.com`,
+            onPress: handlePress,
+          },
+          {label: '전화번호', value: `010-1234-5678`, onPress: handlePress},
         ]}
       />
       <S.NoticeSection>
         <S.NoticeSectionTitle>문의 및 알림</S.NoticeSectionTitle>
-        <S.ButtonRow>
+        <S.ButtonContainer>
           <NavigateTextButton
             text="공지사항"
             fontSize="20px"
-            onPress={() => Alert.alert('공지사항 화면으로 이동')}
+            onPress={handlePress}
           />
           <NavigateTextButton
             text="약관 및 정책"
             fontSize="20px"
-            onPress={() => Alert.alert('약관 및 정책 화면으로 이동')}
+            onPress={handlePress}
           />
-        </S.ButtonRow>
-        <S.ButtonRow>
+        </S.ButtonContainer>
+        <S.ButtonContainer>
           <NavigateTextButton
             text="공지사항"
             fontSize="20px"
-            onPress={() => Alert.alert('공지사항 화면으로 이동')}
+            onPress={handlePress}
           />
           <NavigateTextButton
             text="약관 및 정책"
             fontSize="20px"
-            onPress={() => Alert.alert('약관 및 정책 화면으로 이동')}
+            onPress={handlePress}
           />
-        </S.ButtonRow>
+        </S.ButtonContainer>
       </S.NoticeSection>
       <S.BottomSectionContainer>
         <S.BottomSection>
-          <S.ButtonRow>
+          <S.ButtonContainer>
             <NavigateTextButton
               text="로그아웃"
               fontSize="12px"
@@ -82,13 +93,14 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               }}
             />
             <S.VerticalDivider />
+            {/* TODO: 회원탈퇴 로직 적용 */}
             <NavigateTextButton
               text="회원탈퇴"
               fontSize="12px"
               fontColor="#888"
               onPress={() => Alert.alert('회원탈퇴')}
             />
-          </S.ButtonRow>
+          </S.ButtonContainer>
         </S.BottomSection>
       </S.BottomSectionContainer>
     </S.MyPageContainer>

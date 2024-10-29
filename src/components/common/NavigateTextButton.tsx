@@ -4,7 +4,7 @@ import {TouchableOpacity} from 'react-native';
 
 type NavigateTextButtonProps = {
   text: string;
-  onPress: () => void;
+  onPress?: () => void;
   fontColor?: string;
   fontSize?: string;
 };
@@ -16,13 +16,13 @@ const NavigateTextButton = ({
   fontSize = '16px',
 }: NavigateTextButtonProps) => {
   return (
-    <S.TouchableNavigateWrapper>
+    <S.TouchableButtonContainer>
       <TouchableOpacity onPress={onPress}>
         <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
           {text}
         </S.NoticeText>
       </TouchableOpacity>
-    </S.TouchableNavigateWrapper>
+    </S.TouchableButtonContainer>
   );
 };
 

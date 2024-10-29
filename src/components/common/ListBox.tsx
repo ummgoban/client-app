@@ -1,10 +1,11 @@
 import React from 'react';
 import S from './ListBox.style';
 import NavigateNoticeTextButton from './NavigateNoticeTextButton';
-import {Alert} from 'react-native';
+import NavigateTextButton from './NavigateTextButton';
 type ListBoxItemProps = {
   label: string;
-  value?: string;
+  value: string;
+  onPress?: () => void;
 };
 
 type ListBoxProps = {
@@ -12,10 +13,6 @@ type ListBoxProps = {
 };
 
 const ListBox = ({items}: ListBoxProps) => {
-  const handlePress = () => {
-    // TODO: 변경 목록 확정 필요
-    Alert.alert('TODO 변경 목록 확정이후 변경');
-  };
   return (
     <S.ListWrapper>
       {items.map((item, index) => {
@@ -24,14 +21,22 @@ const ListBox = ({items}: ListBoxProps) => {
         return (
           <S.ListItem key={index} isFirst={isFirst} isLast={isLast}>
             <S.ItemLabel>{item.label}</S.ItemLabel>
-            {item.value && (
-              <NavigateNoticeTextButton
-                text={item.value}
-                onPress={handlePress}
-                fontColor="#888"
-                fontSize="16px"
-              />
-            )}
+            {item.value &&
+              (item.onPress ? (
+                <NavigateNoticeTextButton
+                  text={item.value}
+                  onPress={item.onPress}
+                  fontColor="#888"
+                  fontSize="16px"
+                  iconSize={20}
+                />
+              ) : (
+                <NavigateTextButton
+                  text={item.value}
+                  fontColor="#888"
+                  fontSize="16px"
+                />
+              ))}
           </S.ListItem>
         );
       })}

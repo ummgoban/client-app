@@ -4,6 +4,10 @@ const MyPageContainer = styled.ScrollView`
   margin: 32px 16px;
 `;
 
+const ProfileImageSection = styled.View`
+  margin-bottom: 32px;
+`;
+
 const NoticeSection = styled.View`
   display: flex;
   margin: 48px 16px;
@@ -17,7 +21,7 @@ const NoticeSectionTitle = styled.Text`
   color: #888;
 `;
 
-const ButtonRow = styled.View`
+const ButtonContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 16px;
@@ -40,11 +44,12 @@ const BottomSection = styled.View`
 const S = {
   MyPageContainer,
   NoticeSectionTitle,
-  ButtonRow,
+  ButtonContainer,
   NoticeSection,
   VerticalDivider,
   BottomSectionContainer,
   BottomSection,
+  ProfileImageSection,
 };
 
 export default S;

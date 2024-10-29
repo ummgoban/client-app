@@ -3,7 +3,7 @@ name: Lint & Prettier & Typecheck
 on:
   pull_request:
     branches:
-      - chore/**
+      - main
     paths:
       - '**/*.ts'
       - '**/*.tsx'

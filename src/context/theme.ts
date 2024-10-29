@@ -1,13 +1,116 @@
 import {MD3LightTheme as DefaultTheme} from 'react-native-paper';
 
-// TODO: 각종 공통 테마 적용하기
 const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'tomato',
-    secondary: 'yellow',
+    primary: 'rgba(112, 200, 2, 1)',
+    primaryHover: 'rgba(112, 200, 2, 0.08)',
+    primaryPressed: 'rgba(112, 200, 2, 0.18)',
+    primaryDisabled: 'rgba(112, 200, 2, 0.38)',
+    secondary: 'rgba(255, 255, 255, 1)',
+    secondaryHover: 'rgba(255, 255, 255, 0.08)',
+    secondaryPressed: 'rgba(255, 255, 255, 0.18)',
+    secondaryDisabled: 'rgba(255, 255, 255, 0.38)',
+    tertiary: 'rgba(0, 0, 0, 1)',
+    tertiaryHover: 'rgba(0, 0, 0, 0.08)',
+    tertiaryPressed: 'rgba(0, 0, 0, 0.18)',
+    tertiaryDisabled: 'rgba(0, 0, 0, 0.38)',
   },
-};
+  fonts: {
+    ...DefaultTheme.fonts,
+    h1: {
+      fontSize: 96,
+      fontWeight: 'light',
+      letterSpacing: -1.5,
+      lineHeight: 96,
+      fontFamily: 'Roboto',
+    },
+    h2: {
+      fontSize: 60,
+      fontWeight: 'light',
+      letterSpacing: -0.5,
+      lineHeight: 60,
+      fontFamily: 'Roboto',
+    },
+    h3: {
+      fontSize: 48,
+      fontWeight: 'regular',
+      letterSpacing: 0,
+      lineHeight: 48,
+      fontFamily: 'Roboto',
+    },
+    h4: {
+      fontSize: 34,
+      fontWeight: 'regular',
+      letterSpacing: 0.25,
+      lineHeight: 34,
+      fontFamily: 'Roboto',
+    },
+    h5: {
+      fontSize: 24,
+      fontWeight: 'regular',
+      letterSpacing: 0,
+      lineHeight: 24,
+      fontFamily: 'Roboto',
+    },
+    h6: {
+      fontSize: 20,
+      fontWeight: 'medium',
+      letterSpacing: 0.15,
+      lineHeight: 20,
+      fontFamily: 'Roboto',
+    },
+    subtitle1: {
+      fontSize: 16,
+      fontWeight: 'regular',
+      letterSpacing: 0.15,
+      lineHeight: 16,
+      fontFamily: 'Roboto',
+    },
+    subtitle2: {
+      fontSize: 14,
+      fontWeight: 'medium',
+      letterSpacing: 0.1,
+      lineHeight: 14,
+      fontFamily: 'Roboto',
+    },
+    body1: {
+      fontSize: 16,
+      fontWeight: 'regular',
+      letterSpacing: 0.5,
+      lineHeight: 16,
+      fontFamily: 'Roboto',
+    },
+    body2: {
+      fontSize: 14,
+      fontWeight: 'regular',
+      letterSpacing: 0.25,
+      lineHeight: 14,
+      fontFamily: 'Roboto',
+    },
+    button: {
+      fontSize: 14,
+      fontWeight: 'medium',
+      letterSpacing: 1.25,
+      lineHeight: 14,
+      fontFamily: 'Roboto',
+    },
+    caption: {
+      fontSize: 12,
+      fontWeight: 'regular',
+      letterSpacing: 0.4,
+      lineHeight: 12,
+      fontFamily: 'Roboto',
+    },
+    overline: {
+      fontSize: 10,
+      fontWeight: 'regular',
+      letterSpacing: 1.5,
+      lineHeight: 10,
+      fontFamily: 'Roboto',
+    },
+  },
+} as const;
 
 export default theme;

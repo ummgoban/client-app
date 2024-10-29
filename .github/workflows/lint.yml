@@ -4,12 +4,6 @@ on:
   pull_request:
     branches:
       - chore/**
-    paths:
-      - '**/*.ts'
-      - '**/*.tsx'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'Podfile.lock'
 
 jobs:
   build-CI:

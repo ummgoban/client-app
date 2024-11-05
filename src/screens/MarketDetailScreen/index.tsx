@@ -46,7 +46,7 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       pickupEndAt={marketDetail.pickupEndAt}
       address={marketDetail.address}
       products={marketDetail.products}
-      marketId={route.params.marketId}
+      marketId={route.params.marketId.toString()}
     />
   );
 };

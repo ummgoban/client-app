@@ -19,7 +19,11 @@ const HomeNavigator = () => {
   return (
     <Tab.Navigator tabBar={TabBar}>
       <Tab.Screen name="Feed" options={screenOptions} component={HomeScreen} />
-      <Tab.Screen name="Subscribe" component={SubscribeScreen} />
+      <Tab.Screen
+        name="Subscribe"
+        options={screenOptions}
+        component={SubscribeScreen}
+      />
       <Tab.Screen name="OrderHistory" component={OrderHistoryScreen} />
       <Tab.Screen name="MyPage" component={MyPageScreen} />
 

@@ -1,9 +1,10 @@
 name: CI
 
+# TODO: chore -> main
 on:
   pull_request:
     branches:
-      - main
+      - chore/*
 
 jobs:
   install-dependencies:

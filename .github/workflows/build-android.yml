@@ -3,7 +3,7 @@ name: Android Build on Main
 on:
   pull_request:
     branches:
-      - main
+      - chore/**
 
 jobs:
   build:

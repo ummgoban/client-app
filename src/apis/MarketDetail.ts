@@ -3,6 +3,7 @@ import {MarketType} from '@/types/Market';
 const dummyMarketDetail: MarketType = {
   id: 1,
   name: '반찬가게1',
+  isLike: false,
   pickupStartAt: 1609718400000,
   pickupEndAt: 1727622000000,
   products: [

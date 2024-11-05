@@ -16,6 +16,7 @@ import {ProductType} from '@/types/ProductType';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import SubscribeIcon from '@/components/common/SubscribeIcon';
 
 type CartItem = {
   productId: number;
@@ -29,6 +30,8 @@ const MarketDetailPage = ({
   pickupEndAt,
   address,
   products,
+  isLike,
+  marketId,
 }: Omit<MarketType, 'id' | 'images'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -42,6 +45,7 @@ const MarketDetailPage = ({
     {},
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
+  const [marketisLiked, setMarketisLiked] = useState<boolean>(isLike);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
@@ -209,6 +213,9 @@ const MarketDetailPage = ({
     scrollToSection(tag);
   };
 
+  const handleSubscribe = () => {
+    setMarketisLiked(prevState => !prevState);
+  };
   const navigatePage = () => {
     if (cart.length === 0) {
       Alert.alert('장바구니가 비어 있습니다.');
@@ -253,6 +260,13 @@ const MarketDetailPage = ({
         )} ~ ${format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
         <S.MarketSideInfo>{address}</S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
+      <View>
+        <SubscribeIcon
+          marketIsLiked={marketisLiked}
+          marketId={marketId}
+          handleSubscribe={handleSubscribe}
+        />
+      </View>
       <S.SideTagBarScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

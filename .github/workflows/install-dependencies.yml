@@ -1,0 +1,39 @@
+name: Install Dependencies
+
+on:
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.yarn-cache.outputs.cache-hit }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Set Yarn Version
+        run: yarn set version 3.6.4
+
+      - name: Get cache dir path
+        id: yarn-cache-dir-path
+        run: echo "CACHE_DIR=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.CACHE_DIR }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Dependencies
+        run: yarn install

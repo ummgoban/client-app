@@ -1,19 +1,12 @@
-name: Lint & Prettier & Typecheck
+name: Android Build on Main
 
 on:
   pull_request:
     branches:
-      - "*"
-    paths:
-      - '**/*.ts'
-      - '**/*.tsx'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'Podfile.lock'
+      - main
 
 jobs:
-  lint-check:
-    if: ${{ !startsWith(github.head_ref, 'dependabot/') }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,11 +32,25 @@ jobs:
             yarn install
           fi
 
-      - name: Lint Check
-        run: yarn lint
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
-      - name: Prettier Check
-        run: yarn format:check
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 30
+          build-tools: 30.0.3
+          target: android-30
 
-      - name: TypeScript Check
-        run: yarn tsc
+      - name: Build the Android app
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk

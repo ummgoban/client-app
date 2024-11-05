@@ -1,6 +1,6 @@
 import {MarketType} from '@/types/Market';
 import apiClient from './ApiClient';
-
+import {CommonResponseType} from '@/types/CommonResponseType';
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,
@@ -24,13 +24,16 @@ export const getMarketList = async (
 export const updateMarketLike = async (
   marketId: string,
   marketIsLiked: boolean,
-) => {
+): Promise<CommonResponseType | null> => {
   try {
     const res = marketIsLiked
-      ? await apiClient.del(`/market/${marketId}/like`)
-      : await apiClient.post(`/market/${marketId}/like`);
-
-    if (res.status === 200 || res.status === 201) {
+      ? await apiClient.del<CommonResponseType | null>(
+          `/market/${marketId}/like`,
+        )
+      : await apiClient.post<CommonResponseType | null>(
+          `/market/${marketId}/like`,
+        );
+    if (res && (res.code === 200 || res.code === 201)) {
       return res;
     }
     return null;

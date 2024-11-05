@@ -10,5 +10,5 @@ export type MarketType = {
   images: string[];
   isLike: boolean;
   // TODO: 논의 필요
-  marketId?: number;
+  marketId?: string;
 };

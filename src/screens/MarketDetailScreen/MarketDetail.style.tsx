@@ -50,7 +50,7 @@ const MarketSideInfo = styled.Text`
 `;
 
 const SideTagBarScrollView = styled.ScrollView`
-  padding-bottom: 16px;
+  padding-bottom: 24px;
 `;
 
 const SideBarView = styled.View<{selected: boolean}>`

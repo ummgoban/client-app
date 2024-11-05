@@ -265,8 +265,6 @@ const MarketDetailPage = ({
         ))}
       </S.SideTagBarScrollView>
 
-      <S.Divider />
-
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}

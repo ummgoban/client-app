@@ -1,6 +1,5 @@
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
-import {format} from '@utils/date';
 import React from 'react';
 type Props = {
   market: MarketType;
@@ -22,10 +21,7 @@ const Market = ({market, onPress}: Props) => {
       </S.MarketImageContainer>
       <S.MarketTitle>{market.name}</S.MarketTitle>
       <S.MarketPickupTime>
-        {`픽업: ${format(
-          market.pickupStartAt,
-          'HH시 mm분',
-        )} ~ ${format(market.pickupEndAt, 'HH시 mm분')}`}
+        {`픽업: ${market.pickupStartAt} ~ ${market.pickupEndAt}`}
       </S.MarketPickupTime>
     </S.MarketWrapper>
   );

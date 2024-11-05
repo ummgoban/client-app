@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {CommonResponseType} from '@/apis/CommonResponseType';
+import {CommonResponseType} from '@/types/CommonResponseType';
 import apiClient from '@/apis/ApiClient';
 
 type SubscribeIconProps = {

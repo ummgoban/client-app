@@ -11,7 +11,7 @@ import MarketDetailPage from './MarketDetailPage';
 
 type Props = StackScreenProps<DetailStackParamList, 'Market'>;
 
-const MarketDetailScreen = ({route}: Props) => {
+const MarketDetailScreen = ({navigation, route}: Props) => {
   const [marketDetail, setMarketDetail] = useState<MarketType | null>(null);
 
   useEffect(() => {
@@ -27,6 +27,12 @@ const MarketDetailScreen = ({route}: Props) => {
 
     fetchMarketDetail();
   }, [route.params.marketId]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: marketDetail?.name ?? '가게 정보',
+    });
+  }, [marketDetail?.name, navigation]);
 
   if (!marketDetail) {
     return <Text>가게 상세정보를 불러오는데 실패했습니다.</Text>;

@@ -1,47 +1,22 @@
-import date from '@/utils/date';
-import React, {useState} from 'react';
-import S from './DatePicker.style';
+import React from 'react';
 
-type Props = {
-  onChange: (hour: number, minute: number) => void;
-  hour: number;
-  minute: number;
-  step?: number;
-  range?: [number, number];
-};
+import {
+  DatePickerProps,
+  default as RNDatePicker,
+} from 'react-native-date-picker';
 
-const DatePicker = ({
-  onChange,
-  hour,
-  minute,
-  step = 30,
-  range = [0, 24],
-}: Props) => {
-  const [selectedTime, setSelectedTime] = useState({hour, minute});
+type Props = {} & DatePickerProps;
 
-  const timeRange = Array.from(
-    {length: ((range[1] - range[0]) * 60) / step},
-    (_, i) => range[0] + (i * step) / 60,
-  );
-
+const DatePicker = (props: Props) => {
   return (
-    <S.ChipContainer>
-      {timeRange.map(time => {
-        const [h, m] = date.decimalToTime(time);
-        return (
-          <S.DateChip
-            key={time}
-            onPress={() => {
-              setSelectedTime({hour: h, minute: m});
-              onChange(h, m);
-            }}
-            selected={h === selectedTime.hour && m === selectedTime.minute}
-            disabled={date.isAfter(
-              new Date(new Date().setHours(h, m, 0, 0)),
-            )}>{`${date.zeroPad(h)}:${date.zeroPad(m)}`}</S.DateChip>
-        );
-      })}
-    </S.ChipContainer>
+    <RNDatePicker
+      {...props}
+      modal
+      mode="time"
+      date={new Date('2024-01-01T08:00:00')}
+      confirmText={props.confirmText ?? '확인'}
+      cancelText={props.cancelText ?? '취소'}
+    />
   );
 };
 

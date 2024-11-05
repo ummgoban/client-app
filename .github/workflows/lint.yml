@@ -4,9 +4,16 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'Podfile.lock'
 
 jobs:
   build-CI:
+    if: ${{!startsWith(github.head_ref, 'dependabot/')}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

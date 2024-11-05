@@ -8,7 +8,7 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent,
 } from 'react-native';
-import date from '@utils/date';
+import {format} from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
 import {MarketType} from '@/types/Market';
@@ -234,15 +234,15 @@ const MarketDetailPage = ({
         <S.MarketDescription>
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
-        {/* <S.MarketTimeDescription>
-          {`픽업 마감까지 ${date.format(pickupEndAt - Date.now(), 'HH시간 mm분')} 남았습니다!`}
-        </S.MarketTimeDescription> */}
+        <S.MarketTimeDescription>
+          {`픽업 마감까지 ${format(pickupEndAt - Date.now(), 'HH시간 mm분')} 남았습니다!`}
+        </S.MarketTimeDescription>
       </S.MarketMainInfoWrapper>
       <S.MarketSideInfoWrapper>
-        <S.MarketSideInfo>{`픽업: ${date.format(
+        <S.MarketSideInfo>{`픽업: ${format(
           pickupStartAt,
           'HH시 mm분',
-        )} ~ ${date.format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
+        )} ~ ${format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
         <S.MarketSideInfo>{address}</S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
       <S.SideTagBarScrollView

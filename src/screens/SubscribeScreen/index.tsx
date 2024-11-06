@@ -5,8 +5,14 @@ import {getSubscribeList} from '@/apis/Subscribe';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import S from './SubscribeScreen.style';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '@/types/StackNavigationType';
 
-const SubscribeScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
+};
+
+const SubscribeScreen = ({navigation}: Props) => {
   const [markets, setMarkets] = useState<SubscribeType[] | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -17,8 +23,16 @@ const SubscribeScreen = () => {
     }
     setMarkets(res);
   }, []);
-  console.log(markets?.length);
+
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
+
+  const onPressStore = (marketId: number) => {
+    navigation.navigate('Detail', {
+      screen: 'Market',
+      params: {marketId},
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -40,6 +54,7 @@ const SubscribeScreen = () => {
         {markets.map(item => (
           <SubscribeMarketCard
             key={item.id}
+            marketid={item.id}
             name={item.name}
             address={item.address}
             specificAddress={item.specificAddress}
@@ -47,6 +62,7 @@ const SubscribeScreen = () => {
             closeAt={item.closeAt}
             // TODO: 가게 대표 이미지로 변경, 현재 response 부재
             thumbnailImage={item.products[0].image}
+            onPress={onPressStore}
           />
         ))}
       </S.SubscribeMarketCartWrapper>

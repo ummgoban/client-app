@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 
-const SubscribeMarketCard = styled.View`
+const SubscribeMarketCard = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   background-color: white;

@@ -77,7 +77,7 @@ const MenuCounterButtonWrapper = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   width: 32px;
-  background-color: lightblue;
+  background-color: #70c802;
   height: 30px;
   text-align: center;
 `;
@@ -86,6 +86,12 @@ const MenuCounterButton = styled.Text`
   font-size: 16px;
   font-weight: bold;
   color: black;
+`;
+
+const MenuCounterSideButton = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
 `;
 
 const MenuDeleteButtonWrapper = styled.TouchableOpacity`
@@ -114,6 +120,7 @@ const S = {
   MenuCounterButtonWrapper,
   MenuCounterButton,
   MenuDeleteButtonWrapper,
+  MenuCounterSideButton,
   MenuDeleteText,
 };
 

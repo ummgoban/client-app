@@ -202,7 +202,6 @@ const MarketDetailPage = ({
   };
 
   const navigatePage = () => {
-    console.log('??????');
     if (cart.length === 0) {
       Alert.alert('장바구니가 비어 있습니다.');
       return;

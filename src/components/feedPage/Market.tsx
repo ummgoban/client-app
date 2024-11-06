@@ -6,7 +6,6 @@ type Props = {
   onPress: (marketId: number) => void;
 };
 const Market = ({market, onPress}: Props) => {
-  console.log('현재 가게 정보: ', market);
   return (
     <S.MarketWrapper onPress={() => onPress(market.id)}>
       <S.MarketImageContainer>

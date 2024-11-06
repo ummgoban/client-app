@@ -10,7 +10,11 @@
     "start": "react-native start",
     "test": "jest",
     "format:check": "prettier --check --ignore-path .prettierignore .",
-    "format:fix": "prettier --write --ignore-path .prettierignore ."
+    "format:fix": "prettier --write --ignore-path .prettierignore .",
+    "build:android-clean": "cd android && ./gradlew clean",
+    "build:android-apk": "cd android && ./gradlew build",
+    "build:android-aab": "cd android && ./gradlew bundleRelease",
+    "build:android-release": "yarn build:android-clean && yarn build:android-apk"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",

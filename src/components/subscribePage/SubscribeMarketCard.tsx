@@ -3,7 +3,7 @@ import S from './SubscribeMarketCard.style';
 
 type SubscribeMarketCardProps = {
   name: string;
-  marketid: number;
+  marketId: number;
   address: string;
   specificAddress: string;
   openAt: string;
@@ -14,7 +14,7 @@ type SubscribeMarketCardProps = {
 
 const SubscribeMarketCard = ({
   name,
-  marketid,
+  marketId,
   address,
   specificAddress,
   openAt,
@@ -23,7 +23,7 @@ const SubscribeMarketCard = ({
   onPress,
 }: SubscribeMarketCardProps) => {
   return (
-    <S.SubscribeMarketCard onPress={() => onPress(marketid)}>
+    <S.SubscribeMarketCard onPress={() => onPress(marketId)}>
       <S.thumbnailImage source={{uri: thumbnailImage}} />
       <S.MarketInfo>
         <S.MarketNameText>{name}</S.MarketNameText>

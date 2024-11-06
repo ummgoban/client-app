@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Alert, Text, RefreshControl, StyleSheet} from 'react-native';
+import {View, Alert, Text, RefreshControl} from 'react-native';
 import {SubscribeType} from '@/types/Subscribe';
 import {getSubscribeList} from '@/apis/Subscribe';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
@@ -54,7 +54,7 @@ const SubscribeScreen = ({navigation}: Props) => {
         {markets.map(item => (
           <SubscribeMarketCard
             key={item.id}
-            marketid={item.id}
+            marketId={item.id}
             name={item.name}
             address={item.address}
             specificAddress={item.specificAddress}
@@ -69,11 +69,5 @@ const SubscribeScreen = ({navigation}: Props) => {
     </S.SubscribeContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  listContent: {
-    padding: 16,
-  },
-});
 
 export default SubscribeScreen;

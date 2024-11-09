@@ -9,7 +9,12 @@ import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './SearchBar.style';
-
+import {
+  handleForegroundMessage,
+  requestUserPermission,
+  requestNotificationPermission,
+  setBackgroundMessageHandler,
+} from '@/utils/fcm';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
@@ -36,7 +41,13 @@ const FeedScreen = ({navigation}: Props) => {
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
   useEffect(() => {
+    // TODO: fcm permission 로직 위치 논의 필요
+    requestNotificationPermission();
+    const unsubscribe = handleForegroundMessage();
+    requestUserPermission();
+    setBackgroundMessageHandler();
     fetchData();
+    return unsubscribe;
   }, [fetchData]);
 
   if (!marketList) {

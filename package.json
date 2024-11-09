@@ -19,6 +19,9 @@
   "dependencies": {
     "@emotion/native": "^11.11.0",
     "@emotion/react": "^11.13.0",
+    "@notifee/react-native": "^9.1.2",
+    "@react-native-firebase/app": "^21.3.0",
+    "@react-native-firebase/messaging": "^21.3.0",
     "@react-native-seoul/kakao-login": "^5.4.1",
     "@react-native-seoul/naver-login": "^4.0.1",
     "@react-navigation/bottom-tabs": "^6.6.1",

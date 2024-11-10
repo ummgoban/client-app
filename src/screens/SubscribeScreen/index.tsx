@@ -21,7 +21,7 @@ const SubscribeScreen = ({navigation}: Props) => {
       Alert.alert('찜 리스트 받아오기 실패');
       return;
     }
-    setMarkets(res);
+    setMarkets(res.markets);
   }, []);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);

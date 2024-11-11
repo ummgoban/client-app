@@ -6,6 +6,7 @@ import MyPageScreen from '@screens/MyPageScreen';
 import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import {HomeStackParamList} from '@/types/StackNavigationType';
 import CartIcon from '@/components/common/CartNavigatorIcon';
+import SubscribeScreen from '@/screens/SubscribeScreen';
 
 const Tab = createBottomTabNavigator<HomeStackParamList>();
 
@@ -18,8 +19,14 @@ const HomeNavigator = () => {
   return (
     <Tab.Navigator tabBar={TabBar}>
       <Tab.Screen name="Feed" options={screenOptions} component={HomeScreen} />
-      <Tab.Screen name="MyPage" component={MyPageScreen} />
+      <Tab.Screen
+        name="Subscribe"
+        options={screenOptions}
+        component={SubscribeScreen}
+      />
       <Tab.Screen name="OrderHistory" component={OrderHistoryScreen} />
+      <Tab.Screen name="MyPage" component={MyPageScreen} />
+
       {/* <Tab.Screen name="Favorite" component={FavoriteScreen} /> */}
       {/* Add more screens here */}
     </Tab.Navigator>

@@ -23,6 +23,10 @@ const tabBarData: TabBarComponentType = {
     label: '주문 내역',
     icon: 'https://legacy.reactjs.org/logo-og.png',
   },
+  Subscribe: {
+    label: '찜',
+    icon: 'https://legacy.reactjs.org/logo-og.png',
+  },
 };
 
 // TODO: resolve inline style

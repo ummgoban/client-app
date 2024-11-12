@@ -77,9 +77,17 @@ class ApiClient {
     }
   };
 
-  post = async <T>(url: string, body?: unknown): Promise<T | null> => {
+  post = async <T>(
+    url: string,
+    body?: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.post(url, body);
+      const res: AxiosResponse = await this.axiosInstance.post(
+        url,
+        body,
+        config,
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -87,9 +95,17 @@ class ApiClient {
     }
   };
 
-  patch = async <T>(url: string, body: unknown): Promise<T | null> => {
+  patch = async <T>(
+    url: string,
+    body: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.patch(url, body);
+      const res: AxiosResponse = await this.axiosInstance.patch(
+        url,
+        body,
+        config,
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -97,9 +113,17 @@ class ApiClient {
     }
   };
 
-  put = async <T>(url: string, body: unknown): Promise<T | null> => {
+  put = async <T>(
+    url: string,
+    body: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.put(url, body);
+      const res: AxiosResponse = await this.axiosInstance.put(
+        url,
+        body,
+        config,
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -107,11 +131,12 @@ class ApiClient {
     }
   };
 
-  del = async <T>(url: string, body?: unknown): Promise<T | null> => {
+  del = async <T>(
+    url: string,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.delete(url, {
-        data: body,
-      });
+      const res: AxiosResponse = await this.axiosInstance.delete(url, config);
       return res.data;
     } catch (error) {
       console.error(error);

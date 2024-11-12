@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {CartType, OrderType} from '../types/OrderType';
+import {PaymentInfo} from '@tosspayments/widget-sdk-react-native/lib/typescript/src/models/PaymentInfo';
+import apiClient from './ApiClient';
+import {Success} from '@tosspayments/widget-sdk-react-native';
 
 const dummyCart: CartType = {
   id: 1,
@@ -161,6 +164,13 @@ const dummyHistoryList: OrderType[] = [
   },
 ];
 
+const randomString = (): string => Math.random().toString(36).substr(2, 16);
+
+const dummyPaymentInfo: PaymentInfo = {
+  orderId: randomString(),
+  orderName: '김치',
+};
+
 // TODO: fetch order history
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   try {
@@ -192,6 +202,37 @@ export const getCart = async (): Promise<CartType | null> => {
     });
   } catch (error) {
     console.error(error);
+    return null;
+  }
+};
+
+export const requestOrder = async (
+  cart: CartType,
+): Promise<PaymentInfo | null> => {
+  try {
+    // TODO: uri 수정
+    // const res = await apiClient.post<PaymentInfo | null>('/order', cart);
+    console.debug(cart);
+    const res = dummyPaymentInfo;
+
+    return res;
+  } catch (error) {
+    console.debug(error);
+    return null;
+  }
+};
+
+export const requestOrderSuccess = async (
+  success: Success,
+): Promise<Boolean | null> => {
+  try {
+    // TODO: uri 수정
+    // const res = await apiClient.post<Boolean>('/order/success', success);
+    console.debug(success);
+    const res = true;
+    return res;
+  } catch (error) {
+    console.debug(error);
     return null;
   }
 };

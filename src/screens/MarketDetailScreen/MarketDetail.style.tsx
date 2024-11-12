@@ -59,8 +59,10 @@ const SideBarView = styled.View<{selected: boolean}>`
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background-color: ${({selected}) => (selected ? '#70C802' : 'white')};
-  border: ${({selected}) => (selected ? '' : '1px solid #70C802')};
+  background-color: ${({selected, theme}) =>
+    selected ? theme.colors.primary : 'white'};
+  border: ${({selected, theme}) =>
+    selected ? '' : `1px solid ${theme.colors.primary}`};
   margin: 5px;
   border-radius: 10px;
 `;

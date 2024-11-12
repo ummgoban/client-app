@@ -77,7 +77,7 @@ const MenuCounterButtonWrapper = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   width: 32px;
-  background-color: #70c802;
+  background-color: ${props => props.theme.colors.primary};
   height: 30px;
   text-align: center;
 `;

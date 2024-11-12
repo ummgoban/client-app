@@ -1,12 +1,12 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {getBuckets} from '@/apis/Bucket';
 import {BucketType} from '@/types/Bucket';
-import {Alert} from 'react-native';
-import {getCartHistory} from '@/apis/Cart';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import ShoppingCartPage from './ShoppingCartPage';
-import EmptyCartPage from './EmptyCartPage';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
+import EmptyCartPage from './EmptyCartPage';
+import ShoppingCartPage from './ShoppingCartPage';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -19,7 +19,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
   const fetchDummyData = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await getCartHistory();
+      const response = await getBuckets();
       if (!response) {
         setCartData(null);
         return;
@@ -57,7 +57,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     return <ActivityIndicator animating size="large" />;
   }
 
-  if (!cartData || cartData.products.length === 0) {
+  if (!cartData || !cartData.products) {
     return (
       <EmptyCartPage
         onPress={() => navigation.navigate('Home', {screen: 'Feed'})}

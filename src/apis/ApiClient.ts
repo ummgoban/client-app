@@ -27,7 +27,9 @@ class ApiClient {
       async (config: InternalAxiosRequestConfig) => {
         const session: SessionType | null = await getStorage('session');
 
-        this._JWTToken = session?.accessToken ?? null;
+        console.log('session:', session);
+
+        this._JWTToken = session?.jwtToken ?? null;
 
         if (this._JWTToken) {
           config.headers.Authorization = `Bearer ${this._JWTToken}`;
@@ -65,6 +67,7 @@ class ApiClient {
   ): Promise<T | null> => {
     try {
       const res: AxiosResponse = await this.axiosInstance.get(url, config);
+      console.debug('GET', url, res.data);
 
       if (res.data.code === 200 && res.data.data) {
         return res.data.data;
@@ -72,7 +75,8 @@ class ApiClient {
 
       return null;
     } catch (error) {
-      console.error(error);
+      console.debug('GET', url, error);
+      console.dir({error});
       return null;
     }
   };
@@ -88,9 +92,14 @@ class ApiClient {
         body,
         config,
       );
+
+      console.debug('POST', url, res.data);
+
       return res.data;
     } catch (error) {
+      console.debug('POST', url, error);
       console.error(error);
+
       return null;
     }
   };

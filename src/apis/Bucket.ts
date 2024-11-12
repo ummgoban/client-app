@@ -1,4 +1,5 @@
 import {BucketType} from '@/types/Bucket';
+import apiClient from './ApiClient';
 const dummyCartList: BucketType = {
   market: {
     id: 1,
@@ -51,16 +52,14 @@ const dummyCartList: BucketType = {
   ],
 };
 
-export const getCartHistory = async (): Promise<BucketType | null> => {
+export const getBuckets = async (): Promise<BucketType | null> => {
   try {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(dummyCartList);
-        console.log('fetch getCartHistory lists');
-      }, 500);
-    });
+    const res = await apiClient.get<BucketType | null>('/buckets');
+
+    // TODO: API 호출
+    return res?.products ? res : dummyCartList;
   } catch (error) {
-    console.error('Error fetching getCartHistory list:', error);
+    console.error('Error fetching getBurkets list:', error);
     return null;
   }
 };

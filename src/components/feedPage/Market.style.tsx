@@ -1,4 +1,44 @@
 import styled from '@emotion/native';
+import LinearGradient from 'react-native-linear-gradient';
+import theme from '@/context/theme';
+
+const MarketTitle = styled.Text`
+  font: ${theme.fonts.h6};
+  font-weight: 800;
+  padding-left: 10px;
+  margin-bottom: 4px;
+`;
+
+const MarketPickupTime = styled.Text`
+  font: ${theme.fonts.body2};
+  padding-left: 10px;
+`;
+
+const MarketAddress = styled.Text`
+  font: ${theme.fonts.body2};
+  padding-left: 10px;
+`;
+
+const MenuLabel = styled.Text`
+  position: absolute;
+  top: 5px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font: ${theme.fonts.caption};
+  z-index: 110;
+`;
+
+const PriceLabel = styled.Text`
+  position: absolute;
+  font: ${theme.fonts.body2};
+  top: 20px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  z-index: 101;
+`;
 
 const MarketWrapper = styled.TouchableOpacity`
   display: flex;
@@ -7,48 +47,45 @@ const MarketWrapper = styled.TouchableOpacity`
   border-radius: 8px;
   background-color: white;
   margin-bottom: 10px;
+  padding-bottom: 16px;
 `;
 
 const MarketImageContainer = styled.View`
+  display: flex;
+  gap: 8px;
   flex-direction: row;
-  justify-content: space-between;
-  padding: 10px;
+  align-items: center;
+  width: 100%;
+  height: 160px;
+  flex-direction: row;
+  padding: 16px;
+`;
+
+const MenuGradation = styled(LinearGradient)`
+  flex: 1;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  border-radius: 18px;
+  position: absolute;
 `;
 
 const MarketImageBox = styled.View`
-  position: relative;
+  display: flex;
   flex: 1;
 `;
 
 const MarketImage = styled.Image`
-  flex: 1;
-  aspect-ratio: 1;
-  margin-right: 10px;
+  z-index: 1;
   border-radius: 18px;
-  opacity: 0.8;
+  width: 100%;
+  height: 100%;
 `;
 
-const PriceLabel = styled.Text`
-  position: absolute;
-  bottom: 5px;
-  right: 10px;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: bold;
-`;
-
-const MarketTitle = styled.Text`
-  font-size: 18px;
-  font-weight: 800;
-  padding: 0px 10px 5px 10px;
-`;
-
-const MarketPickupTime = styled.Text`
-  font-size: 12px;
-  font-weight: 400;
-  padding-left: 10px;
+const MarketInfoDiscription = styled.View`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const S = {
@@ -57,8 +94,12 @@ const S = {
   MarketImageBox,
   MarketImage,
   PriceLabel,
+  MenuLabel,
   MarketTitle,
   MarketPickupTime,
+  MenuGradation,
+  MarketAddress,
+  MarketInfoDiscription,
 };
 
 export default S;

@@ -8,4 +8,7 @@ export type MarketType = {
   address: string;
   products: ProductType[];
   images: string[];
+  openAt: string;
+  closeAt: string;
+  specificAddress: string;
 };

@@ -12,7 +12,7 @@ export const getMarketList = async (
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
-    } | null>(`/market/paging?cursorId=${cursorId}&size=${size}`);
+    } | null>(`/markets?cursorId=${cursorId}&size=${size}`);
 
     return res;
   } catch (error) {

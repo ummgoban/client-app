@@ -17,13 +17,13 @@ const PaymentScreen = ({navigation}: Props) => {
         const res = await getBuckets();
 
         if (!res) {
-          console.log('error');
+          console.debug('error');
           setCart(null);
           return;
         }
         setCart(res);
       } catch (e) {
-        console.log(e);
+        console.debug(e);
         setCart(null);
       }
     };

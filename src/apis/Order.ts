@@ -130,7 +130,7 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
 
     return new Promise(async resolve => {
       await new Promise(_ => setTimeout(_, 1000));
-      console.log('fetch order history');
+      console.debug('fetch order history');
       resolve(dummyHistoryList);
     });
   } catch (error) {

@@ -61,7 +61,7 @@ const PaymentPage = ({cart}: Props) => {
                   },
                 )
                 .then(control => {
-                  console.log({control});
+                  console.debug({control});
                 });
             }}
           />
@@ -111,7 +111,7 @@ const PaymentPage = ({cart}: Props) => {
             return;
           }
 
-          console.log(tossPaymentRes);
+          console.debug(tossPaymentRes);
 
           if (tossPaymentRes.success) {
             // 결제 성공 비즈니스 로직을 구현하세요.

@@ -13,7 +13,7 @@ export const getSubscribeList = async (
       markets: SubscribeType[];
       hasNext: boolean;
     } | null>(`/market/like?cursorId=${cursorId}&size=${size}`);
-    console.log(res?.markets);
+    console.debug(res?.markets);
     return res;
   } catch (error) {
     console.error('Error Subscribed market list:', error);

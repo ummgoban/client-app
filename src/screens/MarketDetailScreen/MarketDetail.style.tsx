@@ -19,11 +19,11 @@ const MarKetName = styled.Text`
   font-weight: 700;
 `;
 const MarketDescription = styled.Text`
-  color: #2d3e39;
+  color: #6a6a6a;
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
 `;
 const MarketTimeDescription = styled.Text`
   color: red;
@@ -42,15 +42,15 @@ const MarketSideInfoWrapper = styled.View`
 `;
 
 const MarketSideInfo = styled.Text`
-  color: #78827f;
+  color: black;
   font-family: Pretendard;
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const SideTagBarScrollView = styled.ScrollView`
-  padding-bottom: 50px;
+  padding-bottom: 24px;
 `;
 
 const SideBarView = styled.View<{selected: boolean}>`
@@ -59,13 +59,15 @@ const SideBarView = styled.View<{selected: boolean}>`
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background-color: ${({selected}) =>
-    selected ? 'skyblue' : 'rgb(154, 211, 232)'};
+  background-color: ${({selected, theme}) =>
+    selected ? theme.colors.primary : 'white'};
+  border: ${({selected, theme}) =>
+    selected ? '' : `1px solid ${theme.colors.primary}`};
   margin: 5px;
   border-radius: 10px;
 `;
 const SideBarText = styled.Text<{selected: boolean}>`
-  color: ${({selected}) => (selected ? 'black' : 'white')};
+  color: ${({selected}) => (selected ? 'white' : 'black')};
   font-size: 14px;
   font-weight: bold;
   text-align-vertical: center;

@@ -16,7 +16,13 @@ const dummyCart: CartType = {
       originalPrice: 10000,
       discountPrice: 7000,
       count: 3,
-      tags: ['추천메뉴', '김치류'],
+      tags: [
+        {
+          id: 1,
+          tagName: '추천메뉴',
+        },
+        {id: 5, tagName: '김치류'},
+      ],
     },
     {
       id: 2,
@@ -25,7 +31,12 @@ const dummyCart: CartType = {
       originalPrice: 5000,
       discountPrice: 3000,
       count: 3,
-      tags: ['깻잎류'],
+      tags: [
+        {
+          id: 2,
+          tagName: '깻잎류',
+        },
+      ],
     },
     {
       id: 3,
@@ -34,7 +45,12 @@ const dummyCart: CartType = {
       originalPrice: 20000,
       discountPrice: 17000,
       count: 3,
-      tags: ['게장류'],
+      tags: [
+        {
+          id: 3,
+          tagName: '게장류',
+        },
+      ],
     },
   ],
 };
@@ -55,7 +71,13 @@ const dummyHistoryList: OrderType[] = [
         originalPrice: 10000,
         discountPrice: 7000,
         count: 3,
-        tags: ['추천메뉴', '김치류'],
+        tags: [
+          {
+            id: 1,
+            tagName: '추천메뉴',
+          },
+          {id: 5, tagName: '김치류'},
+        ],
       },
       {
         id: 2,
@@ -64,7 +86,12 @@ const dummyHistoryList: OrderType[] = [
         originalPrice: 5000,
         discountPrice: 3000,
         count: 3,
-        tags: ['깻잎류'],
+        tags: [
+          {
+            id: 2,
+            tagName: '깻잎류',
+          },
+        ],
       },
       {
         id: 3,
@@ -73,7 +100,12 @@ const dummyHistoryList: OrderType[] = [
         originalPrice: 20000,
         discountPrice: 17000,
         count: 3,
-        tags: ['추천메뉴', '게장류'],
+        tags: [
+          {
+            id: 3,
+            tagName: '게장류',
+          },
+        ],
       },
     ],
     pickupAt: 1719545600000,
@@ -95,7 +127,7 @@ const dummyHistoryList: OrderType[] = [
         originalPrice: 20000,
         discountPrice: 17000,
         count: 3,
-        tags: ['추천메뉴'],
+        tags: [{id: 1, tagName: '추천메뉴'}],
       },
     ],
     pickupAt: 1614639000000,
@@ -118,7 +150,7 @@ const dummyHistoryList: OrderType[] = [
         originalPrice: 20000,
         discountPrice: 17000,
         count: 1,
-        tags: ['추천메뉴'],
+        tags: [{id: 1, tagName: '추천메뉴'}],
       },
     ],
     pickupAt: 1610718400000,

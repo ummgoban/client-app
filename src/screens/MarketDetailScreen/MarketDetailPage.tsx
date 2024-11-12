@@ -16,7 +16,7 @@ import {ProductType} from '@/types/ProductType';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
-
+import {BottomButton} from '@/components/common';
 type CartItem = {
   productId: number;
   productName: string;
@@ -24,7 +24,6 @@ type CartItem = {
 };
 
 const MarketDetailPage = ({
-  name,
   pickupStartAt,
   pickupEndAt,
   address,
@@ -73,7 +72,8 @@ const MarketDetailPage = ({
   };
   const productsByTags = products.reduce(
     (acc: {[key: string]: ProductType[]}, product) => {
-      product.tags.forEach(tag => {
+      product.tags.forEach(tagObj => {
+        const tag = tagObj.tagName;
         if (!acc[tag]) {
           acc[tag] = [];
         }
@@ -98,16 +98,9 @@ const MarketDetailPage = ({
     );
 
   const handleCheckout = () => {
-    const cartSummary = cart
-      .map(item => `${item.productName} 수량: ${item.count}`)
-      .join('\n');
-
-    navigation.navigate('Home', {
-      screen: 'Cart',
-      params: {cart},
+    navigation.navigate('Cart', {
+      screen: 'Market',
     });
-
-    Alert.alert('장바구니로 이동합니다', cartSummary);
   };
 
   const scrollToSection = useCallback(
@@ -238,7 +231,6 @@ const MarketDetailPage = ({
   return (
     <S.MarketDetailInfoView>
       <S.MarketMainInfoWrapper>
-        <S.MarKetName>{name} </S.MarKetName>
         <S.MarketDescription>
           내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
         </S.MarketDescription>
@@ -273,8 +265,6 @@ const MarketDetailPage = ({
         ))}
       </S.SideTagBarScrollView>
 
-      <S.Divider />
-
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
@@ -299,9 +289,9 @@ const MarketDetailPage = ({
         ))}
       </S.MenuScrollView>
 
-      <S.ReserveButton onPress={navigatePage}>
-        <S.ButtonText>예약하기 ({cart.length})</S.ButtonText>
-      </S.ReserveButton>
+      <BottomButton onPress={navigatePage}>
+        예약하기 ({cart.length})
+      </BottomButton>
     </S.MarketDetailInfoView>
   );
 };

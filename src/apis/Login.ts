@@ -67,7 +67,12 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
         loginResult.successResponse;
       console.log('Naver Access Token:', accessToken);
       // JWT 토큰
-      const response = await apiClient.post('/auth/login', {
+      const response = await apiClient.post<{
+        data: {
+          accessToken: string;
+          refreshToken: string;
+        };
+      }>('/auth/login', {
         provider: 'NAVER',
         roles: 'ROLE_USER',
         accessToken,
@@ -83,6 +88,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           accessTokenExpiresAt,
           refreshTokenExpiresAt: accessTokenExpiresAt,
           OAuthProvider: 'NAVER',
+          jwtToken: response.data.accessToken,
         };
       } else {
         console.log('네이버 로그인 실패');
@@ -107,7 +113,12 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     // Oauth 토큰 생성
     const token = await kakaoLogin();
     // JWT 토큰
-    const response = await apiClient.post('/auth/login', {
+    const response = await apiClient.post<{
+      data: {
+        accessToken: string;
+        refreshToken: string;
+      };
+    }>('/auth/login', {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,
@@ -115,7 +126,6 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
 
     if (response) {
       console.log('카카오 로그인 성공:', response);
-
       return {
         //TODO: JWT 토큰으로 대체 필요
         accessToken: token.accessToken,
@@ -123,6 +133,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         accessTokenExpiresAt: new Date(token.accessTokenExpiresAt).getTime(),
         refreshTokenExpiresAt: new Date(token.refreshTokenExpiresAt).getTime(),
         OAuthProvider: 'KAKAO',
+        jwtToken: response.data.accessToken,
       };
     } else {
       console.log('카카오 로그인 실패');

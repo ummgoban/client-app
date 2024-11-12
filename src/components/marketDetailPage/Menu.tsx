@@ -81,11 +81,11 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
           <S.MenuCounterButtonWrapper
             disabled={isDecrease}
             onPress={decreaseMenuCount}>
-            <S.MenuCounterButton>-</S.MenuCounterButton>
+            <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
           <S.MenuCounterButtonWrapper onPress={increaseMenuCount}>
-            <S.MenuCounterButton>+</S.MenuCounterButton>
+            <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
         </S.MenuCounter>
       </S.MenuBoxRight>

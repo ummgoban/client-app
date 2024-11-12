@@ -12,7 +12,12 @@ export const getMarketList = async (
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
-    } | null>(`/market/paging?cursorId=${cursorId}&size=${size}`);
+    } | null>(`/markets`, {
+      params: {
+        cursorId,
+        size,
+      },
+    });
 
     return res;
   } catch (error) {
@@ -21,24 +26,15 @@ export const getMarketList = async (
   }
 };
 
-export const updateMarketLike = async (
-  marketId: string,
-  marketIsLiked: boolean,
-): Promise<CommonResponseType | null> => {
+export const getMarket = async (
+  marketId: number,
+): Promise<MarketType | null> => {
   try {
-    const res = marketIsLiked
-      ? await apiClient.del<CommonResponseType | null>(
-          `/market/${marketId}/like`,
-        )
-      : await apiClient.post<CommonResponseType | null>(
-          `/market/${marketId}/like`,
-        );
-    if (res && (res.code === 200 || res.code === 201)) {
-      return res;
-    }
-    return null;
+    const res = await apiClient.get<MarketType | null>(`/markets/${marketId}`);
+
+    return res;
   } catch (error) {
-    console.error('Error in updateMarketLike:', error);
+    console.error(`Error fetching market: ${marketId}`, error);
     return null;
   }
 };

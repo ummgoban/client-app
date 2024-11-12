@@ -12,7 +12,7 @@ import {
 } from '@tosspayments/widget-sdk-react-native';
 
 import {requestOrder, requestOrderSuccess} from '@/apis';
-import {CartType} from '@/types/OrderType';
+import {BucketType} from '@/types/Bucket';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@components/common';
 import {
@@ -23,7 +23,7 @@ import {
 
 import S from './PaymentPage.style';
 
-type Props = {cart: CartType};
+type Props = {cart: BucketType};
 
 const PaymentPage = ({cart}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

@@ -1,62 +1,9 @@
-import axios from 'axios';
-import {CartType, OrderType} from '../types/OrderType';
-import {PaymentInfo} from '@tosspayments/widget-sdk-react-native/lib/typescript/src/models/PaymentInfo';
-import apiClient from './ApiClient';
+import {BucketType} from '@/types/Bucket';
 import {Success} from '@tosspayments/widget-sdk-react-native';
-
-const dummyCart: CartType = {
-  id: 1,
-  market: {
-    id: 1,
-    name: 'market1',
-    images: ['https://legacy.reactjs.org/logo-og.png'],
-  },
-  products: [
-    {
-      id: 1,
-      name: '김치',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 10000,
-      discountPrice: 7000,
-      count: 3,
-      tags: [
-        {
-          id: 1,
-          tagName: '추천메뉴',
-        },
-        {id: 5, tagName: '김치류'},
-      ],
-    },
-    {
-      id: 2,
-      name: '깻잎',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 5000,
-      discountPrice: 3000,
-      count: 3,
-      tags: [
-        {
-          id: 2,
-          tagName: '깻잎류',
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: '간장게장',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 20000,
-      discountPrice: 17000,
-      count: 3,
-      tags: [
-        {
-          id: 3,
-          tagName: '게장류',
-        },
-      ],
-    },
-  ],
-};
+import {PaymentInfo} from '@tosspayments/widget-sdk-react-native/lib/typescript/src/models/PaymentInfo';
+import axios from 'axios';
+import {OrderType} from '../types/OrderType';
+import apiClient from './ApiClient';
 
 const dummyHistoryList: OrderType[] = [
   {
@@ -192,26 +139,13 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   }
 };
 
-// TODO: fetch cart
-export const getCart = async (): Promise<CartType | null> => {
-  try {
-    return new Promise(async resolve => {
-      await new Promise(_ => setTimeout(_, 1000));
-      console.log('fetch cart');
-      resolve(dummyCart);
-    });
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
 export const requestOrder = async (
-  cart: CartType,
+  cart: BucketType,
 ): Promise<PaymentInfo | null> => {
   try {
     // TODO: uri 수정
     // const res = await apiClient.post<PaymentInfo | null>('/order', cart);
+    apiClient.get('/utils/health');
     console.debug(cart);
     const res = dummyPaymentInfo;
 

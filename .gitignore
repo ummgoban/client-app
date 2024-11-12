@@ -78,3 +78,10 @@ yarn-error.log
 
 # react-native-config codegen
 ios/tmp.xcconfig
+
+# Firebase configuration files
+GoogleService-Info.plist
+google-services.json
+
+# iOS entitlements
+ClientApp.entitlements

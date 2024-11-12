@@ -115,7 +115,6 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
 
     if (response) {
       console.log('카카오 로그인 성공:', response);
-
       return {
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,

@@ -5,7 +5,7 @@ import {updateMarketLike} from '@/apis';
 
 type SubscribeIconProps = {
   marketIsLiked: boolean;
-  marketId?: string;
+  marketId?: number;
   handleSubscribe: () => void;
 };
 
@@ -16,7 +16,7 @@ const SubscribeIcon = ({
 }: SubscribeIconProps) => {
   const handleLikePress = async () => {
     if (marketId !== undefined) {
-      const response = await updateMarketLike(marketId, marketIsLiked);
+      const response = await updateMarketLike(marketId);
       if (response) {
         handleSubscribe();
       }

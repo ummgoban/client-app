@@ -17,7 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import SubscribeIcon from '@/components/common/SubscribeIcon';
-
+import {BottomButton} from '@/components/common';
 type CartItem = {
   productId: number;
   productName: string;
@@ -29,9 +29,9 @@ const MarketDetailPage = ({
   pickupEndAt,
   address,
   products,
-  isLike,
-  marketId,
-}: Omit<MarketType, 'id' | 'images'>) => {
+  hasLike,
+  id,
+}: Omit<MarketType, 'images'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
@@ -44,7 +44,7 @@ const MarketDetailPage = ({
     {},
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
-  const [marketisLiked, setMarketisLiked] = useState<boolean>(isLike);
+  const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
@@ -207,7 +207,7 @@ const MarketDetailPage = ({
   };
 
   const handleSubscribe = () => {
-    setMarketisLiked(prevState => !prevState);
+    setMarketIsLiked(prevState => !prevState);
   };
   const navigatePage = () => {
     if (cart.length === 0) {
@@ -254,8 +254,8 @@ const MarketDetailPage = ({
       </S.MarketSideInfoWrapper>
       <View>
         <SubscribeIcon
-          marketIsLiked={marketisLiked}
-          marketId={marketId}
+          marketIsLiked={marketIsLiked}
+          marketId={id}
           handleSubscribe={handleSubscribe}
         />
       </View>

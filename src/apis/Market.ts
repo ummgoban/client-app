@@ -1,6 +1,5 @@
 import {MarketType} from '@/types/Market';
 import apiClient from './ApiClient';
-import {CommonResponseType} from '@/types/CommonResponseType';
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,
@@ -36,5 +35,18 @@ export const getMarket = async (
   } catch (error) {
     console.error(`Error fetching market: ${marketId}`, error);
     return null;
+  }
+};
+
+export const updateMarketLike = async (marketId: number): Promise<boolean> => {
+  try {
+    const res = await apiClient.post(`/markets/${marketId}/likes`);
+    if (res) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error in updateMarketLike:', error);
+    return false;
   }
 };

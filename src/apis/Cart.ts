@@ -13,7 +13,12 @@ const dummyCartList: BucketType = {
       originalPrice: 10000,
       discountPrice: 7000,
       count: 3,
-      tags: ['예시'],
+      tags: [
+        {
+          id: 1,
+          tagName: '예시',
+        },
+      ],
     },
     {
       id: 2,
@@ -22,7 +27,12 @@ const dummyCartList: BucketType = {
       originalPrice: 5000,
       discountPrice: 3000,
       count: 3,
-      tags: ['예시'],
+      tags: [
+        {
+          id: 1,
+          tagName: '예시',
+        },
+      ],
     },
     {
       id: 3,
@@ -31,7 +41,12 @@ const dummyCartList: BucketType = {
       originalPrice: 20000,
       discountPrice: 17000,
       count: 3,
-      tags: ['예시'],
+      tags: [
+        {
+          id: 1,
+          tagName: '예시',
+        },
+      ],
     },
   ],
 };

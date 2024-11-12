@@ -1,5 +1,6 @@
 import axios, {
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
@@ -58,9 +59,12 @@ class ApiClient {
     return ApiClient.instance;
   }
 
-  get = async <T>(url: string): Promise<T | null> => {
+  get = async <T>(
+    url: string,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.get(url);
+      const res: AxiosResponse = await this.axiosInstance.get(url, config);
 
       if (res.data.code === 200 && res.data.data) {
         return res.data.data;

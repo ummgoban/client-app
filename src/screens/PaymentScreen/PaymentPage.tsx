@@ -55,7 +55,7 @@ const PaymentPage = ({cart}: Props) => {
               paymentWidgetControl
                 .renderPaymentMethods(
                   'payment-methods',
-                  {value: 50000},
+                  {value: discountPrice},
                   {
                     variantKey: 'DEFAULT',
                   },
@@ -127,7 +127,12 @@ const PaymentPage = ({cart}: Props) => {
 
             navigation.navigate('Detail', {
               screen: 'OrderDone',
-              params: {orderId: tossPaymentRes.success.orderId},
+              params: {
+                orderId: tossPaymentRes.success.orderId,
+                products: cart.products,
+                originalPrice,
+                discountPrice,
+              },
             });
           } else if (tossPaymentRes.fail) {
             // 결제 실패 비즈니스 로직을 구현하세요.

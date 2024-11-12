@@ -8,19 +8,47 @@ import S from './OrderDoneScreen.style';
 type Props = StackScreenProps<DetailStackParamList, 'OrderDone'>;
 
 const OrderDoneScreen = ({navigation, route}: Props) => {
-  const {orderId} = route.params;
+  const {orderId, products, originalPrice, discountPrice} = route.params;
 
   return (
-    <S.OrderDoneCard>
-      <Title>주문완료</Title>
-      <View>
-        <Text>주문이 완료되었습니다.</Text>
-        <Text>{`주문번호: ${orderId}`}</Text>
-      </View>
+    <S.OrderDoneContainer>
+      <S.OrderDoneCard>
+        <Title>주문완료</Title>
+        <View>
+          <Text>주문이 완료되었습니다.</Text>
+          <Text>{`주문번호: ${orderId}`}</Text>
+        </View>
+      </S.OrderDoneCard>
+      <S.OrderDoneCard>
+        <Title>주문 상품</Title>
+        {products.map(product => (
+          <S.ProductItem key={product.id}>
+            <Text>{product.name}</Text>
+            <Text>{`${product.count.toLocaleString()}개`}</Text>
+          </S.ProductItem>
+        ))}
+      </S.OrderDoneCard>
+      <S.OrderDoneCard>
+        <Title>결제 정보</Title>
+        <S.PriceView>
+          <S.PriceItem>
+            <S.PrimaryText>결제 금액</S.PrimaryText>
+            <S.PrimaryText>{`${discountPrice.toLocaleString()}원`}</S.PrimaryText>
+          </S.PriceItem>
+          <S.PriceItem>
+            <Text>상품 금액</Text>
+            <Text>{`${originalPrice.toLocaleString()}원`}</Text>
+          </S.PriceItem>
+          <S.PriceItem>
+            <Text>할인 금액</Text>
+            <Text>{`- ${(originalPrice - discountPrice).toLocaleString()}원`}</Text>
+          </S.PriceItem>
+        </S.PriceView>
+      </S.OrderDoneCard>
       <Button onPress={() => navigation.navigate('Home', {screen: 'Feed'})}>
         <Text>홈으로</Text>
       </Button>
-    </S.OrderDoneCard>
+    </S.OrderDoneContainer>
   );
 };
 

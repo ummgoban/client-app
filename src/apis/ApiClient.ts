@@ -27,8 +27,6 @@ class ApiClient {
       async (config: InternalAxiosRequestConfig) => {
         const session: SessionType | null = await getStorage('session');
 
-        console.log('session:', session);
-
         this._JWTToken = session?.jwtToken ?? null;
 
         if (this._JWTToken) {
@@ -45,7 +43,7 @@ class ApiClient {
       (response: AxiosResponse) => {
         if (response.data && response.data.token) {
           this._JWTToken = response.data.token; // 토큰 갱신
-          console.log('토큰 갱신:', this._JWTToken);
+          console.debug('토큰 갱신:', this._JWTToken);
         }
         return response;
       },

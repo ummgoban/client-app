@@ -28,7 +28,10 @@ const MarketDetailPage = ({
   pickupEndAt,
   address,
   products,
-}: Omit<MarketType, 'id' | 'images'>) => {
+}: Omit<
+  MarketType,
+  'id' | 'images' | 'openAt' | 'closeAt' | 'specificAddress'
+>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');

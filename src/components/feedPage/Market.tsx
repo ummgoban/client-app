@@ -1,6 +1,7 @@
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
 import React from 'react';
+import {Text} from 'react-native';
 type Props = {
   market: MarketType;
   onPress: (marketId: number) => void;
@@ -22,7 +23,7 @@ const Market = ({market, onPress}: Props) => {
               start={{x: 0.5, y: 0}}
               end={{x: 0.5, y: 1}}
             />
-            <S.MenuLabel>{product.name}</S.MenuLabel>
+            <S.MenuLabel numberOfLines={1}>{product.name}</S.MenuLabel>
             <S.PriceLabel>
               {product.discountPrice.toLocaleString()}원
             </S.PriceLabel>

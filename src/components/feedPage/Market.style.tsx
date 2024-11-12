@@ -1,43 +1,39 @@
 import styled from '@emotion/native';
 import LinearGradient from 'react-native-linear-gradient';
-import theme from '@/context/theme';
-
-const MarketTitle = styled.Text`
-  font: ${theme.fonts.h6};
-  font-weight: 800;
-  padding-left: 10px;
-  margin-bottom: 4px;
-`;
 
 const MarketPickupTime = styled.Text`
-  font: ${theme.fonts.body2};
+  ${props => props.theme.fonts.body2};
   padding-left: 10px;
 `;
 
 const MarketAddress = styled.Text`
-  font: ${theme.fonts.body2};
+  ${props => props.theme.fonts.body2};
+  font-weight: 700;
   padding-left: 10px;
 `;
 
 const MenuLabel = styled.Text`
+  ${props => props.theme.fonts.caption};
   position: absolute;
+  width: 100%;
   top: 5px;
   color: white;
   padding: 5px 10px;
   border-radius: 10px;
-  font: ${theme.fonts.caption};
-  z-index: 110;
+  z-index: 3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const PriceLabel = styled.Text`
+  ${props => props.theme.fonts.body2};
+  font-weight: 700;
   position: absolute;
-  font: ${theme.fonts.body2};
   top: 20px;
   color: white;
   padding: 5px 10px;
   border-radius: 10px;
-  font-weight: 600;
-  z-index: 101;
+  z-index: 3;
 `;
 
 const MarketWrapper = styled.TouchableOpacity`
@@ -63,7 +59,7 @@ const MarketImageContainer = styled.View`
 
 const MenuGradation = styled(LinearGradient)`
   flex: 1;
-  z-index: 100;
+  z-index: 2;
   height: 100%;
   width: 100%;
   border-radius: 18px;
@@ -85,7 +81,14 @@ const MarketImage = styled.Image`
 const MarketInfoDiscription = styled.View`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+`;
+
+const MarketTitle = styled.Text`
+  ${props => props.theme.fonts.h6};
+  font-weight: 800;
+  padding-left: 10px;
+  margin-bottom: 4px;
 `;
 
 const S = {

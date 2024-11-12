@@ -12,11 +12,29 @@ export const getMarketList = async (
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
-    } | null>(`/market/paging?cursorId=${cursorId}&size=${size}`);
+    } | null>(`/markets`, {
+      params: {
+        cursorId,
+        size,
+      },
+    });
 
     return res;
   } catch (error) {
     console.error('Error fetching market list:', error);
+    return null;
+  }
+};
+
+export const getMarket = async (
+  marketId: number,
+): Promise<MarketType | null> => {
+  try {
+    const res = await apiClient.get<MarketType | null>(`/markets/${marketId}`);
+
+    return res;
+  } catch (error) {
+    console.error(`Error fetching market: ${marketId}`, error);
     return null;
   }
 };

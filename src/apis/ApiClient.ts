@@ -1,5 +1,6 @@
 import axios, {
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
@@ -26,7 +27,7 @@ class ApiClient {
       async (config: InternalAxiosRequestConfig) => {
         const session: SessionType | null = await getStorage('session');
 
-        this._JWTToken = session?.accessToken ?? null;
+        this._JWTToken = session?.jwtToken ?? null;
 
         if (this._JWTToken) {
           config.headers.Authorization = `Bearer ${this._JWTToken}`;
@@ -42,7 +43,7 @@ class ApiClient {
       (response: AxiosResponse) => {
         if (response.data && response.data.token) {
           this._JWTToken = response.data.token; // 토큰 갱신
-          console.log('토큰 갱신:', this._JWTToken);
+          console.debug('토큰 갱신:', this._JWTToken);
         }
         return response;
       },
@@ -58,9 +59,13 @@ class ApiClient {
     return ApiClient.instance;
   }
 
-  get = async <T>(url: string): Promise<T | null> => {
+  get = async <T>(
+    url: string,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.get(url);
+      const res: AxiosResponse = await this.axiosInstance.get(url, config);
+      console.debug('GET', url, res.data);
 
       if (res.data.code === 200 && res.data.data) {
         return res.data.data;
@@ -68,14 +73,46 @@ class ApiClient {
 
       return null;
     } catch (error) {
-      console.error(error);
+      console.debug('GET', url, error);
+      console.dir({error});
       return null;
     }
   };
 
-  post = async <T>(url: string, body?: unknown): Promise<T | null> => {
+  post = async <T>(
+    url: string,
+    body?: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.post(url, body);
+      const res: AxiosResponse = await this.axiosInstance.post(
+        url,
+        body,
+        config,
+      );
+
+      console.debug('POST', url, res.data);
+
+      return res.data;
+    } catch (error) {
+      console.debug('POST', url, error);
+      console.error(error);
+
+      return null;
+    }
+  };
+
+  patch = async <T>(
+    url: string,
+    body: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
+    try {
+      const res: AxiosResponse = await this.axiosInstance.patch(
+        url,
+        body,
+        config,
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -83,9 +120,17 @@ class ApiClient {
     }
   };
 
-  patch = async <T>(url: string, body: unknown): Promise<T | null> => {
+  put = async <T>(
+    url: string,
+    body: unknown,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.patch(url, body);
+      const res: AxiosResponse = await this.axiosInstance.put(
+        url,
+        body,
+        config,
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -93,21 +138,12 @@ class ApiClient {
     }
   };
 
-  put = async <T>(url: string, body: unknown): Promise<T | null> => {
+  del = async <T>(
+    url: string,
+    config?: AxiosRequestConfig<any> | undefined,
+  ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.put(url, body);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-
-  del = async <T>(url: string, body?: unknown): Promise<T | null> => {
-    try {
-      const res: AxiosResponse = await this.axiosInstance.delete(url, {
-        data: body,
-      });
+      const res: AxiosResponse = await this.axiosInstance.delete(url, config);
       return res.data;
     } catch (error) {
       console.error(error);

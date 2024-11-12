@@ -1,10 +1,9 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {Alert, Text} from 'react-native';
-import {DetailStackParamList} from '@/types/StackNavigationType';
-import {useState, useEffect} from 'react';
-import {getMarketDetail} from '@/apis';
+import {getMarket} from '@/apis';
 import {MarketType} from '@/types/Market';
-import React from 'react';
+import {DetailStackParamList} from '@/types/StackNavigationType';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
+import {Alert, Text} from 'react-native';
 import MarketDetailPage from './MarketDetailPage';
 
 // TODO : getMarketDetail
@@ -16,7 +15,7 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
 
   useEffect(() => {
     const fetchMarketDetail = async () => {
-      const res = await getMarketDetail(route.params.marketId);
+      const res = await getMarket(route.params.marketId);
       if (!res) {
         Alert.alert('가게 상세정보를 불러오는데 실패했습니다.');
         return;

@@ -72,7 +72,8 @@ const MarketDetailPage = ({
   };
   const productsByTags = products.reduce(
     (acc: {[key: string]: ProductType[]}, product) => {
-      product.tags.forEach(tag => {
+      product.tags.forEach(tagObj => {
+        const tag = tagObj.tagName;
         if (!acc[tag]) {
           acc[tag] = [];
         }

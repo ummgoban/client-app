@@ -20,9 +20,7 @@ const MenuLabel = styled.Text`
   color: white;
   padding: 5px 10px;
   border-radius: 10px;
-  z-index: 3;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  z-index: 10;
 `;
 
 const PriceLabel = styled.Text`
@@ -33,7 +31,7 @@ const PriceLabel = styled.Text`
   color: white;
   padding: 5px 10px;
   border-radius: 10px;
-  z-index: 3;
+  z-index: 10;
 `;
 
 const MarketWrapper = styled.TouchableOpacity`
@@ -48,18 +46,15 @@ const MarketWrapper = styled.TouchableOpacity`
 
 const MarketImageContainer = styled.View`
   display: flex;
+  width: 100%;
+  height: 140px;
   gap: 8px;
   flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 160px;
-  flex-direction: row;
-  padding: 16px;
+  padding: 8px;
 `;
 
 const MenuGradation = styled(LinearGradient)`
-  flex: 1;
-  z-index: 2;
+  z-index: 5;
   height: 100%;
   width: 100%;
   border-radius: 18px;

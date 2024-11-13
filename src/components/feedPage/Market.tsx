@@ -1,6 +1,7 @@
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
 import React from 'react';
+import {ScrollView} from 'react-native';
 type Props = {
   market: MarketType;
   onPress: (marketId: number) => void;
@@ -9,7 +10,7 @@ const Market = ({market, onPress}: Props) => {
   return (
     <S.MarketWrapper onPress={() => onPress(market.id)}>
       <S.MarketImageContainer>
-        {market.products.map(product => (
+        {market.products.slice(0, 3).map(product => (
           <S.MarketImageBox key={product.id}>
             <S.MarketImage source={{uri: product.image}} />
             <S.MenuGradation

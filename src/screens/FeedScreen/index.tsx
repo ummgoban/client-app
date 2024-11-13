@@ -57,7 +57,7 @@ const FeedScreen = ({navigation}: Props) => {
     setBackgroundMessageHandler();
     fetchData();
     return unsubscribe;
-  }, [fetchData]);
+  }, [fetchData, navigation]);
 
   if (!marketList) {
     return (

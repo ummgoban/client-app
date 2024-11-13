@@ -40,10 +40,12 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
   return (
     <MarketDetailPage
       name={marketDetail.name}
+      hasLike={marketDetail.hasLike}
       pickupStartAt={marketDetail.pickupStartAt}
       pickupEndAt={marketDetail.pickupEndAt}
       address={marketDetail.address}
       products={marketDetail.products}
+      id={marketDetail.id}
     />
   );
 };

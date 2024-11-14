@@ -10156,6 +10156,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-naver-map@https://github.com/zerocho/react-native-naver-map":
+  version: 0.0.67
+  resolution: "react-native-naver-map@https://github.com/zerocho/react-native-naver-map.git#commit=b2134b45f0db93374863bbb1ead8efc477691c6b"
+  peerDependencies:
+    react: ">=17"
+    react-native: ">=0.66"
+  checksum: 8b7c32ef1042b693f2346706c148cd8229282b828cc97e2eddda1bd9246c174c6512b916da5238b01ff1b1cea998a637f42e470dad2d60959facd0089c236ca1
+  languageName: node
+  linkType: hard
+
 "react-native-paper@npm:^5.12.5":
   version: 5.12.5
   resolution: "react-native-paper@npm:5.12.5"

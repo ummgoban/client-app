@@ -7,5 +7,13 @@ export type MarketType = {
   pickupEndAt: number;
   address: string;
   products: ProductType[];
+  specificAddress: string;
+  openAt: string;
+  closeAt: string;
   images: string[];
+};
+
+export type MarketDetailType = MarketType & {
+  hasLike: boolean;
+  imageUrls: string[];
 };

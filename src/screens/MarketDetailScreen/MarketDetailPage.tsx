@@ -11,12 +11,13 @@ import {
 import {format} from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
-import {MarketType} from '@/types/Market';
 import {ProductType} from '@/types/ProductType';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import SubscribeIcon from '@/components/common/SubscribeIcon';
 import {BottomButton} from '@/components/common';
+import {MarketDetailType} from '@/types/Market';
 type CartItem = {
   productId: number;
   productName: string;
@@ -28,7 +29,11 @@ const MarketDetailPage = ({
   pickupEndAt,
   address,
   products,
-}: Omit<MarketType, 'id' | 'images'>) => {
+  hasLike,
+  id,
+  specificAddress,
+  // TODO: 영업 및 픽업시간 현재 분리, 통일 및 어떤 시간 사용할지 논의
+}: Omit<MarketDetailType, 'images' | 'openAt' | 'closeAt' | 'imageUrls'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
@@ -41,6 +46,7 @@ const MarketDetailPage = ({
     {},
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
+  const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
@@ -202,6 +208,9 @@ const MarketDetailPage = ({
     scrollToSection(tag);
   };
 
+  const handleSubscribe = () => {
+    setMarketIsLiked(prevState => !prevState);
+  };
   const navigatePage = () => {
     if (cart.length === 0) {
       Alert.alert('장바구니가 비어 있습니다.');
@@ -243,8 +252,17 @@ const MarketDetailPage = ({
           pickupStartAt,
           'HH시 mm분',
         )} ~ ${format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
-        <S.MarketSideInfo>{address}</S.MarketSideInfo>
+        <S.MarketSideInfo>
+          {address} {specificAddress}
+        </S.MarketSideInfo>
       </S.MarketSideInfoWrapper>
+      <View>
+        <SubscribeIcon
+          marketIsLiked={marketIsLiked}
+          marketId={id}
+          handleSubscribe={handleSubscribe}
+        />
+      </View>
       <S.SideTagBarScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

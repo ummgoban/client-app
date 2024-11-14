@@ -127,6 +127,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     if (response) {
       console.debug('카카오 로그인 성공:', response);
       return {
+        //TODO: JWT 토큰으로 대체 필요
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
         accessTokenExpiresAt: new Date(token.accessTokenExpiresAt).getTime(),

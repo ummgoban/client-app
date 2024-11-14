@@ -1,6 +1,6 @@
-import {CartType} from '@/types/OrderType';
+import {getBuckets} from '@/apis/Bucket';
+import {BucketType} from '@/types/Bucket';
 import {DetailStackParamList} from '@/types/StackNavigationType';
-import {getCart} from '@/apis';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import EmptyCartPage from './EmptyCartPage';
@@ -9,21 +9,21 @@ import PaymentPage from './PaymentPage';
 type Props = StackScreenProps<DetailStackParamList, 'Payment'>;
 
 const PaymentScreen = ({navigation}: Props) => {
-  const [cart, setCart] = useState<CartType | null>(null);
+  const [cart, setCart] = useState<BucketType | null>(null);
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await getCart();
+        const res = await getBuckets();
 
         if (!res) {
-          console.log('error');
+          console.debug('error');
           setCart(null);
           return;
         }
         setCart(res);
       } catch (e) {
-        console.log(e);
+        console.debug(e);
         setCart(null);
       }
     };

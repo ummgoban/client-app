@@ -63,3 +63,20 @@ export const getBuckets = async (): Promise<BucketType | null> => {
     return null;
   }
 };
+
+export const validateBucket = async (marketId: number): Promise<boolean> => {
+  try {
+    const res = await apiClient.get<{
+      sameMarketProduct: boolean;
+    }>(`/buckets/markets/${marketId}`);
+
+    if (!res) {
+      return false;
+    }
+
+    return res.sameMarketProduct;
+  } catch (error) {
+    console.error('Error fetching validateBucket:', error);
+    return false;
+  }
+};

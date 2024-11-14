@@ -13,7 +13,7 @@ const dummyCart: CartType = {
       id: 1,
       name: '김치',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 10000,
+      originPrice: 10000,
       discountPrice: 7000,
       count: 3,
       tags: [
@@ -28,7 +28,7 @@ const dummyCart: CartType = {
       id: 2,
       name: '깻잎',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 5000,
+      originPrice: 5000,
       discountPrice: 3000,
       count: 3,
       tags: [
@@ -42,7 +42,7 @@ const dummyCart: CartType = {
       id: 3,
       name: '간장게장',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 20000,
+      originPrice: 20000,
       discountPrice: 17000,
       count: 3,
       tags: [
@@ -68,7 +68,7 @@ const dummyHistoryList: OrderType[] = [
         id: 1,
         name: '김치',
         image: 'https://legacy.reactjs.org/logo-og.png',
-        originalPrice: 10000,
+        originPrice: 10000,
         discountPrice: 7000,
         count: 3,
         tags: [
@@ -83,7 +83,7 @@ const dummyHistoryList: OrderType[] = [
         id: 2,
         name: '깻잎',
         image: 'https://legacy.reactjs.org/logo-og.png',
-        originalPrice: 5000,
+        originPrice: 5000,
         discountPrice: 3000,
         count: 3,
         tags: [
@@ -97,7 +97,7 @@ const dummyHistoryList: OrderType[] = [
         id: 3,
         name: '간장게장',
         image: 'https://legacy.reactjs.org/logo-og.png',
-        originalPrice: 20000,
+        originPrice: 20000,
         discountPrice: 17000,
         count: 3,
         tags: [
@@ -124,7 +124,7 @@ const dummyHistoryList: OrderType[] = [
         id: 2,
         name: '띄어쓰기가없는엄청나게긴음식이름은어떻게해야될까요없는엄청나게긴음식이름은어떻게해야될까요',
         image: 'https://legacy.reactjs.org/logo-og.png',
-        originalPrice: 20000,
+        originPrice: 20000,
         discountPrice: 17000,
         count: 3,
         tags: [{id: 1, tagName: '추천메뉴'}],
@@ -147,7 +147,7 @@ const dummyHistoryList: OrderType[] = [
         id: 3,
         name: 'very long product name + very long product name, very long product name, very long product name',
         image: 'https://legacy.reactjs.org/logo-og.png',
-        originalPrice: 20000,
+        originPrice: 20000,
         discountPrice: 17000,
         count: 1,
         tags: [{id: 1, tagName: '추천메뉴'}],

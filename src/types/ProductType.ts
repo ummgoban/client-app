@@ -2,7 +2,7 @@ export type ProductType = {
   id: number;
   name: string;
   image: string;
-  originalPrice: number;
+  originPrice: number;
   discountPrice: number;
   tags: TagType[];
 };

@@ -11,7 +11,7 @@ const dummyCartList: BucketType = {
       id: 1,
       name: '김치',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 10000,
+      originPrice: 10000,
       discountPrice: 7000,
       count: 3,
       tags: [
@@ -25,7 +25,7 @@ const dummyCartList: BucketType = {
       id: 2,
       name: '깻잎',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 5000,
+      originPrice: 5000,
       discountPrice: 3000,
       count: 3,
       tags: [
@@ -39,7 +39,7 @@ const dummyCartList: BucketType = {
       id: 3,
       name: '간장게장',
       image: 'https://legacy.reactjs.org/logo-og.png',
-      originalPrice: 20000,
+      originPrice: 20000,
       discountPrice: 17000,
       count: 3,
       tags: [

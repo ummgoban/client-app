@@ -23,14 +23,14 @@ type Props = {cart: CartType};
 const PaymentPage = ({cart}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {originalPrice, discountPrice} = useMemo(
+  const {originPrice, discountPrice} = useMemo(
     () =>
       cart.products.reduce(
         (acc, cur) => ({
-          originalPrice: acc.originalPrice + cur.originalPrice * cur.count,
+          originPrice: acc.originPrice + cur.originPrice * cur.count,
           discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
         }),
-        {originalPrice: 0, discountPrice: 0},
+        {originPrice: 0, discountPrice: 0},
       ),
     [cart.products],
   );
@@ -74,7 +74,7 @@ const PaymentPage = ({cart}: Props) => {
           />
         </>
         <PaymentSummary
-          originalPrice={originalPrice}
+          originPrice={originPrice}
           discountPrice={discountPrice}
         />
       </S.ScrollView>

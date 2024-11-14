@@ -2,13 +2,12 @@ import React, {useRef, useState, useCallback} from 'react';
 import {
   Alert,
   TouchableOpacity,
-  View,
   ScrollView,
   NativeSyntheticEvent,
   NativeScrollEvent,
   LayoutChangeEvent,
 } from 'react-native';
-import {zeroPad, format} from '@utils/date';
+import {zeroPad} from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
 import {ProductType} from '@/types/ProductType';
@@ -239,11 +238,11 @@ const MarketDetailPage = ({
   };
 
   const caculateRemainingPickupTime = () => {
-    const hour = parseInt(Date.now().toString().slice(0, 2));
-    const miniute = parseInt(Date.now().toString().slice(2, 4));
+    const hour = parseInt(Date.now().toString().slice(0, 2), 10);
+    const miniute = parseInt(Date.now().toString().slice(2, 4), 10);
 
-    const pickupEndHour = parseInt(pickupEndAt.slice(0, 2));
-    const pickupEndMinute = parseInt(pickupEndAt.slice(-2));
+    const pickupEndHour = parseInt(pickupEndAt.slice(0, 2), 10);
+    const pickupEndMinute = parseInt(pickupEndAt.slice(-2), 10);
 
     let remainingHour = pickupEndHour - hour;
     let remainingMinute = pickupEndMinute - miniute;
@@ -254,7 +253,7 @@ const MarketDetailPage = ({
     }
 
     if (remainingHour < 0) {
-      return '픽업 시간이 지났습니다.';
+      return '픽업 가능 시간이 지났습니다.';
     }
     return `${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
   };
@@ -272,8 +271,7 @@ const MarketDetailPage = ({
           <S.MarketPickupTimeWrapper>
             <S.MarketSideInfo>픽업 가능 시간: </S.MarketSideInfo>
             <S.MarketPickupTime>
-              {pickupStartAt.slice(0, 2)}시 {pickupEndAt.slice(-2)}분 -{' '}
-              {pickupEndAt.slice(0, 2)}시 {pickupEndAt.slice(-2)}분
+              {`${pickupStartAt.slice(0, 2)}시 ${pickupStartAt.slice(-2)}분 - ${pickupEndAt.slice(0, 2)}시 ${pickupEndAt.slice(-2)}분`}
             </S.MarketPickupTime>
           </S.MarketPickupTimeWrapper>
           <S.MarketSideInfo>
@@ -315,19 +313,19 @@ const MarketDetailPage = ({
         decelerationRate="fast">
         {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
           <S.MenuView key={tag} onLayout={handleLayout(tag)}>
-            <View>
+            <S.TagWrapper>
               <S.MenuText>{tag}</S.MenuText>
-              {productsByTag.map(product => (
-                <Menu
-                  key={product.id}
-                  product={product}
-                  initCount={
-                    cart.find(item => item.productId === product.id)?.count || 0
-                  }
-                  onCountChange={handleCountChange}
-                />
-              ))}
-            </View>
+            </S.TagWrapper>
+            {productsByTag.map(product => (
+              <Menu
+                key={product.id}
+                product={product}
+                initCount={
+                  cart.find(item => item.productId === product.id)?.count || 0
+                }
+                onCountChange={handleCountChange}
+              />
+            ))}
           </S.MenuView>
         ))}
       </S.MenuScrollView>

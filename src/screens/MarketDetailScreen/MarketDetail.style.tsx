@@ -122,7 +122,12 @@ const ButtonText = styled.Text`
   color: blue;
 `;
 
+const TagWrapper = styled.View`
+  display: flex;
+  padding-left: 16px;
+`;
 const S = {
+  TagWrapper,
   MarketPickupTime,
   MarketPickupTimeWrapper,
   MarketSubscribeIconWrapper,

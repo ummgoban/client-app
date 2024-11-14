@@ -8,7 +8,7 @@ export type MarketType = {
   address: string;
   products: ProductType[];
   images: string[];
-  openAt: string;
-  closeAt: string;
-  specificAddress: string;
+  hasLike: boolean;
+  // TODO: 논의 필요
+  marketId?: number;
 };

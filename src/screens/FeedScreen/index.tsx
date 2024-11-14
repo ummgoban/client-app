@@ -41,6 +41,15 @@ const FeedScreen = ({navigation}: Props) => {
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
   useEffect(() => {
+    navigation.setOptions({
+      title: '주변 가게 조회',
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
+        fontFamily: 'Arial',
+      },
+    });
     // TODO: fcm permission 로직 위치 논의 필요
     requestNotificationPermission();
     const unsubscribe = handleForegroundMessage();
@@ -48,7 +57,7 @@ const FeedScreen = ({navigation}: Props) => {
     setBackgroundMessageHandler();
     fetchData();
     return unsubscribe;
-  }, [fetchData]);
+  }, [fetchData, navigation]);
 
   if (!marketList) {
     return (

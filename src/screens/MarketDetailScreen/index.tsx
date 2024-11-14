@@ -1,5 +1,5 @@
 import {getMarket} from '@/apis';
-import {MarketType} from '@/types/Market';
+import {MarketDetailType} from '@/types/Market';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
@@ -11,7 +11,9 @@ import MarketDetailPage from './MarketDetailPage';
 type Props = StackScreenProps<DetailStackParamList, 'Market'>;
 
 const MarketDetailScreen = ({navigation, route}: Props) => {
-  const [marketDetail, setMarketDetail] = useState<MarketType | null>(null);
+  const [marketDetail, setMarketDetail] = useState<MarketDetailType | null>(
+    null,
+  );
 
   useEffect(() => {
     const fetchMarketDetail = async () => {
@@ -46,6 +48,7 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       address={marketDetail.address}
       products={marketDetail.products}
       id={marketDetail.id}
+      specificAddress={marketDetail.specificAddress}
     />
   );
 };

@@ -61,10 +61,11 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       <S.MenuBoxLeft>
         <S.MenuName>{product.name}</S.MenuName>
         <S.MenuOriginalPrice>
-          정가: {product.originalPrice.toLocaleString()}원
+          {/* TODO: 타입 수정 */}
+          {/* 정가: {product.originalPrice.toLocaleString()}원 */}
         </S.MenuOriginalPrice>
         <S.MenuDiscountPrice>
-          할인가: {product.discountPrice.toLocaleString()}원
+          {/* 할인가: {product.discountPrice.toLocaleString()}원 */}
         </S.MenuDiscountPrice>
         {/* TODO: API연결 후 재고 값 넣기 */}
         <S.MenuStockCount>재고: 1</S.MenuStockCount>

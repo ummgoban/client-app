@@ -11,6 +11,7 @@ const Stack = createStackNavigator<DetailStackParamList>();
 const screenOptions = {
   headerShown: true,
   headerRight: () => <CartIcon />,
+  headerTitleAlign: 'center' as const,
 };
 
 const DetailNavigator = () => {

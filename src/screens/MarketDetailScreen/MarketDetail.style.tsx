@@ -2,13 +2,18 @@ import styled from '@emotion/native';
 
 const MarketDetailInfoView = styled.View`
   flex: 1;
+`;
+const MarketInfoWrapper = styled.View`
+  display: flex;
+  background-color: #fff;
+  margin-bottom: 16px;
   padding: 16px;
 `;
 const MarketMainInfoWrapper = styled.View`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  background-color: #ffffff;
+  align-items: center;
   align-self: stretch;
 `;
 const SpecialView = styled.View``;
@@ -19,36 +24,51 @@ const MarKetName = styled.Text`
   font-weight: 700;
 `;
 const MarketDescription = styled.Text`
-  color: #6a6a6a;
+  ${props => props.theme.fonts.subtitle1};
   font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
+  color: black;
+`;
+const MarketPickupTimeWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
+const MarketPickupTime = styled.Text`
+  ${props => props.theme.fonts.titleMedium};
+  color: black;
+  font-family: Pretendard;
+  font-weight: bold;
 `;
 const MarketTimeDescription = styled.Text`
-  color: red;
+  ${props => props.theme.fonts.titleMedium};
+
+  color: #f05650;
   font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
   font-weight: 500;
 `;
 
 const MarketSideInfoWrapper = styled.View`
   display: flex;
   padding: 8px 0px;
+  gap: 4px;
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
 `;
 
 const MarketSideInfo = styled.Text`
+  ${props => props.theme.fonts.titleMedium};
   color: black;
   font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
   font-weight: 600;
 `;
-
+const MarketSubscribeIconWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+`;
 const SideTagBarScrollView = styled.ScrollView`
   padding-bottom: 24px;
 `;
@@ -103,6 +123,10 @@ const ButtonText = styled.Text`
 `;
 
 const S = {
+  MarketPickupTime,
+  MarketPickupTimeWrapper,
+  MarketSubscribeIconWrapper,
+  MarketInfoWrapper,
   SpecialView,
   MarketDetailInfoView,
   MarketMainInfoWrapper,

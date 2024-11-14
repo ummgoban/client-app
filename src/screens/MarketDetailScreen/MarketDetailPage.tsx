@@ -8,7 +8,7 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent,
 } from 'react-native';
-import {format} from '@utils/date';
+import {zeroPad, format} from '@utils/date';
 import Menu from '@/components/marketDetailPage/Menu';
 import S from './MarketDetail.style';
 import {ProductType} from '@/types/ProductType';
@@ -32,6 +32,7 @@ const MarketDetailPage = ({
   hasLike,
   id,
   specificAddress,
+  summary,
   // TODO: 영업 및 픽업시간 현재 분리, 통일 및 어떤 시간 사용할지 논의
 }: Omit<MarketDetailType, 'images' | 'openAt' | 'closeAt' | 'imageUrls'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -237,32 +238,56 @@ const MarketDetailPage = ({
     );
   };
 
+  const caculateRemainingPickupTime = () => {
+    const hour = parseInt(Date.now().toString().slice(0, 2));
+    const miniute = parseInt(Date.now().toString().slice(2, 4));
+
+    const pickupEndHour = parseInt(pickupEndAt.slice(0, 2));
+    const pickupEndMinute = parseInt(pickupEndAt.slice(-2));
+
+    let remainingHour = pickupEndHour - hour;
+    let remainingMinute = pickupEndMinute - miniute;
+
+    if (remainingMinute < 0) {
+      remainingHour -= 1;
+      remainingMinute += 60;
+    }
+
+    if (remainingHour < 0) {
+      return '픽업 시간이 지났습니다.';
+    }
+    return `${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
+  };
+
   return (
     <S.MarketDetailInfoView>
-      <S.MarketMainInfoWrapper>
-        <S.MarketDescription>
-          내 자식에게 준다는 마음으로 음식을 만들고 있습니다^^
-        </S.MarketDescription>
-        <S.MarketTimeDescription>
-          {`픽업 마감까지 ${format(pickupEndAt - Date.now(), 'HH시간 mm분')} 남았습니다!`}
-        </S.MarketTimeDescription>
-      </S.MarketMainInfoWrapper>
-      <S.MarketSideInfoWrapper>
-        <S.MarketSideInfo>{`픽업: ${format(
-          pickupStartAt,
-          'HH시 mm분',
-        )} ~ ${format(pickupEndAt, 'HH시 mm분')}`}</S.MarketSideInfo>
-        <S.MarketSideInfo>
-          {address} {specificAddress}
-        </S.MarketSideInfo>
-      </S.MarketSideInfoWrapper>
-      <View>
-        <SubscribeIcon
-          marketIsLiked={marketIsLiked}
-          marketId={id}
-          handleSubscribe={handleSubscribe}
-        />
-      </View>
+      <S.MarketInfoWrapper>
+        <S.MarketMainInfoWrapper>
+          <S.MarketDescription>{summary}</S.MarketDescription>
+        </S.MarketMainInfoWrapper>
+        <S.MarketSideInfoWrapper>
+          <S.MarketTimeDescription>
+            {caculateRemainingPickupTime()}
+          </S.MarketTimeDescription>
+          <S.MarketPickupTimeWrapper>
+            <S.MarketSideInfo>픽업 가능 시간: </S.MarketSideInfo>
+            <S.MarketPickupTime>
+              {pickupStartAt.slice(0, 2)}시 {pickupEndAt.slice(-2)}분 -{' '}
+              {pickupEndAt.slice(0, 2)}시 {pickupEndAt.slice(-2)}분
+            </S.MarketPickupTime>
+          </S.MarketPickupTimeWrapper>
+          <S.MarketSideInfo>
+            {address} {specificAddress}
+          </S.MarketSideInfo>
+        </S.MarketSideInfoWrapper>
+        <S.MarketSubscribeIconWrapper>
+          <SubscribeIcon
+            marketIsLiked={marketIsLiked}
+            marketId={id}
+            handleSubscribe={handleSubscribe}
+          />
+        </S.MarketSubscribeIconWrapper>
+      </S.MarketInfoWrapper>
       <S.SideTagBarScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

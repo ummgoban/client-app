@@ -49,6 +49,7 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       products={marketDetail.products}
       id={marketDetail.id}
       specificAddress={marketDetail.specificAddress}
+      summary={marketDetail.summary}
     />
   );
 };

@@ -1,4 +1,4 @@
-import {MarketType} from '@/types/Market';
+import {MarketType, MarketDetailType} from '@/types/Market';
 import apiClient from './ApiClient';
 export const getMarketList = async (
   cursorId: number = 0,
@@ -27,9 +27,11 @@ export const getMarketList = async (
 
 export const getMarket = async (
   marketId: number,
-): Promise<MarketType | null> => {
+): Promise<MarketDetailType | null> => {
   try {
-    const res = await apiClient.get<MarketType | null>(`/markets/${marketId}`);
+    const res = await apiClient.get<MarketDetailType | null>(
+      `/markets/${marketId}`,
+    );
 
     return res;
   } catch (error) {

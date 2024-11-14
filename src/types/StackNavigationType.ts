@@ -24,7 +24,7 @@ export interface DetailStackParamList extends ParamListBase {
   OrderDone: {
     orderId: number;
     products: OrderType['products'];
-    originalPrice: number;
+    originPrice: number;
     discountPrice: number;
   };
 }

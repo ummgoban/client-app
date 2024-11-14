@@ -130,7 +130,7 @@ const PaymentPage = ({cart}: Props) => {
               params: {
                 orderId: tossPaymentRes.success.orderId,
                 products: cart.products,
-                originalPrice,
+                originPrice,
                 discountPrice,
               },
             });

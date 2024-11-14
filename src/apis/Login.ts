@@ -25,7 +25,7 @@ const initializeNaver = ({
 }: NaverLoginInitParams) => {
   if (Platform.OS === 'ios') {
     if (!serviceUrlSchemeIOS) {
-      console.log('serviceUrlSchemeIOS is missing in iOS initialize.');
+      console.debug('serviceUrlSchemeIOS is missing in iOS initialize.');
       return;
     }
     RNNaverLogin.initialize(
@@ -65,7 +65,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
     if (loginResult.isSuccess && loginResult.successResponse) {
       const {accessToken, refreshToken, expiresAtUnixSecondString} =
         loginResult.successResponse;
-      console.log('Naver Access Token:', accessToken);
+      console.debug('Naver Access Token:', accessToken);
       // JWT 토큰
       const response = await apiClient.post<{
         data: {
@@ -79,7 +79,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
       });
 
       if (response) {
-        console.log('네이버 로그인 성공:', response);
+        console.debug('네이버 로그인 성공:', response);
         const accessTokenExpiresAt = Number(expiresAtUnixSecondString) * 1000;
 
         return {
@@ -91,11 +91,11 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           jwtToken: response.data.accessToken,
         };
       } else {
-        console.log('네이버 로그인 실패');
+        console.debug('네이버 로그인 실패');
         return null;
       }
     } else {
-      console.log('네이버 로그인 실패:', loginResult.failureResponse);
+      console.debug('네이버 로그인 실패:', loginResult.failureResponse);
       return null;
     }
   } catch (error) {
@@ -125,7 +125,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     });
 
     if (response) {
-      console.log('카카오 로그인 성공:', response);
+      console.debug('카카오 로그인 성공:', response);
       return {
         //TODO: JWT 토큰으로 대체 필요
         accessToken: token.accessToken,
@@ -136,7 +136,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         jwtToken: response.data.accessToken,
       };
     } else {
-      console.log('카카오 로그인 실패');
+      console.debug('카카오 로그인 실패');
       return null;
     }
   } catch (error) {

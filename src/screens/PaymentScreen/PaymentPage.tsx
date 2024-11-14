@@ -11,14 +11,19 @@ import {
   usePaymentWidget,
 } from '@tosspayments/widget-sdk-react-native';
 
-import {CartType} from '@/types/OrderType';
+import {requestOrder, requestOrderSuccess} from '@/apis';
+import {BucketType} from '@/types/Bucket';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@components/common';
-import {DatePickerCard, PaymentSummary} from '@components/orderPage';
+import {
+  DatePickerCard,
+  PaymentMethod,
+  PaymentSummary,
+} from '@components/orderPage';
 
 import S from './PaymentPage.style';
 
-type Props = {cart: CartType};
+type Props = {cart: BucketType};
 
 const PaymentPage = ({cart}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -43,20 +48,20 @@ const PaymentPage = ({cart}: Props) => {
     <S.PaymentPage>
       <S.ScrollView>
         <DatePickerCard />
-        <>
+        <PaymentMethod>
           <PaymentMethodWidget
             selector="payment-methods"
             onLoadEnd={() => {
               paymentWidgetControl
                 .renderPaymentMethods(
                   'payment-methods',
-                  {value: 50000},
+                  {value: discountPrice},
                   {
                     variantKey: 'DEFAULT',
                   },
                 )
                 .then(control => {
-                  console.log({control});
+                  console.debug({control});
                 });
             }}
           />
@@ -72,7 +77,7 @@ const PaymentPage = ({cart}: Props) => {
                 });
             }}
           />
-        </>
+        </PaymentMethod>
         <PaymentSummary
           originPrice={originPrice}
           discountPrice={discountPrice}
@@ -91,24 +96,48 @@ const PaymentPage = ({cart}: Props) => {
             return;
           }
 
-          paymentWidgetControl
-            .requestPayment?.({
-              orderId: '1lB4sMvBNySuMmzDy5PPv',
-              orderName: '토스 티셔츠 외 2건',
-            })
-            .then(result => {
-              if (result?.success) {
-                // 결제 성공 비즈니스 로직을 구현하세요.
-                // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
-                navigation.navigate('Detail', {
-                  screen: 'OrderDone',
-                  params: {orderId: 1},
-                });
-              } else if (result?.fail) {
-                // 결제 실패 비즈니스 로직을 구현하세요.
-                Alert.alert('결제 실패');
-              }
+          const orderRes = await requestOrder(cart);
+
+          if (orderRes == null) {
+            Alert.alert('주문 정보를 가져오지 못했습니다.');
+            return;
+          }
+
+          const tossPaymentRes =
+            await paymentWidgetControl.requestPayment?.(orderRes);
+
+          if (tossPaymentRes == null) {
+            Alert.alert('결제 정보를 가져오지 못했습니다.');
+            return;
+          }
+
+          console.debug(tossPaymentRes);
+
+          if (tossPaymentRes.success) {
+            // 결제 성공 비즈니스 로직을 구현하세요.
+            // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
+            const successRes = await requestOrderSuccess(
+              tossPaymentRes.success,
+            );
+
+            if (!successRes) {
+              Alert.alert('결제 승인을 실패했습니다.');
+              return;
+            }
+
+            navigation.navigate('Detail', {
+              screen: 'OrderDone',
+              params: {
+                orderId: tossPaymentRes.success.orderId,
+                products: cart.products,
+                originalPrice,
+                discountPrice,
+              },
             });
+          } else if (tossPaymentRes.fail) {
+            // 결제 실패 비즈니스 로직을 구현하세요.
+            Alert.alert('결제 실패');
+          }
         }}>
         {`${discountPrice.toLocaleString()}원 결제하기`}
       </BottomButton>

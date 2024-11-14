@@ -1,59 +1,9 @@
+import {BucketType} from '@/types/Bucket';
+import {Success} from '@tosspayments/widget-sdk-react-native';
+import {PaymentInfo} from '@tosspayments/widget-sdk-react-native/lib/typescript/src/models/PaymentInfo';
 import axios from 'axios';
-import {CartType, OrderType} from '../types/OrderType';
-
-const dummyCart: CartType = {
-  id: 1,
-  market: {
-    id: 1,
-    name: 'market1',
-    images: ['https://legacy.reactjs.org/logo-og.png'],
-  },
-  products: [
-    {
-      id: 1,
-      name: '김치',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originPrice: 10000,
-      discountPrice: 7000,
-      count: 3,
-      tags: [
-        {
-          id: 1,
-          tagName: '추천메뉴',
-        },
-        {id: 5, tagName: '김치류'},
-      ],
-    },
-    {
-      id: 2,
-      name: '깻잎',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originPrice: 5000,
-      discountPrice: 3000,
-      count: 3,
-      tags: [
-        {
-          id: 2,
-          tagName: '깻잎류',
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: '간장게장',
-      image: 'https://legacy.reactjs.org/logo-og.png',
-      originPrice: 20000,
-      discountPrice: 17000,
-      count: 3,
-      tags: [
-        {
-          id: 3,
-          tagName: '게장류',
-        },
-      ],
-    },
-  ],
-};
+import {OrderType} from '../types/OrderType';
+import apiClient from './ApiClient';
 
 const dummyHistoryList: OrderType[] = [
   {
@@ -161,6 +111,13 @@ const dummyHistoryList: OrderType[] = [
   },
 ];
 
+const randomString = (): string => Math.random().toString(36).substr(2, 16);
+
+const dummyPaymentInfo: PaymentInfo = {
+  orderId: randomString(),
+  orderName: '김치',
+};
+
 // TODO: fetch order history
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   try {
@@ -173,7 +130,7 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
 
     return new Promise(async resolve => {
       await new Promise(_ => setTimeout(_, 1000));
-      console.log('fetch order history');
+      console.debug('fetch order history');
       resolve(dummyHistoryList);
     });
   } catch (error) {
@@ -182,16 +139,34 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   }
 };
 
-// TODO: fetch cart
-export const getCart = async (): Promise<CartType | null> => {
+export const requestOrder = async (
+  cart: BucketType,
+): Promise<PaymentInfo | null> => {
   try {
-    return new Promise(async resolve => {
-      await new Promise(_ => setTimeout(_, 1000));
-      console.log('fetch cart');
-      resolve(dummyCart);
-    });
+    // TODO: uri 수정
+    // const res = await apiClient.post<PaymentInfo | null>('/order', cart);
+    apiClient.get('/utils/health');
+    console.debug(cart);
+    const res = dummyPaymentInfo;
+
+    return res;
   } catch (error) {
-    console.error(error);
+    console.debug(error);
+    return null;
+  }
+};
+
+export const requestOrderSuccess = async (
+  success: Success,
+): Promise<Boolean | null> => {
+  try {
+    // TODO: uri 수정
+    // const res = await apiClient.post<Boolean>('/order/success', success);
+    console.debug(success);
+    const res = true;
+    return res;
+  } catch (error) {
+    console.debug(error);
     return null;
   }
 };

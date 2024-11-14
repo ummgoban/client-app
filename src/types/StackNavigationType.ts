@@ -1,4 +1,5 @@
 import {ParamListBase} from '@react-navigation/native';
+import {OrderType} from './OrderType';
 
 type StackParamType<T> = {
   screen?: keyof T;
@@ -20,7 +21,12 @@ export interface RegisterStackParamList extends ParamListBase {
 export interface DetailStackParamList extends ParamListBase {
   Market: {marketId: number};
   Payment: undefined;
-  OrderDone: {orderId: number};
+  OrderDone: {
+    orderId: number;
+    products: OrderType['products'];
+    originalPrice: number;
+    discountPrice: number;
+  };
 }
 
 export interface CartStackParamList extends ParamListBase {

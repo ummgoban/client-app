@@ -1,31 +1,32 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, Alert} from 'react-native';
+import {View, TextInput, Button, Alert} from 'react-native';
 
 const GeocodingExample = () => {
   const [address, setAddress] = useState('');
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
   const getCoordinates = async () => {
+    console.log(address);
     try {
-      const apiUrl = `https://naveropenapi.apis.naver.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`;
+      const apiUrl = `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${address}`;
       const response = await fetch(apiUrl, {
         headers: {
-          'X-Naver-Client-Id': 'YOUR_CLIENT_ID',
-          'X-Naver-Client-Secret': 'YOUR_CLIENT_SECRET',
+          'x-ncp-apigw-api-key-id': 'yko9b1hpv3',
+          'x-ncp-apigw-api-key': 'NBR6O11YRqjZH27E7g6AczlPi4GmQlUht76LH9bQ',
         },
       });
 
       const data = await response.json();
-
-      if (data.results && data.results.length > 0) {
-        const {x, y} = data.results[0];
-        setLatitude(y);
-        setLongitude(x);
-        Alert.alert('위치 정보', `위도: ${y}, 경도: ${x}`);
-      } else {
-        Alert.alert('Error', '주소를 찾을 수 없습니다.');
-      }
+      console.log(data.addresses[0]);
+      // if (data.addresses && data.results.length > 0) {
+      //   const {x, y} = data.results[0];
+      //   setLatitude(y);
+      //   setLongitude(x);
+      //   Alert.alert('위치 정보', `위도: ${y}, 경도: ${x}`);
+      // } else {
+      //   Alert.alert('Error', '주소를 찾을 수 없습니다.');
+      // }
     } catch (error) {
       console.error(error);
       Alert.alert('Error', '주소 변환 중 오류가 발생했습니다.');
@@ -46,11 +47,11 @@ const GeocodingExample = () => {
         onChangeText={setAddress}
       />
       <Button title="좌표 찾기" onPress={getCoordinates} />
-      {latitude && longitude && (
+      {/* {latitude && longitude && (
         <Text style={{marginTop: 20}}>
           위도: {latitude}, 경도: {longitude}
         </Text>
-      )}
+      )} */}
     </View>
   );
 };

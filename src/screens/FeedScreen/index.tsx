@@ -15,6 +15,7 @@ import {
   requestNotificationPermission,
   setBackgroundMessageHandler,
 } from '@/utils/fcm';
+import GeocodingExample from '@/components/map/GeocodingExample';
 // import MyLocationMap from '@/components/map/MyLocationMap';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -117,6 +118,8 @@ const FeedScreen = ({navigation}: Props) => {
           </NaverMapView>
           <Text>hi</Text> */}
           <MyLocationMap dummyCords={dummyCords} />
+          <GeocodingExample />
+          <GeocodingExample />
         </View>
       </View>
     );
@@ -124,7 +127,10 @@ const FeedScreen = ({navigation}: Props) => {
 
   return (
     <S.Container>
-      <MyLocationMap dummyCords={dummyCords} />
+      {/* <MyLocationMap dummyCords={dummyCords} /> */}
+      <GeocodingExample />
+      <GeocodingExample />
+
       <S.SearchWrapper>
         <SearchTab />
       </S.SearchWrapper>

@@ -69,10 +69,6 @@ const MyLocationMap = ({
       }}>
       {location ? (
         <>
-          <Text>
-            현재 위치: {location.latitude}, {location.longitude}
-          </Text>
-
           <NaverMapView
             style={{width: '100%', height: '100%'}}
             center={{
@@ -86,9 +82,11 @@ const MyLocationMap = ({
                 latitude: location.latitude,
                 longitude: location.longitude,
               }}
+              pinColor="green"
             />
             {dummyCords.map(coord => (
               <Marker
+                key={coord.marketId}
                 coordinate={{
                   latitude: coord.latitude,
                   longitude: coord.longitude,
@@ -97,6 +95,9 @@ const MyLocationMap = ({
               />
             ))}
           </NaverMapView>
+          <Text>
+            현재 위치: {location.latitude}, {location.longitude}
+          </Text>
         </>
       ) : (
         <Text>위치를 가져오는 중...</Text>

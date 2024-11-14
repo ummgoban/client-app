@@ -7,7 +7,7 @@ const CartIcon = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handlePress = () => {
-    navigation.navigate('Cart');
+    navigation.navigate('CartRoot');
   };
 
   return (

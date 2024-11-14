@@ -7,21 +7,32 @@ import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import {HomeStackParamList} from '@/types/StackNavigationType';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import SubscribeScreen from '@/screens/SubscribeScreen';
+import MomChanPickLogo from '@/components/common/MomChanPickLogo';
 
 const Tab = createBottomTabNavigator<HomeStackParamList>();
 
-const screenOptions = {
+const defaultScreenOptions = () => ({
   headerShown: true,
   headerRight: () => <CartIcon />,
-};
+  headerTitleAlign: 'center' as const,
+});
+
+const feedScreenOptions = () => ({
+  ...defaultScreenOptions(),
+  headerLeft: () => <MomChanPickLogo />,
+});
 
 const HomeNavigator = () => {
   return (
     <Tab.Navigator tabBar={TabBar}>
-      <Tab.Screen name="Feed" options={screenOptions} component={HomeScreen} />
+      <Tab.Screen
+        name="Feed"
+        options={feedScreenOptions}
+        component={HomeScreen}
+      />
       <Tab.Screen
         name="Subscribe"
-        options={screenOptions}
+        options={defaultScreenOptions}
         component={SubscribeScreen}
       />
       <Tab.Screen name="OrderHistory" component={OrderHistoryScreen} />

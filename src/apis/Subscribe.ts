@@ -12,8 +12,9 @@ export const getSubscribeList = async (
     const res = await apiClient.get<{
       markets: SubscribeType[];
       hasNext: boolean;
-    } | null>(`/market/like?cursorId=${cursorId}&size=${size}`);
-    console.log(res?.markets);
+    } | null>(`/members/markets/likes`, {
+      params: {cursorId, size},
+    });
     return res;
   } catch (error) {
     console.error('Error Subscribed market list:', error);

@@ -16,8 +16,7 @@ const AppNavigator = () => {
       <Stack.Screen name="Home" component={HomeNavigator} />
       <Stack.Screen name="Register" component={RegisterNavigator} />
       <Stack.Screen name="Detail" component={DetailNavigator} />
-      <Stack.Screen name="Cart" component={CartNavigator} />
-      {/* Add more screens here */}
+      <Stack.Screen name="CartRoot" component={CartNavigator} />
     </Stack.Navigator>
   );
 };

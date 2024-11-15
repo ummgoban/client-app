@@ -24,7 +24,7 @@ const MenuName = styled.Text`
   font-weight: 600;
 `;
 
-const MenuOriginalPrice = styled.Text`
+const MenuoriginPrice = styled.Text`
   color: var(--gray-gray5, #979797);
   font-size: 13px;
   font-weight: 400;
@@ -50,7 +50,6 @@ const MenuBoxRight = styled.View`
 const MenuImage = styled.Image`
   width: 100px;
   height: 100px;
-  margin-right: 10px;
   border-radius: 18px;
 `;
 
@@ -110,7 +109,7 @@ const S = {
   MenuWrapper,
   MenuBoxLeft,
   MenuName,
-  MenuOriginalPrice,
+  MenuoriginPrice,
   MenuDiscountPrice,
   MenuStockCount,
   MenuBoxRight,

@@ -55,17 +55,15 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     );
   };
   const isDecrease = isCart && menuCount === 1;
-
   return (
     <S.MenuWrapper>
       <S.MenuBoxLeft>
         <S.MenuName>{product.name}</S.MenuName>
-        <S.MenuOriginalPrice>
-          {/* TODO: 타입 수정 */}
-          {/* 정가: {product.originalPrice.toLocaleString()}원 */}
-        </S.MenuOriginalPrice>
+        <S.MenuoriginPrice>
+          정가: {product.originPrice.toLocaleString()}원
+        </S.MenuoriginPrice>
         <S.MenuDiscountPrice>
-          {/* 할인가: {product.discountPrice.toLocaleString()}원 */}
+          할인가: {product.discountPrice.toLocaleString()}원
         </S.MenuDiscountPrice>
         {/* TODO: API연결 후 재고 값 넣기 */}
         <S.MenuStockCount>재고: 1</S.MenuStockCount>

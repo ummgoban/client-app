@@ -8,7 +8,7 @@ import S from './OrderDoneScreen.style';
 type Props = StackScreenProps<DetailStackParamList, 'OrderDone'>;
 
 const OrderDoneScreen = ({navigation, route}: Props) => {
-  const {orderId, products, originalPrice, discountPrice} = route.params;
+  const {orderId, products, originPrice, discountPrice} = route.params;
 
   return (
     <S.OrderDoneContainer>
@@ -37,11 +37,11 @@ const OrderDoneScreen = ({navigation, route}: Props) => {
           </S.PriceItem>
           <S.PriceItem>
             <Text>상품 금액</Text>
-            <Text>{`${originalPrice.toLocaleString()}원`}</Text>
+            <Text>{`${originPrice.toLocaleString()}원`}</Text>
           </S.PriceItem>
           <S.PriceItem>
             <Text>할인 금액</Text>
-            <Text>{`- ${(originalPrice - discountPrice).toLocaleString()}원`}</Text>
+            <Text>{`- ${(originPrice - discountPrice).toLocaleString()}원`}</Text>
           </S.PriceItem>
         </S.PriceView>
       </S.OrderDoneCard>

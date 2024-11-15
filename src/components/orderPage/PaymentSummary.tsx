@@ -19,11 +19,11 @@ const PaymentSummaryItem = ({
 };
 
 type Props = {
-  originalPrice: number;
+  originPrice: number;
   discountPrice: number;
 };
 
-const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
+const PaymentSummary = ({originPrice, discountPrice}: Props) => {
   return (
     <S.Card>
       <S.Header>
@@ -33,11 +33,11 @@ const PaymentSummary = ({originalPrice, discountPrice}: Props) => {
       <S.PaymentSummaryItemList>
         <PaymentSummaryItem
           title="주문금액"
-          price={`${originalPrice.toLocaleString()}원`}
+          price={`${originPrice.toLocaleString()}원`}
         />
         <PaymentSummaryItem
           title="할인금액"
-          price={`-${(originalPrice - discountPrice).toLocaleString()}원`}
+          price={`-${(originPrice - discountPrice).toLocaleString()}원`}
           primary
         />
       </S.PaymentSummaryItemList>

@@ -28,14 +28,14 @@ type Props = {cart: BucketType};
 const PaymentPage = ({cart}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {originalPrice, discountPrice} = useMemo(
+  const {originPrice, discountPrice} = useMemo(
     () =>
       cart.products.reduce(
         (acc, cur) => ({
-          originalPrice: acc.originalPrice + cur.originalPrice * cur.count,
+          originPrice: acc.originPrice + cur.originPrice * cur.count,
           discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
         }),
-        {originalPrice: 0, discountPrice: 0},
+        {originPrice: 0, discountPrice: 0},
       ),
     [cart.products],
   );
@@ -79,7 +79,7 @@ const PaymentPage = ({cart}: Props) => {
           />
         </PaymentMethod>
         <PaymentSummary
-          originalPrice={originalPrice}
+          originPrice={originPrice}
           discountPrice={discountPrice}
         />
       </S.ScrollView>
@@ -130,7 +130,7 @@ const PaymentPage = ({cart}: Props) => {
               params: {
                 orderId: tossPaymentRes.success.orderId,
                 products: cart.products,
-                originalPrice,
+                originPrice,
                 discountPrice,
               },
             });

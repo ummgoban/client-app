@@ -3,8 +3,8 @@ import {ProductType} from './ProductType';
 export type MarketType = {
   id: number;
   name: string;
-  pickupStartAt: number;
-  pickupEndAt: number;
+  pickupStartAt: string;
+  pickupEndAt: string;
   address: string;
   products: ProductType[];
   specificAddress: string;
@@ -16,4 +16,5 @@ export type MarketType = {
 export type MarketDetailType = MarketType & {
   hasLike: boolean;
   imageUrls: string[];
+  summary: string;
 };

@@ -18,13 +18,13 @@ const ShoppingCartPage = ({
   cartData,
   updateProductCount,
 }: Props) => {
-  const {originalPrice, discountPrice} = useMemo(() => {
+  const {originPrice, discountPrice} = useMemo(() => {
     return cartData.products.reduce(
       (acc, cur) => ({
-        originalPrice: acc.originalPrice + cur.originalPrice * cur.count,
+        originPrice: acc.originPrice + cur.originPrice * cur.count,
         discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
       }),
-      {originalPrice: 0, discountPrice: 0},
+      {originPrice: 0, discountPrice: 0},
     );
   }, [cartData]);
 
@@ -59,7 +59,7 @@ const ShoppingCartPage = ({
           />
         ))}
         <PaymentSummary
-          originalPrice={originalPrice}
+          originPrice={originPrice}
           discountPrice={discountPrice}
         />
         <BottomButton onPress={onPressPayment}>

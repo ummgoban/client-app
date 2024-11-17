@@ -7,6 +7,10 @@ import {Market, SearchTab} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import {Platform, PermissionsAndroid} from 'react-native';
+import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
+import {BottomButton} from '@/components/common';
 // import NaverMapView, {Marker, Path} from 'react-native-naver-map';
 import S from './SearchBar.style';
 import {
@@ -15,7 +19,6 @@ import {
   requestNotificationPermission,
   setBackgroundMessageHandler,
 } from '@/utils/fcm';
-import GeocodingExample from '@/components/map/GeocodingExample';
 // import MyLocationMap from '@/components/map/MyLocationMap';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -25,33 +28,92 @@ const FeedScreen = ({navigation}: Props) => {
   const dummyCords = [
     {
       marketId: '1',
-
       latitude: 37.566537,
       longitude: 127.0848516666666,
     },
     {
       marketId: '2',
-
       latitude: 37.586537,
       longitude: 127.0948516666666,
     },
   ];
-
-  // TODO: cursor pagination 무한 스크롤 구현
+  const [hasFetchedData, setHasFetchedData] = useState(false);
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
+  const [location, setLocation] = useState<{
+    userLatitude: number;
+    userLongtitude: number;
+  } | null>(null);
+
   const fetchData = useCallback(async () => {
-    const res = await getMarketList();
+    if (hasFetchedData) return;
+    const res = await getMarketList(
+      0,
+      10,
+      location?.userLatitude,
+      location?.userLongtitude,
+    );
     if (!res) {
       Alert.alert('가게내역받아오기실패.');
       return;
     }
     setMarketList(res.markets);
+    console.log(res.markets);
+    setHasFetchedData(true);
+  }, [location, hasFetchedData]);
+
+  const getCurrentLocation = useCallback(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setLocation({
+          userLatitude: position.coords.latitude,
+          userLongtitude: position.coords.longitude,
+        });
+        console.log(position.coords);
+      },
+      error => {
+        console.log(error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
+      },
+    );
   }, []);
+
+  const requestLocationPermission = useCallback(async () => {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      console.log('Android 권한 요청 결과:', granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        getCurrentLocation();
+      } else {
+        console.log('위치 권한이 허용되지 않았습니다.');
+      }
+    } else {
+      const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      console.log('iOS 권한 요청 결과:', result);
+      if (result === RESULTS.GRANTED) {
+        getCurrentLocation();
+      } else {
+        console.log('위치 권한이 허용되지 않았습니다.');
+      }
+    }
+  }, [getCurrentLocation]);
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
       screen: 'Market',
       params: {marketId},
+    });
+  };
+
+  const navigateMap = () => {
+    navigation.navigate('Detail', {
+      screen: 'Map',
+      params: {dummyCords},
     });
   };
 
@@ -67,14 +129,21 @@ const FeedScreen = ({navigation}: Props) => {
         fontFamily: 'Arial',
       },
     });
-    // TODO: fcm permission 로직 위치 논의 필요
+
     requestNotificationPermission();
-    const unsubscribe = handleForegroundMessage();
     requestUserPermission();
+    const unsubscribe = handleForegroundMessage();
     setBackgroundMessageHandler();
-    fetchData();
+    requestLocationPermission();
+
     return unsubscribe;
-  }, [fetchData, navigation]);
+  }, [navigation, requestLocationPermission]);
+
+  useEffect(() => {
+    if (location && !hasFetchedData) {
+      fetchData();
+    }
+  }, [location, hasFetchedData, fetchData]);
 
   if (!marketList) {
     return (
@@ -86,49 +155,7 @@ const FeedScreen = ({navigation}: Props) => {
             height: 200,
             marginTop: 10,
           }}>
-          {/* <NaverMapView
-            style={{width: '100%', height: '100%'}}
-            center={{
-              zoom: 10,
-              tilt: 0,
-              latitude:
-                (dummyOrders[0].start.latitude + dummyOrders[0].end.latitude) /
-                2,
-              longitude:
-                (dummyOrders[0].start.longitude +
-                  dummyOrders[0].end.longitude) /
-                2,
-            }}>
-            <Marker
-              coordinate={{
-                latitude: dummyOrders[0].start.latitude,
-                longitude: dummyOrders[0].start.longitude,
-              }}
-              pinColor="blue"
-            />
-            <Path
-              coordinates={[
-                {
-                  latitude: dummyOrders[0].start.latitude,
-                  longitude: dummyOrders[0].start.longitude,
-                },
-                {
-                  latitude: dummyOrders[0].end.latitude,
-                  longitude: dummyOrders[0].end.longitude,
-                },
-              ]}
-            />
-            <Marker
-              coordinate={{
-                latitude: dummyOrders[0].end.latitude,
-                longitude: dummyOrders[0].end.longitude,
-              }}
-            />
-          </NaverMapView>
-          <Text>hi</Text> */}
           <MyLocationMap dummyCords={dummyCords} />
-          <GeocodingExample />
-          <GeocodingExample />
         </View>
       </View>
     );
@@ -136,10 +163,7 @@ const FeedScreen = ({navigation}: Props) => {
 
   return (
     <S.Container>
-      {/* <MyLocationMap dummyCords={dummyCords} /> */}
-      <GeocodingExample />
-      <GeocodingExample />
-
+      <MyLocationMap dummyCords={dummyCords} />
       <S.SearchWrapper>
         <SearchTab />
       </S.SearchWrapper>
@@ -148,7 +172,6 @@ const FeedScreen = ({navigation}: Props) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {marketList.length === 0 ? (
-          // TODO: 상품이 없을 때 렌더링
           <Text>상품이 없습니다.</Text>
         ) : (
           marketList.map(market => (
@@ -156,7 +179,11 @@ const FeedScreen = ({navigation}: Props) => {
           ))
         )}
       </S.MarketWrapper>
+      <BottomButton onPress={navigateMap}>
+        지도로 주변 가게 확인하기
+      </BottomButton>
     </S.Container>
   );
 };
+
 export default FeedScreen;

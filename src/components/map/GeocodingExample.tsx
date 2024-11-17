@@ -12,8 +12,8 @@ const GeocodingExample = () => {
       const apiUrl = `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${address}`;
       const response = await fetch(apiUrl, {
         headers: {
-          'x-ncp-apigw-api-key-id': 'yko9b1hpv3',
-          'x-ncp-apigw-api-key': 'NBR6O11YRqjZH27E7g6AczlPi4GmQlUht76LH9bQ',
+          'x-ncp-apigw-api-key-id': 'client id',
+          'x-ncp-apigw-api-key': 'client secret key',
         },
       });
 

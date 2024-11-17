@@ -3,6 +3,8 @@ import apiClient from './ApiClient';
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,
+  userLatitude?: number,
+  userLongitude?: number,
 ): Promise<{
   markets: MarketType[];
   hasNext: boolean;
@@ -15,6 +17,8 @@ export const getMarketList = async (
       params: {
         cursorId,
         size,
+        userLatitude,
+        userLongitude,
       },
     });
 

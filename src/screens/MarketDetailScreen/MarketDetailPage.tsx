@@ -104,8 +104,8 @@ const MarketDetailPage = ({
     );
 
   const handleCheckout = () => {
-    navigation.navigate('Cart', {
-      screen: 'Market',
+    navigation.navigate('CartRoot', {
+      screen: 'Cart',
     });
   };
 

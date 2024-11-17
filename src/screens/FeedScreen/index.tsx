@@ -22,7 +22,6 @@ type Props = {
 };
 
 const FeedScreen = ({navigation}: Props) => {
-  const [hasFetchedData, setHasFetchedData] = useState(false);
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
   const [location, setLocation] = useState<{
     userLatitude: number;
@@ -30,7 +29,6 @@ const FeedScreen = ({navigation}: Props) => {
   } | null>(null);
 
   const fetchData = useCallback(async () => {
-    if (hasFetchedData) return;
     const res = await getMarketList(
       0,
       10,
@@ -42,12 +40,31 @@ const FeedScreen = ({navigation}: Props) => {
       return;
     }
     setMarketList(res.markets);
+  }, [location]);
 
-    setHasFetchedData(true);
-  }, [location, hasFetchedData]);
+  // const getCurrentLocation = useCallback(() => {
+  //   console.log('Get current location...');
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       setLocation({
+  //         userLatitude: position.coords.latitude,
+  //         userLongitude: position.coords.longitude,
+  //       });
+  //     },
+  //     error => {
+  //       console.log(error.message);
+  //     },
+  //     {
+  //       enableHighAccuracy: true,
+  //       timeout: 15000,
+  //       maximumAge: 0,
+  //     },
+  //   );
+  // }, []);
 
-  const getCurrentLocation = useCallback(() => {
-    Geolocation.getCurrentPosition(
+  const startLocationTracking = useCallback(() => {
+    console.log('location chagned');
+    Geolocation.watchPosition(
       position => {
         setLocation({
           userLatitude: position.coords.latitude,
@@ -59,8 +76,7 @@ const FeedScreen = ({navigation}: Props) => {
       },
       {
         enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 0,
+        distanceFilter: 10,
       },
     );
   }, []);
@@ -72,7 +88,8 @@ const FeedScreen = ({navigation}: Props) => {
       );
       console.log('Android 권한 요청 결과:', granted);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        getCurrentLocation();
+        // getCurrentLocation();
+        startLocationTracking();
       } else {
         console.log('위치 권한이 허용되지 않았습니다.');
       }
@@ -80,12 +97,13 @@ const FeedScreen = ({navigation}: Props) => {
       const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
       console.log('iOS 권한 요청 결과:', result);
       if (result === RESULTS.GRANTED) {
-        getCurrentLocation();
+        // getCurrentLocation();
+        startLocationTracking();
       } else {
         console.log('위치 권한이 허용되지 않았습니다.');
       }
     }
-  }, [getCurrentLocation]);
+  }, [startLocationTracking]);
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
@@ -95,12 +113,18 @@ const FeedScreen = ({navigation}: Props) => {
   };
 
   const navigateMap = () => {
-    const validDummyCords = [
+    if (!location) {
+      Alert.alert(
+        '위치 정보가 없어 기본가게들을 열람합니다. 권한을 허용해주세요',
+      );
+      return;
+    }
+    const validCords = [
       {
         marketName: '현재위치',
         marketId: '-1',
-        latitude: location?.userLatitude || 0,
-        longitude: location?.userLongitude || 0,
+        latitude: location?.userLatitude || 37.582831666666664,
+        longitude: location?.userLongitude || 127.06107333333334,
       },
       ...marketList!
         .filter(market => market.latitude && market.longitude)
@@ -113,7 +137,7 @@ const FeedScreen = ({navigation}: Props) => {
     ];
     navigation.navigate('Detail', {
       screen: 'Map',
-      params: {dummyCords: validDummyCords},
+      params: {cords: validCords},
     });
   };
 
@@ -132,23 +156,27 @@ const FeedScreen = ({navigation}: Props) => {
 
     requestNotificationPermission();
     requestUserPermission();
+    requestLocationPermission();
     const unsubscribe = handleForegroundMessage();
     setBackgroundMessageHandler();
-    requestLocationPermission();
 
     return unsubscribe;
   }, [navigation, requestLocationPermission]);
 
   useEffect(() => {
-    if (location && !hasFetchedData) {
-      fetchData();
-    }
-  }, [location, hasFetchedData, fetchData]);
+    fetchData();
+  }, [location, fetchData]);
 
-  if (!marketList) {
+  if (marketList === null) {
     return (
       <View>
-        <Text>가게목록을 불러오는데 실패했습니다.</Text>
+        <Text>가게목록을 불러오지 못했습니다.</Text>
+      </View>
+    );
+  } else if (marketList.length === 0) {
+    return (
+      <View>
+        <Text>주변 가게 목록이 없습니다.</Text>
       </View>
     );
   }

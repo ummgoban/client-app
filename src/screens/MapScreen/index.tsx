@@ -9,11 +9,11 @@ type MapScreenRouteProp = RouteProp<DetailStackParamList, 'Map'>;
 const MapScreen = () => {
   const route = useRoute<MapScreenRouteProp>();
 
-  const {dummyCords} = route.params;
+  const {cords} = route.params;
 
   return (
     <View>
-      <MyLocationMap dummyCords={dummyCords} />
+      <MyLocationMap cords={cords} />
     </View>
   );
 };

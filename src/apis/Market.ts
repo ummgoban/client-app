@@ -10,6 +10,7 @@ export const getMarketList = async (
   hasNext: boolean;
 } | null> => {
   try {
+    console.log('api call', userLatitude, userLongitude);
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;

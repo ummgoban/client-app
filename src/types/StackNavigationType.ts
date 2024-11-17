@@ -28,7 +28,7 @@ export interface DetailStackParamList extends ParamListBase {
     discountPrice: number;
   };
   Map: {
-    dummyCords: {
+    cords: {
       marketName: string;
       marketId: string;
       latitude: number;

@@ -1,4 +1,5 @@
 import ShoppingCartScreen from '@/screens/ShoppingCart';
+
 import {CartStackParamList} from '@/types/StackNavigationType';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';

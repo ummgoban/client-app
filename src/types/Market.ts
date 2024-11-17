@@ -8,6 +8,8 @@ export type MarketType = {
   address: string;
   products: ProductType[];
   specificAddress: string;
+  latitude: number;
+  longitude: number;
   openAt: string;
   closeAt: string;
   images: string[];

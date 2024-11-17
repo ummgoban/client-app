@@ -1,7 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl, Text, View, Dimensions} from 'react-native';
-import MyLocationMap from '@/components/map/MyLocationMap';
+import {Alert, RefreshControl, Text, View} from 'react-native';
 import {getMarketList} from '@/apis';
 import {Market, SearchTab} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
@@ -11,7 +10,6 @@ import {Platform, PermissionsAndroid} from 'react-native';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import {BottomButton} from '@/components/common';
-// import NaverMapView, {Marker, Path} from 'react-native-naver-map';
 import S from './SearchBar.style';
 import {
   handleForegroundMessage,
@@ -19,29 +17,16 @@ import {
   requestNotificationPermission,
   setBackgroundMessageHandler,
 } from '@/utils/fcm';
-// import MyLocationMap from '@/components/map/MyLocationMap';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
 const FeedScreen = ({navigation}: Props) => {
-  const dummyCords = [
-    {
-      marketId: '1',
-      latitude: 37.566537,
-      longitude: 127.0848516666666,
-    },
-    {
-      marketId: '2',
-      latitude: 37.586537,
-      longitude: 127.0948516666666,
-    },
-  ];
   const [hasFetchedData, setHasFetchedData] = useState(false);
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
   const [location, setLocation] = useState<{
     userLatitude: number;
-    userLongtitude: number;
+    userLongitude: number;
   } | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -50,14 +35,14 @@ const FeedScreen = ({navigation}: Props) => {
       0,
       10,
       location?.userLatitude,
-      location?.userLongtitude,
+      location?.userLongitude,
     );
     if (!res) {
       Alert.alert('가게내역받아오기실패.');
       return;
     }
     setMarketList(res.markets);
-    console.log(res.markets);
+
     setHasFetchedData(true);
   }, [location, hasFetchedData]);
 
@@ -66,9 +51,8 @@ const FeedScreen = ({navigation}: Props) => {
       position => {
         setLocation({
           userLatitude: position.coords.latitude,
-          userLongtitude: position.coords.longitude,
+          userLongitude: position.coords.longitude,
         });
-        console.log(position.coords);
       },
       error => {
         console.log(error.message);
@@ -111,9 +95,25 @@ const FeedScreen = ({navigation}: Props) => {
   };
 
   const navigateMap = () => {
+    const validDummyCords = [
+      {
+        marketName: '현재위치',
+        marketId: '-1',
+        latitude: location?.userLatitude || 0,
+        longitude: location?.userLongitude || 0,
+      },
+      ...marketList!
+        .filter(market => market.latitude && market.longitude)
+        .map(market => ({
+          marketName: market.name,
+          marketId: market.id.toString(),
+          latitude: market.latitude,
+          longitude: market.longitude,
+        })),
+    ];
     navigation.navigate('Detail', {
       screen: 'Map',
-      params: {dummyCords},
+      params: {dummyCords: validDummyCords},
     });
   };
 
@@ -149,21 +149,12 @@ const FeedScreen = ({navigation}: Props) => {
     return (
       <View>
         <Text>가게목록을 불러오는데 실패했습니다.</Text>
-        <View
-          style={{
-            width: Dimensions.get('window').width - 30,
-            height: 200,
-            marginTop: 10,
-          }}>
-          <MyLocationMap dummyCords={dummyCords} />
-        </View>
       </View>
     );
   }
 
   return (
     <S.Container>
-      <MyLocationMap dummyCords={dummyCords} />
       <S.SearchWrapper>
         <SearchTab />
       </S.SearchWrapper>

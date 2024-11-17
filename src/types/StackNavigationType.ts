@@ -27,7 +27,14 @@ export interface DetailStackParamList extends ParamListBase {
     originPrice: number;
     discountPrice: number;
   };
-  Map: {dummyCords: {marketId: string; latitude: number; longitude: number}[]};
+  Map: {
+    dummyCords: {
+      marketName: string;
+      marketId: string;
+      latitude: number;
+      longitude: number;
+    }[];
+  };
 }
 
 export interface CartStackParamList extends ParamListBase {

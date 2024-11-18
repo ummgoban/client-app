@@ -130,7 +130,7 @@ const FeedScreen = ({navigation}: Props) => {
         latitude: location?.userLatitude || 37.582831666666664,
         longitude: location?.userLongitude || 127.06107333333334,
       },
-      ...marketList!
+      ...marketList
         .filter(
           market =>
             market.latitude != null &&

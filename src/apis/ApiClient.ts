@@ -13,7 +13,7 @@ class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
-  private _JWTToken: string | null = null;
+  private _jwt: string | null = null;
 
   private constructor() {
     this.axiosInstance = axios.create({
@@ -27,10 +27,10 @@ class ApiClient {
       async (config: InternalAxiosRequestConfig) => {
         const session: SessionType | null = await getStorage('session');
 
-        this._JWTToken = session?.jwtToken ?? null;
+        this._jwt = session?.jwt ?? null;
 
-        if (this._JWTToken) {
-          config.headers.Authorization = `Bearer ${this._JWTToken}`;
+        if (this._jwt) {
+          config.headers.Authorization = `Bearer ${this._jwt}`;
         }
 
         return config;
@@ -42,8 +42,8 @@ class ApiClient {
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         if (response.data && response.data.token) {
-          this._JWTToken = response.data.token; // 토큰 갱신
-          console.debug('토큰 갱신:', this._JWTToken);
+          this._jwt = response.data.token; // 토큰 갱신
+          console.debug('토큰 갱신:', this._jwt);
         }
         return response;
       },

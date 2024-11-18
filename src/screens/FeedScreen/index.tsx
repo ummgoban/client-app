@@ -177,7 +177,7 @@ const FeedScreen = ({navigation}: Props) => {
 
   useEffect(() => {
     fetchData();
-  }, [location, fetchData]);
+  }, [fetchData]);
 
   if (marketList === null) {
     return (

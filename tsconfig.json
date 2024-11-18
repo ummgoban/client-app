@@ -15,5 +15,5 @@
       // "@types/*": ["src/types/*"] // @types is typescript library, so use @/types/* instead of @types/*
     }
   },
-  "exclude": ["node_modules", "node_modules/react-native-naver-map"]
+  "exclude": ["node_modules"]
 }

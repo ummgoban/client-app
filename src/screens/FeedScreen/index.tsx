@@ -119,6 +119,10 @@ const FeedScreen = ({navigation}: Props) => {
       );
       return;
     }
+    if (!marketList || !marketList.length) {
+      Alert.alert('가게 목록이 없습니다.');
+      return;
+    }
     const validCords = [
       {
         marketName: '현재위치',
@@ -127,7 +131,15 @@ const FeedScreen = ({navigation}: Props) => {
         longitude: location?.userLongitude || 127.06107333333334,
       },
       ...marketList!
-        .filter(market => market.latitude && market.longitude)
+        .filter(
+          market =>
+            market.latitude != null &&
+            market.longitude != null &&
+            market.latitude >= -90 &&
+            market.latitude <= 90 &&
+            market.longitude >= -180 &&
+            market.longitude <= 180,
+        )
         .map(market => ({
           marketName: market.name,
           marketId: market.id.toString(),

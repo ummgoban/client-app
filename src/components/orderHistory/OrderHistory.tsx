@@ -41,15 +41,11 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
 
               const productLength = order.products.length;
 
-              const sumOfPrice = order.products
-                .reduce((acc, curr) => acc + curr.discountPrice, 0)
-                .toLocaleString();
-
               const description = `${representProduct} ${
                 productLength > 1
                   ? `외 ${productLength - 1}개`
                   : `${order.products[0].count}개`
-              } ${sumOfPrice}원`;
+              } ${order.ordersPrice.toLocaleString()}원`;
 
               const status =
                 order.ordersStatus === 'ORDERED' ||

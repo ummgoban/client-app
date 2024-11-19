@@ -17,6 +17,7 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 import SubscribeIcon from '@/components/common/SubscribeIcon';
 import {BottomButton} from '@/components/common';
 import {MarketDetailType} from '@/types/Market';
+import {validateBucket, addToBucket} from '@/apis/Bucket';
 type CartItem = {
   productId: number;
   productName: string;
@@ -103,10 +104,39 @@ const MarketDetailPage = ({
       {} as Record<string, ProductType[]>,
     );
 
-  const handleCheckout = () => {
-    navigation.navigate('CartRoot', {
-      screen: 'Cart',
-    });
+  const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
+    try {
+      const bucketProducts = cartItems.map(cartItem => {
+        const productDetails = products.find(
+          (product): product is ProductType =>
+            product.id === cartItem.productId,
+        );
+
+        if (!productDetails) {
+          throw new Error(`타입 방지 위한 error`);
+        }
+
+        return {
+          count: cartItem.count,
+          id: productDetails.id,
+          name: productDetails.name,
+          image: productDetails.image,
+          originPrice: productDetails.originPrice,
+          discountPrice: productDetails.discountPrice,
+        };
+      });
+
+      const bucketPostValidate = await addToBucket(marketId, bucketProducts);
+      if (bucketPostValidate) {
+        navigation.navigate('CartRoot', {
+          screen: 'Cart',
+        });
+      } else {
+        console.log('add to bucket failed');
+      }
+    } catch (error) {
+      console.error('Error in handleCheckout:', error);
+    }
   };
 
   const scrollToSection = useCallback(
@@ -211,30 +241,33 @@ const MarketDetailPage = ({
   const handleSubscribe = () => {
     setMarketIsLiked(prevState => !prevState);
   };
-  const navigatePage = () => {
-    if (cart.length === 0) {
-      Alert.alert('장바구니가 비어 있습니다.');
+  const addProductToBucket = async (
+    marketId: number,
+    addProducts: CartItem[],
+  ) => {
+    if (!(await validateBucket(marketId))) {
+      Alert.alert(
+        '기존에 담아두었던 장바구니가 존재합니다.',
+        '장바구니에 담으시겠습니까?',
+        [
+          {
+            text: '예',
+            onPress: () => {
+              handleCheckout(marketId, addProducts);
+            },
+          },
+          {
+            text: '아니오',
+            onPress: () => {
+              setCart([]);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
       return;
     }
-    Alert.alert(
-      `장바구니로 이동하시겠습니까?`,
-      `취소시 장바구니가 초기화됩니다.`,
-      [
-        {
-          text: '예',
-          onPress: () => {
-            handleCheckout();
-          },
-        },
-        {
-          text: '취소',
-          onPress: () => {
-            setCart([]);
-          },
-        },
-      ],
-      {cancelable: false},
-    );
+    handleCheckout(marketId, addProducts);
   };
 
   const caculateRemainingPickupTime = () => {
@@ -330,7 +363,7 @@ const MarketDetailPage = ({
         ))}
       </S.MenuScrollView>
 
-      <BottomButton onPress={navigatePage}>
+      <BottomButton onPress={() => addProductToBucket(id, cart)}>
         예약하기 ({cart.length})
       </BottomButton>
     </S.MarketDetailInfoView>

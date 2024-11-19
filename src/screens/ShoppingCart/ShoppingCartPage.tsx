@@ -36,7 +36,6 @@ const ShoppingCartPage = ({
   };
 
   const onPressPayment = () => {
-    // TODO: 장바구니 담기 post 추가
     navigation.navigate('Detail', {
       screen: 'Payment',
       params: {cartData},

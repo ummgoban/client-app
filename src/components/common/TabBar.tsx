@@ -1,38 +1,59 @@
 import React from 'react';
+
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {View, TouchableOpacity, Text, Image} from 'react-native';
+
+import {default as AntIcon} from 'react-native-vector-icons/AntDesign';
+import {default as FeatherIcon} from 'react-native-vector-icons/Feather';
+
 import {HomeStackParamList} from '@/types/StackNavigationType';
+
+import S from './TabBar.style';
 
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
     label: string;
-    icon: string;
+    icon: {
+      family: 'AntDesign' | 'Feather';
+      name: string;
+    };
   };
 };
 
 const tabBarData: TabBarComponentType = {
   Feed: {
     label: '홈',
-    icon: 'https://legacy.reactjs.org/logo-og.png',
+    icon: {
+      family: 'Feather',
+      name: 'home',
+    },
   },
   MyPage: {
     label: '마이 페이지',
-    icon: 'https://legacy.reactjs.org/logo-og.png',
+    icon: {
+      family: 'Feather',
+      name: 'user',
+    },
   },
   OrderHistory: {
     label: '주문 내역',
-    icon: 'https://legacy.reactjs.org/logo-og.png',
+    icon: {
+      family: 'AntDesign',
+      name: 'profile',
+    },
   },
   Subscribe: {
     label: '찜',
-    icon: 'https://legacy.reactjs.org/logo-og.png',
+    icon: {
+      family: 'Feather',
+      name: 'heart',
+    },
   },
 };
 
 // TODO: resolve inline style
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <S.TabBarContainer>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
 
@@ -60,32 +81,35 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
         };
 
         return (
-          <TouchableOpacity
+          <S.TabBarItemButton
             key={route.key}
             accessibilityRole="button"
             accessibilityState={isFocused ? {selected: true} : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
-            style={{flex: 1}}>
-            <View style={{marginHorizontal: 'auto'}}>
-              <Image
-                source={{uri: icon}}
-                style={{width: 24, height: 24, marginHorizontal: 'auto'}}
-              />
-              <Text
-                style={{
-                  color: isFocused ? '#673ab7' : '#222',
-                  textAlign: 'center',
-                }}>
-                {label}
-              </Text>
-            </View>
-          </TouchableOpacity>
+            onLongPress={onLongPress}>
+            <S.TabBarItem>
+              {icon.family === 'AntDesign' && (
+                <AntIcon
+                  name={icon.name}
+                  size={24}
+                  color={isFocused ? 'rgba(112, 200, 2, 1)' : '#222'}
+                />
+              )}
+              {icon.family === 'Feather' && (
+                <FeatherIcon
+                  name={icon.name}
+                  size={24}
+                  color={isFocused ? 'rgba(112, 200, 2, 1)' : '#222'}
+                />
+              )}
+              <S.TabBarText isFocused={isFocused}>{label}</S.TabBarText>
+            </S.TabBarItem>
+          </S.TabBarItemButton>
         );
       })}
-    </View>
+    </S.TabBarContainer>
   );
 };
 

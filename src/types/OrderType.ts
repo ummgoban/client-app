@@ -1,18 +1,13 @@
-import {MarketType} from './Market';
 import {ProductType} from './ProductType';
 
 export type OrderType = {
-  id: number;
-  market: Pick<MarketType, 'id' | 'images' | 'name'>;
-  products: (ProductType & {count: number})[];
-  pickupAt: number;
+  ordersId: number;
+  marketId: number;
+  marketName: string;
   createdAt: number;
-  pendingAt?: number;
-  doneAt?: number;
-  status: 'ORDERED' | 'PENDING' | 'DONE' | 'CANCEL';
+  pickupReservedAt: number;
+  ordersPrice: number;
+  ordersStatus: 'ORDERED' | 'ACCEPTED' | 'PICKEDUP' | 'CANCELED';
+  customerRequest: string;
+  products: (ProductType & {count: number})[];
 };
-
-export type CartType = Omit<
-  OrderType,
-  'createdAt' | 'pickupAt' | 'pendingAt' | 'doneAt' | 'status'
->;

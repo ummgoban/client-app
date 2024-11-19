@@ -1,9 +1,10 @@
-import React from 'react';
-import {Alert, Image} from 'react-native';
 import {OrderType} from '@/types/OrderType';
-import HistoryTimeline from './HistoryTimeline';
-import S from './OrderHistory.style';
 import {format} from '@/utils/date';
+import React from 'react';
+import {Image} from 'react-native';
+import HistoryTimeline from './HistoryTimeline';
+
+import S from './OrderHistory.style';
 
 const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -52,30 +53,28 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
               } ${sumOfPrice}원`;
 
               const status =
-                order.status === 'ORDERED'
+                order.ordersStatus === 'ORDERED'
                   ? '예약완료'
-                  : order.status === 'PENDING'
-                    ? '픽업대기'
-                    : order.status === 'DONE'
-                      ? '픽업완료'
-                      : order.status === 'CANCEL'
-                        ? '주문취소'
-                        : null; // not reachable
+                  : order.ordersStatus === 'ACCEPTED'
+                    ? '픽업완료'
+                    : order.ordersStatus === 'CANCELED'
+                      ? '주문취소'
+                      : null; // not reachable
 
               return (
-                <S.HistoryItem key={order.id}>
+                <S.HistoryItem key={order.ordersId}>
                   <S.HistoryItemSummary>
                     <S.StoreImage
-                      source={{uri: order.market.images[0]}}
+                      source={{uri: order.products[0].image}}
                       width={64}
                       height={64}
                     />
                     <S.ItemInfo>
                       <S.InfoHeader>
                         <S.TouchableStoreName
-                          onPress={() => onPressMarket(order.market.id)}>
+                          onPress={() => onPressMarket(order.marketId)}>
                           <S.StoreName numberOfLines={1}>
-                            {order.market.name}
+                            {order.marketName}
                           </S.StoreName>
                           <Image
                             source={{
@@ -86,16 +85,19 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                             height={24}
                           />
                         </S.TouchableStoreName>
-                        <S.OrderDetailButtonContainer>
+                        {/* TODO: 주문 상세 페이지 추가 @l-lyun */}
+                        {/* <S.OrderDetailButtonContainer>
                           <S.OrderDetailButton
                             onPress={() =>
-                              Alert.alert(`주문 상세 바로가기: ${order.id}`)
+                              Alert.alert(
+                                `주문 상세 바로가기: ${order.ordersId}`,
+                              )
                             }>
                             <S.OrderDetailButtonText>
                               주문 상세
                             </S.OrderDetailButtonText>
                           </S.OrderDetailButton>
-                        </S.OrderDetailButtonContainer>
+                        </S.OrderDetailButtonContainer> */}
                       </S.InfoHeader>
                       <S.CreatedAt>{`${format(order.createdAt)}${
                         status != null ? ` · ${status}` : ''
@@ -106,38 +108,14 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                     </S.ItemInfo>
                   </S.HistoryItemSummary>
                   <S.HistoryTimelineContainer>
-                    <HistoryTimeline
-                      title="예약 접수"
-                      timestamp={order.createdAt}
-                      description={
-                        order.pendingAt == null
-                          ? '픽업 예약이 완료되었습니다.'
-                          : null
-                      }
-                    />
-                    {order.pendingAt != null && (
+                    {order.ordersStatus === 'ACCEPTED' && (
                       <HistoryTimeline
                         title="픽업 대기"
-                        timestamp={order.pendingAt}
-                        description={
-                          order.doneAt == null
-                            ? `${format(
-                                order.pickupAt,
-                                'HH시 mm분',
-                              )}까지 가게로 방문해주세요.`
-                            : null
-                        }
-                      />
-                    )}
-                    {order.doneAt != null && (
-                      <HistoryTimeline
-                        title="픽업 완료"
-                        timestamp={order.doneAt}
+                        timestamp={order.pickupReservedAt}
                         description={`${format(
-                          order.doneAt,
-                          'HH시 mm분',
-                        )}에 픽업이 완료되었습니다.`}
-                        dashline={false}
+                          order.pickupReservedAt,
+                          'YYYY.MM.DD HH시 mm분',
+                        )}까지 가게로 방문해주세요.`}
                       />
                     )}
                   </S.HistoryTimelineContainer>

@@ -1,7 +1,7 @@
 import {OrderType} from '@/types/OrderType';
 import {format} from '@/utils/date';
 import React from 'react';
-import {Image} from 'react-native';
+import {Alert, Image} from 'react-native';
 import HistoryTimeline from './HistoryTimeline';
 
 import S from './OrderHistory.style';
@@ -16,9 +16,8 @@ type Props = {
 const OrderHistory = ({historyList, onPressMarket}: Props) => {
   return (
     <S.OrderContainer>
-      <S.Title>진행중인 주문</S.Title>
       <S.HistoryList>
-        {historyList == null
+        {historyList === null
           ? Array.from({length: 3}).map((_, idx) => (
               <S.HistoryItemSkeleton key={idx} />
             ))
@@ -53,9 +52,10 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
               } ${sumOfPrice}원`;
 
               const status =
-                order.ordersStatus === 'ORDERED'
+                order.ordersStatus === 'ORDERED' ||
+                order.ordersStatus === 'ACCEPTED'
                   ? '예약완료'
-                  : order.ordersStatus === 'ACCEPTED'
+                  : order.ordersStatus === 'PICKEDUP'
                     ? '픽업완료'
                     : order.ordersStatus === 'CANCELED'
                       ? '주문취소'
@@ -86,7 +86,7 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                           />
                         </S.TouchableStoreName>
                         {/* TODO: 주문 상세 페이지 추가 @l-lyun */}
-                        {/* <S.OrderDetailButtonContainer>
+                        <S.OrderDetailButtonContainer>
                           <S.OrderDetailButton
                             onPress={() =>
                               Alert.alert(
@@ -97,7 +97,7 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                               주문 상세
                             </S.OrderDetailButtonText>
                           </S.OrderDetailButton>
-                        </S.OrderDetailButtonContainer> */}
+                        </S.OrderDetailButtonContainer>
                       </S.InfoHeader>
                       <S.CreatedAt>{`${format(order.createdAt)}${
                         status != null ? ` · ${status}` : ''
@@ -108,14 +108,28 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                     </S.ItemInfo>
                   </S.HistoryItemSummary>
                   <S.HistoryTimelineContainer>
-                    {order.ordersStatus === 'ACCEPTED' && (
+                    <HistoryTimeline
+                      title="픽업 대기"
+                      timestamp={order.pickupReservedAt}
+                      description={`${format(
+                        order.pickupReservedAt,
+                        'YYYY.MM.DD HH시 mm분',
+                      )}까지 가게로 방문해주세요.`}
+                    />
+                    {/* TODO: 픽업 완료 시간 추가 */}
+                    {order.ordersStatus === 'PICKEDUP' && (
                       <HistoryTimeline
-                        title="픽업 대기"
-                        timestamp={order.pickupReservedAt}
-                        description={`${format(
-                          order.pickupReservedAt,
-                          'YYYY.MM.DD HH시 mm분',
-                        )}까지 가게로 방문해주세요.`}
+                        title="픽업 완료"
+                        timestamp={order.pickupReservedAt + 1000 * 60}
+                        description={'픽업이 완료되었습니다.'}
+                      />
+                    )}
+                    {/* TODO: 주문 취소 시간 추가 */}
+                    {order.ordersStatus === 'CANCELED' && (
+                      <HistoryTimeline
+                        title="주문 취소"
+                        timestamp={order.pickupReservedAt + 1000 * 60}
+                        description={'주문이 취소되었습니다.'}
                       />
                     )}
                   </S.HistoryTimelineContainer>

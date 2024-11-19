@@ -114,8 +114,7 @@ const MarketDetailPage = ({
         );
 
         if (!productDetails) {
-          console.log('장바구니 불일치');
-          return;
+          throw new Error(`타입 방지 위한 error`);
         }
 
         return {
@@ -130,8 +129,8 @@ const MarketDetailPage = ({
 
       const bucketPostValidate = await addToBucket(id, bucketProducts);
       if (bucketPostValidate) {
-        navigation.navigate('Cart', {
-          screen: 'Market',
+        navigation.navigate('CartRoot', {
+          screen: 'Cart',
         });
       } else {
         console.log('add to bucket failed');

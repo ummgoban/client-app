@@ -16,7 +16,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
   const [cartData, setCartData] = useState<BucketType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const fetchDummyData = useCallback(async () => {
+  const fetchBucketData = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await getBuckets();
@@ -36,8 +36,8 @@ const ShoppingCartScreen = ({navigation}: Props) => {
   }, []);
 
   useEffect(() => {
-    fetchDummyData();
-  }, [fetchDummyData]);
+    fetchBucketData();
+  }, [fetchBucketData]);
 
   const updateProductCount = (id: number, newCount: number) => {
     setCartData(prevCartData => {

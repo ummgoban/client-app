@@ -36,7 +36,6 @@ const ShoppingCartPage = ({
   };
 
   const onPressPayment = () => {
-    // TODO: 장바구니 담기 post 추가
     navigation.navigate('Detail', {
       screen: 'Payment',
       params: {cartData},
@@ -63,7 +62,7 @@ const ShoppingCartPage = ({
           discountPrice={discountPrice}
         />
         <BottomButton onPress={onPressPayment}>
-          {`${discountPrice.toLocaleString()}원 결제하기`}
+          {`${(originPrice - discountPrice).toLocaleString()}원 결제하기`}
         </BottomButton>
       </S.ScrollView>
     </S.CartPage>

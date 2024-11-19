@@ -62,7 +62,7 @@ const ShoppingCartPage = ({
           discountPrice={discountPrice}
         />
         <BottomButton onPress={onPressPayment}>
-          {`${(originPrice - discountPrice).toLocaleString()}원 결제하기`}
+          {`${discountPrice.toLocaleString()}원 결제하기`}
         </BottomButton>
       </S.ScrollView>
     </S.CartPage>

@@ -18,7 +18,6 @@ import SubscribeIcon from '@/components/common/SubscribeIcon';
 import {BottomButton} from '@/components/common';
 import {MarketDetailType} from '@/types/Market';
 import {validateBucket, addToBucket} from '@/apis/Bucket';
-import {BucketProductType} from '@/types/Bucket';
 type CartItem = {
   productId: number;
   productName: string;
@@ -105,7 +104,7 @@ const MarketDetailPage = ({
       {} as Record<string, ProductType[]>,
     );
 
-  const handleCheckout = async (id: number, cartItems: CartItem[]) => {
+  const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
     try {
       const bucketProducts = cartItems.map(cartItem => {
         const productDetails = products.find(
@@ -127,7 +126,7 @@ const MarketDetailPage = ({
         };
       });
 
-      const bucketPostValidate = await addToBucket(id, bucketProducts);
+      const bucketPostValidate = await addToBucket(marketId, bucketProducts);
       if (bucketPostValidate) {
         navigation.navigate('CartRoot', {
           screen: 'Cart',
@@ -242,8 +241,11 @@ const MarketDetailPage = ({
   const handleSubscribe = () => {
     setMarketIsLiked(prevState => !prevState);
   };
-  const addProductToBucket = async (id: number, products: CartItem[]) => {
-    if (!(await validateBucket(id))) {
+  const addProductToBucket = async (
+    marketId: number,
+    addProducts: CartItem[],
+  ) => {
+    if (!(await validateBucket(marketId))) {
       Alert.alert(
         '기존에 담아두었던 장바구니가 존재합니다.',
         '장바구니에 담으시겠습니까?',
@@ -251,7 +253,7 @@ const MarketDetailPage = ({
           {
             text: '예',
             onPress: () => {
-              handleCheckout(id, products);
+              handleCheckout(marketId, addProducts);
             },
           },
           {
@@ -265,7 +267,7 @@ const MarketDetailPage = ({
       );
       return;
     }
-    handleCheckout(id, products);
+    handleCheckout(marketId, addProducts);
   };
 
   const caculateRemainingPickupTime = () => {

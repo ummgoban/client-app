@@ -1,3 +1,11 @@
+allprojects {
+    repositories {
+        maven {
+            url "https://repository.map.naver.com/archive/maven"
+        }
+    }
+}
+
 buildscript {
     ext {
         buildToolsVersion = "34.0.0"
@@ -18,7 +26,9 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
         classpath 'com.google.gms:google-services:4.4.2'
+        
     }
 }
 
 apply plugin: "com.facebook.react.rootproject"
+apply plugin: 'com.google.gms.google-services'

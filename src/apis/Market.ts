@@ -1,13 +1,17 @@
 import {MarketType, MarketDetailType} from '@/types/Market';
 import apiClient from './ApiClient';
+
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,
+  userLatitude?: number,
+  userLongitude?: number,
 ): Promise<{
   markets: MarketType[];
   hasNext: boolean;
 } | null> => {
   try {
+    console.log('api call', userLatitude, userLongitude);
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
@@ -15,6 +19,8 @@ export const getMarketList = async (
       params: {
         cursorId,
         size,
+        userLatitude,
+        userLongitude,
       },
     });
 

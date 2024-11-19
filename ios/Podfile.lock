@@ -86,6 +86,9 @@ PODS:
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
   - naveridlogin-sdk-ios (4.2.1)
+  - NMapsGeometry (1.0.2)
+  - NMapsMap (3.19.0):
+    - NMapsGeometry
   - PromisesObjC (2.4.0)
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1325,6 +1328,32 @@ PODS:
     - React-Core
   - react-native-encrypted-storage (4.0.3):
     - React-Core
+  - react-native-geolocation (3.4.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-geolocation-service (5.3.1):
+    - React
+  - react-native-nmap (0.0.67):
+    - NMapsMap
+    - React
   - react-native-safe-area-context (4.11.0):
     - React-Core
   - React-nativeconfig (0.75.2)
@@ -1643,6 +1672,8 @@ PODS:
     - RNNotifee/NotifeeCore (= 9.1.2)
   - RNNotifee/NotifeeCore (9.1.2):
     - React-Core
+  - RNPermissions (5.1.0):
+    - React-Core
   - RNScreens (3.34.0):
     - DoubleConversion
     - glog
@@ -1776,6 +1807,9 @@ DEPENDENCIES:
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
+  - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
+  - react-native-nmap (from `../node_modules/react-native-naver-map`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -1808,6 +1842,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNNaverLogin (from `../node_modules/@react-native-seoul/naver-login`)"
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -1831,6 +1866,8 @@ SPEC REPOS:
     - KakaoSDKUser
     - nanopb
     - naveridlogin-sdk-ios
+    - NMapsGeometry
+    - NMapsMap
     - PromisesObjC
     - SocketRocket
 
@@ -1916,6 +1953,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-date-picker"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
+  react-native-geolocation-service:
+    :path: "../node_modules/react-native-geolocation-service"
+  react-native-nmap:
+    :path: "../node_modules/react-native-naver-map"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-nativeconfig:
@@ -1980,6 +2023,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-seoul/naver-login"
   RNNotifee:
     :path: "../node_modules/@notifee/react-native"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -2016,6 +2061,8 @@ SPEC CHECKSUMS:
   KakaoSDKUser: 043bcd7e91454ebf3bf64f150c430e6f65f0a08d
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   naveridlogin-sdk-ios: d5f9d92905a7e964976ebfdd665bee5fb75845c5
+  NMapsGeometry: 4e02554fa9880ef02ed96b075dc84355d6352479
+  NMapsMap: 99c10429d93340780b6f88d3fc7c0a3850b43664
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 34cbf122b623037ea9facad2e92e53434c5c7422
@@ -2049,6 +2096,9 @@ SPEC CHECKSUMS:
   react-native-config: 8f7283449bbb048902f4e764affbbf24504454af
   react-native-date-picker: 06a4d96ab525a163c7a90bccd68833d136b0bb13
   react-native-encrypted-storage: db300a3f2f0aba1e818417c1c0a6be549038deb7
+  react-native-geolocation: cc79f2a7a8c6616db25b9728670bbb2011ded918
+  react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
+  react-native-nmap: 057c4e7b1b765b234ab4b0a6c5ccd9baaf3bc9c7
   react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
   React-nativeconfig: 5fc2b05a590eb704128f5a4fc8ea6fa7b847e6e8
   React-NativeModulesApple: 88313414ddffd1758f76042733e8f0297acfd502
@@ -2081,6 +2131,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: f81137aeaf7a060c491d0a43af0f5ef6a8867250
   RNNaverLogin: b47794502b392e6a10d6966dd95896385056f957
   RNNotifee: bc20a5e3d581f629db988075944fdd944d363dfe
+  RNPermissions: a18e5e6d26f254326b6d6073a6902eae95344375
   RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   RNVectorIcons: 7b81882e9c9369031aede0016dee0fe415cf2f43
@@ -2089,6 +2140,6 @@ SPEC CHECKSUMS:
   widget-sdk-react-native: f35fb725a1375a9d68b2805e226d15c966683805
   Yoga: 36d44f1d31d7c11be1067e5c7a70a12c2eed355c
 
-PODFILE CHECKSUM: ca7933221d2cea83cdbcda015c762d59640fff76
+PODFILE CHECKSUM: 3ce7a289ca1ba4108c258212f6e3b54d00957b5a
 
 COCOAPODS: 1.15.2

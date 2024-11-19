@@ -5,3 +5,7 @@ export type BucketType = {
   market: Pick<MarketType, 'id' | 'name' | 'images'>;
   products: ({count: number} & ProductType)[];
 };
+
+export type BucketProductType = Omit<ProductType, 'tags'> & {
+  count: number;
+};

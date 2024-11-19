@@ -25,10 +25,28 @@ const DetailNavigator = () => {
         options={screenOptions}
         component={MarketDetailScreen}
       />
-      <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          title: '주변 가게',
+        }}
+      />
       {/* <Stack.Screen name="Order" component={OrderScreen} /> */}
-      <Stack.Screen name="Payment" component={PaymentScreen} />
-      <Stack.Screen name="OrderDone" component={OrderDoneScreen} />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{
+          title: '결제하기',
+        }}
+      />
+      <Stack.Screen
+        name="OrderDone"
+        component={OrderDoneScreen}
+        options={{
+          title: '주문 완료',
+        }}
+      />
     </Stack.Navigator>
   );
 };

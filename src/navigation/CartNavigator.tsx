@@ -11,7 +11,13 @@ const CartNavigator = () => {
     <Stack.Navigator
       initialRouteName="CartRoot"
       screenOptions={{headerShown: true}}>
-      <Stack.Screen name="Cart" component={ShoppingCartScreen} />
+      <Stack.Screen
+        name="Cart"
+        component={ShoppingCartScreen}
+        options={{
+          title: '장바구니',
+        }}
+      />
     </Stack.Navigator>
   );
 };

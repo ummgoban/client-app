@@ -1,5 +1,6 @@
 import {MarketType, MarketDetailType} from '@/types/Market';
 import apiClient from './ApiClient';
+
 export const getMarketList = async (
   cursorId: number = 0,
   size: number = 10,

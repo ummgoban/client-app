@@ -156,16 +156,6 @@ const FeedScreen = ({navigation}: Props) => {
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: '주변 가게 조회',
-      headerTitleStyle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#333',
-        fontFamily: 'Arial',
-      },
-    });
-
     requestNotificationPermission();
     requestUserPermission();
     requestLocationPermission();

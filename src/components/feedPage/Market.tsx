@@ -10,7 +10,7 @@ const Market = ({market, onPress}: Props) => {
     <S.MarketWrapper onPress={() => onPress(market.id)}>
       <S.MarketImageContainer>
         {market.products
-          .filter(p => p.stock)
+          .filter(p => p.stock && p.productStatus !== 'HIDDEN')
           .slice(0, 3)
           .map(product => (
             <S.MarketImageBox key={product.id}>

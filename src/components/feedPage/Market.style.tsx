@@ -64,6 +64,8 @@ const MenuGradation = styled(LinearGradient)`
 const MarketImageBox = styled.View`
   display: flex;
   flex: 1;
+
+  max-width: 33%;
 `;
 
 const MarketImage = styled.Image`

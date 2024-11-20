@@ -30,7 +30,7 @@ export interface DetailStackParamList extends ParamListBase {
   Map: {
     cords: {
       marketName: string;
-      marketId: string;
+      marketId: number;
       latitude: number;
       longitude: number;
     }[];

@@ -6,24 +6,27 @@ import S from './MyLocationMap.style';
 import {Dimensions} from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 type RootStackParamList = {
-  Detail: {screen: 'Market'; params: {marketId: string}};
+  Detail: {screen: 'Market'; params: {marketId: number}};
 };
 const MyLocationMap = ({
   cords,
 }: {
   cords: {
     marketName: string;
-    marketId: string;
+    marketId: number;
     latitude: number;
     longitude: number;
   }[];
 }) => {
+  console.log(cords);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const handleMarkerClick = (marketId: string) => {
-    navigation.navigate('Detail', {
-      screen: 'Market',
-      params: {marketId},
-    });
+  const handleMarkerClick = (marketId: number) => {
+    if (marketId !== -1) {
+      navigation.navigate('Detail', {
+        screen: 'Market',
+        params: {marketId},
+      });
+    }
   };
   return (
     <S.MapWrapper width={windowWidth - 30}>

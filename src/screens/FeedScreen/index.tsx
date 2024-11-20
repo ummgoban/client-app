@@ -115,12 +115,12 @@ const FeedScreen = ({navigation}: Props) => {
   };
 
   const navigateMap = () => {
-    if (!location) {
-      Alert.alert(
-        '위치 정보가 없어 기본가게들을 열람합니다. 권한을 허용해주세요',
-      );
-      return;
-    }
+    // if (!location) {
+    //   Alert.alert(
+    //     '위치 정보가 없어 기본가게들을 열람합니다. 권한을 허용해주세요',
+    //   );
+    //   return;
+    // }
     if (!marketList || !marketList.length) {
       Alert.alert('가게 목록이 없습니다.');
       return;
@@ -128,7 +128,7 @@ const FeedScreen = ({navigation}: Props) => {
     const validCords = [
       {
         marketName: '현재위치',
-        marketId: '-1',
+        marketId: -1,
         latitude: location?.userLatitude || 37.582831666666664,
         longitude: location?.userLongitude || 127.06107333333334,
       },
@@ -146,7 +146,7 @@ const FeedScreen = ({navigation}: Props) => {
         )
         .map(market => ({
           marketName: market.name,
-          marketId: market.id.toString(),
+          marketId: market.id,
           latitude: market.latitude,
           longitude: market.longitude,
         })),

@@ -77,6 +77,7 @@ const MarketDetailPage = ({
       }
     });
   };
+
   const productsByTags = products.reduce(
     (acc: {[key: string]: ProductType[]}, product) => {
       if (product.tags.length === 0) {

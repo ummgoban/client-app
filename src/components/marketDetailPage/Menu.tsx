@@ -20,6 +20,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
+      if (newCount > product.stock) {
+        return prevCount;
+      }
       onCountChange(product.id, newCount);
       return newCount;
     });
@@ -29,6 +32,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
       const newCount = Math.max(prevCount - 1, minCount);
+
       onCountChange(product.id, newCount);
       return newCount;
     });
@@ -60,13 +64,12 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       <S.MenuBoxLeft>
         <S.MenuName>{product.name}</S.MenuName>
         <S.MenuoriginPrice>
-          정가: {product.originPrice.toLocaleString()}원
+          {`정가:${product.originPrice.toLocaleString()}원`}
         </S.MenuoriginPrice>
         <S.MenuDiscountPrice>
-          할인가: {product.discountPrice.toLocaleString()}원
+          {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
-        {/* TODO: API연결 후 재고 값 넣기 */}
-        <S.MenuStockCount>재고: 1</S.MenuStockCount>
+        <S.MenuStockCount>{`재고: ${product.stock}`}</S.MenuStockCount>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>

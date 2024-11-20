@@ -16,7 +16,6 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(initCount);
   }, [initCount]);
 
-  //TODO: 갯수 증가, 차감시 api 호출
   const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
@@ -58,7 +57,8 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       {cancelable: false},
     );
   };
-  const isDecrease = isCart && menuCount === 1;
+  const isDecrease = (isCart && menuCount === 1) || menuCount === 0;
+
   return (
     <S.MenuWrapper>
       <S.MenuBoxLeft>
@@ -69,7 +69,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         <S.MenuDiscountPrice>
           {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
-        <S.MenuStockCount>{`재고: ${product.stock}`}</S.MenuStockCount>
+        <S.MenuStockCount>{`${!isCart ? `재고: ${product.stock}` : `수량: ${product.count}`}`}</S.MenuStockCount>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>
@@ -86,7 +86,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
             <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
-          <S.MenuCounterButtonWrapper onPress={increaseMenuCount}>
+          <S.MenuCounterButtonWrapper
+            onPress={increaseMenuCount}
+            disabled={menuCount === product.stock}>
             <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
         </S.MenuCounter>

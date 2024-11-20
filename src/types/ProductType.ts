@@ -7,6 +7,7 @@ export type ProductType = {
   tags: TagType[];
   productStatus: 'IN_STOCK' | 'OUT_OF_STOCK' | 'HIDDEN';
   stock: number;
+  count?: number;
 };
 
 export type TagType = {

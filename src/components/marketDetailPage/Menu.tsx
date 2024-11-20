@@ -16,10 +16,12 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(initCount);
   }, [initCount]);
 
-  //TODO: 갯수 증가, 차감시 api 호출
   const increaseMenuCount = () => {
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
+      if (newCount > product.stock) {
+        return prevCount;
+      }
       onCountChange(product.id, newCount);
       return newCount;
     });
@@ -29,6 +31,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
       const newCount = Math.max(prevCount - 1, minCount);
+
       onCountChange(product.id, newCount);
       return newCount;
     });
@@ -54,19 +57,19 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       {cancelable: false},
     );
   };
-  const isDecrease = isCart && menuCount === 1;
+  const isDecrease = (isCart && menuCount === 1) || menuCount === 0;
+
   return (
     <S.MenuWrapper>
       <S.MenuBoxLeft>
         <S.MenuName>{product.name}</S.MenuName>
         <S.MenuoriginPrice>
-          정가: {product.originPrice.toLocaleString()}원
+          {`정가:${product.originPrice.toLocaleString()}원`}
         </S.MenuoriginPrice>
         <S.MenuDiscountPrice>
-          할인가: {product.discountPrice.toLocaleString()}원
+          {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
-        {/* TODO: API연결 후 재고 값 넣기 */}
-        <S.MenuStockCount>재고: 1</S.MenuStockCount>
+        <S.MenuStockCount>{`${!isCart ? `재고: ${product.stock}` : `수량: ${product.count}`}`}</S.MenuStockCount>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>
@@ -83,7 +86,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
             <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
           <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
-          <S.MenuCounterButtonWrapper onPress={increaseMenuCount}>
+          <S.MenuCounterButtonWrapper
+            onPress={increaseMenuCount}
+            disabled={menuCount === product.stock}>
             <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
           </S.MenuCounterButtonWrapper>
         </S.MenuCounter>

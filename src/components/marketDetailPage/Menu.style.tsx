@@ -76,7 +76,10 @@ const MenuCounterButtonWrapper = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   width: 32px;
-  background-color: ${props => props.theme.colors.primary};
+  background-color: ${props =>
+    props.disabled
+      ? props.theme.colors.primaryDisabled
+      : props.theme.colors.primary};
   height: 30px;
   text-align: center;
 `;

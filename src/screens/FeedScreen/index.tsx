@@ -41,7 +41,12 @@ const FeedScreen = ({navigation}: Props) => {
       return;
     }
     // TODO: 필터링 로직 추가
-    setMarketList(res.markets.filter(market => market.products.length));
+    setMarketList(
+      res.markets.filter(
+        market =>
+          market.products.length && market.pickupEndAt && market.pickupStartAt,
+      ),
+    );
   }, [location]);
 
   // const getCurrentLocation = useCallback(() => {

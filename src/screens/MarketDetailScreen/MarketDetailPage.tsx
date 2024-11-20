@@ -77,8 +77,17 @@ const MarketDetailPage = ({
       }
     });
   };
+
   const productsByTags = products.reduce(
     (acc: {[key: string]: ProductType[]}, product) => {
+      if (product.tags.length === 0) {
+        if (!acc['메뉴']) {
+          acc['메뉴'] = [];
+        }
+        acc['메뉴'].push(product);
+        return acc;
+      }
+
       product.tags.forEach(tagObj => {
         const tag = tagObj.tagName;
         if (!acc[tag]) {
@@ -90,6 +99,7 @@ const MarketDetailPage = ({
     },
     {},
   );
+
   const sortedProductsByTags = Object.entries(productsByTags)
     .sort(([tagA, productsA], [tagB, productsB]) => {
       if (tagA === '추천메뉴') return -1;

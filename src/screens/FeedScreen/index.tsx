@@ -23,6 +23,7 @@ type Props = {
 
 const FeedScreen = ({navigation}: Props) => {
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
+
   const [location, setLocation] = useState<{
     userLatitude: number;
     userLongitude: number;
@@ -39,7 +40,8 @@ const FeedScreen = ({navigation}: Props) => {
       Alert.alert('가게내역받아오기실패.');
       return;
     }
-    setMarketList(res.markets);
+    // TODO: 필터링 로직 추가
+    setMarketList(res.markets.filter(market => market.products.length));
   }, [location]);
 
   // const getCurrentLocation = useCallback(() => {
@@ -138,7 +140,9 @@ const FeedScreen = ({navigation}: Props) => {
             market.latitude >= -90 &&
             market.latitude <= 90 &&
             market.longitude >= -180 &&
-            market.longitude <= 180,
+            market.longitude <= 180 &&
+            market.products.length &&
+            market.products.some(p => p.stock),
         )
         .map(market => ({
           marketName: market.name,

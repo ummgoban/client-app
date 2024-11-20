@@ -62,20 +62,6 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             isNotice={false}
           />
         </S.ButtonContainer>
-        <S.ButtonContainer>
-          <NavigationTextButton
-            text="공지사항"
-            fontSize="20px"
-            onPress={handlePress}
-            isNotice={false}
-          />
-          <NavigationTextButton
-            text="약관 및 정책"
-            fontSize="20px"
-            onPress={handlePress}
-            isNotice={false}
-          />
-        </S.ButtonContainer>
       </S.NoticeSection>
       <S.BottomSectionContainer>
         <S.BottomSection>

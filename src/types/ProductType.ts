@@ -6,6 +6,7 @@ export type ProductType = {
   discountPrice: number;
   tags: TagType[];
   productStatus: 'IN_STOCK' | 'OUT_OF_STOCK' | 'HIDDEN';
+  stock: number;
 };
 
 export type TagType = {

@@ -140,7 +140,9 @@ const FeedScreen = ({navigation}: Props) => {
             market.latitude >= -90 &&
             market.latitude <= 90 &&
             market.longitude >= -180 &&
-            market.longitude <= 180,
+            market.longitude <= 180 &&
+            market.products.length &&
+            market.products.some(p => p.stock),
         )
         .map(market => ({
           marketName: market.name,

@@ -5,6 +5,7 @@ export type ProductType = {
   originPrice: number;
   discountPrice: number;
   tags: TagType[];
+  productStatus: 'IN_STOCK' | 'OUT_OF_STOCK' | 'HIDDEN';
 };
 
 export type TagType = {

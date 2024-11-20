@@ -46,7 +46,9 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       pickupStartAt={marketDetail.pickupStartAt}
       pickupEndAt={marketDetail.pickupEndAt}
       address={marketDetail.address}
-      products={marketDetail.products}
+      products={marketDetail.products.filter(
+        product => product.productStatus === 'IN_STOCK',
+      )}
       id={marketDetail.id}
       specificAddress={marketDetail.specificAddress}
       summary={marketDetail.summary}

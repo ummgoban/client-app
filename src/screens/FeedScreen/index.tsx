@@ -8,9 +8,11 @@ import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {Platform, PermissionsAndroid} from 'react-native';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {BottomButton} from '@/components/common';
+
 import S from './SearchBar.style';
+
 import {
   handleForegroundMessage,
   requestUserPermission,
@@ -49,45 +51,6 @@ const FeedScreen = ({navigation}: Props) => {
     );
   }, [location]);
 
-  // const getCurrentLocation = useCallback(() => {
-  //   console.log('Get current location...');
-  //   Geolocation.getCurrentPosition(
-  //     position => {
-  //       setLocation({
-  //         userLatitude: position.coords.latitude,
-  //         userLongitude: position.coords.longitude,
-  //       });
-  //     },
-  //     error => {
-  //       console.log(error.message);
-  //     },
-  //     {
-  //       enableHighAccuracy: true,
-  //       timeout: 15000,
-  //       maximumAge: 0,
-  //     },
-  //   );
-  // }, []);
-
-  const startLocationTracking = useCallback(() => {
-    console.log('location chagned');
-    Geolocation.watchPosition(
-      position => {
-        setLocation({
-          userLatitude: position.coords.latitude,
-          userLongitude: position.coords.longitude,
-        });
-      },
-      error => {
-        console.log(error.message);
-      },
-      {
-        enableHighAccuracy: true,
-        distanceFilter: 10,
-      },
-    );
-  }, []);
-
   const requestLocationPermission = useCallback(async () => {
     if (Platform.OS === 'android') {
       const granted = await PermissionsAndroid.request(
@@ -95,22 +58,53 @@ const FeedScreen = ({navigation}: Props) => {
       );
       console.log('Android 권한 요청 결과:', granted);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // getCurrentLocation();
-        startLocationTracking();
+        return true;
       } else {
-        console.log('위치 권한이 허용되지 않았습니다.');
+        Alert.alert('Android 위치 권한이 허용되지 않았습니다.');
       }
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
     } else {
       const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
       console.log('iOS 권한 요청 결과:', result);
       if (result === RESULTS.GRANTED) {
-        // getCurrentLocation();
-        startLocationTracking();
+        return true;
       } else {
-        console.log('위치 권한이 허용되지 않았습니다.');
+        Alert.alert('IOS 위치 권한이 허용되지 않았습니다.');
       }
     }
-  }, [startLocationTracking]);
+  }, []);
+
+  const getCurrentLocation = useCallback(async () => {
+    const hasPermission = await requestLocationPermission();
+    if (!hasPermission) {
+      Alert.alert('위치 권한이 필요합니다.');
+      return false;
+    }
+
+    return new Promise<boolean>(resolve => {
+      Geolocation.getCurrentPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          setLocation({userLatitude: latitude, userLongitude: longitude});
+          console.log('위치 정보:', latitude, longitude);
+          resolve(true);
+        },
+        error => {
+          console.error('위치 에러:', error);
+          Alert.alert('위치 에러', error.message);
+          resolve(false);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    });
+  }, [requestLocationPermission]);
+
+  const initializeData = useCallback(async () => {
+    const gotLocation = await getCurrentLocation();
+    if (gotLocation) {
+      await fetchData();
+    }
+  }, [getCurrentLocation, fetchData]);
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
@@ -120,12 +114,6 @@ const FeedScreen = ({navigation}: Props) => {
   };
 
   const navigateMap = () => {
-    // if (!location) {
-    //   Alert.alert(
-    //     '위치 정보가 없어 기본가게들을 열람합니다. 권한을 허용해주세요',
-    //   );
-    //   return;
-    // }
     if (!marketList || !marketList.length) {
       Alert.alert('가게 목록이 없습니다.');
       return;
@@ -175,8 +163,8 @@ const FeedScreen = ({navigation}: Props) => {
   }, [navigation, requestLocationPermission]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    initializeData();
+  }, [initializeData]);
 
   if (marketList === null) {
     return (

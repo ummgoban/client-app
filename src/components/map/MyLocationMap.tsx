@@ -18,7 +18,6 @@ const MyLocationMap = ({
     longitude: number;
   }[];
 }) => {
-  console.log(cords);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const handleMarkerClick = (marketId: number) => {
     if (marketId !== -1) {

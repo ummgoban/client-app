@@ -73,7 +73,6 @@ const FeedScreen = ({navigation}: Props) => {
       }
     }
   }, []);
-
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
     if (!hasPermission) {
@@ -85,6 +84,13 @@ const FeedScreen = ({navigation}: Props) => {
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
+          if (
+            location?.userLatitude === latitude &&
+            location?.userLongitude === longitude
+          ) {
+            resolve(true);
+            return;
+          }
           setLocation({userLatitude: latitude, userLongitude: longitude});
           console.log('위치 정보:', latitude, longitude);
           resolve(true);
@@ -97,11 +103,12 @@ const FeedScreen = ({navigation}: Props) => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     });
-  }, [requestLocationPermission]);
+  }, [location, requestLocationPermission]);
 
   const initializeData = useCallback(async () => {
     const gotLocation = await getCurrentLocation();
     if (gotLocation) {
+      console.log('fetch 실행......');
       await fetchData();
     }
   }, [getCurrentLocation, fetchData]);
@@ -150,17 +157,16 @@ const FeedScreen = ({navigation}: Props) => {
     });
   };
 
-  const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
+  const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
 
   useEffect(() => {
     requestNotificationPermission();
     requestUserPermission();
-    requestLocationPermission();
     const unsubscribe = handleForegroundMessage();
     setBackgroundMessageHandler();
 
     return unsubscribe;
-  }, [navigation, requestLocationPermission]);
+  }, [navigation]);
 
   useEffect(() => {
     initializeData();

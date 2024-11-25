@@ -1,14 +1,17 @@
-import React from 'react';
-import {Alert, RefreshControl} from 'react-native';
-import {UserType} from '@/types/UserType';
-import {Profile} from '@components/myPage';
-import {logout} from '@/apis/Login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
+import {Alert, RefreshControl} from 'react-native';
+
+import {logout} from '@/apis/Login';
 import ListBox from '@/components/common/ListBox';
-import S from './UserMyPage.style';
-import {RootStackParamList} from '@/types/StackNavigationType';
 import NavigationTextButton from '@/components/common/NavigateTextButton';
+import {RootStackParamList} from '@/types/StackNavigationType';
+import {UserType} from '@/types/UserType';
+import {convertOAuthProviderToKorean} from '@/utils/common';
+import {Profile} from '@components/myPage';
+
+import S from './UserMyPage.style';
 
 type UserMyPageProps = {
   profile: UserType;
@@ -41,9 +44,13 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
           },
           {
             label: '이메일',
-            value: `test@example.com`,
+            value: profile.email ?? '이메일 미등록',
           },
-          {label: '전화번호', value: `010-1234-5678`},
+          {label: '전화번호', value: profile.phoneNumber ?? '전화번호 미등록'},
+          {
+            label: '소셜 로그인',
+            value: convertOAuthProviderToKorean(profile.provider),
+          },
         ]}
       />
       <S.NoticeSection>

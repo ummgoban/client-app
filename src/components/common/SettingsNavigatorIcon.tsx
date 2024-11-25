@@ -9,8 +9,7 @@ const SettingsIcon = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handlePress = () => {
-    // TODO: Navigate to the setting screen
-    navigation.navigate('Settings');
+    navigation.navigate('MyPageRoot', {screen: 'Setting'});
   };
 
   return (

@@ -42,11 +42,12 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             label: '이름',
             value: `${profile.name}`,
           },
-          {
-            label: '이메일',
-            value: profile.email ?? '이메일 미등록',
-          },
-          {label: '전화번호', value: profile.phoneNumber ?? '전화번호 미등록'},
+          // TODO: 이메일, 전화번호 등록 시 주석 해제
+          // {
+          //   label: '이메일',
+          //   value: profile.email ?? '이메일 미등록',
+          // },
+          // {label: '전화번호', value: profile.phoneNumber ?? '전화번호 미등록'},
           {
             label: '소셜 로그인',
             value: convertOAuthProviderToKorean(profile.provider),

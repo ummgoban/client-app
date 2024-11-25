@@ -18,7 +18,6 @@ const MyLocationMap = ({
     longitude: number;
   }[];
 }) => {
-  console.log(cords);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const handleMarkerClick = (marketId: number) => {
     if (marketId !== -1) {
@@ -32,11 +31,11 @@ const MyLocationMap = ({
     <S.MapWrapper width={windowWidth - 30}>
       <S.MapView
         center={{
-          zoom: 14,
+          zoom: 12,
           tilt: 0,
           //TODO: 에뮬레이터 확인위해 현재 인덱스1로 설정, 배포시 0으로 수정
-          latitude: cords[1]?.latitude || 37.582831666666664,
-          longitude: cords[1]?.longitude || 127.06107333333334,
+          latitude: cords[0]?.latitude || 37.582831666666664,
+          longitude: cords[0]?.longitude || 127.06107333333334,
         }}>
         {cords.map((coord, index) => (
           <Marker

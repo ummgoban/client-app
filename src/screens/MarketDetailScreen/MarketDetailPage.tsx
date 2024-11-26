@@ -114,41 +114,6 @@ const MarketDetailPage = ({
       {} as Record<string, ProductType[]>,
     );
 
-  const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
-    try {
-      const bucketProducts = cartItems.map(cartItem => {
-        const productDetails = products.find(
-          (product): product is ProductType =>
-            product.id === cartItem.productId,
-        );
-
-        if (!productDetails) {
-          throw new Error(`타입 방지 위한 error`);
-        }
-
-        return {
-          count: cartItem.count,
-          id: productDetails.id,
-          name: productDetails.name,
-          image: productDetails.image,
-          originPrice: productDetails.originPrice,
-          discountPrice: productDetails.discountPrice,
-        };
-      });
-
-      const bucketPostValidate = await addToBucket(marketId, bucketProducts);
-      if (bucketPostValidate) {
-        navigation.navigate('CartRoot', {
-          screen: 'Cart',
-        });
-      } else {
-        console.log('add to bucket failed');
-      }
-    } catch (error) {
-      console.error('Error in handleCheckout:', error);
-    }
-  };
-
   const scrollToSection = useCallback(
     (tag: string) => {
       if (scrollViewRef.current && sectionOffsets[tag] !== undefined) {
@@ -251,10 +216,49 @@ const MarketDetailPage = ({
   const handleSubscribe = () => {
     setMarketIsLiked(prevState => !prevState);
   };
+
+  const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
+    try {
+      const bucketProducts = cartItems.map(cartItem => {
+        const productDetails = products.find(
+          (product): product is ProductType =>
+            product.id === cartItem.productId,
+        );
+
+        if (!productDetails) {
+          throw new Error(`타입 방지 위한 error`);
+        }
+
+        return {
+          count: cartItem.count,
+          id: productDetails.id,
+          name: productDetails.name,
+          image: productDetails.image,
+          originPrice: productDetails.originPrice,
+          discountPrice: productDetails.discountPrice,
+        };
+      });
+
+      const bucketPostValidate = await addToBucket(marketId, bucketProducts);
+      if (bucketPostValidate) {
+        navigation.navigate('CartRoot', {
+          screen: 'Cart',
+        });
+      } else {
+        console.log('add to bucket failed');
+      }
+    } catch (error) {
+      console.error('Error in handleCheckout:', error);
+    }
+  };
   const addProductToBucket = async (
     marketId: number,
     addProducts: CartItem[],
   ) => {
+    if (addProducts.length === 0) {
+      Alert.alert('장바구니가 비어있습니다.');
+      return;
+    }
     if (!(await validateBucket(marketId))) {
       Alert.alert(
         '기존에 담아두었던 장바구니가 존재합니다.',
@@ -278,6 +282,7 @@ const MarketDetailPage = ({
       return;
     }
     handleCheckout(marketId, addProducts);
+    setCart([]);
   };
 
   const caculateRemainingPickupTime = () => {

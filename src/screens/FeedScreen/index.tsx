@@ -14,11 +14,11 @@ import {BottomButton} from '@/components/common';
 import S from './SearchBar.style';
 
 import {
-  handleForegroundMessage,
+  onForegroundMessageHandler,
   requestUserPermission,
   requestNotificationPermission,
   setBackgroundMessageHandler,
-} from '@/utils/fcm';
+} from '@/utils/notification';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
@@ -162,10 +162,8 @@ const FeedScreen = ({navigation}: Props) => {
   useEffect(() => {
     requestNotificationPermission();
     requestUserPermission();
-    const unsubscribe = handleForegroundMessage();
     setBackgroundMessageHandler();
-
-    return unsubscribe;
+    onForegroundMessageHandler();
   }, [navigation]);
 
   useEffect(() => {

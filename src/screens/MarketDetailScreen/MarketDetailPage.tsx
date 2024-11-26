@@ -268,6 +268,7 @@ const MarketDetailPage = ({
             text: '예',
             onPress: () => {
               handleCheckout(marketId, addProducts);
+              setCart([]);
             },
           },
           {

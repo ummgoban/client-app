@@ -4,6 +4,7 @@
 #import "RNCConfig.h"
 #import <NaverThirdPartyLogin/NaverThirdPartyLogin.h> // Naver SDK 헤더 추가
 #import <Firebase.h> // FirebaseCore 추가
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 

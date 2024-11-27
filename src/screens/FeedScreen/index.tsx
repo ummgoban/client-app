@@ -17,12 +17,13 @@ import {Market} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
+
 import {
-  handleForegroundMessage,
-  requestNotificationPermission,
+  onForegroundMessageHandler,
   requestUserPermission,
+  requestNotificationPermission,
   setBackgroundMessageHandler,
-} from '@/utils/fcm';
+} from '@/utils/notification';
 
 import S from './SearchBar.style';
 
@@ -170,10 +171,8 @@ const FeedScreen = ({navigation}: Props) => {
   useEffect(() => {
     requestNotificationPermission();
     requestUserPermission();
-    const unsubscribe = handleForegroundMessage();
     setBackgroundMessageHandler();
-
-    return unsubscribe;
+    onForegroundMessageHandler();
   }, [navigation]);
 
   useEffect(() => {

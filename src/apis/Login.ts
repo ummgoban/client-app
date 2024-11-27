@@ -211,6 +211,7 @@ export const getProfile = async () => {
           id: kakaoProfileRes.id,
           name: kakaoProfileRes.nickname,
           image: kakaoProfileRes.profileImageUrl,
+          provider: 'KAKAO',
         };
       }
     } else if (storageRes.OAuthProvider === 'NAVER') {
@@ -226,6 +227,7 @@ export const getProfile = async () => {
           id: naverProfileRes.response.id,
           name: naverProfileRes.response.name,
           image: naverProfileRes.response.profile_image ?? '',
+          provider: 'NAVER',
         };
       }
     }

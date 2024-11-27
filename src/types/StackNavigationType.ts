@@ -41,8 +41,14 @@ export interface CartStackParamList extends ParamListBase {
   Cart: undefined;
 }
 
+export interface MyPageStackParamList extends ParamListBase {
+  MyPageRoot: undefined;
+  Setting: undefined;
+}
+
 export interface RootStackParamList extends ParamListBase {
   Home: StackParamType<HomeStackParamList>;
   Register: StackParamType<RegisterStackParamList>;
   Detail: StackParamType<DetailStackParamList>;
+  MyPage: StackParamType<MyPageStackParamList>;
 }

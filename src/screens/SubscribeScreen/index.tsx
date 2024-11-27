@@ -22,6 +22,7 @@ const SubscribeScreen = ({navigation}: Props) => {
       return;
     }
     setMarkets(res.markets);
+    console.log('Fetch data success', markets);
   }, [markets]);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);

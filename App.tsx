@@ -3,7 +3,6 @@ import './gesture-handler';
 import RootProvider from './src/context';
 import AppNavigator from './src/navigation';
 import SplashScreen from 'react-native-splash-screen';
-import {requestUserPermission} from '@/utils/notification';
 function App(): React.JSX.Element {
   // const isDarkMode = useColorScheme() === 'dark';
   useEffect(() => {

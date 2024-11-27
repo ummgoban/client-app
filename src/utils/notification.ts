@@ -3,56 +3,43 @@ import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {registerFCMToken} from '@/apis/Fcm';
 
-// 포어그라운드에서 푸시 알림 처리 함수
-export const onForegroundMessageHandler = () => {
+export const setupPushNotificationHandlers = () => {
+  // 포어그라운드에서 푸시 알림 처리 함수
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Message:', remoteMessage);
     await displayNotification(remoteMessage);
   });
-};
 
-// 백그라운드에서 푸시 알림 처리 함수
-export const setBackgroundMessageHandler = () => {
+  // 백그라운드에서 푸시 알림 처리 함수
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Background Message:', remoteMessage);
     await displayNotification(remoteMessage);
   });
+
   notifee.onBackgroundEvent(async ({type, detail}) => {
     console.log('Notifee Background Event:', type, detail);
   });
 };
 
-// 알림 표시 함수
 export const displayNotification = async (remoteMessage: any) => {
   const {title, body} = remoteMessage.notification ?? {};
-  console.log('notification body:', title, body);
 
-  if (Platform.OS === 'android') {
-    await notifee.displayNotification({
-      title,
-      body,
-      android: {
-        channelId: await createAndroidChannel(),
-        importance: AndroidImportance.HIGH,
-        sound: 'default',
-        pressAction: {
-          id: 'default',
-        },
-      },
-    });
-  } else {
-    const settings = await notifee.requestPermission();
-    if (settings.authorizationStatus) {
-      console.log('iOS firebase notification permission');
-    }
-    await notifee.displayNotification({
-      title,
-      body,
-      ios: {
-        sound: 'default',
-      },
-    });
-  }
+  const notificationOptions = {
+    title,
+    body,
+    android:
+      Platform.OS === 'android'
+        ? {
+            channelId: await createAndroidChannel(),
+            importance: AndroidImportance.HIGH,
+            sound: 'default',
+            pressAction: {id: 'default'},
+          }
+        : undefined,
+    ios: Platform.OS === 'ios' ? {sound: 'default'} : undefined,
+  };
+
+  await notifee.displayNotification(notificationOptions);
 };
 
 // Android 채널 생성 함수
@@ -61,7 +48,7 @@ export const createAndroidChannel = async (): Promise<string> => {
     id: 'default',
     name: 'Default Channel',
     importance: AndroidImportance.HIGH,
-    sound: 'default', // 채널 기본 사운드 추가
+    sound: 'default',
   });
   return channelId;
 };

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">ClientApp</string>
+    <string name="app_name">맘찬픽</string>
     <string name="kakao_app_key">@string/KAKAO_KEY</string>
 </resources>

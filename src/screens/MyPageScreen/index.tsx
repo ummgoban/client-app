@@ -1,14 +1,14 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {getProfile} from '@/apis/Login';
-import {RootStackParamList} from '@/types/StackNavigationType';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+import {MyPageStackParamList} from '@/types/StackNavigationType';
 import {UserType} from '@/types/UserType';
+import {useIsFocused} from '@react-navigation/native';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
 import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 
-type Props = StackScreenProps<RootStackParamList, 'MyPage'>;
+type Props = StackScreenProps<MyPageStackParamList, 'MyPage'>;
 
 const MyPageScreen = ({navigation}: Props) => {
   const [profile, setProfile] = useState<UserType | null>(null);

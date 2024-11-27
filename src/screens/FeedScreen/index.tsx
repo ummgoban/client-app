@@ -1,24 +1,32 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl, Text, View} from 'react-native';
+import {
+  Alert,
+  PermissionsAndroid,
+  Platform,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
 import {getMarketList} from '@/apis';
-import {Market, SearchTab} from '@/components/feedPage';
+import {BottomButton} from '@/components/common';
+import {Market} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import {Platform, PermissionsAndroid} from 'react-native';
-import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
-import {BottomButton} from '@/components/common';
-
-import S from './SearchBar.style';
 
 import {
   onForegroundMessageHandler,
-  requestUserPermission,
   requestNotificationPermission,
+  requestUserPermission,
   setBackgroundMessageHandler,
 } from '@/utils/notification';
+
+import S from './SearchBar.style';
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
@@ -73,6 +81,7 @@ const FeedScreen = ({navigation}: Props) => {
       }
     }
   }, []);
+
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
     if (!hasPermission) {
@@ -186,9 +195,8 @@ const FeedScreen = ({navigation}: Props) => {
 
   return (
     <S.Container>
-      <S.SearchWrapper>
-        <SearchTab />
-      </S.SearchWrapper>
+      {/* TODO: 검색바 */}
+      <S.SearchWrapper>{/* <SearchTab /> */}</S.SearchWrapper>
       <S.MarketWrapper
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

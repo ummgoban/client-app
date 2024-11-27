@@ -12,7 +12,7 @@ const SearchWrapper = styled.View`
 `;
 
 const MarketWrapper = styled.ScrollView`
-  margin-top: 50px;
+  // margin-top: 50px;
 `;
 
 const S = {

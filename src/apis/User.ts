@@ -18,12 +18,14 @@ export const getUserProfile = async (): Promise<UserType | null> => {
         id: kakaoRes.id,
         name: kakaoRes.nickname,
         image: kakaoRes.profileImageUrl,
+        provider: 'KAKAO',
       };
     } else if (naverRes) {
       userProfile = {
         id: naverRes.id.toString(),
         name: naverRes.name,
         image: naverRes.profile_image ?? '',
+        provider: 'NAVER',
       };
     }
 

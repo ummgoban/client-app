@@ -22,7 +22,7 @@ const SubscribeScreen = ({navigation}: Props) => {
       return;
     }
     setMarkets(res.markets);
-  }, []);
+  }, [markets]);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 

@@ -20,8 +20,8 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 
 import {
   onForegroundMessageHandler,
-  requestUserPermission,
   requestNotificationPermission,
+  requestUserPermission,
   setBackgroundMessageHandler,
 } from '@/utils/notification';
 

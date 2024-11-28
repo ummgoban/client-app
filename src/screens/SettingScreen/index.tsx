@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import messaging from '@react-native-firebase/messaging';
+import {AppState, AppStateStatus} from 'react-native';
 
 import S from './SettingScreen.style';
 import {
@@ -22,15 +22,29 @@ const SettingScreen = () => {
 
   useEffect(() => {
     initializeNotificationPermission();
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'active') {
+        initializeNotificationPermission();
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    // 클린업
+    return () => {
+      subscription.remove();
+    };
   }, [initializeNotificationPermission]);
 
   const handleNotificationSwitch = async () => {
     try {
-      await changeNotificationPermission(isNotificationOn);
+      await changeNotificationPermission();
       const newIsNotificationOn = await isNotificationPermissionEnabled();
       if (newIsNotificationOn !== isNotificationOn) {
-        console.log('new', newIsNotificationOn);
-        console.log('old', isNotificationOn);
         setIsNotificationOn(newIsNotificationOn);
       }
     } catch (error) {

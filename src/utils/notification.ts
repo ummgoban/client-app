@@ -3,41 +3,29 @@ import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform, Alert, Linking} from 'react-native';
 import {registerFCMToken} from '@/apis/Fcm';
 
-export const requestNotificationPermission = async (): Promise<boolean> => {
-  const enabled = await isNotificationPermissionEnabled();
-  if (enabled) {
-    console.log('Notification permission granted');
-    return true;
+export const requestNotificationPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  console.log(authStatus);
+  if (
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  ) {
+    console.log('fcm 권한 허용', authStatus);
+  } else {
+    console.log('fcm 권한 거부됨', authStatus);
+    return;
   }
-  try {
-    const authStatus = await messaging().requestPermission();
-    if (
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL
-    ) {
-      console.log('fcm 권한 허용', authStatus);
-    } else {
-      console.log('fcm 권한 거부됨');
-      return false;
+  if (Platform.OS === 'android' && Platform.Version >= 33) {
+    const androidPermission = await requestAndroidPermission();
+    if (!androidPermission) {
+      console.log('Android POST_NOTIFICATIONS 권한 거부됨');
+      return;
     }
-
-    if (Platform.OS === 'android' && Platform.Version >= 33) {
-      const androidPermission = await requestAndroidPermission();
-      if (!androidPermission) {
-        console.log('Android POST_NOTIFICATIONS 권한 거부됨');
-        return false;
-      }
-    }
-    const token = await messaging().getToken();
-    await registerFCMToken(token);
-    setupPushNotificationHandlers();
-    console.log('FCM Token:', token);
-    console.log('Notification permission changed');
-    return true;
-  } catch (error) {
-    console.error('Notification permission error:', error);
-    return false;
   }
+  const token = await messaging().getToken();
+  await registerFCMToken(token);
+  setUpPushNotificationHandlers();
+  console.log('FCM Token:', token);
 };
 
 export const isNotificationPermissionEnabled = async (): Promise<boolean> => {
@@ -67,54 +55,36 @@ const requestAndroidPermission = async (): Promise<boolean> => {
     },
   );
 
-  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    console.log('Notification permission granted');
-    return true;
-  } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-    console.log('Notification permission NEVER_ASK_AGAIN');
-    Alert.alert(
-      '알림 권한 필요',
-      '앱 알림을 활성화하려면 설정에서 권한을 활성화해야 합니다.',
-      [
-        {
-          text: '설정으로 이동',
-          onPress: () => {
-            Linking.openSettings();
-          },
-          style: 'default',
-        },
-        {text: '취소', style: 'cancel'},
-      ],
-    );
-  } else {
-    console.log('Notification permission denied');
-  }
-
-  return false;
+  return granted === PermissionsAndroid.RESULTS.GRANTED;
 };
 
-export const changeNotificationPermission = async (currentStatus: boolean) => {
-  if (currentStatus) {
-    Alert.alert(
-      '알림 권한 비활성화',
-      '알림 권한을 비활성화하려면 설정에서 변경해야 합니다.',
-      [
-        {
-          text: '설정으로 이동',
-          onPress: () => {
-            Linking.openSettings();
-          },
-          style: 'default',
-        },
-        {text: '취소', style: 'cancel'},
-      ],
-    );
+export const changeNotificationPermission = async () => {
+  const authStatus = await isNotificationPermissionEnabled();
+  if (authStatus) {
+    console.log('fcm 권한 거부됨', authStatus);
   } else {
-    await requestNotificationPermission();
+    console.log('fcm 권한 허용', authStatus);
+    const token = await messaging().getToken();
+    await registerFCMToken(token);
+    setUpPushNotificationHandlers();
   }
+  Alert.alert(
+    '알림 권한 활성화',
+    '알림 권한을 변경하려면 설정에서 변경해야 합니다.',
+    [
+      {
+        text: '설정으로 이동',
+        onPress: () => {
+          Linking.openSettings();
+        },
+        style: 'default',
+      },
+      {text: '취소', style: 'cancel'},
+    ],
+  );
 };
 
-const setupPushNotificationHandlers = () => {
+const setUpPushNotificationHandlers = () => {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Message:', remoteMessage);
     await displayNotification(remoteMessage);

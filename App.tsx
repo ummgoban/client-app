@@ -9,7 +9,6 @@ function App(): React.JSX.Element {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // TODO: 권한 요청 로직 호출
         await requestNotificationPermission();
         SplashScreen.hide();
       } catch (error) {

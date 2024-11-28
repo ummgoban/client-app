@@ -29,6 +29,8 @@ const SettingScreen = () => {
       await changeNotificationPermission(isNotificationOn);
       const newIsNotificationOn = await isNotificationPermissionEnabled();
       if (newIsNotificationOn !== isNotificationOn) {
+        console.log('new', newIsNotificationOn);
+        console.log('old', isNotificationOn);
         setIsNotificationOn(newIsNotificationOn);
       }
     } catch (error) {

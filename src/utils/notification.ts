@@ -8,56 +8,89 @@ export const requestNotificationPermission = async (): Promise<boolean> => {
   if (enabled) {
     console.log('Notification permission granted');
     return true;
-  } else {
-    const permssionStatus = await messaging().requestPermission();
-    const AndroidPermssionStatus: boolean = await requestAndroidPermission();
+  }
+  try {
+    const authStatus = await messaging().requestPermission();
     if (
-      AndroidPermssionStatus &&
-      (permssionStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        permssionStatus === messaging.AuthorizationStatus.PROVISIONAL)
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL
     ) {
-      const token = await messaging().getToken();
-      await registerFCMToken(token);
-      setupPushNotificationHandlers();
-      console.log('FCM Token:', token);
-      console.log('Notification permission changed');
-      return true;
+      console.log('fcm 권한 허용', authStatus);
     } else {
-      console.log('Notification permission denied');
+      console.log('fcm 권한 거부됨');
       return false;
     }
+
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+      const androidPermission = await requestAndroidPermission();
+      if (!androidPermission) {
+        console.log('Android POST_NOTIFICATIONS 권한 거부됨');
+        return false;
+      }
+    }
+    const token = await messaging().getToken();
+    await registerFCMToken(token);
+    setupPushNotificationHandlers();
+    console.log('FCM Token:', token);
+    console.log('Notification permission changed');
+    return true;
+  } catch (error) {
+    console.error('Notification permission error:', error);
+    return false;
   }
 };
 
 export const isNotificationPermissionEnabled = async (): Promise<boolean> => {
   const status = await messaging().hasPermission();
+  const AndroidPermssionStatus: boolean =
+    Platform.OS === 'android' && Platform.Version >= 33
+      ? await PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        )
+      : true;
   return (
-    status === messaging.AuthorizationStatus.AUTHORIZED ||
-    status === messaging.AuthorizationStatus.PROVISIONAL
+    AndroidPermssionStatus &&
+    (status === messaging.AuthorizationStatus.AUTHORIZED ||
+      status === messaging.AuthorizationStatus.PROVISIONAL)
   );
 };
 
-// 알림 권한 요청 함수
 const requestAndroidPermission = async (): Promise<boolean> => {
-  if (Platform.OS === 'android' && Platform.Version >= 33) {
-    console.log('sdfasfd');
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      {
-        title: '푸시 알림 권한 요청',
-        message: '알림을 활성화하려면 권한이 필요합니다.',
-        buttonNeutral: '나중에',
-        buttonNegative: '취소',
-        buttonPositive: '확인',
-      },
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    {
+      title: '푸시 알림 권한 요청',
+      message: '알림을 활성화하려면 권한이 필요합니다.',
+      buttonNeutral: '나중에',
+      buttonNegative: '취소',
+      buttonPositive: '확인',
+    },
+  );
+
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    console.log('Notification permission granted');
+    return true;
+  } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+    console.log('Notification permission NEVER_ASK_AGAIN');
+    Alert.alert(
+      '알림 권한 필요',
+      '앱 알림을 활성화하려면 설정에서 권한을 활성화해야 합니다.',
+      [
+        {
+          text: '설정으로 이동',
+          onPress: () => {
+            Linking.openSettings();
+          },
+          style: 'default',
+        },
+        {text: '취소', style: 'cancel'},
+      ],
     );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('Notification permission denied');
-      return true;
-    }
-    return false;
+  } else {
+    console.log('Notification permission denied');
   }
-  return true;
+
+  return false;
 };
 
 export const changeNotificationPermission = async (currentStatus: boolean) => {
@@ -82,13 +115,11 @@ export const changeNotificationPermission = async (currentStatus: boolean) => {
 };
 
 const setupPushNotificationHandlers = () => {
-  // 포어그라운드에서 푸시 알림 처리 함수
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Message:', remoteMessage);
     await displayNotification(remoteMessage);
   });
 
-  // 백그라운드에서 푸시 알림 처리 함수
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Background Message:', remoteMessage);
     await displayNotification(remoteMessage);
@@ -99,7 +130,7 @@ const setupPushNotificationHandlers = () => {
   });
 };
 
-export const displayNotification = async (remoteMessage: any) => {
+const displayNotification = async (remoteMessage: any) => {
   const {title, body} = remoteMessage.notification ?? {};
 
   const notificationOptions = {
@@ -121,7 +152,7 @@ export const displayNotification = async (remoteMessage: any) => {
 };
 
 // Android 채널 생성 함수
-export const createAndroidChannel = async (): Promise<string> => {
+const createAndroidChannel = async (): Promise<string> => {
   const channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',

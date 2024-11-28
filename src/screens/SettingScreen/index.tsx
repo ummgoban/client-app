@@ -2,7 +2,10 @@ import React, {useState, useCallback, useEffect} from 'react';
 import messaging from '@react-native-firebase/messaging';
 
 import S from './SettingScreen.style';
-import {handleNotificationPermission} from '@/utils/notification';
+import {
+  changeNotificationPermission,
+  isNotificationPermissionEnabled,
+} from '@/utils/notification';
 
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);
@@ -10,10 +13,7 @@ const SettingScreen = () => {
 
   const initializeNotificationPermission = useCallback(async () => {
     try {
-      const status = await messaging().hasPermission();
-      const isEnabled =
-        status === messaging.AuthorizationStatus.AUTHORIZED ||
-        status === messaging.AuthorizationStatus.PROVISIONAL;
+      const isEnabled = await isNotificationPermissionEnabled();
       setIsNotificationOn(isEnabled);
     } catch (error) {
       console.error('체크 실패', error);
@@ -24,10 +24,16 @@ const SettingScreen = () => {
     initializeNotificationPermission();
   }, [initializeNotificationPermission]);
 
-  // TODO: Implement handleNotificationSwitch function
   const handleNotificationSwitch = async () => {
-    await handleNotificationPermission(isNotificationOn);
-    setIsNotificationOn(prev => !prev);
+    try {
+      await changeNotificationPermission(isNotificationOn);
+      const newIsNotificationOn = await isNotificationPermissionEnabled();
+      if (newIsNotificationOn !== isNotificationOn) {
+        setIsNotificationOn(newIsNotificationOn);
+      }
+    } catch (error) {
+      console.error('알림 상태 변경 실패', error);
+    }
   };
 
   // TODO: Implement handleLocationSwitch function

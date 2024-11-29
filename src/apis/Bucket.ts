@@ -72,3 +72,26 @@ export const updateBucketQuantity = async (
     return false;
   }
 };
+
+export const deleteBucketQuantity = async (
+  productId: number,
+): Promise<boolean> => {
+  try {
+    const res = await apiClient.del<{
+      code: number;
+      message: string;
+      data: string;
+    }>(`/buckets`, {
+      params: {
+        productId,
+      },
+    });
+    if (res && res.code === 200) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('updateBucket error:', error);
+    return false;
+  }
+};

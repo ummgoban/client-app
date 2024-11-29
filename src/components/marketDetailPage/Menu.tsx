@@ -31,7 +31,6 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
       const newCount = Math.max(prevCount - 1, minCount);
-
       onCountChange(product.id, newCount);
       return newCount;
     });

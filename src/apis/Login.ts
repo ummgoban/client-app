@@ -194,47 +194,12 @@ export const logout = async (): Promise<boolean> => {
   }
 };
 
-export const getProfile = async () => {
+export const getProfile = async (): Promise<UserType | null> => {
   try {
-    const storageRes: SessionType | null = await getStorage('session');
-    if (!storageRes) {
-      return null;
-    }
-
-    let res: UserType | null = null;
-
-    if (storageRes.OAuthProvider === 'KAKAO') {
-      const kakaoProfileRes = await getKakaoProfile();
-
-      if (kakaoProfileRes) {
-        res = {
-          id: kakaoProfileRes.id,
-          name: kakaoProfileRes.nickname,
-          image: kakaoProfileRes.profileImageUrl,
-          provider: 'KAKAO',
-        };
-      }
-    } else if (storageRes.OAuthProvider === 'NAVER') {
-      const naverProfileRes = await NaverLogin.getProfile(
-        storageRes.accessToken,
-      );
-
-      if (
-        naverProfileRes.message === 'success' &&
-        naverProfileRes.resultcode === '00'
-      ) {
-        res = {
-          id: naverProfileRes.response.id,
-          name: naverProfileRes.response.name,
-          image: naverProfileRes.response.profile_image ?? '',
-          provider: 'NAVER',
-        };
-      }
-    }
-
+    const res = await apiClient.get<UserType | null>(`/members/profiles`);
     return res;
   } catch (error) {
-    console.error('프로필 불러오기 에러:', error);
+    console.error(`Error fetching profile: ${error}`);
     return null;
   }
 };

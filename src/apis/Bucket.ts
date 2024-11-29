@@ -48,7 +48,7 @@ export const addToBucket = async (
   }
 };
 
-export const updateBucketQuantity = async (
+export const updateBucketProduct = async (
   productId: number,
   count: number,
 ): Promise<boolean> => {
@@ -73,7 +73,7 @@ export const updateBucketQuantity = async (
   }
 };
 
-export const deleteBucketQuantity = async (
+export const deleteBucketProduct = async (
   productId: number,
 ): Promise<boolean> => {
   try {

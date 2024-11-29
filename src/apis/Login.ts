@@ -1,5 +1,4 @@
 import {
-  getProfile as getKakaoProfile,
   login as kakaoLogin,
   logout as kakaoLogout,
 } from '@react-native-seoul/kakao-login';

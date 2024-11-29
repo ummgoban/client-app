@@ -47,3 +47,28 @@ export const addToBucket = async (
     return false;
   }
 };
+
+export const updateBucketQuantity = async (
+  productId: number,
+  count: number,
+): Promise<boolean> => {
+  try {
+    const res = await apiClient.patch<{
+      code: number;
+      message: string;
+      data: string;
+    }>(`/buckets`, {
+      params: {
+        productId,
+        count,
+      },
+    });
+    if (res && res.code === 200 && (res.data === 'SUCCESS' || 'CREATE')) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('updateBucket error:', error);
+    return false;
+  }
+};

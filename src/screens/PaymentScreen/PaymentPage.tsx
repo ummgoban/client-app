@@ -28,6 +28,8 @@ type Props = {cart: BucketType};
 const PaymentPage = ({cart}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
+  const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
+
   const {originPrice, discountPrice} = useMemo(
     () =>
       cart.products.reduce(
@@ -47,7 +49,10 @@ const PaymentPage = ({cart}: Props) => {
   return (
     <S.PaymentPage>
       <S.ScrollView>
-        <DatePickerCard />
+        <DatePickerCard
+          pickupReservedAt={pickupReservedAt}
+          onChange={setPickupReservedAt}
+        />
         <PaymentMethod>
           <PaymentMethodWidget
             selector="payment-methods"
@@ -96,15 +101,23 @@ const PaymentPage = ({cart}: Props) => {
             return;
           }
 
-          const orderRes = await requestOrder(cart);
+          // TODO: 주문 요청 사항
+          const orderRes = await requestOrder(
+            pickupReservedAt.toISOString(),
+            '',
+          );
+
+          console.debug('orderRes', orderRes);
 
           if (orderRes == null) {
             Alert.alert('주문 정보를 가져오지 못했습니다.');
             return;
           }
 
-          const tossPaymentRes =
-            await paymentWidgetControl.requestPayment?.(orderRes);
+          const tossPaymentRes = await paymentWidgetControl.requestPayment({
+            orderId: orderRes.ordersId,
+            orderName: orderRes.ordersName,
+          });
 
           if (tossPaymentRes == null) {
             Alert.alert('결제 정보를 가져오지 못했습니다.');
@@ -117,7 +130,9 @@ const PaymentPage = ({cart}: Props) => {
             // 결제 성공 비즈니스 로직을 구현하세요.
             // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
             const successRes = await requestOrderSuccess(
-              tossPaymentRes.success,
+              tossPaymentRes.success.paymentKey,
+              orderRes.ordersId,
+              orderRes.amount,
             );
 
             if (!successRes) {

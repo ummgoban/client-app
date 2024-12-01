@@ -6,14 +6,19 @@ import {format} from '@/utils/date';
 
 import S from './DatePickerCard.style';
 
-const DatePickerCard = () => {
+const DatePickerCard = ({
+  pickupReservedAt,
+  onChange,
+}: {
+  pickupReservedAt: Date;
+  onChange: (date: Date) => void;
+}) => {
   const now = new Date();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [reservedAt, setReservedAt] = useState(now);
 
   const onConfirm = (date: Date) => {
-    setReservedAt(date);
+    onChange(date);
     setIsOpen(false);
   };
 
@@ -22,7 +27,7 @@ const DatePickerCard = () => {
       <S.Card>
         <S.DatePickerButton onPress={() => setIsOpen(true)}>
           <S.DatePickerText>
-            {format(reservedAt.getTime(), 'a HH : mm')}
+            {format(pickupReservedAt.getTime(), 'a HH : mm')}
           </S.DatePickerText>
           <Icon source={'menu-down'} size={24} />
         </S.DatePickerButton>
@@ -32,7 +37,7 @@ const DatePickerCard = () => {
         title={'예약 시간을 선택해주세요'}
         open={isOpen}
         mode="time"
-        date={reservedAt}
+        date={pickupReservedAt}
         minimumDate={now}
         // TODO: 예약 가능 시간 서버에서 받아와야 함
         maximumDate={new Date(now.getTime() + 24 * 60 * 60 * 1000)}

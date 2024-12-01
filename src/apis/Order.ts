@@ -56,7 +56,7 @@ export const requestOrderSuccess = async (
   amount: number,
 ): Promise<Boolean | null> => {
   try {
-    const res = await apiClient.post<{data: 'SUCCESS'} | null>(
+    const res = await apiClient.post<{code: number} | null>(
       '/orders/payments',
       {
         paymentKey,
@@ -65,7 +65,7 @@ export const requestOrderSuccess = async (
       },
     );
 
-    return res?.data === 'SUCCESS';
+    return res?.code === 201;
   } catch (error) {
     console.debug(error);
     return null;

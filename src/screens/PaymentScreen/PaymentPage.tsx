@@ -107,8 +107,6 @@ const PaymentPage = ({cart}: Props) => {
             '',
           );
 
-          console.debug('orderRes', orderRes);
-
           if (orderRes == null) {
             Alert.alert('주문 정보를 가져오지 못했습니다.');
             return;
@@ -124,11 +122,7 @@ const PaymentPage = ({cart}: Props) => {
             return;
           }
 
-          console.debug(tossPaymentRes);
-
           if (tossPaymentRes.success) {
-            // 결제 성공 비즈니스 로직을 구현하세요.
-            // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
             const successRes = await requestOrderSuccess(
               tossPaymentRes.success.paymentKey,
               orderRes.ordersId,

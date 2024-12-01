@@ -1,5 +1,4 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StorageKeyType} from '@/types/Storage';
 
 const FIRST_LAUNCH_KEY = 'isFirst';
@@ -20,14 +19,14 @@ export const getStorage = async <T extends Object>(
 
 export const checkFirstLaunch = async (): Promise<boolean> => {
   try {
-    const isFirstLaunch = await AsyncStorage.getItem(FIRST_LAUNCH_KEY);
+    const isFirstLaunch = await EncryptedStorage.getItem(FIRST_LAUNCH_KEY);
     if (isFirstLaunch === null) {
-      await AsyncStorage.setItem(FIRST_LAUNCH_KEY, 'false');
+      await EncryptedStorage.setItem(FIRST_LAUNCH_KEY, JSON.stringify(false));
       return true;
     }
     return false;
   } catch (error) {
-    console.error('Error check first launch:', error);
+    console.error('Error checking first launch:', error);
     return false;
   }
 };

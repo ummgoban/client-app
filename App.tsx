@@ -10,6 +10,7 @@ function App(): React.JSX.Element {
   useEffect(() => {
     const initializeApp = async () => {
       try {
+        //TODO: fcm 토큰 등록 위치 논의 후 따로 분리 예정
         const isFirstLaunch = await checkFirstLaunch();
         if (isFirstLaunch) {
           await requestNotificationPermission();

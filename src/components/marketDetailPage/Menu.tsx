@@ -28,9 +28,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     }
   };
 
-  const increaseMenuCount = () => {
+  const increaseMenuCount = async () => {
     if (isCart) {
-      updateBucketCount(product.id, 1);
+      await updateBucketCount(product.id, 1);
     }
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
@@ -42,9 +42,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     });
   };
 
-  const decreaseMenuCount = () => {
+  const decreaseMenuCount = async () => {
     if (isCart) {
-      updateBucketCount(product.id, -1);
+      await updateBucketCount(product.id, -1);
     }
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
@@ -94,7 +94,10 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         <S.MenuDiscountPrice>
           {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
-        <S.MenuStockCount>{`${!isCart ? `재고: ${product.stock}` : `수량: ${product.count}`}`}</S.MenuStockCount>
+        <S.MenuStockWrapper>
+          <S.MenuStockCount>{`재고: ${product.stock}`}</S.MenuStockCount>
+          <S.MenuStockCount>{`${!isCart ? '' : `수량: ${product.count}`}`}</S.MenuStockCount>
+        </S.MenuStockWrapper>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>

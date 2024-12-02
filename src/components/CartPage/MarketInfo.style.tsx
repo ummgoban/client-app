@@ -12,9 +12,7 @@ const MarketInfoWrapper = styled.TouchableOpacity`
   background-color: white;
 `;
 
-const MarketInfoText = styled(S.HeaderText)`
-  margin-left: 16px;
-`;
+const MarketInfoText = styled(S.HeaderText)``;
 
 const MarketInfoImage = styled.Image`
   width: 25px;

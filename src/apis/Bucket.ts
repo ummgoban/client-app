@@ -57,12 +57,16 @@ export const updateBucketProduct = async (
       code: number;
       message: string;
       data: string;
-    }>(`/buckets`, {
-      params: {
-        productId,
-        count,
+    }>(
+      `/buckets`,
+      {},
+      {
+        params: {
+          productId,
+          count,
+        },
       },
-    });
+    );
     if (res && res.code === 200 && (res.data === 'SUCCESS' || 'CREATE')) {
       return true;
     }

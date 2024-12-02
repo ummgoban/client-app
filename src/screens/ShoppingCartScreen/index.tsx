@@ -39,7 +39,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     fetchBucketData();
   }, [fetchBucketData]);
 
-  const updateProductCount = (id: number, newCount: number) => {
+  const handleBucketProductCount = (id: number, newCount: number) => {
     setCartData(prevCartData => {
       if (!prevCartData) return null;
 
@@ -69,7 +69,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     <ShoppingCartPage
       navigation={navigation}
       cartData={cartData}
-      updateProductCount={updateProductCount}
+      updateProductCount={handleBucketProductCount}
     />
   );
 };

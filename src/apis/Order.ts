@@ -1,15 +1,5 @@
-import {BucketType} from '@/types/Bucket';
-import {Success} from '@tosspayments/widget-sdk-react-native';
-import {PaymentInfo} from '@tosspayments/widget-sdk-react-native/lib/typescript/src/models/PaymentInfo';
-import {OrderType} from '../types/OrderType';
+import {OrderType} from '@/types/OrderType';
 import apiClient from './ApiClient';
-
-const randomString = (): string => Math.random().toString(36).substr(2, 16);
-
-const dummyPaymentInfo: PaymentInfo = {
-  orderId: randomString(),
-  orderName: '김치',
-};
 
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   try {
@@ -34,16 +24,26 @@ export const getProgressingOrder = async (): Promise<OrderType[] | null> => {
 };
 
 export const requestOrder = async (
-  cart: BucketType,
-): Promise<PaymentInfo | null> => {
+  pickupReservedAt: string,
+  customerRequest: string,
+): Promise<{
+  ordersId: string;
+  ordersName: string;
+  amount: number;
+} | null> => {
   try {
-    // TODO: uri 수정
-    // const res = await apiClient.post<PaymentInfo | null>('/order', cart);
-    apiClient.get('/utils/health');
-    console.debug(cart);
-    const res = dummyPaymentInfo;
+    const res = await apiClient.post<{
+      data: {
+        ordersId: string;
+        ordersName: string;
+        amount: number;
+      };
+    } | null>('/orders', {
+      pickupReservedAt,
+      customerRequest,
+    });
 
-    return res;
+    return res?.data ?? null;
   } catch (error) {
     console.debug(error);
     return null;
@@ -51,14 +51,21 @@ export const requestOrder = async (
 };
 
 export const requestOrderSuccess = async (
-  success: Success,
+  paymentKey: string,
+  ordersId: string,
+  amount: number,
 ): Promise<Boolean | null> => {
   try {
-    // TODO: uri 수정
-    // const res = await apiClient.post<Boolean>('/order/success', success);
-    console.debug(success);
-    const res = true;
-    return res;
+    const res = await apiClient.post<{code: number} | null>(
+      '/orders/payments',
+      {
+        paymentKey,
+        ordersId,
+        amount,
+      },
+    );
+
+    return res?.code === 201;
   } catch (error) {
     console.debug(error);
     return null;

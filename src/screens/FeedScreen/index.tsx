@@ -18,13 +18,6 @@ import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-import {
-  onForegroundMessageHandler,
-  requestNotificationPermission,
-  requestUserPermission,
-  setBackgroundMessageHandler,
-} from '@/utils/notification';
-
 import S from './SearchBar.style';
 
 type Props = {
@@ -168,12 +161,7 @@ const FeedScreen = ({navigation}: Props) => {
 
   const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
 
-  useEffect(() => {
-    requestNotificationPermission();
-    requestUserPermission();
-    setBackgroundMessageHandler();
-    onForegroundMessageHandler();
-  }, [navigation]);
+  useEffect(() => {}, [navigation]);
 
   useEffect(() => {
     initializeData();

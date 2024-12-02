@@ -1,14 +1,55 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {AppState, AppStateStatus} from 'react-native';
 
 import S from './SettingScreen.style';
+import {
+  changeNotificationPermission,
+  isNotificationPermissionEnabled,
+} from '@/utils/notification';
 
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);
   const [isLocationOn, setIsLocationOn] = useState(false);
 
-  // TODO: Implement handleNotificationSwitch function
+  const initializeNotificationPermission = useCallback(async () => {
+    try {
+      const isEnabled = await isNotificationPermissionEnabled();
+      setIsNotificationOn(isEnabled);
+    } catch (error) {
+      console.error('체크 실패', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    initializeNotificationPermission();
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'active') {
+        initializeNotificationPermission();
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    // 클린업
+    return () => {
+      subscription.remove();
+    };
+  }, [initializeNotificationPermission]);
+
   const handleNotificationSwitch = async () => {
-    setIsNotificationOn(prev => !prev);
+    try {
+      await changeNotificationPermission();
+      const newIsNotificationOn = await isNotificationPermissionEnabled();
+      if (newIsNotificationOn !== isNotificationOn) {
+        setIsNotificationOn(newIsNotificationOn);
+      }
+    } catch (error) {
+      console.error('알림 상태 변경 실패', error);
+    }
   };
 
   // TODO: Implement handleLocationSwitch function

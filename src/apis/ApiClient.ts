@@ -73,8 +73,8 @@ class ApiClient {
 
       return null;
     } catch (error) {
-      console.debug('GET', url, error);
-      console.dir({error});
+      console.error('GET', url, JSON.stringify(error));
+
       return null;
     }
   };
@@ -95,8 +95,7 @@ class ApiClient {
 
       return res.data;
     } catch (error) {
-      console.debug('POST', url, error);
-      console.error(error);
+      console.error('POST', url, JSON.stringify(error));
 
       return null;
     }
@@ -113,9 +112,12 @@ class ApiClient {
         body,
         config,
       );
+
+      console.debug('PATCH', url, res.data);
+
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error('PATCH', url, JSON.stringify(error));
       return null;
     }
   };
@@ -131,9 +133,12 @@ class ApiClient {
         body,
         config,
       );
+
+      console.debug('PUT', url, res.data);
+
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error('PUT', url, JSON.stringify(error));
       return null;
     }
   };
@@ -144,9 +149,13 @@ class ApiClient {
   ): Promise<T | null> => {
     try {
       const res: AxiosResponse = await this.axiosInstance.delete(url, config);
+
+      console.debug('DELETE', url, res.data);
+
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error('DELETE', url, JSON.stringify(error));
+
       return null;
     }
   };

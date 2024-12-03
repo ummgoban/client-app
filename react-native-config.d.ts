@@ -8,6 +8,8 @@ declare module 'react-native-config' {
     NAVER_URL_SCHEME: string;
     NAVER_CONSUMER_KEY: string;
     NAVER_CONSUMER_SECRET_KEY: string;
+    TOSS_CLIENT_KEY: string;
+    TOSS_CUSTOMER_KEY: string;
   }
 
   export const Config: NativeConfig;

@@ -12,21 +12,31 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="center" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="momchanpick" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-BL-8RO">
-                                <rect key="frame" x="100" y="289" width="175" height="88"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Txu-dc-pz5">
-                                <rect key="frame" x="67" y="125" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="AppSplashLogo" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-VP-ZdD">
+                                <rect key="frame" x="102" y="137" width="171" height="204"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="242" id="Asc-hI-Ccp"/>
+                                    <constraint firstAttribute="height" constant="165" id="K5t-Yw-kIA"/>
+                                    <constraint firstAttribute="width" secondItem="s5f-VP-ZdD" secondAttribute="height" multiplier="157:185" id="nhJ-NK-XiW"/>
+                                    <constraint firstAttribute="width" secondItem="s5f-VP-ZdD" secondAttribute="height" multiplier="121:337" id="ocd-3j-6lh"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="0.97647058959999999" green="0.96862745289999996" blue="0.74117648599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="s5f-VP-ZdD" secondAttribute="bottom" constant="850" id="1ae-be-pgy"/>
+                            <constraint firstItem="s5f-VP-ZdD" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="40" id="SxN-d6-VZC"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="s5f-VP-ZdD" secondAttribute="trailing" constant="368" id="Vys-gG-nSW"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="s5f-VP-ZdD" secondAttribute="trailing" constant="40" id="awd-gV-eq4"/>
+                            <constraint firstItem="s5f-VP-ZdD" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="154" id="tCz-sT-svO"/>
+                            <constraint firstItem="s5f-VP-ZdD" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="91" id="uyH-zp-cGH"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="s5f-VP-ZdD" secondAttribute="bottom" constant="274" id="zha-gQ-Caz"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -35,7 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="20" height="24"/>
-        <image name="momchanpick" width="32" height="22"/>
+        <image name="AppSplashLogo" width="379" height="674"/>
     </resources>
 </document>

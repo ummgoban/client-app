@@ -47,3 +47,55 @@ export const addToBucket = async (
     return false;
   }
 };
+
+export const updateBucketProduct = async (
+  productId: number,
+  count: number,
+): Promise<boolean> => {
+  try {
+    const res = await apiClient.patch<{
+      code: number;
+      message: string;
+      data: string;
+    }>(
+      `/buckets`,
+      {},
+      {
+        params: {
+          productId,
+          count,
+        },
+      },
+    );
+    if (res && res.code === 200 && (res.data === 'SUCCESS' || 'CREATE')) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('updateBucket error:', error);
+    return false;
+  }
+};
+
+export const deleteBucketProduct = async (
+  productId: number,
+): Promise<boolean> => {
+  try {
+    const res = await apiClient.del<{
+      code: number;
+      message: string;
+      data: string;
+    }>(`/buckets`, {
+      params: {
+        productId,
+      },
+    });
+    if (res && res.code === 200) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('updateBucket error:', error);
+    return false;
+  }
+};

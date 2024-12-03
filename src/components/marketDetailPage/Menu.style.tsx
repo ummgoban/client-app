@@ -17,7 +17,11 @@ const MenuBoxLeft = styled.View`
   gap: 20px;
   align-self: stretch;
 `;
-
+const MenuStockWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+`;
 const MenuName = styled.Text`
   color: #2d3e39;
   font-size: 18px;
@@ -124,6 +128,7 @@ const S = {
   MenuDeleteButtonWrapper,
   MenuCounterSideButton,
   MenuDeleteText,
+  MenuStockWrapper,
 };
 
 export default S;

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {ProductType} from '@/types/ProductType';
+import {updateBucketProduct, deleteBucketProduct} from '@/apis/Bucket';
 import S from './Menu.style';
 type Props = {
   product: ProductType;
@@ -16,7 +17,21 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     setMenuCount(initCount);
   }, [initCount]);
 
-  const increaseMenuCount = () => {
+  const updateBucketCount = async (productId: number, count: number) => {
+    try {
+      const res = await updateBucketProduct(productId, count);
+      if (!res) {
+        console.debug('error');
+      }
+    } catch (error) {
+      console.debug('error');
+    }
+  };
+
+  const increaseMenuCount = async () => {
+    if (isCart) {
+      await updateBucketCount(product.id, 1);
+    }
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
       if (newCount > product.stock) {
@@ -27,17 +42,27 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
     });
   };
 
-  const decreaseMenuCount = () => {
+  const decreaseMenuCount = async () => {
+    if (isCart) {
+      await updateBucketCount(product.id, -1);
+    }
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
       const newCount = Math.max(prevCount - 1, minCount);
-
       onCountChange(product.id, newCount);
       return newCount;
     });
   };
 
-  const deleteMenu = () => {
+  const deleteMenu = async () => {
+    const handleDelete = async () => {
+      try {
+        await deleteBucketProduct(product.id);
+        onCountChange(product.id, 0);
+      } catch (error) {
+        console.debug('메뉴 삭제 중 에러 발생', error);
+      }
+    };
     Alert.alert(
       '메뉴 삭제',
       '메뉴를 삭제하시겠습니까?',
@@ -45,8 +70,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         {
           text: '예',
           onPress: () => {
-            setMenuCount(0);
-            onCountChange(product.id, 0);
+            handleDelete();
           },
         },
         {
@@ -57,6 +81,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       {cancelable: false},
     );
   };
+
   const isDecrease = (isCart && menuCount === 1) || menuCount === 0;
 
   return (
@@ -69,7 +94,10 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         <S.MenuDiscountPrice>
           {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
-        <S.MenuStockCount>{`${!isCart ? `재고: ${product.stock}` : `수량: ${product.count}`}`}</S.MenuStockCount>
+        <S.MenuStockWrapper>
+          <S.MenuStockCount>{`재고: ${product.stock}`}</S.MenuStockCount>
+          <S.MenuStockCount>{`${!isCart ? '' : `수량: ${product.count}`}`}</S.MenuStockCount>
+        </S.MenuStockWrapper>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>
             <S.MenuDeleteText>메뉴 삭제</S.MenuDeleteText>

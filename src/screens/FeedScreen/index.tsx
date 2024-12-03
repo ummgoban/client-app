@@ -1,15 +1,8 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Alert,
-  PermissionsAndroid,
-  Platform,
-  RefreshControl,
-  Text,
-  View,
-} from 'react-native';
+import {Alert, RefreshControl, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import {requestLocationPermission} from '@/utils/notification';
 
 import {getMarketList} from '@/apis';
 import {BottomButton} from '@/components/common';
@@ -52,33 +45,10 @@ const FeedScreen = ({navigation}: Props) => {
     );
   }, [location]);
 
-  const requestLocationPermission = useCallback(async () => {
-    if (Platform.OS === 'android') {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      console.log('Android 권한 요청 결과:', granted);
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        return true;
-      } else {
-        Alert.alert('Android 위치 권한이 허용되지 않았습니다.');
-      }
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } else {
-      const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-      console.log('iOS 권한 요청 결과:', result);
-      if (result === RESULTS.GRANTED) {
-        return true;
-      } else {
-        Alert.alert('IOS 위치 권한이 허용되지 않았습니다.');
-      }
-    }
-  }, []);
-
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
-    if (!hasPermission) {
-      Alert.alert('위치 권한이 필요합니다.');
+    if (hasPermission !== 'granted') {
+      Alert.alert('위치 권한이 허용되지 않아 기본 가게들을 조회합니다');
       return false;
     }
 
@@ -105,12 +75,15 @@ const FeedScreen = ({navigation}: Props) => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     });
-  }, [location, requestLocationPermission]);
+  }, [location]);
 
   const initializeData = useCallback(async () => {
     const gotLocation = await getCurrentLocation();
     if (gotLocation) {
-      console.log('fetch 실행......');
+      console.log('위치를 받아와서 fetch 실행......');
+      await fetchData();
+    } else {
+      console.log('디폴트 위치로 fetch실행...');
       await fetchData();
     }
   }, [getCurrentLocation, fetchData]);
@@ -170,7 +143,7 @@ const FeedScreen = ({navigation}: Props) => {
   if (marketList === null) {
     return (
       <View>
-        <Text>가게목록을 불러오지 못했습니다.</Text>
+        <Text>가게목록을 불러오는 중입니다....</Text>
       </View>
     );
   } else if (marketList.length === 0) {

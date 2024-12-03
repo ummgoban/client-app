@@ -1,15 +1,18 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {AppState, AppStateStatus} from 'react-native';
-
+import React, {useState, useCallback, useEffect, useRef} from 'react';
+import {AppState, AppStateStatus, Alert, Linking} from 'react-native';
 import S from './SettingScreen.style';
 import {
+  changeLocationPermission,
   changeNotificationPermission,
   isNotificationPermissionEnabled,
+  requestLocationPermission,
 } from '@/utils/notification';
 
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);
-  const [isLocationOn, setIsLocationOn] = useState(false);
+  const [isLocationOn, setIsLocationOn] = useState<
+    'granted' | 'never_ask_again' | 'denied' | null
+  >(null);
 
   const initializeNotificationPermission = useCallback(async () => {
     try {
@@ -20,12 +23,49 @@ const SettingScreen = () => {
     }
   }, []);
 
+  const isPermissionRequestedRef = useRef(false);
+
+  const initializeLocationPermission = useCallback(async () => {
+    if (isPermissionRequestedRef.current) {
+      console.log('권한 요청 중복 실행 방지');
+      return;
+    }
+
+    console.log('initializeLocationPermission 실행');
+    try {
+      const permissionStatus = await requestLocationPermission();
+
+      if (permissionStatus === 'granted') {
+        setIsLocationOn('granted');
+        console.log('위치 권한 허용됨');
+      } else {
+        console.log('위치 권한 요청: never_ask_again');
+        Alert.alert(
+          '위치 권한 필요',
+          '위치 권한을 활성화하려면 설정에서 권한을 허용해주세요.',
+          [
+            {text: '설정 열기', onPress: () => Linking.openSettings()},
+            {text: '취소', style: 'cancel'},
+          ],
+        );
+        isPermissionRequestedRef.current = true;
+      }
+    } catch (error) {
+      console.error('위치 권한 초기화 실패:', error);
+    }
+  }, []);
+
   useEffect(() => {
     initializeNotificationPermission();
+    initializeLocationPermission();
 
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      console.log('AppState 변경:', nextAppState);
       if (nextAppState === 'active') {
         initializeNotificationPermission();
+        initializeLocationPermission();
+      } else if (nextAppState === 'background') {
+        console.log('앱이 백그라운드로 이동');
       }
     };
 
@@ -33,12 +73,11 @@ const SettingScreen = () => {
       'change',
       handleAppStateChange,
     );
-
-    // 클린업
     return () => {
+      console.log('AppState 이벤트 클린업');
       subscription.remove();
     };
-  }, [initializeNotificationPermission]);
+  }, [initializeNotificationPermission, initializeLocationPermission]);
 
   const handleNotificationSwitch = async () => {
     try {
@@ -52,9 +91,16 @@ const SettingScreen = () => {
     }
   };
 
-  // TODO: Implement handleLocationSwitch function
   const handleLocationSwitch = async () => {
-    setIsLocationOn(prev => !prev);
+    try {
+      await changeLocationPermission();
+      const newLocationPermission = await requestLocationPermission();
+      if (newLocationPermission !== isLocationOn) {
+        setIsLocationOn(newLocationPermission);
+      }
+    } catch (error) {
+      console.error('알림 상태 변경 실패', error);
+    }
   };
 
   return (
@@ -86,7 +132,7 @@ const SettingScreen = () => {
             </S.SettingItemDescription>
           </S.SettingItemDescriptionContainer>
           <S.SwitchButton
-            value={isLocationOn}
+            value={isLocationOn === 'granted' ? true : false}
             onChange={handleLocationSwitch}
           />
         </S.SettingItem>

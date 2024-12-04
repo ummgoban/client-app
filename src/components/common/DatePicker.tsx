@@ -13,7 +13,7 @@ const DatePicker = (props: Props) => {
       {...props}
       modal
       mode="time"
-      date={new Date('2024-01-01T08:00:00')}
+      date={props.date ?? new Date()}
       confirmText={props.confirmText ?? '확인'}
       cancelText={props.cancelText ?? '취소'}
     />

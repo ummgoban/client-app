@@ -40,6 +40,33 @@ const DatePickerText = styled(Text)`
   line-height: 36px;
 `;
 
-const S = {Card, PlaneText, DatePickerButton, DatePickerText};
+const PickupAbleTextContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0px 8px;
+`;
+
+const PickupAbleText = styled(Text)`
+  color: rgb(0, 0, 0);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+`;
+
+const S = {
+  Card,
+  PlaneText,
+  DatePickerButton,
+  DatePickerText,
+  PickupAbleTextContainer,
+  PickupAbleText,
+};
 
 export default S;

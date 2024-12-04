@@ -8,7 +8,10 @@ import 'dayjs/locale/ko';
  * @returns 변환된 날짜
  * @example format(1627772400000) // '2021. 07. 31. (토)'
  */
-export function format(timestamp: number, template?: string): string {
+export function format(
+  timestamp: number | string | Date,
+  template?: string,
+): string {
   const date = new Date(timestamp);
 
   return dayjs(date)

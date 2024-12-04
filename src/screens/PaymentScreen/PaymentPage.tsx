@@ -21,8 +21,11 @@ import {
   PaymentMethod,
   PaymentSummary,
 } from '@components/orderPage';
+import {format} from '@/utils/date';
 
 import S from './PaymentPage.style';
+
+const nowDate = format(new Date(), 'YYYY-MM-DD');
 
 type Props = {cart: BucketType; market: MarketDetailType};
 
@@ -53,8 +56,8 @@ const PaymentPage = ({cart, market}: Props) => {
         <DatePickerCard
           pickupReservedAt={pickupReservedAt}
           onChange={setPickupReservedAt}
-          minimumDate={new Date(`2024-01-01T${market.pickupStartAt}`)}
-          maximumDate={new Date(`2024-01-01T${market.pickupEndAt}`)}
+          minimumDate={new Date(`${nowDate}T${market.pickupStartAt}`)}
+          maximumDate={new Date(`${nowDate}T${market.pickupEndAt}`)}
         />
         <PaymentMethod>
           <PaymentMethodWidget

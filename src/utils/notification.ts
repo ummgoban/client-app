@@ -2,7 +2,7 @@ import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform, Alert, Linking} from 'react-native';
 import {registerFCMToken} from '@/apis/Fcm';
-
+import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 export const requestNotificationPermission = async () => {
   const authStatus = await messaging().requestPermission();
   console.log(authStatus);
@@ -130,4 +130,47 @@ const createAndroidChannel = async (): Promise<string> => {
     sound: 'default',
   });
   return channelId;
+};
+
+export const requestLocationPermission = async () => {
+  if (Platform.OS === 'android') {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+    console.log('Android 권한 요청 결과:', granted);
+    switch (granted) {
+      case PermissionsAndroid.RESULTS.GRANTED:
+        return 'granted';
+      case PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN:
+        return 'never_ask_again';
+      default:
+        return 'denied';
+    }
+  } else {
+    const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    console.log('iOS 권한 요청 결과:', result);
+    if (result === RESULTS.GRANTED) {
+      return 'granted';
+    } else {
+      console.log('IOS 위치 허용 꺼짐');
+      return 'never_ask_again';
+    }
+  }
+};
+
+export const changeLocationPermission = async () => {
+  Alert.alert(
+    '위치 권한 변경',
+    '위치 권한을 변경하려면 설정에서 변경해야 합니다.',
+    [
+      {
+        text: '설정으로 이동',
+        onPress: () => {
+          Linking.openSettings();
+        },
+        style: 'default',
+      },
+      {text: '취소', style: 'cancel'},
+    ],
+  );
 };

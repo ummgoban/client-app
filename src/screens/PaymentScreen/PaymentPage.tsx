@@ -13,6 +13,7 @@ import {
 
 import {requestOrder, requestOrderSuccess} from '@/apis';
 import {BucketType} from '@/types/Bucket';
+import {MarketDetailType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@components/common';
 import {
@@ -23,9 +24,9 @@ import {
 
 import S from './PaymentPage.style';
 
-type Props = {cart: BucketType};
+type Props = {cart: BucketType; market: MarketDetailType};
 
-const PaymentPage = ({cart}: Props) => {
+const PaymentPage = ({cart, market}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
@@ -52,6 +53,8 @@ const PaymentPage = ({cart}: Props) => {
         <DatePickerCard
           pickupReservedAt={pickupReservedAt}
           onChange={setPickupReservedAt}
+          minimumDate={new Date(`2024-01-01T${market.pickupStartAt}`)}
+          maximumDate={new Date(`2024-01-01T${market.pickupEndAt}`)}
         />
         <PaymentMethod>
           <PaymentMethodWidget

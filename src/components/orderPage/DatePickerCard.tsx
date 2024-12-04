@@ -9,12 +9,14 @@ import S from './DatePickerCard.style';
 const DatePickerCard = ({
   pickupReservedAt,
   onChange,
+  minimumDate,
+  maximumDate,
 }: {
   pickupReservedAt: Date;
   onChange: (date: Date) => void;
+  minimumDate: Date;
+  maximumDate: Date;
 }) => {
-  const now = new Date();
-
   const [isOpen, setIsOpen] = useState(false);
 
   const onConfirm = (date: Date) => {
@@ -32,15 +34,20 @@ const DatePickerCard = ({
           <Icon source={'menu-down'} size={24} />
         </S.DatePickerButton>
         <S.PlaneText>{'으로 픽업 예약을 확정할게요'}</S.PlaneText>
+        <S.PickupAbleTextContainer>
+          <S.PickupAbleText>
+            {`${format(minimumDate.getTime(), 'HH:mm')} ~ ${format(maximumDate.getTime(), 'HH:mm')}`}
+          </S.PickupAbleText>
+        </S.PickupAbleTextContainer>
       </S.Card>
       <DatePicker
         title={'예약 시간을 선택해주세요'}
         open={isOpen}
         mode="time"
+        locale="ko"
         date={pickupReservedAt}
-        minimumDate={now}
-        // TODO: 예약 가능 시간 서버에서 받아와야 함
-        maximumDate={new Date(now.getTime() + 24 * 60 * 60 * 1000)}
+        minimumDate={minimumDate}
+        maximumDate={maximumDate}
         onConfirm={date => {
           onConfirm(date);
           setIsOpen(false);

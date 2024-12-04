@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback} from 'react';
+import React, {useRef, useState, useCallback, useEffect} from 'react';
 import {
   Alert,
   TouchableOpacity,
@@ -37,7 +37,7 @@ const MarketDetailPage = ({
 }: Omit<MarketDetailType, 'images' | 'openAt' | 'closeAt' | 'imageUrls'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedTag, setSelectedTag] = useState<string>('추천메뉴');
+  const [selectedTag, setSelectedTag] = useState<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
   const tagScrollViewRef = useRef<ScrollView>(null);
   const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>(
@@ -306,6 +306,13 @@ const MarketDetailPage = ({
     }
     return `${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
   };
+
+  useEffect(() => {
+    const firstTag = Object.keys(sortedProductsByTags)[0];
+    if (firstTag) {
+      setSelectedTag(prevTag => prevTag || firstTag);
+    }
+  }, [sortedProductsByTags]);
 
   return (
     <S.MarketDetailInfoView>

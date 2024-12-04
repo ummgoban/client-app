@@ -71,7 +71,7 @@ const MarketSubscribeIconWrapper = styled.View`
 `;
 const SideTagBarScrollView = styled.ScrollView`
   flex-grow: 0;
-  padding-bottom: 20px;
+  padding-bottom: 32px;
 `;
 
 const SideBarView = styled.View<{selected: boolean}>`

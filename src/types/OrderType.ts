@@ -1,13 +1,22 @@
 import {ProductType} from './ProductType';
 
 export type OrderType = {
-  ordersId: number;
+  ordersId: string;
   marketId: number;
   marketName: string;
-  createdAt: number;
-  pickupReservedAt: number;
+  createdAt: string;
+  pickupReservedAt: string;
   ordersPrice: number;
-  ordersStatus: 'ORDERED' | 'ACCEPTED' | 'PICKEDUP' | 'CANCELED';
+  ordersStatus: 'ORDERED' | 'ACCEPTED' | 'PICKEDUP' | 'CANCELED' | 'NO_SHOW';
   customerRequest: string;
   products: (ProductType & {count: number})[];
+};
+
+export type OrderDetailType = OrderType & {
+  orderMemberName: string;
+  method: string;
+  totalAmount: number;
+  paymentKey: string;
+  approvedAt: string;
+  doneAt: string;
 };

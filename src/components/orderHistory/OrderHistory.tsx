@@ -1,10 +1,13 @@
 import {OrderType} from '@/types/OrderType';
 import {format} from '@/utils/date';
 import React from 'react';
-import {Alert, Image} from 'react-native';
+import {Image} from 'react-native';
 import HistoryTimeline from './HistoryTimeline';
 
 import S from './OrderHistory.style';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '@/types/StackNavigationType';
 
 const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -14,6 +17,8 @@ type Props = {
 };
 
 const OrderHistory = ({historyList, onPressMarket}: Props) => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, 'OrderHistory'>>();
   return (
     <S.OrderContainer>
       <S.HistoryList>
@@ -85,9 +90,14 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                         <S.OrderDetailButtonContainer>
                           <S.OrderDetailButton
                             onPress={() =>
-                              Alert.alert(
-                                `주문 상세 바로가기: ${order.ordersId}`,
-                              )
+                              navigation.navigate('Detail', {
+                                screen: 'OrderDetail',
+                                params: {
+                                  marketId: order.marketId,
+                                  marketName: order.marketName,
+                                  ordersId: order.ordersId,
+                                },
+                              })
                             }>
                             <S.OrderDetailButtonText>
                               주문 상세

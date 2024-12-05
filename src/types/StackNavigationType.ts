@@ -35,6 +35,11 @@ export interface DetailStackParamList extends ParamListBase {
       longitude: number;
     }[];
   };
+  OrderDetail: {
+    marketId: number;
+    marketName: string;
+    ordersId: string;
+  };
 }
 
 export interface CartStackParamList extends ParamListBase {

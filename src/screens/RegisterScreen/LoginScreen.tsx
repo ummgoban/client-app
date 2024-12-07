@@ -3,7 +3,9 @@ import React from 'react';
 
 import {login} from '@/apis/Login';
 import {RootStackParamList} from '@/types/StackNavigationType';
-
+import KakaoLoginButton from '../../assets/KakaoLoginButton.svg';
+import AppleLoginButton from '../../assets/AppleLoginButton.svg';
+import NaverLoginButton from '../../assets/NaverLoginButton.svg';
 import S from './LoginScreen.style';
 
 const LoginScreen = () => {

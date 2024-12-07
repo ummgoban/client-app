@@ -11,6 +11,7 @@ import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 import apiClient from './ApiClient';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
@@ -43,7 +44,6 @@ const naverLogin = (): Promise<NaverLoginResponse> => {
   return RNNaverLogin.login();
 };
 
-// TODO: 이 객체 입니다
 const naverLoginParams = {
   appName: Config.NAVER_APP_NAME,
   consumerKey: Config.NAVER_CONSUMER_KEY,
@@ -145,21 +145,77 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
 };
 
 /**
+ * @description 애플 로그인 함수
+ * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
+ */
+export const signInWithApple = async (): Promise<SessionType | null> => {
+  try {
+    // Apple 로그인 요청 수행
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    // 애플에서 반환한 jwt
+    const token = appleAuthRequestResponse.identityToken;
+
+    // 인증 상태 확인
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    if (token && credentialState === appleAuth.State.AUTHORIZED) {
+      console.log('Apple User is authenticated');
+      const response = await apiClient.post<{
+        data: {
+          accessToken: string;
+          refreshToken: string;
+        };
+      }>('/auth/login', {
+        provider: 'APPLE',
+        roles: 'ROLE_STORE_OWNER',
+        accessToken: token,
+      });
+      console.log(response);
+      if (response) {
+        console.log('애플 로그인 성공:', response);
+        return {
+          accessToken: token,
+          OAuthProvider: 'APPLE',
+          jwt: response.data.accessToken,
+        };
+      } else {
+        console.log('애플 로그인 실패');
+        return null;
+      }
+    } else {
+      console.log('User is not authenticated');
+      return null;
+    }
+  } catch (error) {
+    console.error('Apple Sign-In Error:', error);
+    return null;
+  }
+};
+
+/**
  * @description 로그인 함수
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
 // TODO: 로그인 후 리프레쉬
 export const login = async (
-  OAuthProvider: SessionType['OAuthProvider'],
+  oAuthProvider: SessionType['OAuthProvider'],
 ): Promise<boolean> => {
   let res: SessionType | null = null;
-  if (OAuthProvider === 'KAKAO') {
+  if (oAuthProvider === 'KAKAO') {
     res = await signInWithKakao();
-  } else if (OAuthProvider === 'NAVER') {
+  } else if (oAuthProvider === 'NAVER') {
     res = await signInWithNaver();
+  } else if (oAuthProvider === 'APPLE') {
+    res = await signInWithApple();
   } else {
-    throw new Error(`Unsupported OAuthProvider: ${OAuthProvider}`);
+    throw new Error(`Unsupported OAuthProvider: ${oAuthProvider}`);
   }
 
   if (res) {

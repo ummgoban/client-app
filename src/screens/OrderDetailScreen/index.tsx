@@ -1,5 +1,5 @@
-import OrderCustomerInfo from '@/components/orderDetail/OrderCustomerInfo';
-import OrderProductsInfo from '@/components/orderDetail/OrderProductsInfo';
+import OrderDescription from '@/components/orderDetail/OrderDescription';
+import OrderPaymentDescription from '@/components/orderDetail/OrderPaymentDescription';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useCallback, useState, useEffect} from 'react';
@@ -8,6 +8,7 @@ import {getOrderDetail} from '@/apis';
 import {Alert, RefreshControl} from 'react-native';
 import {OrderDetailType} from '@/types/OrderType';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+import CustomActivityIndicator from '@/components/common/ActivityIndicatior';
 
 type OrderDetailScreenProps = StackScreenProps<
   DetailStackParamList,
@@ -40,8 +41,7 @@ const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
   }, [fetchData]);
 
   if (!orderDetail) {
-    Alert.alert('주문 내역을 불러오는데 실패했습니다.');
-    return;
+    return <CustomActivityIndicator />;
   }
 
   return (
@@ -49,7 +49,7 @@ const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <OrderCustomerInfo
+      <OrderDescription
         id={ordersId}
         marketName={orderDetail.marketName}
         marketId={orderDetail.marketId}
@@ -61,7 +61,8 @@ const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
         marketAddress={orderDetail.address}
       />
       <S.HorizonDivider />
-      <OrderProductsInfo
+      <OrderPaymentDescription
+        paymentMethod={orderDetail.method}
         products={orderDetail.products}
         totalPrice={orderDetail.ordersPrice}
       />

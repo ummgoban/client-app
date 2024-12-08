@@ -1,6 +1,6 @@
 import React from 'react';
 import {format} from '@/utils/date';
-import S from './OrderCustomerInfo.style';
+import S from './OrderDescription.style';
 import {TouchableOpacity} from 'react-native';
 import MarketInfo from '../CartPage/MarketInfo';
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
     | 'CANCELED'
     | 'NO_SHOW'
     | 'IN_PROGRESS'
-    | 'PICKEDUP_OR_CACNCELED';
+    | 'PICKEDUP_OR_CANCELED';
   navigation: any;
   marketAddress: string;
 };
@@ -36,7 +36,9 @@ const OrderCustomerInfo = ({
   const getOrderStatusText = () => {
     switch (orderStatus) {
       case 'ORDERED':
-        return '주문이 접수되었어요.';
+        return '주문 확인중이에요';
+      case 'ORDERED':
+        return '주문 확인중이에요';
       case 'ACCEPTED':
         return '픽업 대기중이에요.';
       case 'PICKEDUP':
@@ -45,7 +47,8 @@ const OrderCustomerInfo = ({
         return '주문이 취소되었어요.';
       case 'NO_SHOW':
         return '노쇼 처리된 주문입니다.';
-      //TODO: 나머지 상태 논의 후 워딩 결정
+      case 'PICKEDUP_OR_CANCELED':
+        return '완료된 주문입니다.';
       default:
         return '상태를 알 수 없습니다.';
     }

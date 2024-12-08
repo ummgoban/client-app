@@ -6,7 +6,7 @@ const Container = styled.ScrollView`
 `;
 
 const HorizonDivider = styled.View`
-  border: 1px solid #e2e2e2;
+  border: 3px solid #e2e2e2;
   width: 100%;
 `;
 

@@ -19,4 +19,5 @@ export type OrderDetailType = OrderType & {
   paymentKey: string;
   approvedAt: string;
   doneAt: string;
+  address: string;
 };

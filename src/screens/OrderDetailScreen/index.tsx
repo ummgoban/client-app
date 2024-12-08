@@ -8,9 +8,6 @@ import {getOrderDetail} from '@/apis';
 import {Alert, RefreshControl} from 'react-native';
 import {OrderDetailType} from '@/types/OrderType';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import MarketInfo from '@/components/CartPage/MarketInfo';
 
 type OrderDetailScreenProps = StackScreenProps<
   DetailStackParamList,
@@ -22,11 +19,9 @@ type OrderDetailScreenProps = StackScreenProps<
 //   'OrderDetail'
 // >;
 
-const OrderDetailScreen = ({route}: OrderDetailScreenProps) => {
-  const {marketId, ordersId, marketName} = route.params;
+const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
+  const {ordersId} = route.params;
 
-  const navigation =
-    useNavigation<StackNavigationProp<DetailStackParamList, 'OrderDetail'>>();
   const [orderDetail, setOrderDetail] = useState<OrderDetailType | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -56,12 +51,14 @@ const OrderDetailScreen = ({route}: OrderDetailScreenProps) => {
       }>
       <OrderCustomerInfo
         id={ordersId}
-        marketName={marketName}
-        marketId={marketId}
+        marketName={orderDetail.marketName}
+        marketId={orderDetail.marketId}
         orderMemberName={orderDetail.orderMemberName}
         createdAt={orderDetail.createdAt}
         pickupReservedAt={orderDetail.pickupReservedAt}
-        customerRequest={orderDetail.customerRequest}
+        navigation={navigation}
+        orderStatus={orderDetail.ordersStatus}
+        marketAddress={orderDetail.address}
       />
       <S.HorizonDivider />
       <OrderProductsInfo

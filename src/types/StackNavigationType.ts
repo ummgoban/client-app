@@ -36,8 +36,6 @@ export interface DetailStackParamList extends ParamListBase {
     }[];
   };
   OrderDetail: {
-    marketId: number;
-    marketName: string;
     ordersId: string;
   };
 }

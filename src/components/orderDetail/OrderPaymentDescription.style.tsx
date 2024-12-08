@@ -6,18 +6,18 @@ const Container = styled.View`
   gap: 16px;
   background-color: white;
 `;
-const InfoTextRowWrapper = styled.View`
+const TextRowWrapper = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
-const InfoBoldText = styled.Text`
+const PaymentInfoText = styled.Text`
   ${({theme}) => theme.fonts.body1};
   color: ${props => props.theme.colors.tertiary};
   font-weight: 700;
 `;
-const InfoText = styled.Text`
+const ProductDescription = styled.Text`
   ${({theme}) => theme.fonts.body2};
   color: ${props => props.theme.colors.tertiary};
 `;
@@ -30,9 +30,9 @@ const OrderMethodText = styled.Text`
 
 const S = {
   Container,
-  InfoBoldText,
-  InfoText,
-  InfoTextRowWrapper,
+  PaymentInfoText,
+  ProductDescription,
+  TextRowWrapper,
   OrderMethodText,
 };
 

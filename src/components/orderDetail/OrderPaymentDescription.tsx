@@ -37,23 +37,25 @@ const OrderProductsInfo = ({products, totalPrice, paymentMethod}: Props) => {
   return (
     <S.Container>
       {products.map(product => (
-        <S.InfoTextRowWrapper key={product.id}>
-          <S.InfoText>
+        <S.TextRowWrapper key={product.id}>
+          <S.ProductDescription>
             {product.name} {product.count}개
-          </S.InfoText>
-          <S.InfoText>{product.discountPrice.toLocaleString()}원</S.InfoText>
-        </S.InfoTextRowWrapper>
+          </S.ProductDescription>
+          <S.ProductDescription>
+            {product.discountPrice.toLocaleString()}원
+          </S.ProductDescription>
+        </S.TextRowWrapper>
       ))}
-      <S.InfoTextRowWrapper>
-        <S.InfoBoldText>총 결제금액</S.InfoBoldText>
-        <S.InfoBoldText>{totalPrice.toLocaleString()}원</S.InfoBoldText>
-      </S.InfoTextRowWrapper>
-      <S.InfoTextRowWrapper>
+      <S.TextRowWrapper>
+        <S.PaymentInfoText>총 결제금액</S.PaymentInfoText>
+        <S.PaymentInfoText>{totalPrice.toLocaleString()}원</S.PaymentInfoText>
+      </S.TextRowWrapper>
+      <S.TextRowWrapper>
         <S.OrderMethodText>결제방법</S.OrderMethodText>
         <S.OrderMethodText>
           {getPaymentMethodText(paymentMethod)}
         </S.OrderMethodText>
-      </S.InfoTextRowWrapper>
+      </S.TextRowWrapper>
     </S.Container>
   );
 };

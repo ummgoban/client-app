@@ -1,5 +1,4 @@
 import styled from '@emotion/native';
-import C from './Common.style';
 const Container = styled.View`
   display: flex;
   margin: 24px 16px 32px 16px;

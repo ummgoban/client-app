@@ -8,17 +8,12 @@ import {getOrderDetail} from '@/apis';
 import {Alert, RefreshControl} from 'react-native';
 import {OrderDetailType} from '@/types/OrderType';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import CustomActivityIndicator from '@/components/common/ActivityIndicatior';
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 
 type OrderDetailScreenProps = StackScreenProps<
   DetailStackParamList,
   'OrderDetail'
 >;
-
-// type OrderDetailScreenProps = StackScreenProps<
-//   OrderStackParamList,
-//   'OrderDetail'
-// >;
 
 const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
   const {ordersId} = route.params;
@@ -32,7 +27,7 @@ const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
       return;
     }
     setOrderDetail(res);
-  }, []);
+  }, [ordersId]);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 

@@ -9,8 +9,8 @@ type Props = {
 };
 
 const OrderProductsInfo = ({products, totalPrice, paymentMethod}: Props) => {
-  const getPaymentMethodText = (paymentMethod: string): string => {
-    switch (paymentMethod) {
+  const getPaymentMethodText = (method: string): string => {
+    switch (method) {
       case 'CARD':
         return '카드';
       case 'VIRTUAL_ACCOUNT':

@@ -1,8 +1,7 @@
 import React from 'react';
 import {format} from '@/utils/date';
 import S from './OrderDescription.style';
-import {TouchableOpacity} from 'react-native';
-import MarketInfo from '../CartPage/MarketInfo';
+
 type Props = {
   id: string;
   orderMemberName: string;
@@ -35,20 +34,20 @@ const OrderCustomerInfo = ({
 }: Props) => {
   const getOrderStatusText = () => {
     switch (orderStatus) {
+      case 'IN_PROGRESS':
+        return '결제가 진행중이에요!';
       case 'ORDERED':
-        return '주문 확인중이에요';
-      case 'ORDERED':
-        return '주문 확인중이에요';
+        return '주문 확인중이에요!';
       case 'ACCEPTED':
-        return '픽업 대기중이에요.';
+        return '픽업 대기중이에요!';
       case 'PICKEDUP':
-        return '픽업이 완료되었어요.';
+        return '픽업이 완료되었어요!';
       case 'CANCELED':
         return '주문이 취소되었어요.';
       case 'NO_SHOW':
-        return '노쇼 처리된 주문입니다.';
+        return '노쇼 처리된 주문이에요.';
       case 'PICKEDUP_OR_CANCELED':
-        return '완료된 주문입니다.';
+        return '완료된 주문이에요.';
       default:
         return '상태를 알 수 없습니다.';
     }

@@ -4,7 +4,6 @@ import apiClient from './ApiClient';
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   try {
     const res = await apiClient.get<OrderType[] | null>('/members/orders');
-    console.log('test: ', res);
     return res;
   } catch (error) {
     console.error(error);

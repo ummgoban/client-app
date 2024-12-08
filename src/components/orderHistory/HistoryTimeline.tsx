@@ -12,7 +12,7 @@ const HistoryTimeline = ({
   dashline = true,
 }: {
   title: string;
-  timestamp: number;
+  timestamp: string;
   description: string | null;
   dashline?: boolean;
 }) => {

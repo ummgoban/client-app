@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import MapScreen from '@/screens/MapScreen';
+import OrderDetailScreen from '@/screens/OrderDetailScreen';
 
 const Stack = createStackNavigator<DetailStackParamList>();
 
@@ -45,6 +46,13 @@ const DetailNavigator = () => {
         component={OrderDoneScreen}
         options={{
           title: '주문 완료',
+        }}
+      />
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetailScreen}
+        options={{
+          title: '주문 상세',
         }}
       />
     </Stack.Navigator>

@@ -246,6 +246,7 @@ const MarketDetailPage = ({
         });
       } else {
         console.log('add to bucket failed');
+        Alert.alert('재고 초과입니다. 기존 장바구니의 구매수량을 확인해주세요');
       }
     } catch (error) {
       console.error('Error in handleCheckout:', error);

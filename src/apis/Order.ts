@@ -1,4 +1,4 @@
-import {OrderType} from '@/types/OrderType';
+import {OrderDetailType, OrderType} from '@/types/OrderType';
 import apiClient from './ApiClient';
 
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
@@ -68,6 +68,20 @@ export const requestOrderSuccess = async (
     return res?.code === 201;
   } catch (error) {
     console.debug(error);
+    return null;
+  }
+};
+
+export const getOrderDetail = async (
+  ordersId: string,
+): Promise<OrderDetailType | null> => {
+  try {
+    const res = await apiClient.get<OrderDetailType | null>(
+      `/orders/${ordersId}`,
+    );
+    return res;
+  } catch (error) {
+    console.error(error);
     return null;
   }
 };

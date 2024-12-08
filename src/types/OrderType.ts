@@ -7,7 +7,14 @@ export type OrderType = {
   createdAt: string;
   pickupReservedAt: string;
   ordersPrice: number;
-  ordersStatus: 'ORDERED' | 'ACCEPTED' | 'PICKEDUP' | 'CANCELED' | 'NO_SHOW';
+  ordersStatus:
+    | 'ORDERED'
+    | 'ACCEPTED'
+    | 'PICKEDUP'
+    | 'CANCELED'
+    | 'NO_SHOW'
+    | 'IN_PROGRESS'
+    | 'PICKEDUP_OR_CANCELED';
   customerRequest: string;
   products: (ProductType & {count: number})[];
 };

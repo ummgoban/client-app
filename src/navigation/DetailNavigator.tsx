@@ -37,7 +37,7 @@ const DetailNavigator = () => {
         name="Payment"
         component={PaymentScreen}
         options={{
-          title: '결제하기',
+          title: '예약하기',
         }}
       />
       <Stack.Screen

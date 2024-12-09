@@ -21,41 +21,42 @@ type Props = {
   marketAddress: string;
 };
 
+const getOrderStatusText = (orderStatus: Props['orderStatus']): string => {
+  switch (orderStatus) {
+    case 'IN_PROGRESS':
+      return '결제가 진행중이에요!';
+    case 'ORDERED':
+      return '주문 확인중이에요!';
+    case 'ACCEPTED':
+      return '픽업 대기중이에요!';
+    case 'PICKEDUP':
+      return '픽업이 완료되었어요!';
+    case 'CANCELED':
+      return '주문이 취소되었어요.';
+    case 'NO_SHOW':
+      return '노쇼 처리된 주문이에요.';
+    case 'PICKEDUP_OR_CANCELED':
+      return '완료된 주문이에요.';
+    default:
+      return '상태를 알 수 없습니다.';
+  }
+};
+
 const OrderCustomerInfo = ({
   id,
   marketId,
   marketName,
   orderMemberName,
   createdAt,
-  pickupReservedAt,
   orderStatus,
+  pickupReservedAt,
   navigation,
   marketAddress,
 }: Props) => {
-  const getOrderStatusText = () => {
-    switch (orderStatus) {
-      case 'IN_PROGRESS':
-        return '결제가 진행중이에요!';
-      case 'ORDERED':
-        return '주문 확인중이에요!';
-      case 'ACCEPTED':
-        return '픽업 대기중이에요!';
-      case 'PICKEDUP':
-        return '픽업이 완료되었어요!';
-      case 'CANCELED':
-        return '주문이 취소되었어요.';
-      case 'NO_SHOW':
-        return '노쇼 처리된 주문이에요.';
-      case 'PICKEDUP_OR_CANCELED':
-        return '완료된 주문이에요.';
-      default:
-        return '상태를 알 수 없습니다.';
-    }
-  };
-
+  const orderStatusText = getOrderStatusText(orderStatus);
   return (
     <S.Container>
-      <S.OrderStatusText>{getOrderStatusText()}</S.OrderStatusText>
+      <S.OrderStatusText>{orderStatusText}</S.OrderStatusText>
       <S.MarketInformation
         onPress={() => navigation.navigate('Market', {marketId})}>
         <S.MarketName>{marketName}</S.MarketName>

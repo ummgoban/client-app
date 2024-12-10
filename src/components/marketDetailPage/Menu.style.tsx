@@ -112,6 +112,12 @@ const MenuDeleteText = styled.Text`
   font-weight: 100;
 `;
 
+const MenuSoldOutText = styled.Text`
+  color: red;
+  font-size: 16px;
+  font-weight: 700;
+`;
+
 const S = {
   MenuWrapper,
   MenuBoxLeft,
@@ -129,6 +135,7 @@ const S = {
   MenuCounterSideButton,
   MenuDeleteText,
   MenuStockWrapper,
+  MenuSoldOutText,
 };
 
 export default S;

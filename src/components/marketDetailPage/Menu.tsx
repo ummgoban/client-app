@@ -95,7 +95,12 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
           {`할인가: ${product.discountPrice.toLocaleString()}원`}
         </S.MenuDiscountPrice>
         <S.MenuStockWrapper>
-          <S.MenuStockCount>{`재고: ${product.stock}`}</S.MenuStockCount>
+          {product.stock > 0 ? (
+            <S.MenuStockCount>{`재고 : ${product.stock}`} </S.MenuStockCount>
+          ) : (
+            <S.MenuSoldOutText>{`현재 재고가 없어요`}</S.MenuSoldOutText>
+          )}
+
           <S.MenuStockCount>{`${!isCart ? '' : `수량: ${product.count}`}`}</S.MenuStockCount>
         </S.MenuStockWrapper>
         {isCart && (
@@ -106,20 +111,35 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       </S.MenuBoxLeft>
       <S.MenuBoxRight>
         <S.MenuImage source={{uri: product.image}} />
-        <S.MenuCounter>
-          {/* TODO: 디자인 적용시 disabled 명시 필요 */}
-          <S.MenuCounterButtonWrapper
-            disabled={isDecrease}
-            onPress={decreaseMenuCount}>
-            <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
-          </S.MenuCounterButtonWrapper>
-          <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
-          <S.MenuCounterButtonWrapper
-            onPress={increaseMenuCount}
-            disabled={menuCount === product.stock}>
-            <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
-          </S.MenuCounterButtonWrapper>
-        </S.MenuCounter>
+        {product.stock > 0 ? (
+          <S.MenuCounter>
+            <S.MenuCounterButtonWrapper
+              disabled={isDecrease}
+              onPress={decreaseMenuCount}>
+              <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
+            </S.MenuCounterButtonWrapper>
+            <S.MenuCounterButton>{menuCount} 개</S.MenuCounterButton>
+            <S.MenuCounterButtonWrapper
+              onPress={increaseMenuCount}
+              disabled={menuCount === product.stock}>
+              <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
+            </S.MenuCounterButtonWrapper>
+          </S.MenuCounter>
+        ) : (
+          <S.MenuCounter>
+            <S.MenuCounterButtonWrapper
+              disabled={isDecrease}
+              onPress={decreaseMenuCount}>
+              <S.MenuCounterSideButton>-</S.MenuCounterSideButton>
+            </S.MenuCounterButtonWrapper>
+            <S.MenuCounterButton>{`품절`}</S.MenuCounterButton>
+            <S.MenuCounterButtonWrapper
+              onPress={increaseMenuCount}
+              disabled={menuCount === product.stock}>
+              <S.MenuCounterSideButton>+</S.MenuCounterSideButton>
+            </S.MenuCounterButtonWrapper>
+          </S.MenuCounter>
+        )}
       </S.MenuBoxRight>
     </S.MenuWrapper>
   );

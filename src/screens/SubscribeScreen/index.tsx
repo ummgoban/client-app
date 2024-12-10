@@ -7,6 +7,7 @@ import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import S from './SubscribeScreen.style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import {useIsFocused} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
@@ -15,15 +16,18 @@ type Props = {
 const SubscribeScreen = ({navigation}: Props) => {
   const [markets, setMarkets] = useState<SubscribeType[] | null>(null);
 
+  const isFocused = useIsFocused();
+
   const fetchData = useCallback(async () => {
+    console.log('fetchData...');
     const res = await getSubscribeList();
     if (!res) {
       Alert.alert('찜 리스트 받아오기 실패');
       return;
     }
     setMarkets(res.markets);
-    console.log('Fetch data success', markets);
-  }, [markets]);
+    console.log('Fetch data success', res.markets);
+  }, []);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
@@ -35,8 +39,10 @@ const SubscribeScreen = ({navigation}: Props) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (isFocused) {
+      fetchData();
+    }
+  }, [fetchData, isFocused]);
 
   if (!markets) {
     return (

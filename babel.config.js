@@ -14,6 +14,7 @@ module.exports = {
           '@hooks': './src/hooks',
           '@utils': './src/utils',
           '@apis': './src/apis',
+          '@assets': './src/assets',
           // '@types': './src/types', // @types is typescript library, so use @/types instead of @types
         },
       },

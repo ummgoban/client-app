@@ -9,7 +9,11 @@ const Stack = createStackNavigator<RegisterStackParamList>();
 const RegisterNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: true}}>
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerTitle: '로그인'}}
+      />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
   );

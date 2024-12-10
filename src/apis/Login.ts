@@ -251,8 +251,17 @@ export const logout = async (): Promise<boolean> => {
 
 export const getProfile = async (): Promise<UserType | null> => {
   try {
-    const res = await apiClient.get<UserType | null>(`/members/profiles`);
-    return res;
+    const res = await apiClient.get<UserType | null>('/members/profiles');
+
+    if (res) {
+      return {
+        id: res.id,
+        name: res.name || '고객',
+        provider: res.provider,
+      };
+    } else {
+      return null;
+    }
   } catch (error) {
     console.error(`Error fetching profile: ${error}`);
     return null;

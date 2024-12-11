@@ -3,6 +3,7 @@ import {Alert} from 'react-native';
 import {ProductType} from '@/types/ProductType';
 import {updateBucketProduct, deleteBucketProduct} from '@/apis/Bucket';
 import S from './Menu.style';
+import CustomImageModal from '../common/CustomImageModal';
 type Props = {
   product: ProductType;
   initCount: number;
@@ -118,7 +119,9 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         )}
       </S.MenuBoxLeft>
       <S.MenuBoxRight>
-        <S.MenuImage source={{uri: product.image}} />
+        <S.ImageView>
+          <CustomImageModal uri={product.image} borderRadius={18} />
+        </S.ImageView>
         {product.stock > 0 ? (
           <S.MenuCounter>
             <S.MenuCounterButtonWrapper

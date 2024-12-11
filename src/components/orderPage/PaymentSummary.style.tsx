@@ -8,9 +8,13 @@ const Header = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
 
+const HeaderPaymentMethod = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 16px;
-
   border-bottom-width: 1px;
   border-bottom-color: #b5b5b5;
 `;
@@ -42,6 +46,7 @@ const S = {
   PaymentSummaryItemList,
   Header,
   ItemText,
+  HeaderPaymentMethod,
 };
 
 export default S;

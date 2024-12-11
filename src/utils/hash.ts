@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 const crcTable = new Uint32Array(256);
 for (let i = 0; i < 256; i++) {
   let crc = i;
@@ -21,7 +22,3 @@ export const to6DigitHash = (str: string): string => {
   const crc = crc32(str).toString(16);
   return crc.slice(0, 6).toUpperCase();
 };
-
-// 테스트
-const hash = to6DigitHash('Your long string here');
-console.log(hash); // 출력 예시: "1be4a9"

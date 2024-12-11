@@ -4,19 +4,20 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {Button, Title} from 'react-native-paper';
 import S from './OrderDoneScreen.style';
+import {to6DigitHash} from '@/utils/hash';
 
 type Props = StackScreenProps<DetailStackParamList, 'OrderDone'>;
 
 const OrderDoneScreen = ({navigation, route}: Props) => {
   const {orderId, products, originPrice, discountPrice} = route.params;
-
+  const hashOrderId = to6DigitHash(orderId);
   return (
     <S.OrderDoneContainer>
       <S.OrderDoneCard>
         <Title>주문완료</Title>
         <View>
           <Text>주문이 완료되었습니다.</Text>
-          <Text>{`주문번호: ${orderId}`}</Text>
+          <Text>{`주문번호: ${hashOrderId}`}</Text>
         </View>
       </S.OrderDoneCard>
       <S.OrderDoneCard>

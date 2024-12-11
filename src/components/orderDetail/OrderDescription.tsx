@@ -1,6 +1,7 @@
 import React from 'react';
 import {format} from '@/utils/date';
 import S from './OrderDescription.style';
+import {to6DigitHash} from '@/utils/hash';
 
 type Props = {
   id: string;
@@ -54,6 +55,7 @@ const OrderCustomerInfo = ({
   marketAddress,
 }: Props) => {
   const orderStatusText = getOrderStatusText(orderStatus);
+  const hashOrderId = to6DigitHash(id);
   return (
     <S.Container>
       <S.OrderStatusText>{orderStatusText}</S.OrderStatusText>
@@ -66,7 +68,9 @@ const OrderCustomerInfo = ({
         <S.OrderDescriptionText>
           주문자: {orderMemberName}
         </S.OrderDescriptionText>
-        <S.OrderDescriptionText>주문 번호: {id}</S.OrderDescriptionText>
+        <S.OrderDescriptionText>
+          주문 번호: {hashOrderId}
+        </S.OrderDescriptionText>
         <S.OrderDescriptionText>
           {`주문 일시: ${format(new Date(createdAt).getTime(), 'YYYY. MM. DD. (ddd) A hh:mm')}`}
         </S.OrderDescriptionText>

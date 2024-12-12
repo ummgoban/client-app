@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
+import React, {useRef, useState, useCallback, useEffect, useMemo} from 'react';
 import {
   Alert,
   TouchableOpacity,
@@ -287,12 +287,12 @@ const MarketDetailPage = ({
     setCart([]);
   };
 
-  const caculateRemainingPickupTime = () => {
-    const hour = parseInt(Date.now().toString().slice(0, 2), 10);
-    const miniute = parseInt(Date.now().toString().slice(2, 4), 10);
+  const remainingPickupTime = useMemo(() => {
+    const now = new Date();
+    const hour = now.getHours();
+    const miniute = now.getMinutes();
 
-    const pickupEndHour = parseInt(pickupEndAt.slice(0, 2), 10);
-    const pickupEndMinute = parseInt(pickupEndAt.slice(-2), 10);
+    const [pickupEndHour, pickupEndMinute] = pickupEndAt.split(':').map(Number);
 
     let remainingHour = pickupEndHour - hour;
     let remainingMinute = pickupEndMinute - miniute;
@@ -305,8 +305,9 @@ const MarketDetailPage = ({
     if (remainingHour < 0) {
       return '픽업 가능 시간이 지났습니다.';
     }
-    return `${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
-  };
+
+    return `예약 종료까지 ${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
+  }, [pickupEndAt]);
 
   useEffect(() => {
     const firstTag = Object.keys(sortedProductsByTags)[0];
@@ -323,7 +324,7 @@ const MarketDetailPage = ({
         </S.MarketMainInfoWrapper>
         <S.MarketSideInfoWrapper>
           <S.MarketTimeDescription>
-            {caculateRemainingPickupTime()}
+            {remainingPickupTime}
           </S.MarketTimeDescription>
           <S.MarketPickupTimeWrapper>
             <S.MarketSideInfo>픽업 가능 시간: </S.MarketSideInfo>

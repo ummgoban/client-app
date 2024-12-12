@@ -38,7 +38,10 @@ const Market = ({market, onPress}: Props) => {
           {market.address} {market.specificAddress}
         </S.MarketAddress>
         <S.MarketPickupTime>
-          픽업 가능 시간: {market.openAt}~ {market.closeAt}
+          {`영업 가능 시간: ${market.openAt} ~ ${market.closeAt}`}
+        </S.MarketPickupTime>
+        <S.MarketPickupTime>
+          {`픽업 가능 시간: ${market.pickupStartAt} ~ ${market.pickupEndAt}`}
         </S.MarketPickupTime>
       </S.MarketInfoDiscription>
     </S.MarketWrapper>

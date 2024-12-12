@@ -2,8 +2,8 @@ import styled from '@emotion/native';
 
 const EmptyCartContainer = styled.View`
   flex: 1;
-  justify-content: 'center';
-  align-items: 'center';
+  justify-content: center;
+  align-items: center;
   padding: 20px;
 `;
 
@@ -14,13 +14,13 @@ const MessageText = styled.Text`
 `;
 
 const GoShoppingButton = styled.TouchableOpacity`
-  background-color: powderblue;
-  border-radius: 5px;
+  padding: 16px;
 `;
 
 const GoShoppingText = styled.Text`
-  font-size: 16px;
-  font-color: #fff;
+  font-size: ${({theme}) => theme.fonts.h6};
+
+  color: ${({theme}) => theme.colors.primary};
 `;
 
 const S = {

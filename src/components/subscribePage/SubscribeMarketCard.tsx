@@ -28,10 +28,9 @@ const SubscribeMarketCard = ({
       <S.MarketInfo>
         <S.MarketNameText>{name}</S.MarketNameText>
         <S.MarketDescribeText>
-          가게 주소: {address} {specificAddress}
+          {`가게 주소: ${address} ${specificAddress}`}
         </S.MarketDescribeText>
-        <S.MarketDescribeText>여는 시간: {openAt}</S.MarketDescribeText>
-        <S.MarketDescribeText>닫는 시간: {closeAt}</S.MarketDescribeText>
+        <S.MarketDescribeText>{`영업 시간: ${openAt} ~ ${closeAt}`}</S.MarketDescribeText>
       </S.MarketInfo>
     </S.SubscribeMarketCard>
   );

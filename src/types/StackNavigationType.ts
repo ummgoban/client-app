@@ -47,6 +47,8 @@ export interface CartStackParamList extends ParamListBase {
 export interface MyPageStackParamList extends ParamListBase {
   MyPageRoot: undefined;
   Setting: undefined;
+  Notice: undefined;
+  Policy: undefined;
 }
 
 export interface RootStackParamList extends ParamListBase {

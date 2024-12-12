@@ -23,11 +23,6 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
 
-  // TODO: 실제 navigate 적용
-  const handlePress = () => {
-    Alert.alert('실제 navigate 로직 적용 필요');
-  };
-
   return (
     <S.MyPageContainer
       refreshControl={
@@ -60,13 +55,17 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
           <NavigationTextButton
             text="공지사항"
             fontSize="20px"
-            onPress={handlePress}
+            onPress={() =>
+              navigation.navigate('MyPageRoot', {screen: 'Notice'})
+            }
             isNotice={false}
           />
           <NavigationTextButton
             text="약관 및 정책"
             fontSize="20px"
-            onPress={handlePress}
+            onPress={() =>
+              navigation.navigate('MyPageRoot', {screen: 'Policy'})
+            }
             isNotice={false}
           />
         </S.ButtonContainer>

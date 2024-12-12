@@ -7,6 +7,7 @@ export type OrderType = {
   createdAt: string;
   pickupReservedAt: string;
   ordersPrice: number;
+  approvedAt?: string;
   ordersStatus:
     | 'ORDERED'
     | 'ACCEPTED'

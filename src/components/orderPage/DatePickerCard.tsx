@@ -29,14 +29,14 @@ const DatePickerCard = ({
       <S.Card>
         <S.DatePickerButton onPress={() => setIsOpen(true)}>
           <S.DatePickerText>
-            {format(pickupReservedAt.getTime(), 'a HH : mm')}
+            {format(pickupReservedAt, 'a HH : mm')}
           </S.DatePickerText>
           <Icon source={'menu-down'} size={24} />
         </S.DatePickerButton>
         <S.PlaneText>{'으로 픽업 예약을 확정할게요'}</S.PlaneText>
         <S.PickupAbleTextContainer>
           <S.PickupAbleText>
-            {`* 픽업 가능 시간: ${format(minimumDate.getTime(), 'HH:mm')} ~ ${format(maximumDate.getTime(), 'HH:mm')}`}
+            {`* 픽업 가능 시간: ${format(minimumDate, 'HH:mm')} ~ ${format(maximumDate, 'HH:mm')}`}
           </S.PickupAbleText>
         </S.PickupAbleTextContainer>
       </S.Card>

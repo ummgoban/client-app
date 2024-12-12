@@ -47,24 +47,25 @@ const ShoppingCartPage = ({
       <MarketInfo onPress={onPressStore} market={cartData.market} />
       <S.ScrollView>
         {cartData.products.map(product => (
-          <Menu
-            key={product.id}
-            product={product}
-            initCount={product.count}
-            onCountChange={(productId, count) =>
-              updateProductCount(productId, count)
-            }
-            isCart
-          />
+          <S.CardContainer key={product.id}>
+            <Menu
+              product={product}
+              initCount={product.count}
+              onCountChange={(productId, count) =>
+                updateProductCount(productId, count)
+              }
+              isCart
+            />
+          </S.CardContainer>
         ))}
         <PaymentSummary
           originPrice={originPrice}
           discountPrice={discountPrice}
         />
-        <BottomButton onPress={onPressPayment}>
-          {`${discountPrice.toLocaleString()}원 예약하기`}
-        </BottomButton>
       </S.ScrollView>
+      <BottomButton onPress={onPressPayment}>
+        {`${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
+      </BottomButton>
     </S.CartPage>
   );
 };

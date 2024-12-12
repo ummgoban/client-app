@@ -36,7 +36,7 @@ const DatePickerCard = ({
         <S.PlaneText>{'으로 픽업 예약을 확정할게요'}</S.PlaneText>
         <S.PickupAbleTextContainer>
           <S.PickupAbleText>
-            {`${format(minimumDate.getTime(), 'HH:mm')} ~ ${format(maximumDate.getTime(), 'HH:mm')}`}
+            {`* 픽업 가능 시간: ${format(minimumDate.getTime(), 'HH:mm')} ~ ${format(maximumDate.getTime(), 'HH:mm')}`}
           </S.PickupAbleText>
         </S.PickupAbleTextContainer>
       </S.Card>

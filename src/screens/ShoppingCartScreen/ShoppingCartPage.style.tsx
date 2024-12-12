@@ -1,16 +1,21 @@
 import styled from '@emotion/native';
+import {Card} from 'react-native-paper';
+
 const CartPage = styled.View`
+  position: relative;
+
   flex: 1;
-  margin: 0 16px;
 `;
+
 const ScrollView = styled.ScrollView``;
-const CardContainer = styled.View`
-  display: flex;
-  flex-direction: row;
+
+const CardContainer = styled(Card)`
   padding: 16px;
+
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  margin: 8px 0;
+  margin: 8px;
+
   background-color: white;
 `;
 

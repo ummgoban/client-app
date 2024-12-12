@@ -22,7 +22,7 @@ export interface DetailStackParamList extends ParamListBase {
   Market: {marketId: number};
   Payment: undefined;
   OrderDone: {
-    orderId: number;
+    orderId: string;
     products: OrderType['products'];
     originPrice: number;
     discountPrice: number;

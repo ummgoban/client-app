@@ -14,7 +14,7 @@ const MenuBoxLeft = styled.View`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
+  gap: 16px;
   align-self: stretch;
 `;
 const MenuStockWrapper = styled.View`
@@ -28,15 +28,23 @@ const MenuName = styled.Text`
   font-weight: 600;
 `;
 
+const MenuInfoWrapper = styled.View`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 const MenuoriginPrice = styled.Text`
   color: var(--gray-gray5, #979797);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
+
   text-decoration-line: line-through;
 `;
 const MenuDiscountPrice = styled.Text`
   color: #2d3e39;
   font-size: 16px;
+
   font-weight: 700;
 `;
 const MenuStockCount = styled.Text`
@@ -126,6 +134,7 @@ const S = {
   MenuWrapper,
   MenuBoxLeft,
   MenuName,
+  MenuInfoWrapper,
   MenuoriginPrice,
   MenuDiscountPrice,
   MenuStockCount,

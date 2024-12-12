@@ -50,11 +50,15 @@ const MenuBoxRight = styled.View`
   align-items: center;
   gap: 8px;
 `;
+const ImageView = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+`;
 
 const MenuImage = styled.Image`
   width: 100px;
   height: 100px;
-  border-radius: 18px;
 `;
 
 const MenuTimeText = styled.Text`
@@ -136,6 +140,7 @@ const S = {
   MenuDeleteText,
   MenuStockWrapper,
   MenuSoldOutText,
+  ImageView,
 };
 
 export default S;

@@ -1,9 +1,10 @@
 import {
   login as kakaoLogin,
   logout as kakaoLogout,
+  KakaoOAuthToken,
 } from '@react-native-seoul/kakao-login';
 import NaverLogin from '@react-native-seoul/naver-login';
-import {NativeModules, Platform} from 'react-native';
+import {Alert, NativeModules, Platform} from 'react-native';
 import Config from 'react-native-config';
 
 import {NaverLoginInitParams, NaverLoginResponse} from '@/types/Login';
@@ -108,9 +109,22 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
 const signInWithKakao = async (): Promise<SessionType | null> => {
+  let token: KakaoOAuthToken | null = null;
   try {
-    // Oauth 토큰 생성
-    const token = await kakaoLogin();
+    token = await kakaoLogin();
+  } catch (error) {
+    // TODO: remove alert
+    Alert.alert(
+      '카카오 로그인 에러',
+      '@react-native-seoul/kakao-login\n카카오 로그인에 실패했습니다.',
+    );
+  }
+
+  if (!token) {
+    return null;
+  }
+
+  try {
     // JWT 토큰
     const response = await apiClient.post<{
       data: {
@@ -140,6 +154,14 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     }
   } catch (error) {
     console.error('카카오 로그인 에러:', error);
+    Alert.alert(
+      '카카오 로그인 에러',
+      // TODO: remove POST /auth/login\n
+      `
+      POST /auth/login\n
+      카카오 로그인에 실패했습니다.
+      `,
+    );
     return null;
   }
 };

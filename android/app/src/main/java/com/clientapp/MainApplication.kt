@@ -1,4 +1,4 @@
-package com.clientapp
+package com.ummgoban.momchanpick
 
 import android.app.Application
 import com.facebook.react.PackageList

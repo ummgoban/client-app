@@ -14,6 +14,7 @@
     "build:android-clean": "cd android && ./gradlew clean",
     "build:android-apk": "cd android && ./gradlew build",
     "build:android-aab": "cd android && ./gradlew bundleRelease",
+    "build:android-store": "yarn build:android-clean && yarn build:android-aab",
     "build:android-release": "yarn build:android-clean && yarn build:android-apk"
   },
   "dependencies": {

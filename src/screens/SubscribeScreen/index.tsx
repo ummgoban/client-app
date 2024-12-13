@@ -19,14 +19,12 @@ const SubscribeScreen = ({navigation}: Props) => {
   const isFocused = useIsFocused();
 
   const fetchData = useCallback(async () => {
-    console.log('fetchData...');
     const res = await getSubscribeList();
     if (!res) {
       Alert.alert('찜 리스트 받아오기 실패');
       return;
     }
     setMarkets(res.markets);
-    console.log('Fetch data success', res.markets);
   }, []);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);

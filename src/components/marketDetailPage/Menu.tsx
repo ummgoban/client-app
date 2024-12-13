@@ -90,14 +90,14 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
       <S.MenuBoxLeft>
         <S.MenuName>{product.name}</S.MenuName>
         {product.originPrice !== product.discountPrice ? (
-          <>
+          <S.MenuInfoWrapper>
             <S.MenuoriginPrice>
-              {`정가:${product.originPrice.toLocaleString()}원`}
+              {`정가: ${product.originPrice.toLocaleString()}원`}
             </S.MenuoriginPrice>
             <S.MenuDiscountPrice>
               {`할인가: ${product.discountPrice.toLocaleString()}원`}
             </S.MenuDiscountPrice>
-          </>
+          </S.MenuInfoWrapper>
         ) : (
           <S.MenuDiscountPrice>
             {`정가: ${product.originPrice.toLocaleString()}원`}

@@ -1,81 +1,74 @@
-import React from 'react';
+import React, {useMemo} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {OrderDetailType} from '@/types/OrderType';
+
 import {format} from '@/utils/date';
-import S from './OrderDescription.style';
 import {to6DigitHash} from '@/utils/hash';
+
+import {DetailStackParamList} from '@/types/StackNavigationType';
+
+import S from './OrderDescription.style';
 
 type Props = {
   id: string;
-  orderMemberName: string;
-  createdAt: string;
-  pickupReservedAt: string;
-  marketId: number;
-  marketName: string;
-  orderStatus:
-    | 'ORDERED'
-    | 'ACCEPTED'
-    | 'PICKEDUP'
-    | 'CANCELED'
-    | 'NO_SHOW'
-    | 'IN_PROGRESS'
-    | 'PICKEDUP_OR_CANCELED';
-  navigation: any;
-  marketAddress: string;
+  navigation: StackNavigationProp<
+    DetailStackParamList,
+    'OrderDetail',
+    undefined
+  >;
+  orderDetail: OrderDetailType;
 };
 
-const getOrderStatusText = (orderStatus: Props['orderStatus']): string => {
-  switch (orderStatus) {
-    case 'IN_PROGRESS':
-      return '결제가 진행중이에요!';
-    case 'ORDERED':
-      return '주문 확인중이에요!';
-    case 'ACCEPTED':
-      return '픽업 대기중이에요!';
-    case 'PICKEDUP':
-      return '픽업이 완료되었어요!';
-    case 'CANCELED':
-      return '주문이 취소되었어요.';
-    case 'NO_SHOW':
-      return '노쇼 처리된 주문이에요.';
-    case 'PICKEDUP_OR_CANCELED':
-      return '완료된 주문이에요.';
-    default:
-      return '상태를 알 수 없습니다.';
-  }
-};
+const OrderCustomerInfo = ({id, navigation, orderDetail}: Props) => {
+  const hashOrderId = useMemo(() => to6DigitHash(id), [id]);
 
-const OrderCustomerInfo = ({
-  id,
-  marketId,
-  marketName,
-  orderMemberName,
-  createdAt,
-  orderStatus,
-  pickupReservedAt,
-  navigation,
-  marketAddress,
-}: Props) => {
-  const orderStatusText = getOrderStatusText(orderStatus);
-  const hashOrderId = to6DigitHash(id);
+  const orderStatusText = useMemo(() => {
+    switch (orderDetail.ordersStatus) {
+      case 'IN_PROGRESS':
+        return '결제가 진행중이에요!';
+      case 'ORDERED':
+        return '주문 확인중이에요!';
+      case 'ACCEPTED':
+        return '픽업 대기중이에요!';
+      case 'PICKEDUP':
+        return '픽업이 완료되었어요!';
+      case 'CANCELED':
+        return '주문이 취소되었어요.';
+      case 'NO_SHOW':
+        return '노쇼 처리된 주문이에요.';
+      case 'PICKEDUP_OR_CANCELED':
+        return '완료된 주문이에요.';
+      default:
+        return '상태를 알 수 없습니다.';
+    }
+  }, [orderDetail.ordersStatus]);
+
   return (
     <S.Container>
       <S.OrderStatusText>{orderStatusText}</S.OrderStatusText>
       <S.MarketInformation
-        onPress={() => navigation.navigate('Market', {marketId})}>
-        <S.MarketName>{marketName}</S.MarketName>
-        <S.MarketAddress>{marketAddress}</S.MarketAddress>
+        onPress={() =>
+          navigation.navigate('Market', {marketId: orderDetail.marketId})
+        }>
+        <S.MarketName>{orderDetail.marketName}</S.MarketName>
+        <S.MarketAddress>{orderDetail.address}</S.MarketAddress>
       </S.MarketInformation>
       <S.OrderDescription>
         <S.OrderDescriptionText>
-          주문자: {orderMemberName}
+          {`주문자: ${orderDetail.orderMemberName}`}
         </S.OrderDescriptionText>
         <S.OrderDescriptionText>
-          주문 번호: {hashOrderId}
+          {`주문 번호: ${hashOrderId}`}
         </S.OrderDescriptionText>
         <S.OrderDescriptionText>
-          {`주문 일시: ${format(new Date(createdAt).getTime(), 'YYYY. MM. DD. (ddd) A hh:mm')}`}
+          {`주문 일시: ${format(orderDetail.createdAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
         </S.OrderDescriptionText>
         <S.OrderDescriptionText>
-          {`픽업 예정 시간: ${format(new Date(pickupReservedAt).getTime(), 'YYYY. MM. DD. (ddd) A hh:mm')}`}
+          {`픽업 예정 시간: ${format(orderDetail.pickupReservedAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
+        </S.OrderDescriptionText>
+        <S.OrderDescriptionText>
+          {`완료 시간: ${format(orderDetail.approvedAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
         </S.OrderDescriptionText>
       </S.OrderDescription>
     </S.Container>

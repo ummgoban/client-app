@@ -1,14 +1,19 @@
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl} from 'react-native';
+
+import {getOrderDetail} from '@/apis';
+
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 import OrderDescription from '@/components/orderDetail/OrderDescription';
 import OrderPaymentDescription from '@/components/orderDetail/OrderPaymentDescription';
-import {DetailStackParamList} from '@/types/StackNavigationType';
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useCallback, useState, useEffect} from 'react';
-import S from './OrderDetailScreen.style';
-import {getOrderDetail} from '@/apis';
-import {Alert, RefreshControl} from 'react-native';
-import {OrderDetailType} from '@/types/OrderType';
+
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+
+import {OrderDetailType} from '@/types/OrderType';
+import {DetailStackParamList} from '@/types/StackNavigationType';
+
+import S from './OrderDetailScreen.style';
 
 type OrderDetailScreenProps = StackScreenProps<
   DetailStackParamList,
@@ -46,14 +51,8 @@ const OrderDetailScreen = ({navigation, route}: OrderDetailScreenProps) => {
       }>
       <OrderDescription
         id={ordersId}
-        marketName={orderDetail.marketName}
-        marketId={orderDetail.marketId}
-        orderMemberName={orderDetail.orderMemberName}
-        createdAt={orderDetail.createdAt}
-        pickupReservedAt={orderDetail.pickupReservedAt}
         navigation={navigation}
-        orderStatus={orderDetail.ordersStatus}
-        marketAddress={orderDetail.address}
+        orderDetail={orderDetail}
       />
       <S.HorizonDivider />
       <OrderPaymentDescription

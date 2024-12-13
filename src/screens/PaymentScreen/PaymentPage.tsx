@@ -109,7 +109,8 @@ const PaymentPage = ({cart, market}: Props) => {
 
           // TODO: 주문 요청 사항
           const orderRes = await requestOrder(
-            pickupReservedAt.toISOString(),
+            // TODO: 타임존 문제
+            `${format(pickupReservedAt, 'YYYY-MM-DDTHH:mm:ss.000')}Z`,
             '',
           );
 

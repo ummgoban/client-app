@@ -65,7 +65,7 @@ class ApiClient {
   ): Promise<T | null> => {
     try {
       const res: AxiosResponse = await this.axiosInstance.get(url, config);
-      console.debug('GET', url, res.data);
+      console.debug('GET', url, JSON.stringify(res.data, null, 2));
 
       if (res.data.code === 200 && res.data.data) {
         return res.data.data;
@@ -73,7 +73,7 @@ class ApiClient {
 
       return null;
     } catch (error) {
-      console.error('GET', url, JSON.stringify(error));
+      console.error('GET', url, JSON.stringify(error, null, 2));
 
       return null;
     }
@@ -91,11 +91,11 @@ class ApiClient {
         config,
       );
 
-      console.debug('POST', url, res.data);
+      console.debug('POST', url, JSON.stringify(res.data, null, 2));
 
       return res.data;
     } catch (error) {
-      console.error('POST', url, JSON.stringify(error));
+      console.error('POST', url, JSON.stringify(error, null, 2));
 
       return null;
     }
@@ -113,11 +113,11 @@ class ApiClient {
         config,
       );
 
-      console.debug('PATCH', url, res.data);
+      console.debug('PATCH', url, JSON.stringify(res.data, null, 2));
 
       return res.data;
     } catch (error) {
-      console.error('PATCH', url, JSON.stringify(error));
+      console.error('PATCH', url, JSON.stringify(error, null, 2));
       return null;
     }
   };
@@ -134,11 +134,11 @@ class ApiClient {
         config,
       );
 
-      console.debug('PUT', url, res.data);
+      console.debug('PUT', url, JSON.stringify(res.data, null, 2));
 
       return res.data;
     } catch (error) {
-      console.error('PUT', url, JSON.stringify(error));
+      console.error('PUT', url, JSON.stringify(error, null, 2));
       return null;
     }
   };
@@ -150,11 +150,11 @@ class ApiClient {
     try {
       const res: AxiosResponse = await this.axiosInstance.delete(url, config);
 
-      console.debug('DELETE', url, res.data);
+      console.debug('DELETE', url, JSON.stringify(res.data, null, 2));
 
       return res.data;
     } catch (error) {
-      console.error('DELETE', url, JSON.stringify(error));
+      console.error('DELETE', url, JSON.stringify(error, null, 2));
 
       return null;
     }

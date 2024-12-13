@@ -1,5 +1,7 @@
 import React from 'react';
+
 import S from './MarketInfo.style';
+
 import {MarketType} from '@/types/Market';
 
 type MarketInfoProps = {

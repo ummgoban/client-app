@@ -8,6 +8,8 @@ export function convertOAuthProviderToKorean(
       return '카카오';
     case 'NAVER':
       return '네이버';
+    case 'APPLE':
+      return '애플';
     default:
       return '';
   }

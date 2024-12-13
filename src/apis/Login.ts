@@ -113,11 +113,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
   try {
     token = await kakaoLogin();
   } catch (error) {
-    // TODO: remove alert
-    Alert.alert(
-      '카카오 로그인 에러',
-      '@react-native-seoul/kakao-login\n카카오 로그인에 실패했습니다.',
-    );
+    Alert.alert('카카오 로그인 에러');
   }
 
   if (!token) {
@@ -156,11 +152,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
     console.error('카카오 로그인 에러:', error);
     Alert.alert(
       '카카오 로그인 에러',
-      // TODO: remove POST /auth/login\n
-      `
-      POST /auth/login\n
-      카카오 로그인에 실패했습니다.
-      `,
+      '카카오 로그인에 실패했습니다.\n오류가 계속될 경우 관리자에게 문의해주세요.',
     );
     return null;
   }

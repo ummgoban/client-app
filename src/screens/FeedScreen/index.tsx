@@ -2,17 +2,23 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, RefreshControl, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {requestLocationPermission} from '@/utils/notification';
-
+import {
+  changeLocationPermission,
+  isNotificationPermissionEnabled,
+  requestLocationPermission,
+  requestNotificationPermission,
+  setUpPushNotificationHandlers,
+} from '@/utils/notification';
+import {AppState, AppStateStatus} from 'react-native';
 import {getMarketList} from '@/apis';
 import {BottomButton} from '@/components/common';
 import {Market} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
-
 import S from './SearchBar.style';
-
+import messaging from '@react-native-firebase/messaging';
+import {registerFCMToken} from '@/apis';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
@@ -24,7 +30,6 @@ const FeedScreen = ({navigation}: Props) => {
     userLatitude: number;
     userLongitude: number;
   } | null>(null);
-
   const fetchData = useCallback(async () => {
     const res = await getMarketList(
       0,
@@ -79,6 +84,18 @@ const FeedScreen = ({navigation}: Props) => {
 
   const initializeData = useCallback(async () => {
     const gotLocation = await getCurrentLocation();
+    await requestNotificationPermission();
+    const isNotificationOn = await isNotificationPermissionEnabled();
+    if (isNotificationOn) {
+      console.log('isNotificationOn:', isNotificationOn);
+      setUpPushNotificationHandlers();
+      const token = await messaging().getToken();
+      await registerFCMToken(token);
+      await setUpPushNotificationHandlers();
+      console.log('FCM Token:', token);
+    } else {
+      await changeLocationPermission();
+    }
     if (gotLocation) {
       console.log('위치를 받아와서 fetch 실행......');
       await fetchData();
@@ -134,11 +151,27 @@ const FeedScreen = ({navigation}: Props) => {
 
   const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
 
-  useEffect(() => {}, [navigation]);
-
   useEffect(() => {
     initializeData();
-  }, [initializeData]);
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      console.log('AppState 변경:', nextAppState);
+      if (nextAppState === 'active') {
+        initializeData();
+      } else if (nextAppState === 'background') {
+        console.log('앱이 백그라운드로 이동');
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+    return () => {
+      console.log('AppState 이벤트 클린업');
+      subscription.remove();
+    };
+  }, [initializeData, navigation]);
 
   if (marketList === null) {
     return (

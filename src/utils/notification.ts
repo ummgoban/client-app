@@ -1,7 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform, Alert, Linking} from 'react-native';
-import {registerFCMToken} from '@/apis/Fcm';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 export const requestNotificationPermission = async () => {
   if (Platform.OS === 'ios') {
@@ -23,10 +22,6 @@ export const requestNotificationPermission = async () => {
       return;
     }
   }
-  const token = await messaging().getToken();
-  await registerFCMToken(token);
-  setUpPushNotificationHandlers();
-  console.log('FCM Token:', token);
 };
 
 const isIOSNotificationPermissionEnabled = async (): Promise<boolean> => {
@@ -56,29 +51,11 @@ export const isNotificationPermissionEnabled = async (): Promise<boolean> => {
 const requestAndroidPermission = async (): Promise<boolean> => {
   const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    {
-      title: '푸시 알림 권한 요청',
-      message: '알림을 활성화하려면 권한이 필요합니다.',
-      buttonNeutral: '나중에',
-      buttonNegative: '취소',
-      buttonPositive: '확인',
-    },
   );
-
   return granted === PermissionsAndroid.RESULTS.GRANTED;
 };
 
 export const changeNotificationPermission = async () => {
-  const authStatus = await isNotificationPermissionEnabled();
-  console.log('test');
-  if (authStatus) {
-    console.log('fcm 권한', authStatus);
-  } else {
-    console.log('fcm 권한', authStatus);
-    const token = await messaging().getToken();
-    await registerFCMToken(token);
-    setUpPushNotificationHandlers();
-  }
   Alert.alert(
     '알림 권한 활성화',
     '알림 권한을 변경하려면 설정에서 변경해야 합니다.',
@@ -95,7 +72,7 @@ export const changeNotificationPermission = async () => {
   );
 };
 
-const setUpPushNotificationHandlers = () => {
+export const setUpPushNotificationHandlers = async () => {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Message:', remoteMessage);
     await displayNotification(remoteMessage);

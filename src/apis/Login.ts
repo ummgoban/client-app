@@ -16,7 +16,6 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
-
 const initializeNaver = ({
   appName,
   consumerKey,

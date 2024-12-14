@@ -74,7 +74,7 @@ export const changeNotificationPermission = async () => {
 
 export const setUpPushNotificationHandlers = async () => {
   messaging().onMessage(async remoteMessage => {
-    console.log('Foreground Message:', remoteMessage);
+    console.log('Foreground Messaddge:', remoteMessage);
     await displayNotification(remoteMessage);
   });
 
@@ -88,7 +88,7 @@ export const setUpPushNotificationHandlers = async () => {
   });
 };
 
-const displayNotification = async (remoteMessage: any) => {
+export const displayNotification = async (remoteMessage: any) => {
   let title = remoteMessage.notification?.title;
   let body = remoteMessage.notification?.body;
 

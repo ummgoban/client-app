@@ -3,7 +3,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, RefreshControl, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {
-  changeLocationPermission,
   isNotificationPermissionEnabled,
   requestLocationPermission,
   requestNotificationPermission,
@@ -93,8 +92,6 @@ const FeedScreen = ({navigation}: Props) => {
       await registerFCMToken(token);
       await setUpPushNotificationHandlers();
       console.log('FCM Token:', token);
-    } else {
-      await changeLocationPermission();
     }
     if (gotLocation) {
       console.log('위치를 받아와서 fetch 실행......');

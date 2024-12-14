@@ -152,8 +152,6 @@ const FeedScreen = ({navigation}: Props) => {
   const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
 
   useEffect(() => {
-    initializeData();
-
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       console.log('AppState 변경:', nextAppState);
       if (nextAppState === 'active') {

@@ -3,35 +3,30 @@ import './gesture-handler';
 import RootProvider from './src/context';
 import AppNavigator from './src/navigation';
 import SplashScreen from 'react-native-splash-screen';
+import {setUpPushNotificationHandlers} from './src/utils/notification';
 import {requestNotificationPermission} from './src/utils/notification';
-import messaging from '@react-native-firebase/messaging';
+
+// const isDarkMode = useColorScheme() === 'dark';
 
 function App(): React.JSX.Element {
-  // const isDarkMode = useColorScheme() === 'dark';
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        //TODO: fcm 토큰 등록 위치 논의 후 따로 분리 예정
+        // 푸시 알림 핸들러 설정
         await requestNotificationPermission();
-        setupForegroundMessageHandler();
+        await setUpPushNotificationHandlers();
+
+        // 알림 권한 요청 (필요 시)
+
+        // 스플래시 화면 숨기기
+        console.log('앱 초기화 완료');
       } catch (error) {
-        console.error('splash screen error:', error);
-      } finally {
-        SplashScreen.hide();
+        console.error('앱 초기화 중 오류 발생:', error);
       }
     };
-    const setupForegroundMessageHandler = () => {
-      const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log('[+] Foreground Message:', JSON.stringify(remoteMessage));
-      });
 
-      return unsubscribe;
-    };
     initializeApp();
-    return () => {
-      const unsubscribe = setupForegroundMessageHandler();
-      unsubscribe();
-    };
+    SplashScreen.hide();
   }, []);
 
   return (

@@ -9,7 +9,6 @@ import {
 } from '@/utils/notification';
 import messaging from '@react-native-firebase/messaging';
 import {registerFCMToken} from '@/apis';
-import {setUpPushNotificationHandlers} from '@/utils/notification';
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);
   const [isLocationOn, setIsLocationOn] = useState<
@@ -23,7 +22,6 @@ const SettingScreen = () => {
       if (isEnabled) {
         const token = await messaging().getToken();
         await registerFCMToken(token);
-        await setUpPushNotificationHandlers();
         console.log('FCM Token:', token);
       }
     } catch (error) {

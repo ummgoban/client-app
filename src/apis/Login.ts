@@ -13,7 +13,8 @@ import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 import apiClient from './ApiClient';
 import appleAuth from '@invertase/react-native-apple-authentication';
-
+import messaging from '@react-native-firebase/messaging';
+import {registerFCMToken} from './Fcm';
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
 const initializeNaver = ({
@@ -233,6 +234,14 @@ export const login = async (
 
   if (res) {
     setStorage('session', res);
+
+    try {
+      console.log('test FCM after login');
+      const token = await messaging().getToken();
+      await registerFCMToken(token);
+    } catch (error) {
+      console.error('FCM 설정 중 오류 발생:', error);
+    }
     return true;
   }
 

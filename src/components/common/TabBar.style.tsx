@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 const TabBarContainer = styled.View`
   display: flex;
   flex-direction: row;
+  margin-bottom: 8px;
 `;
 
 const TabBarItemButton = styled.TouchableOpacity`
@@ -12,7 +13,6 @@ const TabBarItemButton = styled.TouchableOpacity`
 const TabBarItem = styled.View`
   margin: 4px auto;
   padding: 4px;
-
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "ENVFILE=.env react-native run-android",
+    "android-release": "ENVFILE=.env.release react-native run-android --mode=release",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "tsc": "tsc",
@@ -12,8 +13,10 @@
     "format:check": "prettier --check --ignore-path .prettierignore .",
     "format:fix": "prettier --write --ignore-path .prettierignore .",
     "build:android-clean": "cd android && ./gradlew clean",
-    "build:android-apk": "cd android && ./gradlew build",
-    "build:android-aab": "cd android && ./gradlew bundleRelease",
+    "build:android-debug-apk": "cd android && ENVFILE=.env ./gradlew build",
+    "build:android-debug-aab": "cd android && ENVFILE=.env ./gradlew bundleDebug",
+    "build:android-release-apk": "cd android && ENVFILE=.env.release ./gradlew build",
+    "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease",
     "build:android-store": "yarn build:android-clean && yarn build:android-aab",
     "build:android-release": "yarn build:android-clean && yarn build:android-apk"
   },

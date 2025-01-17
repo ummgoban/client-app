@@ -72,7 +72,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/login', {
+      }>('/auth/oauth-login', {
         provider: 'NAVER',
         roles: 'ROLE_USER',
         accessToken,
@@ -127,7 +127,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         accessToken: string;
         refreshToken: string;
       };
-    }>('/auth/login', {
+    }>('/auth/oauth-login', {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,
@@ -162,7 +162,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
  * @description 애플 로그인 함수
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
-export const signInWithApple = async (): Promise<SessionType | null> => {
+const signInWithApple = async (): Promise<SessionType | null> => {
   try {
     // Apple 로그인 요청 수행
     const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -185,7 +185,7 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/login', {
+      }>('/auth/oauth-login', {
         provider: 'APPLE',
         roles: 'ROLE_STORE_OWNER',
         accessToken: token,
@@ -213,12 +213,79 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
 };
 
 /**
+ * POST /members/sign-up
+ * body: { email, password, name, phoneNumber }
+ */
+export const credentialSignUp = async ({
+  email,
+  password,
+  name,
+  phoneNumber,
+}: {
+  email: string;
+  password: string;
+  name: string;
+  phoneNumber: string;
+}) => {
+  try {
+    const res = await apiClient.post<{
+      code: number;
+      message: string;
+    }>('/members/sign-up', {
+      email,
+      password,
+      name,
+      phoneNumber,
+    });
+
+    return res && res.code === 200;
+  } catch (error) {
+    console.error('Credential Sign Up Error:', error);
+    return false;
+  }
+};
+
+/**
+ * POST /auth/login
+ * body: { email, password }
+ * TODO: error handling
+ * @see https://ummgoban.com/v1/swagger-ui/index.html#/%EC%9D%B8%EC%A6%9D/login
+ */
+export const credentailLogin = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  try {
+    const res = await apiClient.post<{
+      code: number;
+      data: object;
+    }>('auth/login', {
+      email,
+      password,
+    });
+
+    if (res && res.code === 200) {
+      setStorage('session', res.data);
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Credential Login Error:', error);
+    return false;
+  }
+};
+
+/**
  * @description 로그인 함수
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
 // TODO: 로그인 후 리프레쉬
-export const login = async (
+export const loginWithOAuth = async (
   oAuthProvider: SessionType['OAuthProvider'],
 ): Promise<boolean> => {
   let res: SessionType | null = null;
@@ -250,6 +317,7 @@ export const login = async (
 
 // TODO: 로그아웃 후 리프레쉬
 export const logout = async (): Promise<boolean> => {
+  // TODO: credentail logout 추가
   try {
     const storageRes: SessionType | null = await getStorage('session');
     if (!storageRes) {

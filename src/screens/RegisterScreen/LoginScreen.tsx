@@ -2,7 +2,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Platform} from 'react-native';
 
-import {login} from '@/apis/Login';
+import {loginWithOAuth} from '@/apis/Login';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import S from './LoginScreen.style';
 
@@ -21,7 +21,7 @@ const LoginScreen = () => {
       <S.LoginButtonContainer>
         <S.LoginButtonWrapper
           onPress={async () => {
-            const res = await login('KAKAO');
+            const res = await loginWithOAuth('KAKAO');
             if (res) {
               navigation.navigate('Home', {screen: 'Feed'});
             }
@@ -30,7 +30,7 @@ const LoginScreen = () => {
         </S.LoginButtonWrapper>
         <S.LoginButtonWrapper
           onPress={async () => {
-            const res = await login('NAVER');
+            const res = await loginWithOAuth('NAVER');
             if (res) {
               navigation.navigate('Home', {screen: 'Feed'});
             }
@@ -41,7 +41,7 @@ const LoginScreen = () => {
         {Platform.OS === 'ios' && (
           <S.LoginButtonWrapper
             onPress={async () => {
-              const res = await login('APPLE');
+              const res = await loginWithOAuth('APPLE');
               if (res) {
                 navigation.navigate('Home', {screen: 'Feed'});
               }

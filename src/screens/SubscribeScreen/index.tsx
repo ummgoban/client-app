@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Alert, Text, RefreshControl} from 'react-native';
+import {View, Alert, RefreshControl} from 'react-native';
 import {SubscribeType} from '@/types/Subscribe';
 import {getSubscribeList} from '@/apis/Subscribe';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
@@ -8,6 +8,8 @@ import S from './SubscribeScreen.style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {useIsFocused} from '@react-navigation/native';
+import useProfile from '@/hooks/useProfile';
+import {Button, Text} from 'react-native-paper';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
@@ -18,14 +20,19 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   const isFocused = useIsFocused();
 
+  const {profile} = useProfile();
+
   const fetchData = useCallback(async () => {
+    if (!profile) {
+      return;
+    }
     const res = await getSubscribeList();
     if (!res) {
       Alert.alert('찜 리스트 받아오기 실패');
       return;
     }
     setMarkets(res.markets);
-  }, []);
+  }, [profile]);
 
   const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
 
@@ -42,6 +49,17 @@ const SubscribeScreen = ({navigation}: Props) => {
     }
   }, [fetchData, isFocused]);
 
+  if (!profile) {
+    return (
+      <View>
+        <Text>로그인 후 가게를 찜해보세요.</Text>
+        <Button onPress={() => navigation.navigate('Login')} mode="contained">
+          로그인하러가기
+        </Button>
+      </View>
+    );
+  }
+
   if (!markets) {
     return (
       <View>
@@ -49,6 +67,7 @@ const SubscribeScreen = ({navigation}: Props) => {
       </View>
     );
   }
+
   return (
     <S.SubscribeContainer>
       <Text>현재 {markets.length}개 가게를 찜하고 계세요!</Text>

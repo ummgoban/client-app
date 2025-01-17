@@ -2,16 +2,21 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Platform} from 'react-native';
 
-import {loginWithOAuth} from '@/apis/Login';
 import {RootStackParamList} from '@/types/StackNavigationType';
+
+import AppleLoginButton from '@assets/AppleLoginButton.svg';
+import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
+import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
+import NaverLoginButton from '@assets/NaverLoginButton.svg';
+
+import useProfile from '@/hooks/useProfile';
+
 import S from './LoginScreen.style';
 
-import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
-import AppleLoginButton from '@assets/AppleLoginButton.svg';
-import NaverLoginButton from '@assets/NaverLoginButton.svg';
-import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
 const LoginScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const {loginWithOAuth} = useProfile();
 
   return (
     <S.LoginPageContainer>

@@ -3,7 +3,7 @@ import {create} from 'zustand';
 
 import {
   getProfile as getProfileApi,
-  login as loginApi,
+  loginWithOAuth as loginWithOAuthApi,
   logout as logoutApi,
 } from '@/apis/Login';
 
@@ -80,9 +80,9 @@ const useProfile = () => {
     return false;
   }, [refresh]);
 
-  const login = useCallback(
+  const loginWithOAuth = useCallback(
     async (oAuthProvider: SessionType['OAuthProvider']) => {
-      const res = await loginApi(oAuthProvider);
+      const res = await loginWithOAuthApi(oAuthProvider);
       if (res) {
         await refresh();
 
@@ -101,7 +101,7 @@ const useProfile = () => {
     selectMarket,
     loading,
     logout,
-    login,
+    loginWithOAuth,
   };
 };
 

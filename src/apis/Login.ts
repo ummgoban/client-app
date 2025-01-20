@@ -72,7 +72,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/login', {
+      }>('/auth/oauth-login', {
         provider: 'NAVER',
         roles: 'ROLE_USER',
         accessToken,
@@ -127,7 +127,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         accessToken: string;
         refreshToken: string;
       };
-    }>('/auth/login', {
+    }>('/auth/oauth-login', {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,
@@ -185,7 +185,7 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/login', {
+      }>('/auth/oauth-login', {
         provider: 'APPLE',
         roles: 'ROLE_STORE_OWNER',
         accessToken: token,

@@ -187,7 +187,7 @@ const signInWithApple = async (): Promise<SessionType | null> => {
         };
       }>('/auth/oauth-login', {
         provider: 'APPLE',
-        roles: 'ROLE_STORE_OWNER',
+        roles: 'ROLE_USER',
         accessToken: token,
       });
       console.log(response);
@@ -251,7 +251,7 @@ export const credentialSignUp = async ({
  * TODO: error handling
  * @see https://ummgoban.com/v1/swagger-ui/index.html#/%EC%9D%B8%EC%A6%9D/login
  */
-export const credentailLogin = async ({
+export const credentialLogin = async ({
   email,
   password,
 }: {

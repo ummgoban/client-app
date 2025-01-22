@@ -5,7 +5,10 @@ import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import SubscribeScreen from '@/screens/SubscribeScreen';
 import {HomeStackParamList} from '@/types/StackNavigationType';
 import {TabBar} from '@components/common';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBarProps,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import HomeScreen from '@screens/FeedScreen';
 import MyPageScreen from '@screens/MyPageScreen';
 import React from 'react';
@@ -30,9 +33,11 @@ const myPageScreenOptions = () => ({
   title: '마이페이지',
 });
 
+const renderTabBar = (props: BottomTabBarProps) => <TabBar {...props} />;
+
 const HomeNavigator = () => {
   return (
-    <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+    <Tab.Navigator tabBar={renderTabBar}>
       <Tab.Screen
         name="Feed"
         options={feedScreenOptions}

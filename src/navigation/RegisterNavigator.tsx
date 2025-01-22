@@ -14,7 +14,11 @@ const RegisterNavigator = () => {
         component={LoginScreen}
         options={{headerTitle: '로그인'}}
       />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen
+        name="SignUp"
+        component={SignupScreen}
+        options={{headerTitle: '회원가입'}}
+      />
     </Stack.Navigator>
   );
 };

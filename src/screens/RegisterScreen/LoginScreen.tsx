@@ -9,6 +9,8 @@ import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
 import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
 import NaverLoginButton from '@assets/NaverLoginButton.svg';
 
+import CredentialLogin from '@/components/LoginPage/CredentialLogin';
+
 import useProfile from '@/hooks/useProfile';
 
 import S from './LoginScreen.style';
@@ -23,6 +25,8 @@ const LoginScreen = () => {
       <S.MomChanPickLogoWrapper>
         <MomChanPickLogo width={160} height={160} />
       </S.MomChanPickLogoWrapper>
+      <CredentialLogin />
+      <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
       <S.LoginButtonContainer>
         <S.LoginButtonWrapper
           onPress={async () => {

@@ -1,6 +1,12 @@
 import styled from '@emotion/native';
 import {Button, TextInput} from 'react-native-paper';
 
+const ScreenWrapper = styled.View`
+  flex: 1;
+
+  margin-top: 16px;
+`;
+
 const LoginFormWrapper = styled.View`
   padding: 0 16px;
 
@@ -33,6 +39,7 @@ const HorizontalLine = styled.View`
 `;
 
 const S = {
+  ScreenWrapper,
   LoginFormWrapper,
   LoginTextInput,
   SubmitButton,

@@ -20,7 +20,6 @@ type Props = {
 
 const FeedScreen = ({navigation}: Props) => {
   const [marketList, setMarketList] = useState<MarketType[] | null>(null);
-
   const [location, setLocation] = useState<{
     userLatitude: number;
     userLongitude: number;
@@ -155,7 +154,6 @@ const FeedScreen = ({navigation}: Props) => {
       </View>
     );
   }
-
   return (
     <S.Container>
       {/* TODO: 검색바 */}

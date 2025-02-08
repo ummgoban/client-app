@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 
-const LoginPageContainer = styled.View`
+const LoginPageContainer = styled.ScrollView`
   flex: 1;
   background-color: white;
 `;
@@ -16,7 +16,8 @@ const LoginButtonContainer = styled.View`
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 32px;
+
+  margin: 16px 0;
 `;
 
 const LoginButtonWrapper = styled.TouchableOpacity`
@@ -24,11 +25,17 @@ const LoginButtonWrapper = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const SocialLoginText = styled.Text`
+  text-align: center;
+  ${({theme}) => theme.fonts.body2}
+`;
+
 const S = {
   LoginButtonContainer,
   LoginButtonWrapper,
   LoginPageContainer,
   MomChanPickLogoWrapper,
+  SocialLoginText,
 };
 
 export default S;

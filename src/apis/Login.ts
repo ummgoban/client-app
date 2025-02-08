@@ -72,7 +72,7 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/oauth-login', {
+      }>('/common/auth/oauth-login', {
         provider: 'NAVER',
         roles: 'ROLE_USER',
         accessToken,
@@ -127,7 +127,7 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         accessToken: string;
         refreshToken: string;
       };
-    }>('/auth/oauth-login', {
+    }>('/common/auth/oauth-login', {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,
@@ -185,7 +185,7 @@ const signInWithApple = async (): Promise<SessionType | null> => {
           accessToken: string;
           refreshToken: string;
         };
-      }>('/auth/oauth-login', {
+      }>('/common/auth/oauth-login', {
         provider: 'APPLE',
         roles: 'ROLE_USER',
         accessToken: token,
@@ -213,7 +213,7 @@ const signInWithApple = async (): Promise<SessionType | null> => {
 };
 
 /**
- * POST /members/sign-up
+ * POST /common/members/sign-up
  * body: { email, password, name, phoneNumber }
  */
 export const credentialSignUp = async ({
@@ -231,7 +231,7 @@ export const credentialSignUp = async ({
     const res = await apiClient.post<{
       code: number;
       message: string;
-    }>('/members/sign-up', {
+    }>('/common/members/sign-up', {
       email,
       password,
       name,
@@ -262,7 +262,7 @@ export const credentialLogin = async ({
     const res = await apiClient.post<{
       code: number;
       data: object;
-    }>('auth/login', {
+    }>('/common/auth/login', {
       email,
       password,
     });
@@ -341,7 +341,9 @@ export const logout = async (): Promise<boolean> => {
 
 export const getProfile = async (): Promise<UserType | null> => {
   try {
-    const res = await apiClient.get<UserType | null>('/members/profiles');
+    const res = await apiClient.get<UserType | null>(
+      '/common/members/profiles',
+    );
 
     if (res) {
       return {

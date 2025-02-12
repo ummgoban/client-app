@@ -3,7 +3,7 @@ import apiClient from './ApiClient';
 
 export const getBuckets = async (): Promise<BucketType | null> => {
   try {
-    const res = await apiClient.get<BucketType | null>('/buckets');
+    const res = await apiClient.get<BucketType | null>('/customer/buckets');
 
     return res;
   } catch (error) {
@@ -32,11 +32,14 @@ export const addToBucket = async (
   products: BucketProductType[],
 ): Promise<boolean> => {
   try {
-    const res = await apiClient.post<{
-      code: number;
-      message: string;
-      data: string;
-    }>(`/customer/buckets/markets/${marketId}`, {products});
+    const res = await apiClient.post<
+      {
+        code: number;
+        message: string;
+        data: string;
+      },
+      {products: BucketProductType[]}
+    >(`/customer/buckets/markets/${marketId}`, {products});
     console.log('products: ', products);
     if (res && res.code === 200 && res.data === '상품 추가 성공') {
       return true;

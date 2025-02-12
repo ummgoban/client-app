@@ -79,13 +79,13 @@ class ApiClient {
     }
   };
 
-  post = async <T>(
+  post = async <T, D = unknown>(
     url: string,
-    body?: unknown,
-    config?: AxiosRequestConfig<any> | undefined,
+    body?: D,
+    config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.post(
+      const res: AxiosResponse<T, D> = await this.axiosInstance.post(
         url,
         body,
         config,
@@ -101,13 +101,13 @@ class ApiClient {
     }
   };
 
-  patch = async <T>(
+  patch = async <T, D = unknown>(
     url: string,
-    body: unknown,
-    config?: AxiosRequestConfig<any> | undefined,
+    body: D,
+    config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.patch(
+      const res: AxiosResponse<T, D> = await this.axiosInstance.patch(
         url,
         body,
         config,
@@ -122,13 +122,13 @@ class ApiClient {
     }
   };
 
-  put = async <T>(
+  put = async <T, D = unknown>(
     url: string,
-    body: unknown,
-    config?: AxiosRequestConfig<any> | undefined,
+    body: D,
+    config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.put(
+      const res: AxiosResponse<T, D> = await this.axiosInstance.put(
         url,
         body,
         config,
@@ -143,12 +143,15 @@ class ApiClient {
     }
   };
 
-  del = async <T>(
+  del = async <T, D = unknown>(
     url: string,
-    config?: AxiosRequestConfig<any> | undefined,
+    config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      const res: AxiosResponse = await this.axiosInstance.delete(url, config);
+      const res: AxiosResponse<T, D> = await this.axiosInstance.delete(
+        url,
+        config,
+      );
 
       console.debug('DELETE', url, JSON.stringify(res.data, null, 2));
 

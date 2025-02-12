@@ -12,7 +12,7 @@ export const getSubscribeList = async (
     const res = await apiClient.get<{
       markets: SubscribeType[];
       hasNext: boolean;
-    } | null>(`/members/markets/likes`, {
+    } | null>(`/customer/markets/likes`, {
       params: {cursorId, size},
     });
     return res;

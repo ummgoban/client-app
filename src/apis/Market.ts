@@ -14,7 +14,7 @@ export const getMarketList = async (
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
-    } | null>(`/markets`, {
+    } | null>(`customer/markets`, {
       params: {
         cursorId,
         size,
@@ -35,7 +35,7 @@ export const getMarket = async (
 ): Promise<MarketDetailType | null> => {
   try {
     const res = await apiClient.get<MarketDetailType | null>(
-      `/markets/${marketId}`,
+      `/cutomer/markets/${marketId}`,
     );
 
     return res;
@@ -47,7 +47,7 @@ export const getMarket = async (
 
 export const updateMarketLike = async (marketId: number): Promise<boolean> => {
   try {
-    const res = await apiClient.post(`/markets/${marketId}/likes`);
+    const res = await apiClient.post(`customer/markets/${marketId}/likes`);
     if (res) {
       return true;
     }

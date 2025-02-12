@@ -6,7 +6,7 @@ export const registerFCMToken = async (
   try {
     console.log('Registering FCM token:', deviceToken);
     const res = await apiClient.post<{code: number; message: string}>(
-      '/members/device-token',
+      '/common/members/device-token',
       {},
       {
         params: {

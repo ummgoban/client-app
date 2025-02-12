@@ -3,7 +3,7 @@ import apiClient from './ApiClient';
 
 export const getOrderHistory = async (): Promise<OrderType[] | null> => {
   try {
-    const res = await apiClient.get<OrderType[] | null>('/members/orders');
+    const res = await apiClient.get<OrderType[] | null>('/customer/orders');
     return res;
   } catch (error) {
     console.error(error);
@@ -14,7 +14,7 @@ export const getOrderHistory = async (): Promise<OrderType[] | null> => {
 export const getProgressingOrder = async (): Promise<OrderType[] | null> => {
   try {
     const res = await apiClient.get<OrderType[] | null>(
-      '/members/orders/progress',
+      '/customer/orders/progress',
     );
     return res;
   } catch (error) {
@@ -38,7 +38,7 @@ export const requestOrder = async (
         ordersName: string;
         amount: number;
       };
-    } | null>('/orders', {
+    } | null>('/customer/orders', {
       pickupReservedAt,
       customerRequest,
     });
@@ -57,7 +57,7 @@ export const requestOrderSuccess = async (
 ): Promise<Boolean | null> => {
   try {
     const res = await apiClient.post<{code: number} | null>(
-      '/orders/payments',
+      '/customer/orders/payments',
       {
         paymentKey,
         ordersId,
@@ -77,7 +77,7 @@ export const getOrderDetail = async (
 ): Promise<OrderDetailType | null> => {
   try {
     const res = await apiClient.get<OrderDetailType | null>(
-      `/orders/${ordersId}`,
+      `/customer/orders/${ordersId}`,
     );
     return res;
   } catch (error) {

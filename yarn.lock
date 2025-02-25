@@ -3866,6 +3866,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.66.4":
+  version: 5.66.4
+  resolution: "@tanstack/query-core@npm:5.66.4"
+  checksum: 947d89e844e46d8a13f2ba412227f534ab2d3c7a2f8c09ea3f00b5962ad0eadef94eeec67f61269990a0db23ce13d89df8f62de8bf98976ebda51e014ecbf811
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.66.9":
+  version: 5.66.9
+  resolution: "@tanstack/react-query@npm:5.66.9"
+  dependencies:
+    "@tanstack/query-core": 5.66.4
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: f81de05a362fc8e1d4d44353ff1c8abba0ca268f1c856b63eeaf50bcdba23c7a003045fdafe7540975d432c50f53af9041174d6eeb9fd8e2d8564591603533f4
+  languageName: node
+  linkType: hard
+
 "@tosspayments/widget-sdk-react-native@npm:^1.3.5":
   version: 1.3.5
   resolution: "@tosspayments/widget-sdk-react-native@npm:1.3.5"
@@ -4363,6 +4381,7 @@ __metadata:
     "@react-navigation/bottom-tabs": ^6.6.1
     "@react-navigation/native": ^6.1.18
     "@react-navigation/stack": ^6.4.1
+    "@tanstack/react-query": ^5.66.9
     "@tosspayments/widget-sdk-react-native": ^1.3.5
     "@types/react": ^18.2.6
     "@types/react-native-vector-icons": ^6.4.18

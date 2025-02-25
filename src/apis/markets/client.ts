@@ -1,12 +1,13 @@
 import {MarketType, MarketDetailType} from '@/types/Market';
-import apiClient from './ApiClient';
+import apiClient from '../ApiClient';
+import {MarketListRequest} from './model';
 
-export const getMarketList = async (
-  cursorId: number = 0,
-  size: number = 10,
-  userLatitude?: number,
-  userLongitude?: number,
-): Promise<{
+export const getMarketList = async ({
+  cursorId,
+  size,
+  userLatitude,
+  userLongitude,
+}: MarketListRequest): Promise<{
   markets: MarketType[];
   hasNext: boolean;
 } | null> => {
@@ -30,9 +31,6 @@ export const getMarketList = async (
   }
 };
 
-/**
- * @deprecated use [/apis/markets/query.ts](./markets/query.ts) instead
- */
 export const getMarket = async (
   marketId: number,
 ): Promise<MarketDetailType | null> => {

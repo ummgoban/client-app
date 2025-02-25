@@ -1,10 +1,9 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 
-import {getMarket} from '@/apis';
 import {getBuckets} from '@/apis/Bucket';
+import {useMarket} from '@/apis/markets';
 import {BucketType} from '@/types/Bucket';
-import {MarketDetailType} from '@/types/Market';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import EmptyCartPage from './EmptyCartPage';
 import PaymentPage from './PaymentPage';
@@ -13,7 +12,8 @@ type Props = StackScreenProps<DetailStackParamList, 'Payment'>;
 
 const PaymentScreen = ({navigation}: Props) => {
   const [cart, setCart] = useState<BucketType | null>(null);
-  const [market, setMarket] = useState<MarketDetailType | null>(null);
+
+  const {data: market} = useMarket(cart?.market.id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,18 +26,9 @@ const PaymentScreen = ({navigation}: Props) => {
           return;
         }
         setCart(res);
-
-        const marketRes = await getMarket(res.market.id);
-        if (!marketRes) {
-          console.debug('error');
-          setMarket(null);
-          return;
-        }
-        setMarket(marketRes);
       } catch (e) {
         console.debug(e);
         setCart(null);
-        setMarket(null);
       }
     };
 

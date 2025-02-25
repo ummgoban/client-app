@@ -12,7 +12,7 @@ import {Market} from '@/components/feedPage';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {MarketType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
-import S from './SearchBar.style';
+import S from './Feed.style';
 import {useIsFocused} from '@react-navigation/native';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -25,6 +25,7 @@ const FeedScreen = ({navigation}: Props) => {
     userLongitude: number;
   } | null>(null);
   const isFocused = useIsFocused();
+
   const fetchData = useCallback(async () => {
     const res = await getMarketList(
       0,
@@ -162,13 +163,9 @@ const FeedScreen = ({navigation}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {marketList.length === 0 ? (
-          <Text>상품이 없습니다.</Text>
-        ) : (
-          marketList.map(market => (
-            <Market key={market.id} onPress={onPressStore} market={market} />
-          ))
-        )}
+        {marketList.map(market => (
+          <Market key={market.id} onPress={onPressStore} market={market} />
+        ))}
       </S.MarketWrapper>
       <BottomButton onPress={navigateMap}>
         지도로 주변 가게 확인하기

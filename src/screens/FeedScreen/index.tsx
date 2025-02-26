@@ -1,49 +1,36 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, RefreshControl, Text, View} from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import {useMarketList} from '@/apis/markets';
+import {BottomButton} from '@/components/common';
+import {Market} from '@/components/feedPage';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+import {RootStackParamList} from '@/types/StackNavigationType';
 import {
   requestLocationPermission,
   requestNotificationPermission,
 } from '@/utils/notification';
-import {getMarketList} from '@/apis';
-import {BottomButton} from '@/components/common';
-import {Market} from '@/components/feedPage';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import {MarketType} from '@/types/Market';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import S from './SearchBar.style';
-import {useIsFocused} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, RefreshControl, Text, View} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import {FlatList} from 'react-native-gesture-handler';
+import {ActivityIndicator} from 'react-native-paper';
+import S from './Feed.style';
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
 const FeedScreen = ({navigation}: Props) => {
-  const [marketList, setMarketList] = useState<MarketType[] | null>(null);
   const [location, setLocation] = useState<{
     userLatitude: number;
     userLongitude: number;
   } | null>(null);
-  const isFocused = useIsFocused();
-  const fetchData = useCallback(async () => {
-    const res = await getMarketList(
-      0,
-      10,
-      location?.userLatitude,
-      location?.userLongitude,
-    );
-    if (!res) {
-      Alert.alert('가게내역받아오기실패.');
-      return;
-    }
-    // TODO: 필터링 로직 추가
-    setMarketList(
-      res.markets.filter(
-        market =>
-          market.products.length && market.pickupEndAt && market.pickupStartAt,
-      ),
-    );
-  }, [location]);
+
+  const {data, fetchNextPage, isFetchingNextPage, hasNextPage} = useMarketList({
+    userLatitude: location?.userLatitude,
+    userLongitude: location?.userLongitude,
+  });
+
+  const marketList = data ? data.pages.flatMap(page => page.markets) : [];
 
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
@@ -78,16 +65,9 @@ const FeedScreen = ({navigation}: Props) => {
   }, [location]);
 
   const initializeData = useCallback(async () => {
-    const gotLocation = await getCurrentLocation();
     await requestNotificationPermission();
-    if (gotLocation) {
-      console.log('위치를 받아와서 fetch 실행......');
-      await fetchData();
-    } else {
-      console.log('디폴트 위치로 fetch실행...');
-      await fetchData();
-    }
-  }, [getCurrentLocation, fetchData]);
+    await getCurrentLocation();
+  }, [getCurrentLocation]);
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
@@ -108,7 +88,7 @@ const FeedScreen = ({navigation}: Props) => {
         latitude: location?.userLatitude || 37.582831666666664,
         longitude: location?.userLongitude || 127.06107333333334,
       },
-      ...marketList
+      marketList
         .filter(
           market =>
             market.latitude != null &&
@@ -133,18 +113,22 @@ const FeedScreen = ({navigation}: Props) => {
     });
   };
 
+  const handleEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
   const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
 
   useEffect(() => {
-    if (isFocused) {
-      initializeData();
-    }
-  }, [isFocused, initializeData]);
+    initializeData();
+  }, [initializeData]);
 
   if (marketList === null) {
     return (
       <View>
-        <Text>가게목록을 불러오는 중입니다....</Text>
+        <ActivityIndicator animating={true} size="large" />
       </View>
     );
   } else if (marketList.length === 0) {
@@ -158,17 +142,29 @@ const FeedScreen = ({navigation}: Props) => {
     <S.Container>
       {/* TODO: 검색바 */}
       <S.SearchWrapper>{/* <SearchTab /> */}</S.SearchWrapper>
-      <S.MarketWrapper
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {marketList.length === 0 ? (
-          <Text>상품이 없습니다.</Text>
-        ) : (
-          marketList.map(market => (
-            <Market key={market.id} onPress={onPressStore} market={market} />
-          ))
-        )}
+      <S.MarketWrapper>
+        <FlatList
+          data={marketList}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          keyExtractor={(item, index) => `${index}-${item.id.toString()}`}
+          renderItem={({item}) => {
+            if (!item) {
+              return null;
+            }
+            return <Market market={item} onPress={onPressStore} />;
+          }}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <S.LastIndicatorItem>
+                <ActivityIndicator size="small" animating={true} />
+              </S.LastIndicatorItem>
+            ) : null
+          }
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.6}
+        />
       </S.MarketWrapper>
       <BottomButton onPress={navigateMap}>
         지도로 주변 가게 확인하기

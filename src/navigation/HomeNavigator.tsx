@@ -1,6 +1,7 @@
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import MomChanPickLogo from '@/components/common/MomChanPickLogo';
 import SettingsIcon from '@/components/common/SettingsNavigatorIcon';
+import FeedScreen from '@/screens/FeedScreen';
 import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import SubscribeScreen from '@/screens/SubscribeScreen';
 import {HomeStackParamList} from '@/types/StackNavigationType';
@@ -9,7 +10,7 @@ import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import HomeScreen from '@screens/FeedScreen';
+
 import MyPageScreen from '@screens/MyPageScreen';
 import React from 'react';
 
@@ -41,7 +42,7 @@ const HomeNavigator = () => {
       <Tab.Screen
         name="Feed"
         options={feedScreenOptions}
-        component={HomeScreen}
+        component={FeedScreen}
       />
       <Tab.Screen
         name="Subscribe"

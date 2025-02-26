@@ -4,5 +4,4 @@ export type SessionType = {
   accessTokenExpiresAt?: number;
   refreshTokenExpiresAt?: number;
   OAuthProvider: 'NAVER' | 'KAKAO' | 'APPLE';
-  jwt: string;
 };

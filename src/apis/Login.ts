@@ -88,7 +88,6 @@ const signInWithNaver = async (): Promise<SessionType | null> => {
           accessTokenExpiresAt,
           refreshTokenExpiresAt: accessTokenExpiresAt,
           OAuthProvider: 'NAVER',
-          jwt: response.data.accessToken,
         };
       } else {
         console.debug('네이버 로그인 실패');
@@ -142,7 +141,6 @@ const signInWithKakao = async (): Promise<SessionType | null> => {
         accessTokenExpiresAt: new Date(token.accessTokenExpiresAt).getTime(),
         refreshTokenExpiresAt: new Date(token.refreshTokenExpiresAt).getTime(),
         OAuthProvider: 'KAKAO',
-        jwt: response.data.accessToken,
       };
     } else {
       console.debug('카카오 로그인 실패');
@@ -196,7 +194,6 @@ const signInWithApple = async (): Promise<SessionType | null> => {
         return {
           accessToken: token,
           OAuthProvider: 'APPLE',
-          jwt: response.data.accessToken,
         };
       } else {
         console.log('애플 로그인 실패');

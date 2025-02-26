@@ -11,14 +11,22 @@ const SearchWrapper = styled.View`
   z-index: 1;
 `;
 
-const MarketWrapper = styled.ScrollView`
+const MarketWrapper = styled.View`
   // margin-top: 50px;
+`;
+
+const LastIndicatorItem = styled.View`
+  padding: 16px;
+
+  justify-content: center;
+  align-items: center;
 `;
 
 const S = {
   Container,
   SearchWrapper,
   MarketWrapper,
+  LastIndicatorItem,
 };
 
 export default S;

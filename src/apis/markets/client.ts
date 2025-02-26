@@ -10,12 +10,12 @@ export const getMarketList = async ({
 }: MarketListRequest): Promise<{
   markets: MarketType[];
   hasNext: boolean;
-} | null> => {
+}> => {
   try {
     const res = await apiClient.get<{
       markets: MarketType[];
       hasNext: boolean;
-    } | null>(`customer/markets`, {
+    }>(`customer/markets`, {
       params: {
         cursorId,
         size,
@@ -24,10 +24,20 @@ export const getMarketList = async ({
       },
     });
 
+    if (!res) {
+      return {
+        markets: [],
+        hasNext: false,
+      };
+    }
+
     return res;
   } catch (error) {
     console.error('Error fetching market list:', error);
-    return null;
+    return {
+      markets: [],
+      hasNext: false,
+    };
   }
 };
 

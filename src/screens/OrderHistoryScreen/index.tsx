@@ -44,7 +44,9 @@ const OrderHistoryScreen = () => {
     return (
       <View>
         <Text>로그인 후 주문 목록을 확인해보세요.</Text>
-        <Button onPress={() => navigation.navigate('Login')} mode="contained">
+        <Button
+          onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+          mode="contained">
           로그인하러가기
         </Button>
       </View>

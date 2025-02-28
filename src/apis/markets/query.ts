@@ -33,9 +33,12 @@ export const useMarket = (marketId: number | undefined) => {
   });
 };
 
-export const useMarketLike = (marketId: number) => {
+export const useMarketLike = (marketId: number | undefined) => {
   return useMutation({
     mutationKey: ['marketLike', marketId],
-    mutationFn: () => updateMarketLike(marketId),
+    mutationFn: async () => {
+      if (!marketId) return;
+      return await updateMarketLike(marketId);
+    },
   });
 };

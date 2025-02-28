@@ -27,12 +27,11 @@ class ApiClient {
       async (config: InternalAxiosRequestConfig) => {
         const session: SessionType | null = await getStorage('session');
 
-        this._jwt = session?.jwt ?? null;
+        this._jwt = session?.accessToken ?? null;
 
         if (this._jwt) {
           config.headers.Authorization = `Bearer ${this._jwt}`;
         }
-
         return config;
       },
       error => Promise.reject(error),

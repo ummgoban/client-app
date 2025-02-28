@@ -53,7 +53,9 @@ const SubscribeScreen = ({navigation}: Props) => {
     return (
       <View>
         <Text>로그인 후 가게를 찜해보세요.</Text>
-        <Button onPress={() => navigation.navigate('Login')} mode="contained">
+        <Button
+          onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+          mode="contained">
           로그인하러가기
         </Button>
       </View>

@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {Alert} from 'react-native';
+
+import {useUpdateBucket, useDeleteFromBucket} from '@/apis/buckets';
+
+import CustomImageModal from '@/components/common/CustomImageModal';
+
 import {ProductType} from '@/types/ProductType';
-import {updateBucketProduct, deleteBucketProduct} from '@/apis/Bucket';
+
 import S from './Menu.style';
-import CustomImageModal from '../common/CustomImageModal';
 type Props = {
   product: ProductType;
   initCount: number;
@@ -14,13 +18,16 @@ type Props = {
 const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const [menuCount, setMenuCount] = useState(initCount);
 
+  const {mutateAsync: updateBucketProduct} = useUpdateBucket();
+  const {mutateAsync: deleteFromBucket} = useDeleteFromBucket();
+
   useEffect(() => {
     setMenuCount(initCount);
   }, [initCount]);
 
   const updateBucketCount = async (productId: number, count: number) => {
     try {
-      const res = await updateBucketProduct(productId, count);
+      const res = await updateBucketProduct({productId, count});
       if (!res) {
         console.debug('error');
       }
@@ -58,7 +65,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const deleteMenu = async () => {
     const handleDelete = async () => {
       try {
-        await deleteBucketProduct(product.id);
+        await deleteFromBucket(product.id);
         onCountChange(product.id, 0);
       } catch (error) {
         console.debug('메뉴 삭제 중 에러 발생', error);

@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 
-import {credentialLogin} from '@/apis/Login';
+import {useLoginQuery} from '@/apis/auth';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
@@ -12,6 +12,8 @@ import S from './CredentialLogin.style';
 const CredentialLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {mutateAsync: login} = useLoginQuery();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -32,7 +34,7 @@ const CredentialLogin = () => {
         mode="contained"
         disabled={!email || !password}
         onPress={async () => {
-          const res = await credentialLogin({email, password});
+          const res = await login({email, password});
           if (res) {
             navigation.navigate('Home', {screen: 'Feed'});
             return;

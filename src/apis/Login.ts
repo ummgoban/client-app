@@ -210,6 +210,7 @@ const signInWithApple = async (): Promise<SessionType | null> => {
 };
 
 /**
+ * @deprecated use [/apis/auth/query.ts](./auth/query.ts) instead
  * POST /common/members/sign-up
  * body: { email, password, name, phoneNumber }
  */
@@ -243,6 +244,7 @@ export const credentialSignUp = async ({
 };
 
 /**
+ * @deprecated use [/apis/auth/query.ts](./auth/query.ts) instead
  * POST /auth/login
  * body: { email, password }
  * TODO: error handling
@@ -277,6 +279,7 @@ export const credentialLogin = async ({
 };
 
 /**
+ * @deprecated use [/apis/auth/client.ts](./auth/client.ts) instead
  * @description 로그인 함수
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
@@ -312,7 +315,10 @@ export const loginWithOAuth = async (
   return false;
 };
 
-// TODO: 로그아웃 후 리프레쉬
+/**
+ * @deprecated use [/hooks/useProfile.ts](../hooks/useProfile.ts) instead
+ * @returns
+ */
 export const logout = async (): Promise<boolean> => {
   // TODO: credentail logout 추가
   try {
@@ -336,6 +342,10 @@ export const logout = async (): Promise<boolean> => {
   }
 };
 
+/**
+ * @deprecated use [/apis/auth/query.ts](./auth/query.ts) instead
+ * @returns
+ */
 export const getProfile = async (): Promise<UserType | null> => {
   try {
     const res = await apiClient.get<UserType | null>(

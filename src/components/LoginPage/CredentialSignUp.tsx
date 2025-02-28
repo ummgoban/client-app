@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 
-import {credentialSignUp} from '@/apis/Login';
+import {useSignUpQuery} from '@/apis/auth';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
@@ -17,6 +17,8 @@ const CredentialSignUp = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
 
   const [phoneNumber, setPhoneNumber] = useState('');
+
+  const {mutateAsync: signUp} = useSignUpQuery();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -61,7 +63,7 @@ const CredentialSignUp = () => {
               return;
             }
 
-            const res = await credentialSignUp({
+            const res = await signUp({
               email,
               password,
               name,

@@ -9,16 +9,15 @@ import NaverLoginButton from '@assets/NaverLoginButton.svg';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-import {useLoginWithOAuthQuery} from '@/apis/auth/query';
-
 import CredentialLogin from '@/components/LoginPage/CredentialLogin';
 
+import useProfile from '@/hooks/useProfile';
 import S from './LoginScreen.style';
 
 const LoginScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const {mutateAsync: loginWithOAuth} = useLoginWithOAuthQuery();
+  const {loginWithOAuth} = useProfile();
 
   return (
     <S.LoginPageContainer>

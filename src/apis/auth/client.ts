@@ -66,7 +66,7 @@ export const credentialLogin = async ({
     });
 
     if (res && res.code === 200) {
-      setStorage('session', res.data);
+      await setStorage('session', res.data);
       return true;
     }
 
@@ -98,7 +98,7 @@ export const loginWithOAuth = async (
   }
 
   if (res) {
-    setStorage('session', res);
+    await setStorage('session', res);
 
     try {
       console.log('test FCM after login');

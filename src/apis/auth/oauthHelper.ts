@@ -76,6 +76,7 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
       provider: 'NAVER',
       roles: 'ROLE_USER',
       accessToken,
+      oauthRefreshToken: refreshToken,
     });
 
     if (!response) {
@@ -87,8 +88,8 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     const accessTokenExpiresAt = Number(expiresAtUnixSecondString) * 1000;
 
     return {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       accessTokenExpiresAt,
       refreshTokenExpiresAt: accessTokenExpiresAt,
       OAuthProvider: 'NAVER',
@@ -126,6 +127,7 @@ export const signInWithKakao = async (): Promise<SessionType | null> => {
       provider: 'KAKAO',
       roles: 'ROLE_USER',
       accessToken: token.accessToken,
+      oauthRefreshToken: token.refreshToken,
     });
 
     if (!response) {
@@ -136,9 +138,8 @@ export const signInWithKakao = async (): Promise<SessionType | null> => {
     console.debug('카카오 로그인 성공:', response);
 
     return {
-      //TODO: JWT 토큰으로 대체 필요
-      accessToken: token.accessToken,
-      refreshToken: token.refreshToken,
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       accessTokenExpiresAt: new Date(token.accessTokenExpiresAt).getTime(),
       refreshTokenExpiresAt: new Date(token.refreshTokenExpiresAt).getTime(),
       OAuthProvider: 'KAKAO',
@@ -188,6 +189,7 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
       provider: 'APPLE',
       roles: 'ROLE_USER',
       accessToken: token,
+      oauthRefreshToken: token,
     });
     console.log(response);
 
@@ -198,7 +200,8 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
 
     console.log('애플 로그인 성공:', response);
     return {
-      accessToken: token,
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       OAuthProvider: 'APPLE',
     };
   } catch (error) {

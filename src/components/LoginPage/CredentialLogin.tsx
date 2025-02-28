@@ -3,17 +3,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 
-import {useLoginQuery} from '@/apis/auth';
-
 import {RootStackParamList} from '@/types/StackNavigationType';
 
+import useProfile from '@/hooks/useProfile';
 import S from './CredentialLogin.style';
 
 const CredentialLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {mutateAsync: login} = useLoginQuery();
+  const {login} = useProfile();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 

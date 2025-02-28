@@ -3,11 +3,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 
-import {useSignUpQuery} from '@/apis/auth';
-
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './CredentialLogin.style';
+import useProfile from '@/hooks/useProfile';
 
 const CredentialSignUp = () => {
   const [name, setName] = useState('');
@@ -18,7 +17,7 @@ const CredentialSignUp = () => {
 
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const {mutateAsync: signUp} = useSignUpQuery();
+  const {signUp} = useProfile();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 

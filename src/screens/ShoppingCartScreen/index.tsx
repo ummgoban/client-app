@@ -2,7 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {ActivityIndicator} from 'react-native-paper';
 
-import {useBucketList, useUpdateBucket} from '@/apis/buckets';
+import {useBucketList} from '@/apis/buckets';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
@@ -15,11 +15,6 @@ type Props = {
 
 const ShoppingCartScreen = ({navigation}: Props) => {
   const {data: cart, isLoading} = useBucketList();
-  const {mutateAsync: updateBucket} = useUpdateBucket();
-
-  const handleBucketProductCount = (id: number, newCount: number) => {
-    updateBucket({productId: id, count: newCount});
-  };
 
   if (isLoading) {
     return <ActivityIndicator animating size="large" />;
@@ -33,13 +28,7 @@ const ShoppingCartScreen = ({navigation}: Props) => {
     );
   }
 
-  return (
-    <ShoppingCartPage
-      navigation={navigation}
-      cartData={cart}
-      updateProductCount={handleBucketProductCount}
-    />
-  );
+  return <ShoppingCartPage navigation={navigation} cartData={cart} />;
 };
 
 export default ShoppingCartScreen;

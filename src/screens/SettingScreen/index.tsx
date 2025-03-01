@@ -1,7 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, AppState, AppStateStatus, Linking} from 'react-native';
-import S from './SettingScreen.style';
 
 import {useRegisterFCMTokenQuery} from '@/apis/auth';
 
@@ -11,6 +10,8 @@ import {
   isNotificationPermissionEnabled,
   requestLocationPermission,
 } from '@/utils/notification';
+
+import S from './SettingScreen.style';
 
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);

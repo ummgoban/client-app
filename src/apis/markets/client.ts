@@ -1,5 +1,8 @@
 import {MarketType, MarketDetailType} from '@/types/Market';
+import {SubscribeType} from '@/types/Subscribe';
+
 import apiClient from '../ApiClient';
+
 import {MarketListRequest} from './model';
 
 export const getMarketList = async ({
@@ -66,5 +69,40 @@ export const updateMarketLike = async (marketId: number): Promise<boolean> => {
   } catch (error) {
     console.error('Error in updateMarketLike:', error);
     return false;
+  }
+};
+
+export const getSubscribeList = async ({
+  cursorId,
+  size,
+}: {
+  cursorId: number;
+  size: number;
+}): Promise<{
+  markets: SubscribeType[];
+  hasNext: boolean;
+}> => {
+  try {
+    const res = await apiClient.get<{
+      markets: SubscribeType[];
+      hasNext: boolean;
+    }>(`/customer/markets/likes`, {
+      params: {cursorId, size},
+    });
+
+    if (!res) {
+      return {
+        markets: [],
+        hasNext: false,
+      };
+    }
+
+    return res;
+  } catch (error) {
+    console.error('Error Subscribed market list:', error);
+    return {
+      markets: [],
+      hasNext: false,
+    };
   }
 };

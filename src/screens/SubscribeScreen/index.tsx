@@ -1,40 +1,44 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {View, Alert, RefreshControl} from 'react-native';
-import {SubscribeType} from '@/types/Subscribe';
-import {getSubscribeList} from '@/apis/Subscribe';
-import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import S from './SubscribeScreen.style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {useIsFocused} from '@react-navigation/native';
+import React from 'react';
+import {RefreshControl, View} from 'react-native';
+import {ActivityIndicator, Button, Text} from 'react-native-paper';
+
+import {useSubscribeList} from '@/apis/markets';
+
 import useProfile from '@/hooks/useProfile';
-import {Button, Text} from 'react-native-paper';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
+
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+import S from './SubscribeScreen.style';
+import {FlatList} from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
 };
 
 const SubscribeScreen = ({navigation}: Props) => {
-  const [markets, setMarkets] = useState<SubscribeType[] | null>(null);
+  const {
+    data: subscribeList,
+    refetch,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useSubscribeList();
 
-  const isFocused = useIsFocused();
+  const markets = subscribeList
+    ? subscribeList?.pages.flatMap(page => page.markets)
+    : [];
 
   const {profile} = useProfile();
 
-  const fetchData = useCallback(async () => {
-    if (!profile) {
-      return;
-    }
-    const res = await getSubscribeList();
-    if (!res) {
-      Alert.alert('찜 리스트 받아오기 실패');
-      return;
-    }
-    setMarkets(res.markets);
-  }, [profile]);
-
-  const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
+  const {refreshing, onRefresh} = usePullDownRefresh(async () => {
+    await refetch();
+  });
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
@@ -43,11 +47,10 @@ const SubscribeScreen = ({navigation}: Props) => {
     });
   };
 
-  useEffect(() => {
-    if (isFocused) {
-      fetchData();
-    }
-  }, [fetchData, isFocused]);
+  const handleEndReached = () => {
+    if (isFetchingNextPage || !hasNextPage) return;
+    fetchNextPage();
+  };
 
   if (!profile) {
     return (
@@ -62,6 +65,12 @@ const SubscribeScreen = ({navigation}: Props) => {
     );
   }
 
+  if (isLoading) {
+    <View>
+      <CustomActivityIndicator />
+    </View>;
+  }
+
   if (!markets) {
     return (
       <View>
@@ -72,25 +81,40 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   return (
     <S.SubscribeContainer>
-      <Text>현재 {markets.length}개 가게를 찜하고 계세요!</Text>
-      <S.SubscribeMarketCartWrapper
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {markets.map(item => (
-          <SubscribeMarketCard
-            key={item.id}
-            marketId={item.id}
-            name={item.name}
-            address={item.address}
-            specificAddress={item.specificAddress}
-            openAt={item.openAt}
-            closeAt={item.closeAt}
-            // TODO: 가게 대표 이미지로 변경, 현재 response 부재
-            thumbnailImage={item.products[0].image}
-            onPress={onPressStore}
-          />
-        ))}
+      <S.SubscribeMarketCartWrapper>
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={markets}
+          keyExtractor={(item, index) => `${index}-${item.id.toString()}`}
+          renderItem={({item}) => {
+            if (!item) return null;
+            return (
+              <SubscribeMarketCard
+                key={item.id}
+                marketId={item.id}
+                name={item.name}
+                address={item.address}
+                specificAddress={item.specificAddress}
+                openAt={item.openAt}
+                closeAt={item.closeAt}
+                // TODO: 가게 대표 이미지로 변경, 현재 response 부재
+                thumbnailImage={item.products[0]?.image}
+                onPress={onPressStore}
+              />
+            );
+          }}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <S.LastIndicatorItem>
+                <ActivityIndicator size="small" animating={true} />
+              </S.LastIndicatorItem>
+            ) : null
+          }
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.6}
+        />
       </S.SubscribeMarketCartWrapper>
     </S.SubscribeContainer>
   );

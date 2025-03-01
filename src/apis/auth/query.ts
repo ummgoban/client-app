@@ -6,6 +6,7 @@ import {
   getProfile,
   loginWithOAuth,
   logout,
+  registerFCMToken,
 } from './client';
 import {LoginRequest, OAuthLoginRequest, SignUpRequest} from './model';
 
@@ -40,4 +41,10 @@ export const useLogoutQuery = () =>
   useMutation({
     mutationKey: ['logout'],
     mutationFn: () => logout(),
+  });
+
+export const useRegisterFCMTokenQuery = () =>
+  useMutation({
+    mutationKey: ['register-fcm-token'],
+    mutationFn: (deviceToken: string) => registerFCMToken(deviceToken),
   });

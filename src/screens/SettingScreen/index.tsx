@@ -1,19 +1,24 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {AppState, AppStateStatus, Alert, Linking} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, AppState, AppStateStatus, Linking} from 'react-native';
 import S from './SettingScreen.style';
+
+import {useRegisterFCMTokenQuery} from '@/apis/auth';
+
 import {
   changeLocationPermission,
   changeNotificationPermission,
   isNotificationPermissionEnabled,
   requestLocationPermission,
 } from '@/utils/notification';
-import messaging from '@react-native-firebase/messaging';
-import {registerFCMToken} from '@/apis';
+
 const SettingScreen = () => {
   const [isNotificationOn, setIsNotificationOn] = useState(false);
   const [isLocationOn, setIsLocationOn] = useState<
     'granted' | 'never_ask_again' | 'denied' | null
   >(null);
+
+  const {mutate: registerFCMTokenMutation} = useRegisterFCMTokenQuery();
 
   const initializeNotificationPermission = useCallback(async () => {
     try {
@@ -21,13 +26,13 @@ const SettingScreen = () => {
       setIsNotificationOn(isEnabled);
       if (isEnabled) {
         const token = await messaging().getToken();
-        await registerFCMToken(token);
+        registerFCMTokenMutation(token);
         console.log('FCM Token:', token);
       }
     } catch (error) {
       console.error('체크 실패', error);
     }
-  }, []);
+  }, [registerFCMTokenMutation]);
 
   const isPermissionRequestedRef = useRef(false);
 

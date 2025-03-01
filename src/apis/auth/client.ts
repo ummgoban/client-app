@@ -7,8 +7,28 @@ import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 
 import apiClient from '../ApiClient';
-import {registerFCMToken} from '../Fcm';
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
+
+export const registerFCMToken = async (
+  deviceToken: string,
+): Promise<boolean> => {
+  try {
+    console.log('Registering FCM token:', deviceToken);
+    const res = await apiClient.post<{code: number; message: string}>(
+      '/common/members/device-token',
+      {},
+      {
+        params: {
+          deviceToken,
+        },
+      },
+    );
+    return !!res && res.code === 200;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
 
 /**
  * POST /common/members/sign-up

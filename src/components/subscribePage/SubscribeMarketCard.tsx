@@ -1,5 +1,6 @@
 import React from 'react';
 import S from './SubscribeMarketCard.style';
+import {Image} from 'react-native';
 
 type SubscribeMarketCardProps = {
   name: string;
@@ -8,7 +9,7 @@ type SubscribeMarketCardProps = {
   specificAddress: string;
   openAt: string;
   closeAt: string;
-  thumbnailImage: string;
+  thumbnailImage?: string;
   onPress: (marketId: number) => void;
 };
 
@@ -24,7 +25,18 @@ const SubscribeMarketCard = ({
 }: SubscribeMarketCardProps) => {
   return (
     <S.SubscribeMarketCard onPress={() => onPress(marketId)}>
-      <S.thumbnailImage source={{uri: thumbnailImage}} />
+      <S.ThumbnailImage>
+        {thumbnailImage ? (
+          <Image
+            source={{uri: thumbnailImage}}
+            width={64}
+            height={64}
+            borderRadius={12}
+            resizeMode="cover"
+          />
+        ) : null}
+      </S.ThumbnailImage>
+
       <S.MarketInfo>
         <S.MarketNameText>{name}</S.MarketNameText>
         <S.MarketDescribeText>

@@ -1,5 +1,10 @@
 import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
-import {getMarketList, getMarket, updateMarketLike} from './client';
+import {
+  getMarketList,
+  getMarket,
+  updateMarketLike,
+  getSubscribeList,
+} from './client';
 import {MarketListQueryRequest} from './model';
 
 export const useMarketList = ({
@@ -40,5 +45,21 @@ export const useMarketLike = (marketId: number | undefined) => {
       if (!marketId) return;
       return await updateMarketLike(marketId);
     },
+  });
+};
+
+export const useSubscribeList = () => {
+  return useInfiniteQuery({
+    queryKey: ['subscribeList'],
+    queryFn: ({pageParam = 0}) =>
+      getSubscribeList({
+        cursorId: pageParam,
+        size: 5,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: lastPage =>
+      lastPage.hasNext
+        ? lastPage.markets[lastPage.markets.length - 1].id
+        : undefined,
   });
 };

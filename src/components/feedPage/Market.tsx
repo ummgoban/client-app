@@ -1,6 +1,11 @@
-import {MarketType} from '@/types/Market';
-import S from './Market.style';
 import React from 'react';
+
+import DotIndicator from '@/assets/icons/dot.svg';
+
+import {MarketType} from '@/types/Market';
+
+import S from './Market.style';
+
 type Props = {
   market: MarketType;
   onPress: (marketId: number) => void;
@@ -11,7 +16,6 @@ const Market = ({market, onPress}: Props) => {
       <S.MarketImageContainer>
         {market.products
           .filter(p => p.stock && p.productStatus !== 'HIDDEN')
-          .slice(0, 3)
           .map(product => (
             <S.MarketImageBox key={product.id}>
               <S.MarketImage source={{uri: product.image}} />
@@ -25,24 +29,26 @@ const Market = ({market, onPress}: Props) => {
                 start={{x: 0.5, y: 0}}
                 end={{x: 0.5, y: 1}}
               />
-              <S.MenuLabel numberOfLines={1}>{product.name}</S.MenuLabel>
-              <S.PriceLabel>
-                {product.discountPrice.toLocaleString()}원
-              </S.PriceLabel>
+              <S.LableWrapper>
+                <S.MenuLabel numberOfLines={1}>{product.name}</S.MenuLabel>
+                <S.PriceLabel>
+                  {product.discountPrice.toLocaleString()}원
+                </S.PriceLabel>
+              </S.LableWrapper>
             </S.MarketImageBox>
           ))}
       </S.MarketImageContainer>
       <S.MarketInfoDiscription>
         <S.MarketTitle>{market.name}</S.MarketTitle>
-        <S.MarketAddress>
-          {market.address} {market.specificAddress}
-        </S.MarketAddress>
-        <S.MarketPickupTime>
-          {`영업 가능 시간: ${market.openAt} ~ ${market.closeAt}`}
-        </S.MarketPickupTime>
-        <S.MarketPickupTime>
-          {`픽업 가능 시간: ${market.pickupStartAt} ~ ${market.pickupEndAt}`}
-        </S.MarketPickupTime>
+        <S.DescriptionContainer>
+          <S.MarketPickupTime>
+            <S.LightText>{'픽업'}</S.LightText>
+            <S.DarkText>{`${market.pickupStartAt}~${market.pickupEndAt}`}</S.DarkText>
+          </S.MarketPickupTime>
+          <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
+          {/* TODO: 주소 대신 현재 위치에서 거리 표시 (600m dot 도보 4분) 형태 */}
+          <S.DarkText>{market.address}</S.DarkText>
+        </S.DescriptionContainer>
       </S.MarketInfoDiscription>
     </S.MarketWrapper>
   );

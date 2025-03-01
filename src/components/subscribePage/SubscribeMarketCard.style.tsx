@@ -37,11 +37,12 @@ const MarketDescribeText = styled.Text`
   word-wrap: keep-all;
 `;
 
-const thumbnailImage = styled.Image`
+const ThumbnailImage = styled.View`
   width: 64px;
   height: 64px;
 
   border-radius: 12px;
+  border: 1px solid #e0e0e0;
   margin: 0px 16px;
 `;
 
@@ -50,7 +51,7 @@ const S = {
   MarketInfo,
   MarketNameText,
   MarketDescribeText,
-  thumbnailImage,
+  ThumbnailImage,
 };
 
 export default S;

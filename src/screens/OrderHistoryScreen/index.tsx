@@ -1,44 +1,32 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {OrderType} from '@/types/OrderType';
-import {getOrderHistory} from '@/apis';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Alert, RefreshControl, View} from 'react-native';
-import S from './OrderHistory.style';
-import OrderHistory from '@/components/orderHistory/OrderHistory';
-import useProfile from '@/hooks/useProfile';
+import React from 'react';
+import {RefreshControl, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {useOrderHistoryQuery} from '@/apis/orders';
+
+import OrderHistory from '@/components/orderHistory/OrderHistory';
+
+import useProfile from '@/hooks/useProfile';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+import S from './OrderHistory.style';
+
 const OrderHistoryScreen = () => {
-  const [historyList, setHistoryList] = useState<OrderType[] | null>(null);
+  const {data: historyList, refetch} = useOrderHistoryQuery();
 
   const {profile} = useProfile();
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
 
-  const fetchData = useCallback(async () => {
-    if (!profile) {
-      return;
-    }
-    const res = await getOrderHistory();
-    if (!res) {
-      Alert.alert('주문 내역을 불러오는데 실패했습니다.');
-      return;
-    }
-
-    setHistoryList(res);
-
-    console.log(res);
-  }, [profile]);
-
-  const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const {refreshing, onRefresh} = usePullDownRefresh(async () => {
+    refetch();
+  });
 
   if (!profile) {
     return (
@@ -52,7 +40,6 @@ const OrderHistoryScreen = () => {
       </View>
     );
   }
-  console.log(historyList);
 
   if (!historyList?.length) {
     return (

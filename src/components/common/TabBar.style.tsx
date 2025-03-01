@@ -3,7 +3,12 @@ import styled from '@emotion/native';
 const TabBarContainer = styled.View`
   display: flex;
   flex-direction: row;
-  margin-bottom: 8px;
+
+  padding: 0 12px;
+
+  border-top: 1px solid #c1c9d6;
+
+  background-color: white;
 `;
 
 const TabBarItemButton = styled.TouchableOpacity`
@@ -11,17 +16,21 @@ const TabBarItemButton = styled.TouchableOpacity`
 `;
 
 const TabBarItem = styled.View`
-  margin: 4px auto;
+  margin: 0 auto;
+  height: 56px;
   padding: 4px;
+  box-sizing: border-box;
+
   display: flex;
+  gap: 4px;
   align-items: center;
   justify-content: center;
 `;
 
 const TabBarText = styled.Text<{isFocused: boolean}>`
-  ${({theme}) => theme.fonts.body2};
+  ${({theme}) => theme.fonts.caption};
   color: ${({isFocused, theme}) =>
-    isFocused ? theme.colors.primary : theme.colors.tertiary};
+    isFocused ? theme.colors.primaryLight : theme.colors.disabled};
 `;
 
 const S = {

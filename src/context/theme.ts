@@ -11,6 +11,8 @@ const theme = {
     primaryPressed: 'rgba(112, 200, 2, 0.18)',
     primaryDisabled: 'rgba(112, 200, 2, 0.38)',
 
+    primaryLight: 'rgba(22, 190, 83, 1)',
+
     // secondary: white
     secondary: 'rgba(255, 255, 255, 1)',
     secondaryHover: 'rgba(255, 255, 255, 0.08)',
@@ -34,6 +36,9 @@ const theme = {
     errorHover: 'rgba(255, 44, 44, 0.08)',
     errorPressed: 'rgba(255, 44, 44, 0.18)',
     errorDisabled: 'rgba(255, 44, 44, 0.38)',
+
+    // disabled
+    disabled: 'rgba(174, 174, 174, 1)',
   },
   fonts: {
     ...DefaultTheme.fonts,

@@ -2,8 +2,10 @@ import React from 'react';
 
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import {default as AntIcon} from 'react-native-vector-icons/AntDesign';
-import {default as FeatherIcon} from 'react-native-vector-icons/Feather';
+import HomeIcon from '@/assets/icons/home-regular.svg';
+import HeartIcon from '@/assets/icons/heart-regular.svg';
+import RecipeIcon from '@/assets/icons/file-regular.svg';
+import ProfileIcon from '@/assets/icons/user-profile-regular.svg';
 
 import {HomeStackParamList} from '@/types/StackNavigationType';
 
@@ -12,41 +14,21 @@ import S from './TabBar.style';
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
     label: string;
-    icon: {
-      family: 'AntDesign' | 'Feather';
-      name: string;
-    };
   };
 };
 
 const tabBarData: TabBarComponentType = {
   Feed: {
     label: '홈',
-    icon: {
-      family: 'Feather',
-      name: 'home',
-    },
-  },
-  MyPage: {
-    label: '마이 페이지',
-    icon: {
-      family: 'Feather',
-      name: 'user',
-    },
-  },
-  OrderHistory: {
-    label: '주문 내역',
-    icon: {
-      family: 'AntDesign',
-      name: 'profile',
-    },
   },
   Subscribe: {
     label: '찜',
-    icon: {
-      family: 'Feather',
-      name: 'heart',
-    },
+  },
+  MyPage: {
+    label: '마이',
+  },
+  OrderHistory: {
+    label: '주문 내역',
   },
 };
 
@@ -57,7 +39,7 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
 
-        const {label, icon} = tabBarData[route.name];
+        const {label} = tabBarData[route.name];
 
         const isFocused = state.index === index;
 
@@ -90,18 +72,40 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             onPress={onPress}
             onLongPress={onLongPress}>
             <S.TabBarItem>
-              {icon.family === 'AntDesign' && (
-                <AntIcon
-                  name={icon.name}
-                  size={24}
-                  color={isFocused ? 'rgba(112, 200, 2, 1)' : '#222'}
+              {route.name === 'Feed' && (
+                <HomeIcon
+                  color={
+                    isFocused
+                      ? 'rgba(22, 190, 83, 1)'
+                      : 'rgba(174, 174, 174, 1)'
+                  }
                 />
               )}
-              {icon.family === 'Feather' && (
-                <FeatherIcon
-                  name={icon.name}
-                  size={24}
-                  color={isFocused ? 'rgba(112, 200, 2, 1)' : '#222'}
+              {route.name === 'Subscribe' && (
+                <HeartIcon
+                  color={
+                    isFocused
+                      ? 'rgba(22, 190, 83, 1)'
+                      : 'rgba(174, 174, 174, 1)'
+                  }
+                />
+              )}
+              {route.name === 'MyPage' && (
+                <ProfileIcon
+                  color={
+                    isFocused
+                      ? 'rgba(22, 190, 83, 1)'
+                      : 'rgba(174, 174, 174, 1)'
+                  }
+                />
+              )}
+              {route.name === 'OrderHistory' && (
+                <RecipeIcon
+                  color={
+                    isFocused
+                      ? 'rgba(22, 190, 83, 1)'
+                      : 'rgba(174, 174, 174, 1)'
+                  }
                 />
               )}
               <S.TabBarText isFocused={isFocused}>{label}</S.TabBarText>

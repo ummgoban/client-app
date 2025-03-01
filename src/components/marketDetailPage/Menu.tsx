@@ -1,9 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
+
+import {useDeleteFromBucket} from '@/apis/buckets';
+
+import CustomImageModal from '@/components/common/CustomImageModal';
+
 import {ProductType} from '@/types/ProductType';
-import {updateBucketProduct, deleteBucketProduct} from '@/apis/Bucket';
+
 import S from './Menu.style';
-import CustomImageModal from '../common/CustomImageModal';
 type Props = {
   product: ProductType;
   initCount: number;
@@ -14,43 +18,28 @@ type Props = {
 const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const [menuCount, setMenuCount] = useState(initCount);
 
+  const {mutateAsync: deleteFromBucket} = useDeleteFromBucket();
+
   useEffect(() => {
     setMenuCount(initCount);
   }, [initCount]);
 
-  const updateBucketCount = async (productId: number, count: number) => {
-    try {
-      const res = await updateBucketProduct(productId, count);
-      if (!res) {
-        console.debug('error');
-      }
-    } catch (error) {
-      console.debug('error');
-    }
-  };
-
   const increaseMenuCount = async () => {
-    if (isCart) {
-      await updateBucketCount(product.id, 1);
-    }
     setMenuCount(prevCount => {
       const newCount = prevCount + 1;
       if (newCount > product.stock) {
         return prevCount;
       }
-      onCountChange(product.id, newCount);
+      onCountChange(product.id, isCart ? 1 : newCount);
       return newCount;
     });
   };
 
   const decreaseMenuCount = async () => {
-    if (isCart) {
-      await updateBucketCount(product.id, -1);
-    }
     setMenuCount(prevCount => {
       const minCount = isCart ? 1 : 0;
       const newCount = Math.max(prevCount - 1, minCount);
-      onCountChange(product.id, newCount);
+      onCountChange(product.id, isCart ? -1 : newCount);
       return newCount;
     });
   };
@@ -58,7 +47,7 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
   const deleteMenu = async () => {
     const handleDelete = async () => {
       try {
-        await deleteBucketProduct(product.id);
+        await deleteFromBucket(product.id);
         onCountChange(product.id, 0);
       } catch (error) {
         console.debug('메뉴 삭제 중 에러 발생', error);

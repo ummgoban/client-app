@@ -1,23 +1,29 @@
-import React, {useRef, useState, useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Alert,
-  TouchableOpacity,
-  ScrollView,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
   LayoutChangeEvent,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import {zeroPad} from '@utils/date';
-import Menu from '@/components/marketDetailPage/Menu';
-import S from './MarketDetail.style';
-import {ProductType} from '@/types/ProductType';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import SubscribeIcon from '@/components/common/SubscribeIcon';
+
+import {useValidateBucket, useAddToBucket} from '@/apis/buckets';
+
 import {BottomButton} from '@/components/common';
+import SubscribeIcon from '@/components/common/SubscribeIcon';
+import Menu from '@/components/marketDetailPage/Menu';
+
 import {MarketDetailType} from '@/types/Market';
-import {validateBucket, addToBucket} from '@/apis/Bucket';
+import {ProductType} from '@/types/ProductType';
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+import {zeroPad} from '@utils/date';
+
+import S from './MarketDetail.style';
+
 type CartItem = {
   productId: number;
   productName: string;
@@ -49,6 +55,10 @@ const MarketDetailPage = ({
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
   const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const {mutateAsync: validateBucket} = useValidateBucket();
+  const {mutateAsync: addToBucket} = useAddToBucket();
+
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
       productId,
@@ -56,6 +66,7 @@ const MarketDetailPage = ({
       newCount,
     );
   };
+
   const handleCart = (
     productId: number,
     productName: string,
@@ -140,6 +151,7 @@ const MarketDetailPage = ({
     },
     [sortedProductsByTags, tagWidths],
   );
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
 
@@ -239,7 +251,11 @@ const MarketDetailPage = ({
         };
       });
 
-      const bucketPostValidate = await addToBucket(marketId, bucketProducts);
+      const bucketPostValidate = await addToBucket({
+        marketId,
+        products: bucketProducts,
+      });
+
       if (bucketPostValidate) {
         navigation.navigate('CartRoot', {
           screen: 'Cart',

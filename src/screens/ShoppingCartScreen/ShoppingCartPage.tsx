@@ -7,17 +7,16 @@ import MarketInfo from '@/components/CartPage/MarketInfo';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {Menu} from '@/components/marketDetailPage';
 import {BottomButton} from '@/components/common';
+import {useUpdateBucket} from '@/apis/buckets';
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
   cartData: BucketType;
-  updateProductCount: (id: number, newCount: number) => void;
 };
 
-const ShoppingCartPage = ({
-  navigation,
-  cartData,
-  updateProductCount,
-}: Props) => {
+const ShoppingCartPage = ({navigation, cartData}: Props) => {
+  const {mutateAsync: updateBucketProduct} = useUpdateBucket();
+
   const {originPrice, discountPrice} = useMemo(() => {
     return cartData.products.reduce(
       (acc, cur) => ({
@@ -51,9 +50,9 @@ const ShoppingCartPage = ({
             <Menu
               product={product}
               initCount={product.count}
-              onCountChange={(productId, count) =>
-                updateProductCount(productId, count)
-              }
+              onCountChange={async (productId: number, count: number) => {
+                return await updateBucketProduct({productId, count});
+              }}
               isCart
             />
           </S.CardContainer>

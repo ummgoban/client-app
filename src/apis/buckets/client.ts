@@ -1,7 +1,9 @@
 import {BucketType, BucketProductType} from '@/types/Bucket';
-import apiClient from './ApiClient';
 
-export const getBuckets = async (): Promise<BucketType | null> => {
+import apiClient from '../ApiClient';
+import {AddBucketRequest, UpdateBucketRequest} from './model';
+
+export const getBucketList = async (): Promise<BucketType | null> => {
   try {
     const res = await apiClient.get<BucketType | null>('/customer/buckets');
 
@@ -27,10 +29,10 @@ export const validateBucket = async (marketId: number): Promise<boolean> => {
   }
 };
 
-export const addToBucket = async (
-  marketId: number,
-  products: BucketProductType[],
-): Promise<boolean> => {
+export const addToBucket = async ({
+  marketId,
+  products,
+}: AddBucketRequest): Promise<boolean> => {
   try {
     const res = await apiClient.post<
       {
@@ -51,10 +53,10 @@ export const addToBucket = async (
   }
 };
 
-export const updateBucketProduct = async (
-  productId: number,
-  count: number,
-): Promise<boolean> => {
+export const updateBucketProduct = async ({
+  productId,
+  count,
+}: UpdateBucketRequest): Promise<boolean> => {
   try {
     const res = await apiClient.patch<{
       code: number;

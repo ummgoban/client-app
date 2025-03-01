@@ -1,40 +1,36 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {View, Alert, RefreshControl} from 'react-native';
-import {SubscribeType} from '@/types/Subscribe';
-import {getSubscribeList} from '@/apis/Subscribe';
-import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import S from './SubscribeScreen.style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {useIsFocused} from '@react-navigation/native';
-import useProfile from '@/hooks/useProfile';
+import React from 'react';
+import {RefreshControl, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
+
+import {useSubscribeList} from '@/apis/markets';
+
+import useProfile from '@/hooks/useProfile';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
+
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+import S from './SubscribeScreen.style';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
 };
 
 const SubscribeScreen = ({navigation}: Props) => {
-  const [markets, setMarkets] = useState<SubscribeType[] | null>(null);
+  const {data: subscribeList, refetch, isLoading} = useSubscribeList();
 
-  const isFocused = useIsFocused();
+  const markets = subscribeList
+    ? subscribeList?.pages.flatMap(page => page.markets)
+    : [];
 
   const {profile} = useProfile();
 
-  const fetchData = useCallback(async () => {
-    if (!profile) {
-      return;
-    }
-    const res = await getSubscribeList();
-    if (!res) {
-      Alert.alert('찜 리스트 받아오기 실패');
-      return;
-    }
-    setMarkets(res.markets);
-  }, [profile]);
-
-  const {refreshing, onRefresh} = usePullDownRefresh(fetchData);
+  const {refreshing, onRefresh} = usePullDownRefresh(async () => {
+    await refetch();
+  });
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
@@ -42,12 +38,6 @@ const SubscribeScreen = ({navigation}: Props) => {
       params: {marketId},
     });
   };
-
-  useEffect(() => {
-    if (isFocused) {
-      fetchData();
-    }
-  }, [fetchData, isFocused]);
 
   if (!profile) {
     return (
@@ -60,6 +50,12 @@ const SubscribeScreen = ({navigation}: Props) => {
         </Button>
       </View>
     );
+  }
+
+  if (isLoading) {
+    <View>
+      <CustomActivityIndicator />
+    </View>;
   }
 
   if (!markets) {

@@ -1,4 +1,5 @@
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
@@ -74,6 +75,12 @@ class ApiClient {
     } catch (error) {
       console.error('GET', url, JSON.stringify(error, null, 2));
 
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error(JSON.stringify(error.response.data, null, 2));
+        }
+      }
+
       return null;
     }
   };
@@ -96,6 +103,12 @@ class ApiClient {
     } catch (error) {
       console.error('POST', url, JSON.stringify(error, null, 2));
 
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error(JSON.stringify(error.response.data, null, 2));
+        }
+      }
+
       return null;
     }
   };
@@ -117,6 +130,12 @@ class ApiClient {
       return res.data;
     } catch (error) {
       console.error('PATCH', url, JSON.stringify(error, null, 2));
+
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error(JSON.stringify(error.response.data, null, 2));
+        }
+      }
       return null;
     }
   };
@@ -157,6 +176,12 @@ class ApiClient {
       return res.data;
     } catch (error) {
       console.error('DELETE', url, JSON.stringify(error, null, 2));
+
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error(JSON.stringify(error.response.data, null, 2));
+        }
+      }
 
       return null;
     }

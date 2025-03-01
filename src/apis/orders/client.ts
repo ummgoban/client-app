@@ -1,32 +1,34 @@
 import {OrderDetailType, OrderType} from '@/types/OrderType';
-import apiClient from './ApiClient';
 
-export const getOrderHistory = async (): Promise<OrderType[] | null> => {
+import apiClient from '../ApiClient';
+import {CreateOrderRequest, OrderSuccessRequest} from './model';
+
+const BASE_URL = '/customer/orders';
+
+export const getOrderHistory = async (): Promise<OrderType[]> => {
   try {
-    const res = await apiClient.get<OrderType[] | null>('/customer/orders');
-    return res;
+    const res = await apiClient.get<OrderType[]>(`${BASE_URL}`);
+    return res ?? [];
   } catch (error) {
     console.error(error);
-    return null;
+    return [];
   }
 };
 
-export const getProgressingOrder = async (): Promise<OrderType[] | null> => {
+export const getProgressingOrder = async (): Promise<OrderType[]> => {
   try {
-    const res = await apiClient.get<OrderType[] | null>(
-      '/customer/orders/progress',
-    );
-    return res;
+    const res = await apiClient.get<OrderType[]>(`${BASE_URL}/progress`);
+    return res ?? [];
   } catch (error) {
     console.error(error);
-    return null;
+    return [];
   }
 };
 
-export const requestOrder = async (
-  pickupReservedAt: string,
-  customerRequest: string,
-): Promise<{
+export const requestOrder = async ({
+  pickupReservedAt,
+  customerRequest,
+}: CreateOrderRequest): Promise<{
   ordersId: string;
   ordersName: string;
   amount: number;
@@ -38,7 +40,7 @@ export const requestOrder = async (
         ordersName: string;
         amount: number;
       };
-    } | null>('/customer/orders', {
+    } | null>(`${BASE_URL}`, {
       pickupReservedAt,
       customerRequest,
     });
@@ -50,14 +52,14 @@ export const requestOrder = async (
   }
 };
 
-export const requestOrderSuccess = async (
-  paymentKey: string,
-  ordersId: string,
-  amount: number,
-): Promise<Boolean | null> => {
+export const requestOrderSuccess = async ({
+  paymentKey,
+  ordersId,
+  amount,
+}: OrderSuccessRequest): Promise<Boolean | null> => {
   try {
     const res = await apiClient.post<{code: number} | null>(
-      '/customer/orders/payments',
+      `${BASE_URL}/payments`,
       {
         paymentKey,
         ordersId,
@@ -77,7 +79,7 @@ export const getOrderDetail = async (
 ): Promise<OrderDetailType | null> => {
   try {
     const res = await apiClient.get<OrderDetailType | null>(
-      `/customer/orders/${ordersId}`,
+      `${BASE_URL}/${ordersId}`,
     );
     return res;
   } catch (error) {

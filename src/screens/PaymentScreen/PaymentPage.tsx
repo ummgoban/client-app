@@ -11,16 +11,19 @@ import {StackNavigationProp} from '@react-navigation/stack';
 //   usePaymentWidget,
 // } from '@tosspayments/widget-sdk-react-native';
 
-import {requestOrder} from '@/apis';
-import {BucketType} from '@/types/Bucket';
-import {MarketDetailType} from '@/types/Market';
-import {RootStackParamList} from '@/types/StackNavigationType';
+import {useRequestOrderMutation} from '@/apis/orders';
+
 import {BottomButton} from '@components/common';
 import {
   DatePickerCard,
   // PaymentMethod,
   PaymentSummary,
 } from '@components/orderPage';
+
+import {BucketType} from '@/types/Bucket';
+import {MarketDetailType} from '@/types/Market';
+import {RootStackParamList} from '@/types/StackNavigationType';
+
 import {format} from '@/utils/date';
 
 import S from './PaymentPage.style';
@@ -33,6 +36,8 @@ const PaymentPage = ({cart, market}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
+
+  const {mutateAsync: requestOrder} = useRequestOrderMutation();
 
   const {originPrice, discountPrice} = useMemo(
     () =>
@@ -108,11 +113,13 @@ const PaymentPage = ({cart, market}: Props) => {
           // }
 
           // TODO: 주문 요청 사항
-          const orderRes = await requestOrder(
-            // TODO: 타임존 문제
-            `${format(pickupReservedAt, 'YYYY-MM-DDTHH:mm:ss.000')}Z`,
-            '',
-          );
+          const orderRes = await requestOrder({
+            pickupReservedAt: format(
+              pickupReservedAt,
+              'YYYY-MM-DDTHH:mm:ss.000',
+            ),
+            customerRequest: '',
+          });
 
           if (orderRes == null) {
             Alert.alert('주문 정보를 가져오지 못했습니다.');

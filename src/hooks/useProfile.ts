@@ -1,42 +1,33 @@
+import {useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
 import {create} from 'zustand';
 
-import {
-  getProfile as getProfileApi,
-  loginWithOAuth as loginWithOAuthApi,
-  logout as logoutApi,
-} from '@/apis/Login';
-
-import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
 
-import messaging from '@react-native-firebase/messaging';
-import {registerFCMToken} from '@/apis/Fcm';
+import {
+  useLoginQuery,
+  useLoginWithOAuthQuery,
+  useLogoutQuery,
+  useProfileQuery,
+  useSignUpQuery,
+} from '@/apis/auth/query';
+import type {
+  LoginRequest,
+  SignUpRequest,
+  OAuthLoginRequest,
+} from '@/apis/auth/model';
 
 type AdminUserType = UserType & {
   marketId: number | null;
 };
 
 type ProfileStore = {
-  loading: boolean;
   profile: AdminUserType | null;
-  getProfile: () => Promise<void>;
   setCurrentMarketId: (marketId: number) => void;
 };
 
 const useProfileStore = create<ProfileStore>(set => ({
-  loading: true,
   profile: null,
-  getProfile: async () => {
-    set({loading: true});
-    const profileRes = await getProfileApi();
-
-    if (!profileRes) {
-      set({profile: null, loading: false});
-      return;
-    }
-    set({profile: {...profileRes, marketId: null}, loading: false});
-  },
   setCurrentMarketId: marketId => {
     set(state => {
       if (!state.profile) {
@@ -48,20 +39,26 @@ const useProfileStore = create<ProfileStore>(set => ({
 }));
 
 const useProfile = () => {
-  const {profile, getProfile, setCurrentMarketId, loading} = useProfileStore();
+  const {setCurrentMarketId} = useProfileStore();
 
-  const fetchProfile = useCallback(async () => {
-    if (!profile) {
-      await getProfile();
-    }
-  }, [getProfile, profile]);
+  const {data: profile} = useProfileQuery();
 
-  const refresh = useCallback(async () => {
-    await getProfile();
-    const token = await messaging().getToken();
-    await registerFCMToken(token);
-    console.log('FCM Token:', token);
-  }, [getProfile]);
+  const {mutateAsync: mutateLogout, isPending: logoutPending} =
+    useLogoutQuery();
+  const {mutateAsync: mutateLogin, isPending: loginPending} = useLoginQuery();
+  const {mutateAsync: mutateLoginWithOAuth, isPending: oAuthPending} =
+    useLoginWithOAuthQuery();
+  const {mutateAsync: mutateSignUp, isPending: signUpPending} =
+    useSignUpQuery();
+
+  const loading =
+    logoutPending || loginPending || oAuthPending || signUpPending;
+
+  const queryClient = useQueryClient();
+
+  const refreshProfile = useCallback(async () => {
+    await queryClient.invalidateQueries({queryKey: ['profile']});
+  }, [queryClient]);
 
   const selectMarket = useCallback(
     (marketId: number) => {
@@ -71,37 +68,65 @@ const useProfile = () => {
   );
 
   const logout = useCallback(async () => {
-    const res = await logoutApi();
+    const res = await mutateLogout();
     if (res) {
-      await refresh();
+      await refreshProfile();
       return true;
     }
 
     return false;
-  }, [refresh]);
+  }, [mutateLogout, refreshProfile]);
 
-  const loginWithOAuth = useCallback(
-    async (oAuthProvider: SessionType['OAuthProvider']) => {
-      const res = await loginWithOAuthApi(oAuthProvider);
+  const signUp = useCallback(
+    async ({email, password, name, phoneNumber}: SignUpRequest) => {
+      const res = await mutateSignUp({email, password, name, phoneNumber});
       if (res) {
-        await refresh();
-
+        await refreshProfile();
         return true;
       }
 
       return false;
     },
-    [refresh],
+    [mutateSignUp, refreshProfile],
+  );
+
+  const login = useCallback(
+    async ({email, password}: LoginRequest) => {
+      const result = await mutateLogin({email, password});
+      if (result) {
+        await refreshProfile();
+        return true;
+      }
+
+      return false;
+    },
+    [mutateLogin, refreshProfile],
+  );
+
+  const loginWithOAuth = useCallback(
+    async (oAuthProvider: OAuthLoginRequest) => {
+      const res = await mutateLoginWithOAuth(oAuthProvider);
+      if (res) {
+        await refreshProfile();
+        return true;
+      }
+
+      console.log('loginWithOAuth failed');
+
+      return false;
+    },
+    [mutateLoginWithOAuth, refreshProfile],
   );
 
   return {
     profile,
-    refresh,
-    fetch: fetchProfile,
+    refreshProfile,
     selectMarket,
+    signUp,
     loading,
-    logout,
+    login,
     loginWithOAuth,
+    logout,
   };
 };
 

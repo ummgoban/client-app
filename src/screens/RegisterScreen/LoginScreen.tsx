@@ -2,17 +2,16 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Platform} from 'react-native';
 
-import {RootStackParamList} from '@/types/StackNavigationType';
-
 import AppleLoginButton from '@assets/AppleLoginButton.svg';
 import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
 import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
 import NaverLoginButton from '@assets/NaverLoginButton.svg';
 
+import {RootStackParamList} from '@/types/StackNavigationType';
+
 import CredentialLogin from '@/components/LoginPage/CredentialLogin';
 
 import useProfile from '@/hooks/useProfile';
-
 import S from './LoginScreen.style';
 
 const LoginScreen = () => {

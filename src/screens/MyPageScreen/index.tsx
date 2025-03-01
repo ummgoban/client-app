@@ -1,21 +1,20 @@
+import React from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
+
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+
 import {MyPageStackParamList} from '@/types/StackNavigationType';
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+
 import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 
 type Props = StackScreenProps<MyPageStackParamList, 'MyPage'>;
 
 const MyPageScreen = ({navigation}: Props) => {
-  const {profile, fetch: fetchProfile} = useProfile();
+  const {profile, refreshProfile} = useProfile();
 
-  const {refreshing, onRefresh} = usePullDownRefresh(fetchProfile);
-
-  useEffect(() => {
-    fetchProfile();
-  }, [fetchProfile]);
+  const {refreshing, onRefresh} = usePullDownRefresh(refreshProfile);
 
   if (!profile) {
     return (

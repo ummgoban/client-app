@@ -1,7 +1,7 @@
+import {useMarketLike} from '@/apis/markets';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {updateMarketLike} from '@/apis';
 
 type SubscribeIconProps = {
   marketIsLiked: boolean;
@@ -14,9 +14,11 @@ const SubscribeIcon = ({
   marketId,
   handleSubscribe,
 }: SubscribeIconProps) => {
+  const {mutateAsync: updateMarketLike} = useMarketLike(marketId);
+
   const handleLikePress = async () => {
     if (marketId !== undefined) {
-      const response = await updateMarketLike(marketId);
+      const response = await updateMarketLike();
       if (response) {
         handleSubscribe();
       }

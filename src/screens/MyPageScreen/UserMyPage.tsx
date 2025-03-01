@@ -3,13 +3,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {Alert, RefreshControl} from 'react-native';
 
-import {logout} from '@/apis/Login';
 import ListBox from '@/components/common/ListBox';
 import NavigationTextButton from '@/components/common/NavigateTextButton';
+import {Profile} from '@components/myPage';
+
+import useProfile from '@/hooks/useProfile';
+
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {UserType} from '@/types/UserType';
+
 import {convertOAuthProviderToKorean} from '@/utils/common';
-import {Profile} from '@components/myPage';
 
 import S from './UserMyPage.style';
 
@@ -22,6 +25,8 @@ type UserMyPageProps = {
 const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
+
+  const {logout} = useProfile();
 
   return (
     <S.MyPageContainer

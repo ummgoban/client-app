@@ -48,19 +48,19 @@ const S = {
 
   MarketWrapper: styled.TouchableOpacity`
     display: flex;
-    padding: 12px 16px;
+    padding: 12px 0px 12px 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     align-self: stretch;
   `,
 
-  MarketImageContainer: styled.View`
+  MarketImageContainer: styled.ScrollView`
     display: flex;
+    flex-direction: row;
+
     width: 100%;
     height: 140px;
-    gap: 8px;
-    flex-direction: row;
   `,
 
   MenuGradation: styled(LinearGradient)`
@@ -76,6 +76,11 @@ const S = {
     flex: 1;
 
     max-width: 140px;
+    margin-right: 4px;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border-radius: 12px;
   `,
 
   MarketImage: styled.Image`

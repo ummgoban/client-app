@@ -13,7 +13,9 @@ type Props = {
 const Market = ({market, onPress}: Props) => {
   return (
     <S.MarketWrapper onPress={() => onPress(market.id)}>
-      <S.MarketImageContainer>
+      <S.MarketImageContainer
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}>
         {market.products
           .filter(p => p.stock && p.productStatus !== 'HIDDEN')
           .map(product => (

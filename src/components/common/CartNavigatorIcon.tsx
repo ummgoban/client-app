@@ -1,7 +1,9 @@
 import React from 'react';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
+
 import {RootStackParamList} from '@/types/StackNavigationType';
-import Icon from 'react-native-vector-icons/Feather';
+import BagIcon from '@/assets/icons/bag-bold.svg';
+
 import S from './HeaderIcon.style';
 
 const CartIcon = () => {
@@ -13,7 +15,7 @@ const CartIcon = () => {
 
   return (
     <S.IconContainer onPress={handlePress}>
-      <Icon name="shopping-cart" size={24} color="black" />
+      <BagIcon width={24} height={24} color="rgba(29, 38, 58, 1)" />
     </S.IconContainer>
   );
 };

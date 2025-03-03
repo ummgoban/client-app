@@ -1,5 +1,5 @@
 import CartIcon from '@/components/common/CartNavigatorIcon';
-import MomChanPickLogo from '@/components/common/MomChanPickLogo';
+import HeaderTitle from '@/components/common/HeaderTitle';
 import SettingsIcon from '@/components/common/SettingsNavigatorIcon';
 import FeedScreen from '@/screens/FeedScreen';
 import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
@@ -19,13 +19,12 @@ const Tab = createBottomTabNavigator<HomeStackParamList>();
 const defaultScreenOptions = () => ({
   headerShown: true,
   headerRight: () => <CartIcon />,
-  headerTitleAlign: 'center' as const,
+  headerTitleAlign: 'left' as const,
 });
 
 const feedScreenOptions = () => ({
   ...defaultScreenOptions(),
-  headerLeft: () => <MomChanPickLogo />,
-  title: '주변 가게',
+  headerTitle: () => <HeaderTitle />,
 });
 
 const myPageScreenOptions = () => ({
@@ -41,7 +40,7 @@ const HomeNavigator = () => {
     <Tab.Navigator tabBar={renderTabBar}>
       <Tab.Screen
         name="Feed"
-        options={feedScreenOptions}
+        options={{...feedScreenOptions()}}
         component={FeedScreen}
       />
       <Tab.Screen

@@ -1,18 +1,26 @@
-import {useMarketList} from '@/apis/markets';
-import {BottomButton} from '@/components/common';
-import {Market} from '@/components/feedPage';
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {
-  requestLocationPermission,
-  requestNotificationPermission,
-} from '@/utils/notification';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, RefreshControl, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {FlatList} from 'react-native-gesture-handler';
 import {ActivityIndicator} from 'react-native-paper';
+
+import MapIcon from '@/assets/icons/map-regular.svg';
+
+import theme from '@/context/theme';
+
+import {useMarketList} from '@/apis/markets';
+
+import {Market} from '@/components/feedPage';
+
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+
+import {RootStackParamList} from '@/types/StackNavigationType';
+import {
+  requestLocationPermission,
+  requestNotificationPermission,
+} from '@/utils/notification';
+
 import S from './Feed.style';
 
 type Props = {
@@ -166,9 +174,12 @@ const FeedScreen = ({navigation}: Props) => {
           onEndReachedThreshold={0.6}
         />
       </S.MarketWrapper>
-      <BottomButton onPress={navigateMap}>
-        지도로 주변 가게 확인하기
-      </BottomButton>
+      <S.FloatingButtonContainer>
+        <S.FloatingButton onPress={navigateMap}>
+          <MapIcon fill={theme.colors.dark} />
+          <S.FloatingButtonText>지도보기</S.FloatingButtonText>
+        </S.FloatingButton>
+      </S.FloatingButtonContainer>
     </S.Container>
   );
 };

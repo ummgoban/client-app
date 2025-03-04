@@ -1,3 +1,4 @@
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import MarketDetailScreen from '@/screens/MarketDetailScreen';
 import OrderDetailScreen from '@/screens/OrderDetailScreen';
@@ -15,7 +16,23 @@ const Stack = createStackNavigator<DetailStackParamList>();
 const screenOptions: StackNavigationOptions = {
   headerShown: true,
   headerRight: () => <CartIcon />,
-  headerTitleAlign: 'center' as const,
+  headerTitleAlign: 'left' as const,
+};
+
+const paymentScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="예약하기" />,
+};
+
+const orderDetailScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="주문내역" />,
+};
+
+const orderDoneScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="주문 완료" />,
+  headerLeft: () => null,
 };
 
 const DetailNavigator = () => {
@@ -31,23 +48,17 @@ const DetailNavigator = () => {
       <Stack.Screen
         name="Payment"
         component={PaymentScreen}
-        options={{
-          title: '예약하기',
-        }}
+        options={paymentScreenOptions}
       />
       <Stack.Screen
         name="OrderDone"
         component={OrderDoneScreen}
-        options={{
-          title: '주문 완료',
-        }}
+        options={orderDoneScreenOptions}
       />
       <Stack.Screen
         name="OrderDetail"
         component={OrderDetailScreen}
-        options={{
-          title: '주문 상세',
-        }}
+        options={orderDetailScreenOptions}
       />
     </Stack.Navigator>
   );

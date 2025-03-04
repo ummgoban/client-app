@@ -5,17 +5,17 @@ import {
   updateMarketLike,
   getSubscribeList,
 } from './client';
-import {MarketListQueryRequest} from './model';
+import {MarketPaginationLocRequest} from './model';
 
 export const useMarketList = ({
   userLatitude,
   userLongitude,
-}: MarketListQueryRequest) => {
+}: MarketPaginationLocRequest) => {
   return useInfiniteQuery({
     queryKey: ['marketList', userLatitude, userLongitude],
     queryFn: ({pageParam = 0}) =>
       getMarketList({
-        cursorId: pageParam,
+        cursorDistance: pageParam,
         size: 5,
         userLatitude,
         userLongitude,
@@ -23,7 +23,7 @@ export const useMarketList = ({
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.hasNext
-        ? lastPage.markets[lastPage.markets.length - 1].id
+        ? lastPage.markets[lastPage.markets.length - 1].cursorDistance
         : undefined,
   });
 };
@@ -53,13 +53,13 @@ export const useSubscribeList = () => {
     queryKey: ['subscribeList'],
     queryFn: ({pageParam = 0}) =>
       getSubscribeList({
-        cursorId: pageParam,
+        cursorDistance: pageParam,
         size: 5,
       }),
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.hasNext
-        ? lastPage.markets[lastPage.markets.length - 1].id
+        ? lastPage.markets[lastPage.markets.length - 1].cursorDistance
         : undefined,
   });
 };

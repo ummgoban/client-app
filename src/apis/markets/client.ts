@@ -1,26 +1,19 @@
-import {MarketType, MarketDetailType} from '@/types/Market';
-import {SubscribeType} from '@/types/Subscribe';
+import {MarketDetailType} from '@/types/Market';
 
 import apiClient from '../ApiClient';
 
-import {MarketListRequest} from './model';
+import {MarketPaginationRequest, MarketListResponse} from './model';
 
 export const getMarketList = async ({
-  cursorId,
+  cursorDistance,
   size,
   userLatitude,
   userLongitude,
-}: MarketListRequest): Promise<{
-  markets: MarketType[];
-  hasNext: boolean;
-}> => {
+}: MarketPaginationRequest): Promise<MarketListResponse> => {
   try {
-    const res = await apiClient.get<{
-      markets: MarketType[];
-      hasNext: boolean;
-    }>(`customer/markets`, {
+    const res = await apiClient.get<MarketListResponse>(`customer/markets`, {
       params: {
-        cursorId,
+        cursorDistance,
         size,
         userLatitude,
         userLongitude,
@@ -73,22 +66,23 @@ export const updateMarketLike = async (marketId: number): Promise<boolean> => {
 };
 
 export const getSubscribeList = async ({
-  cursorId,
+  cursorDistance,
   size,
-}: {
-  cursorId: number;
-  size: number;
-}): Promise<{
-  markets: SubscribeType[];
-  hasNext: boolean;
-}> => {
+  userLatitude,
+  userLongitude,
+}: MarketPaginationRequest): Promise<MarketListResponse> => {
   try {
-    const res = await apiClient.get<{
-      markets: SubscribeType[];
-      hasNext: boolean;
-    }>(`/customer/markets/likes`, {
-      params: {cursorId, size},
-    });
+    const res = await apiClient.get<MarketListResponse>(
+      `/customer/markets/likes`,
+      {
+        params: {
+          cursorDistance,
+          size,
+          userLatitude,
+          userLongitude,
+        },
+      },
+    );
 
     if (!res) {
       return {

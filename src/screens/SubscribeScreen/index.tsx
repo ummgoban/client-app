@@ -1,27 +1,30 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {RefreshControl, View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import {ActivityIndicator, Button, Text} from 'react-native-paper';
 
 import {useSubscribeList} from '@/apis/markets';
 
+import useGPSLocation from '@/hooks/useGPSLocation';
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
 import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+import EmptyMarket from '@/components/common/EmptyMarket';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './SubscribeScreen.style';
-import {FlatList} from 'react-native-gesture-handler';
-import EmptyMarket from '@/components/common/EmptyMarket';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
 };
 
 const SubscribeScreen = ({navigation}: Props) => {
+  const {location} = useGPSLocation();
+
   const {
     data: subscribeList,
     refetch,
@@ -29,7 +32,10 @@ const SubscribeScreen = ({navigation}: Props) => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useSubscribeList();
+  } = useSubscribeList({
+    userLatitude: location?.userLatitude,
+    userLongitude: location?.userLongitude,
+  });
 
   const markets = subscribeList?.pages
     ? subscribeList.pages.flatMap(page => page.markets)

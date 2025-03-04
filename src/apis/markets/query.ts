@@ -48,13 +48,18 @@ export const useMarketLike = (marketId: number | undefined) => {
   });
 };
 
-export const useSubscribeList = () => {
+export const useSubscribeList = ({
+  userLatitude,
+  userLongitude,
+}: MarketPaginationLocRequest) => {
   return useInfiniteQuery({
-    queryKey: ['subscribeList'],
+    queryKey: ['subscribeList', userLatitude, userLongitude],
     queryFn: ({pageParam = 0}) =>
       getSubscribeList({
         cursorDistance: pageParam,
         size: 5,
+        userLatitude,
+        userLongitude,
       }),
     initialPageParam: 0,
     getNextPageParam: lastPage =>

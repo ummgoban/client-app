@@ -2,12 +2,11 @@ import React from 'react';
 import {Marker} from 'react-native-naver-map';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+
+import {RootStackParamList} from '@/types/StackNavigationType';
+
 import S from './MyLocationMap.style';
-import {Dimensions} from 'react-native';
-const windowWidth = Dimensions.get('window').width;
-type RootStackParamList = {
-  Detail: {screen: 'Market'; params: {marketId: number}};
-};
+
 const MyLocationMap = ({
   cords,
 }: {
@@ -22,13 +21,13 @@ const MyLocationMap = ({
   const handleMarkerClick = (marketId: number) => {
     if (marketId !== -1) {
       navigation.navigate('Detail', {
-        screen: 'Market',
+        screen: 'MarketDetail',
         params: {marketId},
       });
     }
   };
   return (
-    <S.MapWrapper width={windowWidth - 30}>
+    <S.MapWrapper>
       <S.MapView
         center={{
           zoom: 12,
@@ -36,7 +35,8 @@ const MyLocationMap = ({
           //TODO: 에뮬레이터 확인위해 현재 인덱스1로 설정, 배포시 0으로 수정
           latitude: cords[0]?.latitude || 37.582831666666664,
           longitude: cords[0]?.longitude || 127.06107333333334,
-        }}>
+        }}
+        showsMyLocationButton>
         {cords.map((coord, index) => (
           <Marker
             key={coord.marketId}

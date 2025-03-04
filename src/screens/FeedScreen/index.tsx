@@ -1,7 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import {Alert, RefreshControl, Text, View} from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
 import {FlatList} from 'react-native-gesture-handler';
 import {ActivityIndicator} from 'react-native-paper';
 
@@ -11,15 +10,13 @@ import theme from '@/context/theme';
 
 import {useMarketList} from '@/apis/markets';
 
+import FeedBottomFloatingButton from '@/components/common/FeedBottomFloatingButton';
 import {Market} from '@/components/feedPage';
 
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
+import useGPSLocation from '@/hooks/useGPSLocation';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
-import {
-  requestLocationPermission,
-  requestNotificationPermission,
-} from '@/utils/notification';
 
 import S from './Feed.style';
 
@@ -28,10 +25,7 @@ type Props = {
 };
 
 const FeedScreen = ({navigation}: Props) => {
-  const [location, setLocation] = useState<{
-    userLatitude: number;
-    userLongitude: number;
-  } | null>(null);
+  const {location, init: initLocation} = useGPSLocation();
 
   const {data, fetchNextPage, isFetchingNextPage, hasNextPage} = useMarketList({
     userLatitude: location?.userLatitude,
@@ -40,46 +34,9 @@ const FeedScreen = ({navigation}: Props) => {
 
   const marketList = data ? data.pages.flatMap(page => page.markets) : [];
 
-  const getCurrentLocation = useCallback(async () => {
-    const hasPermission = await requestLocationPermission();
-    if (hasPermission !== 'granted') {
-      Alert.alert('위치 권한이 허용되지 않아 기본 가게들을 조회합니다');
-      return false;
-    }
-
-    return new Promise<boolean>(resolve => {
-      Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          if (
-            location?.userLatitude === latitude &&
-            location?.userLongitude === longitude
-          ) {
-            resolve(true);
-            return;
-          }
-          setLocation({userLatitude: latitude, userLongitude: longitude});
-          console.log('위치 정보:', latitude, longitude);
-          resolve(true);
-        },
-        error => {
-          console.error('위치 에러:', error);
-          Alert.alert('위치 에러', error.message);
-          resolve(false);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
-    });
-  }, [location]);
-
-  const initializeData = useCallback(async () => {
-    await requestNotificationPermission();
-    await getCurrentLocation();
-  }, [getCurrentLocation]);
-
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
-      screen: 'Market',
+      screen: 'MarketDetail',
       params: {marketId},
     });
   };
@@ -89,25 +46,33 @@ const FeedScreen = ({navigation}: Props) => {
       Alert.alert('가게 목록이 없습니다.');
       return;
     }
+
     const validCords = [
+      // 현재 위치 정보
       {
         marketName: '현재위치',
         marketId: -1,
         latitude: location?.userLatitude || 37.582831666666664,
         longitude: location?.userLongitude || 127.06107333333334,
       },
-      marketList
-        .filter(
-          market =>
+      // 유효한 마켓 정보 필터링 및 변환
+      ...marketList
+        .filter(market => {
+          // 위도/경도 유효성 검사
+          const hasValidCoordinates =
             market.latitude != null &&
             market.longitude != null &&
             market.latitude >= -90 &&
             market.latitude <= 90 &&
             market.longitude >= -180 &&
-            market.longitude <= 180 &&
-            market.products.length &&
-            market.products.some(p => p.stock),
-        )
+            market.longitude <= 180;
+
+          // 재고 있는 상품 확인
+          const hasProductsInStock =
+            market.products.length > 0 && market.products.some(p => p.stock);
+
+          return hasValidCoordinates && hasProductsInStock;
+        })
         .map(market => ({
           marketName: market.name,
           marketId: market.id,
@@ -115,7 +80,8 @@ const FeedScreen = ({navigation}: Props) => {
           longitude: market.longitude,
         })),
     ];
-    navigation.navigate('Detail', {
+
+    navigation.navigate('Feed', {
       screen: 'Map',
       params: {cords: validCords},
     });
@@ -127,11 +93,7 @@ const FeedScreen = ({navigation}: Props) => {
     }
   };
 
-  const {refreshing, onRefresh} = usePullDownRefresh(initializeData);
-
-  useEffect(() => {
-    initializeData();
-  }, [initializeData]);
+  const {refreshing, onRefresh} = usePullDownRefresh(initLocation);
 
   if (marketList === null) {
     return (
@@ -174,12 +136,11 @@ const FeedScreen = ({navigation}: Props) => {
           onEndReachedThreshold={0.6}
         />
       </S.MarketWrapper>
-      <S.FloatingButtonContainer>
-        <S.FloatingButton onPress={navigateMap}>
-          <MapIcon fill={theme.colors.dark} />
-          <S.FloatingButtonText>지도보기</S.FloatingButtonText>
-        </S.FloatingButton>
-      </S.FloatingButtonContainer>
+      <FeedBottomFloatingButton
+        onPress={navigateMap}
+        Icon={<MapIcon color={theme.colors.dark} width={18} height={18} />}
+        label="지도보기"
+      />
     </S.Container>
   );
 };

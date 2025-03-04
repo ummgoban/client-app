@@ -1,19 +1,29 @@
-import {useMarket} from '@/apis/markets';
-import {DetailStackParamList} from '@/types/StackNavigationType';
-import {StackScreenProps} from '@react-navigation/stack';
+import {
+  StackNavigationOptions,
+  StackScreenProps,
+} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
 import {Text} from 'react-native';
+
+import {useMarket} from '@/apis/markets';
+
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
+
+import {DetailStackParamList} from '@/types/StackNavigationType';
+
 import MarketDetailPage from './MarketDetailPage';
 
-type Props = StackScreenProps<DetailStackParamList, 'Market'>;
+type Props = StackScreenProps<DetailStackParamList, 'MarketDetail'>;
+
+const screenOptions = (title: string): StackNavigationOptions => ({
+  headerTitle: () => <HeaderTitle title={title} />,
+});
 
 const MarketDetailScreen = ({navigation, route}: Props) => {
   const {data: marketDetail} = useMarket(route.params.marketId);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: marketDetail?.name ?? '가게 정보',
-    });
+    navigation.setOptions(screenOptions(marketDetail?.name ?? '가게 정보'));
   }, [marketDetail?.name, navigation]);
 
   if (!marketDetail) {

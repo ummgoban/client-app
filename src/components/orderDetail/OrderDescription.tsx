@@ -49,7 +49,7 @@ const OrderCustomerInfo = ({id, navigation, orderDetail}: Props) => {
       <S.OrderStatusText>{orderStatusText}</S.OrderStatusText>
       <S.MarketInformation
         onPress={() =>
-          navigation.navigate('Market', {marketId: orderDetail.marketId})
+          navigation.navigate('MarketDetail', {marketId: orderDetail.marketId})
         }>
         <S.MarketName>{orderDetail.marketName}</S.MarketName>
         <S.MarketAddress>{orderDetail.address}</S.MarketAddress>

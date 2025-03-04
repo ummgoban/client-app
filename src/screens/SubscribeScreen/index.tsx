@@ -1,26 +1,30 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {RefreshControl, View} from 'react-native';
-import {ActivityIndicator, Button, Text} from 'react-native-paper';
+import {FlatList} from 'react-native-gesture-handler';
+import {ActivityIndicator} from 'react-native-paper';
 
 import {useSubscribeList} from '@/apis/markets';
 
+import useGPSLocation from '@/hooks/useGPSLocation';
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
 import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+import EmptyComponent from '@/components/common/EmptyComponent';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './SubscribeScreen.style';
-import {FlatList} from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
 };
 
 const SubscribeScreen = ({navigation}: Props) => {
+  const {location} = useGPSLocation();
+
   const {
     data: subscribeList,
     refetch,
@@ -28,10 +32,13 @@ const SubscribeScreen = ({navigation}: Props) => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useSubscribeList();
+  } = useSubscribeList({
+    userLatitude: location?.userLatitude,
+    userLongitude: location?.userLongitude,
+  });
 
-  const markets = subscribeList
-    ? subscribeList?.pages.flatMap(page => page.markets)
+  const markets = subscribeList?.pages
+    ? subscribeList.pages.flatMap(page => page.markets)
     : [];
 
   const {profile} = useProfile();
@@ -42,7 +49,7 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
-      screen: 'Market',
+      screen: 'MarketDetail',
       params: {marketId},
     });
   };
@@ -54,14 +61,11 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   if (!profile) {
     return (
-      <View>
-        <Text>로그인 후 가게를 찜해보세요.</Text>
-        <Button
-          onPress={() => navigation.navigate('Register', {screen: 'Login'})}
-          mode="contained">
-          로그인하러가기
-        </Button>
-      </View>
+      <EmptyComponent
+        title="로그인 후 가게를 찜해보세요."
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+        buttonText="로그인하러 가기"
+      />
     );
   }
 
@@ -73,9 +77,21 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   if (!markets) {
     return (
-      <View>
-        <Text>찜 리스트를 불러오는데 실패했습니다.</Text>
-      </View>
+      <EmptyComponent
+        title="찜 리스트를 불러오는데 실패했습니다."
+        onPress={() => navigation.goBack()}
+        buttonText="뒤로 가기"
+      />
+    );
+  }
+
+  if (!markets.length) {
+    return (
+      <EmptyComponent
+        title="찜한 가게가 없습니다."
+        onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
+        buttonText="주문하러 가기"
+      />
     );
   }
 

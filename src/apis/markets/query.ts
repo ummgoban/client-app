@@ -1,21 +1,23 @@
 import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {
-  getMarketList,
   getMarket,
-  updateMarketLike,
+  getMarketList,
   getSubscribeList,
+  updateMarketLike,
 } from './client';
-import {MarketListQueryRequest} from './model';
+import {MarketPaginationLocRequest} from './model';
+
+import {queryClient} from '@/context/ReactQueryProvider';
 
 export const useMarketList = ({
   userLatitude,
   userLongitude,
-}: MarketListQueryRequest) => {
+}: MarketPaginationLocRequest) => {
   return useInfiniteQuery({
     queryKey: ['marketList', userLatitude, userLongitude],
     queryFn: ({pageParam = 0}) =>
       getMarketList({
-        cursorId: pageParam,
+        cursorDistance: pageParam,
         size: 5,
         userLatitude,
         userLongitude,
@@ -23,18 +25,15 @@ export const useMarketList = ({
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.hasNext
-        ? lastPage.markets[lastPage.markets.length - 1].id
+        ? lastPage.markets[lastPage.markets.length - 1].cursorDistance
         : undefined,
   });
 };
 
-export const useMarket = (marketId: number | undefined) => {
+export const useMarket = (marketId: number) => {
   return useQuery({
     queryKey: ['market', marketId],
-    queryFn: () => {
-      if (!marketId) return null;
-      return getMarket(marketId);
-    },
+    queryFn: () => getMarket(marketId),
   });
 };
 
@@ -43,23 +42,45 @@ export const useMarketLike = (marketId: number | undefined) => {
     mutationKey: ['marketLike', marketId],
     mutationFn: async () => {
       if (!marketId) return;
-      return await updateMarketLike(marketId);
+      return updateMarketLike(marketId);
+    },
+    onSuccess: data => {
+      if (!data) {
+        return;
+      }
+
+      if (marketId) {
+        queryClient.invalidateQueries({
+          queryKey: ['market', marketId],
+          refetchActive: 'none',
+        });
+      }
+
+      queryClient.invalidateQueries({
+        queryKey: ['subscribeList'],
+        refetchActive: 'none',
+      });
     },
   });
 };
 
-export const useSubscribeList = () => {
+export const useSubscribeList = ({
+  userLatitude,
+  userLongitude,
+}: MarketPaginationLocRequest) => {
   return useInfiniteQuery({
-    queryKey: ['subscribeList'],
+    queryKey: ['subscribeList', userLatitude, userLongitude],
     queryFn: ({pageParam = 0}) =>
       getSubscribeList({
-        cursorId: pageParam,
+        cursorDistance: pageParam,
         size: 5,
+        userLatitude,
+        userLongitude,
       }),
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.hasNext
-        ? lastPage.markets[lastPage.markets.length - 1].id
+        ? lastPage.markets[lastPage.markets.length - 1].cursorDistance
         : undefined,
   });
 };

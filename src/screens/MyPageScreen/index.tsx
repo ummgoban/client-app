@@ -4,9 +4,10 @@ import {StackScreenProps} from '@react-navigation/stack';
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
+import EmptyComponent from '@/components/common/EmptyComponent';
+
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 
-import NonMemberMyPage from './NonMemberMyPage';
 import UserMyPage from './UserMyPage';
 
 type Props = StackScreenProps<MyPageStackParamList, 'MyPage'>;
@@ -18,8 +19,10 @@ const MyPageScreen = ({navigation}: Props) => {
 
   if (!profile) {
     return (
-      <NonMemberMyPage
+      <EmptyComponent
+        title="로그인 후 판매 중인 반찬을 예약해보세요."
         onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+        buttonText="로그인 및 회원가입하기"
       />
     );
   }

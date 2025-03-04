@@ -33,10 +33,11 @@ const S = {
   FloatingButton: styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
-    gap: 2px;
-    align-items: center;
 
-    padding: 10px 12px;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 12px;
 
     border-radius: 999px;
     background-color: white;
@@ -58,13 +59,29 @@ const S = {
         : ``}
   `,
 
+  MapIconWrapper: styled.View`
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 0;
+  `,
+
   FloatingButtonText: styled.Text`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 2px;
+
     color: ${props => props.theme.colors.dark};
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
-    line-height: 100%; /* 12px */
+
     letter-spacing: 0.12px;
   `,
 };

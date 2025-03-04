@@ -30,8 +30,8 @@ const SubscribeScreen = ({navigation}: Props) => {
     fetchNextPage,
   } = useSubscribeList();
 
-  const markets = subscribeList
-    ? subscribeList?.pages.flatMap(page => page.markets)
+  const markets = subscribeList?.pages
+    ? subscribeList.pages.flatMap(page => page.markets)
     : [];
 
   const {profile} = useProfile();

@@ -176,7 +176,9 @@ const FeedScreen = ({navigation}: Props) => {
       </S.MarketWrapper>
       <S.FloatingButtonContainer>
         <S.FloatingButton onPress={navigateMap}>
-          <MapIcon fill={theme.colors.dark} />
+          <S.MapIconWrapper>
+            <MapIcon color={theme.colors.dark} width={18} height={18} />
+          </S.MapIconWrapper>
           <S.FloatingButtonText>지도보기</S.FloatingButtonText>
         </S.FloatingButton>
       </S.FloatingButtonContainer>

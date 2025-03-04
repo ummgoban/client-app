@@ -1,14 +1,13 @@
 import React from 'react';
-import {RefreshControl, View} from 'react-native';
-import {Button, Text} from 'react-native-paper';
+import {RefreshControl} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {useOrderHistoryQuery} from '@/apis/orders';
 
+import EmptyComponent from '@/components/common/EmptyComponent';
 import OrderHistory from '@/components/orderHistory/OrderHistory';
-import EmptyMarket from '@/components/common/EmptyMarket';
 
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
@@ -30,20 +29,17 @@ const OrderHistoryScreen = () => {
 
   if (!profile) {
     return (
-      <View>
-        <Text>로그인 후 주문 목록을 확인해보세요.</Text>
-        <Button
-          onPress={() => navigation.navigate('Register', {screen: 'Login'})}
-          mode="contained">
-          로그인하러가기
-        </Button>
-      </View>
+      <EmptyComponent
+        title="로그인 후 주문 목록을 확인해보세요."
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+        buttonText="로그인하러 가기"
+      />
     );
   }
 
   if (!historyList?.length) {
     return (
-      <EmptyMarket
+      <EmptyComponent
         onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
         title="주문 내역이 없습니다."
         buttonText="주문하러 가기"

@@ -1,14 +1,14 @@
 import React from 'react';
 
-import S from './EmptyMarket.style';
+import S from './EmptyComponent.style';
 
-type EmptyMarketProps = {
+type EmptyComponentProps = {
   onPress: () => void;
   title: string;
   buttonText: string;
 };
 
-const EmptyMarket = ({onPress, title, buttonText}: EmptyMarketProps) => {
+const EmptyComponent = ({onPress, title, buttonText}: EmptyComponentProps) => {
   return (
     <S.Container>
       <S.TitleText>{title}</S.TitleText>
@@ -19,4 +19,4 @@ const EmptyMarket = ({onPress, title, buttonText}: EmptyMarketProps) => {
   );
 };
 
-export default EmptyMarket;
+export default EmptyComponent;

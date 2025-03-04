@@ -2,7 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {RefreshControl, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {ActivityIndicator, Button, Text} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 
 import {useSubscribeList} from '@/apis/markets';
 
@@ -11,7 +11,7 @@ import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
 import CustomActivityIndicator from '@/components/common/ActivityIndicator';
-import EmptyMarket from '@/components/common/EmptyMarket';
+import EmptyComponent from '@/components/common/EmptyComponent';
 import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
@@ -61,14 +61,11 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   if (!profile) {
     return (
-      <View>
-        <Text>로그인 후 가게를 찜해보세요.</Text>
-        <Button
-          onPress={() => navigation.navigate('Register', {screen: 'Login'})}
-          mode="contained">
-          로그인하러가기
-        </Button>
-      </View>
+      <EmptyComponent
+        title="로그인 후 가게를 찜해보세요."
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+        buttonText="로그인하러 가기"
+      />
     );
   }
 
@@ -80,15 +77,17 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   if (!markets) {
     return (
-      <View>
-        <Text>찜 리스트를 불러오는데 실패했습니다.</Text>
-      </View>
+      <EmptyComponent
+        title="찜 리스트를 불러오는데 실패했습니다."
+        onPress={() => navigation.goBack()}
+        buttonText="뒤로 가기"
+      />
     );
   }
 
   if (!markets.length) {
     return (
-      <EmptyMarket
+      <EmptyComponent
         title="찜한 가게가 없습니다."
         onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
         buttonText="주문하러 가기"

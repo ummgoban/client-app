@@ -14,32 +14,34 @@ type LocationStore = {
     userLatitude: number;
     userLongitude: number;
   } | null;
-  setLocation: (
+  loading: boolean;
+  fetchLocation: (
     location: {
       userLatitude: number;
       userLongitude: number;
     } | null,
-  ) => void;
+  ) => Promise<boolean>;
 };
 
 const gpsLocationStore = create<LocationStore>(set => ({
   location: null,
-  setLocation: location => {
-    set({location});
-  },
-}));
+  loading: false,
+  fetchLocation: async (
+    location: {
+      userLatitude: number;
+      userLongitude: number;
+    } | null,
+  ) => {
+    set({loading: true});
 
-const useGPSLocation = () => {
-  const {location, setLocation} = gpsLocationStore();
-
-  const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
+
     if (hasPermission !== 'granted') {
-      Alert.alert('위치 권한이 허용되지 않아 기본 가게들을 조회합니다');
+      Alert.alert('위치 권한이 허용되지 않아 기본 가게들을 조회하겠습니다');
       return false;
     }
 
-    return new Promise<boolean>(resolve => {
+    const res = await new Promise<boolean>(resolve => {
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
@@ -50,7 +52,7 @@ const useGPSLocation = () => {
             resolve(true);
             return;
           }
-          setLocation({userLatitude: latitude, userLongitude: longitude});
+          set({location: {userLatitude: latitude, userLongitude: longitude}});
           console.log('위치 정보:', latitude, longitude);
           resolve(true);
         },
@@ -62,18 +64,28 @@ const useGPSLocation = () => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     });
-  }, [location?.userLatitude, location?.userLongitude, setLocation]);
+
+    set({loading: false});
+
+    return res;
+  },
+}));
+
+const useGPSLocation = () => {
+  const {location, fetchLocation, loading} = gpsLocationStore();
 
   const init = useCallback(async () => {
     await requestNotificationPermission();
-    await getCurrentLocation();
-  }, [getCurrentLocation]);
+    await fetchLocation(location);
+  }, [fetchLocation, location]);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (!location) return;
 
-  return {location, init};
+    init();
+  }, [init, location]);
+
+  return {location, init, loading};
 };
 
 export default useGPSLocation;

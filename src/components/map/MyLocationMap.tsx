@@ -3,11 +3,9 @@ import {Marker} from 'react-native-naver-map';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import S from './MyLocationMap.style';
+import {RootStackParamList} from '@/types/StackNavigationType';
 
-type RootStackParamList = {
-  Detail: {screen: 'Market'; params: {marketId: number}};
-};
+import S from './MyLocationMap.style';
 
 const MyLocationMap = ({
   cords,
@@ -23,7 +21,7 @@ const MyLocationMap = ({
   const handleMarkerClick = (marketId: number) => {
     if (marketId !== -1) {
       navigation.navigate('Detail', {
-        screen: 'Market',
+        screen: 'MarketDetail',
         params: {marketId},
       });
     }

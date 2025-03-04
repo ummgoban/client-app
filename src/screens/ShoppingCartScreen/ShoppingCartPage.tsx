@@ -29,7 +29,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
 
   const onPressStore = () => {
     navigation.navigate('Detail', {
-      screen: 'Market',
+      screen: 'MarketDetail',
       params: {marketId: cartData.market.id},
     });
   };

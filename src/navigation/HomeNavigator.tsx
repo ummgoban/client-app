@@ -6,14 +6,14 @@ import {
 import React from 'react';
 
 import CartIcon from '@/components/common/CartNavigatorIcon';
-import HeaderTitle from '@/components/common/HeaderTitle';
 import SettingsIcon from '@/components/common/SettingsNavigatorIcon';
 import {TabBar} from '@components/common';
 
-import FeedScreen from '@/screens/FeedScreen';
 import OrderHistoryScreen from '@/screens/OrderHistoryScreen';
 import SubscribeScreen from '@/screens/SubscribeScreen';
 import MyPageScreen from '@screens/MyPageScreen';
+
+import FeedNavigator from './FeedNavigator';
 
 import {HomeStackParamList} from '@/types/StackNavigationType';
 
@@ -23,11 +23,6 @@ const defaultScreenOptions: BottomTabNavigationOptions = {
   headerShown: true,
   headerRight: () => <CartIcon />,
   headerTitleAlign: 'left' as const,
-};
-
-const feedScreenOptions: BottomTabNavigationOptions = {
-  ...defaultScreenOptions,
-  headerTitle: () => <HeaderTitle />,
 };
 
 const myPageScreenOptions: BottomTabNavigationOptions = {
@@ -43,8 +38,10 @@ const HomeNavigator = () => {
     <Tab.Navigator tabBar={renderTabBar}>
       <Tab.Screen
         name="Feed"
-        options={feedScreenOptions}
-        component={FeedScreen}
+        component={FeedNavigator}
+        options={{
+          headerShown: false,
+        }}
       />
       <Tab.Screen
         name="Subscribe"

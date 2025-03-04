@@ -80,7 +80,7 @@ const FeedScreen = ({navigation}: Props) => {
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
-      screen: 'Market',
+      screen: 'MarketDetail',
       params: {marketId},
     });
   };
@@ -125,7 +125,7 @@ const FeedScreen = ({navigation}: Props) => {
         })),
     ];
 
-    navigation.navigate('Detail', {
+    navigation.navigate('Feed', {
       screen: 'Map',
       params: {cords: validCords},
     });

@@ -10,13 +10,13 @@ import MyLocationMap from '@/components/map/MyLocationMap';
 import FeedBottomFloatingButton from '@/components/common/FeedBottomFloatingButton';
 
 import {
-  DetailStackParamList,
+  FeedStackParamList,
   RootStackParamList,
 } from '@/types/StackNavigationType';
 
 import S from './MapScreen.style';
 
-type MapScreenRouteProp = RouteProp<DetailStackParamList, 'Map'>;
+type MapScreenRouteProp = RouteProp<FeedStackParamList, 'Map'>;
 
 const MapScreen = () => {
   const route = useRoute<MapScreenRouteProp>();
@@ -26,7 +26,7 @@ const MapScreen = () => {
   const {cords} = route.params;
 
   const handleClickFeedListButton = () => {
-    navigation.navigate('Feed');
+    navigation.navigate('Feed', {screen: 'Market'});
   };
 
   return (

@@ -21,8 +21,7 @@ const OrderHistoryScreen = () => {
 
   const {profile} = useProfile();
 
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, 'Detail'>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const {refreshing, onRefresh} = usePullDownRefresh(async () => {
     refetch();
@@ -45,7 +44,9 @@ const OrderHistoryScreen = () => {
     return (
       <View>
         <Text>주문 내역이 없습니다.</Text>
-        <Button onPress={() => navigation.navigate('Feed')} mode="contained">
+        <Button
+          onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
+          mode="contained">
           주문하러가기
         </Button>
       </View>
@@ -61,7 +62,7 @@ const OrderHistoryScreen = () => {
         historyList={historyList}
         onPressMarket={marketId =>
           navigation.navigate('Detail', {
-            screen: 'Market',
+            screen: 'MarketDetail',
             params: {marketId: marketId},
           })
         }

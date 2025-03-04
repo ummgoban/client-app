@@ -42,7 +42,7 @@ const SubscribeScreen = ({navigation}: Props) => {
 
   const onPressStore = (marketId: number) => {
     navigation.navigate('Detail', {
-      screen: 'Market',
+      screen: 'MarketDetail',
       params: {marketId},
     });
   };

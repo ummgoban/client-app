@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {Text} from 'react-native';
 import MarketDetailPage from './MarketDetailPage';
 
-type Props = StackScreenProps<DetailStackParamList, 'Market'>;
+type Props = StackScreenProps<DetailStackParamList, 'MarketDetail'>;
 
 const MarketDetailScreen = ({navigation, route}: Props) => {
   const {data: marketDetail} = useMarket(route.params.marketId);

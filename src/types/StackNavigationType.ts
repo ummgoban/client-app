@@ -19,7 +19,7 @@ export interface RegisterStackParamList extends ParamListBase {
 }
 
 export interface DetailStackParamList extends ParamListBase {
-  Market: {marketId: number};
+  MarketDetail: {marketId: number};
   Payment: undefined;
   OrderDone: {
     orderId: string;
@@ -27,6 +27,13 @@ export interface DetailStackParamList extends ParamListBase {
     originPrice: number;
     discountPrice: number;
   };
+  OrderDetail: {
+    ordersId: string;
+  };
+}
+
+export interface FeedStackParamList extends ParamListBase {
+  Market: undefined;
   Map: {
     cords: {
       marketName: string;
@@ -34,9 +41,6 @@ export interface DetailStackParamList extends ParamListBase {
       latitude: number;
       longitude: number;
     }[];
-  };
-  OrderDetail: {
-    ordersId: string;
   };
 }
 
@@ -53,6 +57,7 @@ export interface MyPageStackParamList extends ParamListBase {
 
 export interface RootStackParamList extends ParamListBase {
   Home: StackParamType<HomeStackParamList>;
+  Feed: StackParamType<FeedStackParamList>;
   Register: StackParamType<RegisterStackParamList>;
   Detail: StackParamType<DetailStackParamList>;
   MyPage: StackParamType<MyPageStackParamList>;

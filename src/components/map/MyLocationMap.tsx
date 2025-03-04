@@ -37,7 +37,8 @@ const MyLocationMap = ({
           //TODO: 에뮬레이터 확인위해 현재 인덱스1로 설정, 배포시 0으로 수정
           latitude: cords[0]?.latitude || 37.582831666666664,
           longitude: cords[0]?.longitude || 127.06107333333334,
-        }}>
+        }}
+        showsMyLocationButton>
         {cords.map((coord, index) => (
           <Marker
             key={coord.marketId}

@@ -2,18 +2,29 @@ import MarketDetailScreen from '@/screens/MarketDetailScreen';
 import OrderDoneScreen from '@/screens/OrderDoneScreen';
 import PaymentScreen from '@/screens/PaymentScreen';
 import {DetailStackParamList} from '@/types/StackNavigationType';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import React from 'react';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import MapScreen from '@/screens/MapScreen';
 import OrderDetailScreen from '@/screens/OrderDetailScreen';
+import HeaderTitle from '@/components/common/HeaderTitle';
 
 const Stack = createStackNavigator<DetailStackParamList>();
 
-const screenOptions = {
+const screenOptions: StackNavigationOptions = {
   headerShown: true,
   headerRight: () => <CartIcon />,
   headerTitleAlign: 'center' as const,
+};
+
+const mapScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitleAlign: 'left' as const,
+  headerTitle: () => <HeaderTitle />,
+  headerLeft: () => null,
 };
 
 const DetailNavigator = () => {
@@ -29,9 +40,7 @@ const DetailNavigator = () => {
       <Stack.Screen
         name="Map"
         component={MapScreen}
-        options={{
-          title: '주변 가게',
-        }}
+        options={mapScreenOptions}
       />
       {/* <Stack.Screen name="Order" component={OrderScreen} /> */}
       <Stack.Screen

@@ -12,6 +12,7 @@ import theme from '@/context/theme';
 import {useMarketList} from '@/apis/markets';
 
 import {Market} from '@/components/feedPage';
+import FeedBottomFloatingButton from '@/components/common/FeedBottomFloatingButton';
 
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
@@ -183,14 +184,11 @@ const FeedScreen = ({navigation}: Props) => {
           onEndReachedThreshold={0.6}
         />
       </S.MarketWrapper>
-      <S.FloatingButtonContainer>
-        <S.FloatingButton onPress={navigateMap}>
-          <S.MapIconWrapper>
-            <MapIcon color={theme.colors.dark} width={18} height={18} />
-          </S.MapIconWrapper>
-          <S.FloatingButtonText>지도보기</S.FloatingButtonText>
-        </S.FloatingButton>
-      </S.FloatingButtonContainer>
+      <FeedBottomFloatingButton
+        onPress={navigateMap}
+        Icon={<MapIcon color={theme.colors.dark} width={18} height={18} />}
+        label="지도보기"
+      />
     </S.Container>
   );
 };

@@ -15,29 +15,21 @@ type LocationStore = {
     userLongitude: number;
   } | null;
   loading: boolean;
-  fetchLocation: (
-    location: {
-      userLatitude: number;
-      userLongitude: number;
-    } | null,
-  ) => Promise<boolean>;
+  fetchLocation: () => Promise<boolean>;
 };
 
 const gpsLocationStore = create<LocationStore>(set => ({
   location: null,
   loading: false,
-  fetchLocation: async (
-    location: {
-      userLatitude: number;
-      userLongitude: number;
-    } | null,
-  ) => {
+  fetchLocation: async () => {
     set({loading: true});
 
     const hasPermission = await requestLocationPermission();
 
     if (hasPermission !== 'granted') {
       Alert.alert('위치 권한이 허용되지 않아 기본 가게들을 조회하겠습니다');
+      set({loading: false});
+
       return false;
     }
 
@@ -45,15 +37,8 @@ const gpsLocationStore = create<LocationStore>(set => ({
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
-          if (
-            location?.userLatitude === latitude &&
-            location?.userLongitude === longitude
-          ) {
-            resolve(true);
-            return;
-          }
+
           set({location: {userLatitude: latitude, userLongitude: longitude}});
-          console.log('위치 정보:', latitude, longitude);
           resolve(true);
         },
         error => {
@@ -76,14 +61,12 @@ const useGPSLocation = () => {
 
   const init = useCallback(async () => {
     await requestNotificationPermission();
-    await fetchLocation(location);
-  }, [fetchLocation, location]);
+    await fetchLocation();
+  }, [fetchLocation]);
 
   useEffect(() => {
-    if (!location) return;
-
     init();
-  }, [init, location]);
+  }, [init]);
 
   return {location, init, loading};
 };

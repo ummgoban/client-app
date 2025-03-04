@@ -332,6 +332,10 @@ const MarketDetailPage = ({
     }
   }, [sortedProductsByTags]);
 
+  useEffect(() => {
+    setMarketIsLiked(hasLike);
+  }, [hasLike]);
+
   return (
     <S.MarketDetailInfoView>
       <S.MarketInfoWrapper>

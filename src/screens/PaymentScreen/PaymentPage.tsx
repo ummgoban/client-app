@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -11,6 +11,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 //   usePaymentWidget,
 // } from '@tosspayments/widget-sdk-react-native';
 
+import {useMarket} from '@/apis/markets';
 import {useRequestOrderMutation} from '@/apis/orders';
 
 import {BottomButton} from '@components/common';
@@ -21,19 +22,21 @@ import {
 } from '@components/orderPage';
 
 import {BucketType} from '@/types/Bucket';
-import {MarketDetailType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import {format} from '@/utils/date';
 
 import S from './PaymentPage.style';
+import {Button, Text} from 'react-native-paper';
 
 const nowDate = format(new Date(), 'YYYY-MM-DD');
 
-type Props = {cart: BucketType; market: MarketDetailType};
+type Props = {cart: BucketType; marketId: number};
 
-const PaymentPage = ({cart, market}: Props) => {
+const PaymentPage = ({cart, marketId}: Props) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const {data: market} = useMarket(marketId);
 
   const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
 
@@ -54,6 +57,15 @@ const PaymentPage = ({cart, market}: Props) => {
   // const paymentWidgetControl = usePaymentWidget();
   // const [agreementWidgetControl, setAgreementWidgetControl] =
   //   useState<AgreementWidgetControl | null>(null);
+
+  if (!market) {
+    return (
+      <View>
+        <Text>장바구니 정보를 가져오지 못했습니다...!</Text>
+        <Button onPress={() => navigation.goBack()}>뒤로 가기</Button>
+      </View>
+    );
+  }
 
   return (
     <S.PaymentPage>

@@ -1,9 +1,9 @@
 import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {
-  getMarketList,
   getMarket,
-  updateMarketLike,
+  getMarketList,
   getSubscribeList,
+  updateMarketLike,
 } from './client';
 import {MarketPaginationLocRequest} from './model';
 
@@ -28,13 +28,10 @@ export const useMarketList = ({
   });
 };
 
-export const useMarket = (marketId: number | undefined) => {
+export const useMarket = (marketId: number) => {
   return useQuery({
     queryKey: ['market', marketId],
-    queryFn: () => {
-      if (!marketId) return null;
-      return getMarket(marketId);
-    },
+    queryFn: () => getMarket(marketId),
   });
 };
 
@@ -43,7 +40,7 @@ export const useMarketLike = (marketId: number | undefined) => {
     mutationKey: ['marketLike', marketId],
     mutationFn: async () => {
       if (!marketId) return;
-      return await updateMarketLike(marketId);
+      return updateMarketLike(marketId);
     },
   });
 };

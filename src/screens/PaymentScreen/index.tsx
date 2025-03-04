@@ -2,7 +2,6 @@ import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 
 import {useBucketList} from '@/apis/buckets';
-import {useMarket} from '@/apis/markets';
 
 import {DetailStackParamList} from '@/types/StackNavigationType';
 
@@ -13,9 +12,8 @@ type Props = StackScreenProps<DetailStackParamList, 'Payment'>;
 
 const PaymentScreen = ({navigation}: Props) => {
   const {data: cart} = useBucketList();
-  const {data: market} = useMarket(cart?.market.id);
 
-  if (!cart || !market) {
+  if (!cart) {
     return (
       <EmptyCartPage
         onPress={() => navigation.navigate('Home', {screen: 'Feed'})}
@@ -23,7 +21,7 @@ const PaymentScreen = ({navigation}: Props) => {
     );
   }
 
-  return <PaymentPage cart={cart} market={market} />;
+  return <PaymentPage cart={cart} marketId={cart.market.id} />;
 };
 
 export default PaymentScreen;

@@ -83,6 +83,7 @@ export const credentialLogin = async ({
     }>('/common/auth/login', {
       email,
       password,
+      roles: 'ROLE_USER',
     });
 
     if (res && res.code === 200) {

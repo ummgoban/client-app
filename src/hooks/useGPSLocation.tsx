@@ -1,17 +1,36 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Alert} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+
+import {create} from 'zustand';
 
 import {
   requestLocationPermission,
   requestNotificationPermission,
 } from '@/utils/notification';
 
-const useGPSLocation = () => {
-  const [location, setLocation] = useState<{
+type LocationStore = {
+  location: {
     userLatitude: number;
     userLongitude: number;
-  } | null>(null);
+  } | null;
+  setLocation: (
+    location: {
+      userLatitude: number;
+      userLongitude: number;
+    } | null,
+  ) => void;
+};
+
+const gpsLocationStore = create<LocationStore>(set => ({
+  location: null,
+  setLocation: location => {
+    set({location});
+  },
+}));
+
+const useGPSLocation = () => {
+  const {location, setLocation} = gpsLocationStore();
 
   const getCurrentLocation = useCallback(async () => {
     const hasPermission = await requestLocationPermission();
@@ -43,7 +62,7 @@ const useGPSLocation = () => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     });
-  }, [location]);
+  }, [location?.userLatitude, location?.userLongitude, setLocation]);
 
   const init = useCallback(async () => {
     await requestNotificationPermission();

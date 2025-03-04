@@ -8,6 +8,7 @@ import {getStorage, setStorage} from '@/utils/storage';
 
 import apiClient from '../ApiClient';
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
+import CustomError from '../CustomError';
 
 export const registerFCMToken = async (
   deviceToken: string,
@@ -25,8 +26,7 @@ export const registerFCMToken = async (
     );
     return !!res && res.code === 200;
   } catch (error) {
-    console.error(error);
-    return false;
+    throw error as CustomError;
   }
 };
 
@@ -58,8 +58,7 @@ export const credentialSignUp = async ({
 
     return res && res.code === 200;
   } catch (error) {
-    console.error('Credential Sign Up Error:', error);
-    return false;
+    throw error;
   }
 };
 
@@ -93,8 +92,7 @@ export const credentialLogin = async ({
 
     return false;
   } catch (error) {
-    console.error('Credential Login Error:', error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -126,7 +124,7 @@ export const loginWithOAuth = async (
       const token = await messaging().getToken();
       await registerFCMToken(token);
     } catch (error) {
-      console.error('FCM 설정 중 오류 발생:', error);
+      throw error;
     }
     return true;
   }
@@ -153,8 +151,7 @@ export const logout = async (): Promise<boolean> => {
 
     return true;
   } catch (error) {
-    console.error('로그아웃 에러:', error);
-    return false;
+    throw error;
   }
 };
 
@@ -174,7 +171,6 @@ export const getProfile = async (): Promise<UserType | null> => {
       return null;
     }
   } catch (error) {
-    console.error(`Error fetching profile: ${error}`);
-    return null;
+    throw error;
   }
 };

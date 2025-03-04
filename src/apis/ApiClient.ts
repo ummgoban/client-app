@@ -9,6 +9,7 @@ import Config from 'react-native-config';
 
 import {SessionType} from '@/types/Session';
 import {getStorage} from '@/utils/storage';
+import CustomError from './CustomError';
 
 class ApiClient {
   private static instance: ApiClient;
@@ -74,11 +75,14 @@ class ApiClient {
 
       return null;
     } catch (error) {
-      console.error('GET', url, JSON.stringify(error, null, 2));
-
       if (error instanceof AxiosError) {
         if (error.response) {
-          console.error(JSON.stringify(error.response.data, null, 2));
+          console.error(
+            'GET',
+            url,
+            JSON.stringify(error.response.data, null, 2),
+          );
+          throw new CustomError(error.response.data);
         }
       }
 
@@ -103,11 +107,14 @@ class ApiClient {
 
       return res.data;
     } catch (error) {
-      console.error('POST', url, JSON.stringify(error, null, 2));
-
       if (error instanceof AxiosError) {
         if (error.response) {
-          console.error(JSON.stringify(error.response.data, null, 2));
+          console.error(
+            'POST',
+            url,
+            JSON.stringify(error.response.data, null, 2),
+          );
+          throw new CustomError(error.response.data);
         }
       }
 
@@ -132,11 +139,14 @@ class ApiClient {
 
       return res.data;
     } catch (error) {
-      console.error('PATCH', url, JSON.stringify(error, null, 2));
-
       if (error instanceof AxiosError) {
         if (error.response) {
-          console.error(JSON.stringify(error.response.data, null, 2));
+          console.error(
+            'PATCH',
+            url,
+            JSON.stringify(error.response.data, null, 2),
+          );
+          throw new CustomError(error.response.data);
         }
       }
       return null;
@@ -160,7 +170,16 @@ class ApiClient {
 
       return res.data;
     } catch (error) {
-      console.error('PUT', url, JSON.stringify(error, null, 2));
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error(
+            'PUT',
+            url,
+            JSON.stringify(error.response.data, null, 2),
+          );
+          throw new CustomError(error.response.data);
+        }
+      }
       return null;
     }
   };
@@ -179,11 +198,14 @@ class ApiClient {
 
       return res.data;
     } catch (error) {
-      console.error('DELETE', url, JSON.stringify(error, null, 2));
-
       if (error instanceof AxiosError) {
         if (error.response) {
-          console.error(JSON.stringify(error.response.data, null, 2));
+          console.error(
+            'DELETE',
+            url,
+            JSON.stringify(error.response.data, null, 2),
+          );
+          throw new CustomError(error.response.data);
         }
       }
 

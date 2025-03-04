@@ -83,9 +83,8 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               fontSize="12px"
               fontColor="#888"
               isNotice={false}
-              onPress={async () => {
-                const res = await logout();
-                if (res) {
+              onPress={() => {
+                logout(() => {
                   Alert.alert('로그아웃 되었습니다.', '', [
                     {
                       text: '확인',
@@ -94,7 +93,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                       },
                     },
                   ]);
-                }
+                });
               }}
             />
             <S.VerticalDivider />

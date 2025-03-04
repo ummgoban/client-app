@@ -11,11 +11,14 @@ import {
   useProfileQuery,
   useSignUpQuery,
 } from '@/apis/auth/query';
+
 import type {
   LoginRequest,
-  SignUpRequest,
   OAuthLoginRequest,
+  SignUpRequest,
 } from '@/apis/auth/model';
+
+import CustomError from '@/apis/CustomError';
 
 type AdminUserType = UserType & {
   marketId: number | null;
@@ -43,9 +46,8 @@ const useProfile = () => {
 
   const {data: profile} = useProfileQuery();
 
-  const {mutateAsync: mutateLogout, isPending: logoutPending} =
-    useLogoutQuery();
-  const {mutateAsync: mutateLogin, isPending: loginPending} = useLoginQuery();
+  const {mutate: mutateLogout, isPending: logoutPending} = useLogoutQuery();
+  const {mutate: mutateLogin, isPending: loginPending} = useLoginQuery();
   const {mutateAsync: mutateLoginWithOAuth, isPending: oAuthPending} =
     useLoginWithOAuthQuery();
   const {mutateAsync: mutateSignUp, isPending: signUpPending} =
@@ -67,15 +69,26 @@ const useProfile = () => {
     [setCurrentMarketId],
   );
 
-  const logout = useCallback(async () => {
-    const res = await mutateLogout();
-    if (res) {
-      await refreshProfile();
-      return true;
-    }
-
-    return false;
-  }, [mutateLogout, refreshProfile]);
+  const logout = useCallback(
+    (callback?: () => void, failCallback?: (error: CustomError) => void) => {
+      mutateLogout(undefined, {
+        onSuccess: async () => {
+          await refreshProfile();
+          if (callback) {
+            callback();
+          }
+        },
+        onError: error => {
+          if (error instanceof CustomError) {
+            if (failCallback) {
+              failCallback(error);
+            }
+          }
+        },
+      });
+    },
+    [mutateLogout, refreshProfile],
+  );
 
   const signUp = useCallback(
     async ({email, password, name, phoneNumber}: SignUpRequest) => {
@@ -91,14 +104,29 @@ const useProfile = () => {
   );
 
   const login = useCallback(
-    async ({email, password}: LoginRequest) => {
-      const result = await mutateLogin({email, password});
-      if (result) {
-        await refreshProfile();
-        return true;
-      }
-
-      return false;
+    (
+      {email, password}: LoginRequest,
+      callback?: () => void,
+      failCallback?: (error: CustomError) => void,
+    ) => {
+      mutateLogin(
+        {email, password},
+        {
+          onSuccess: async () => {
+            await refreshProfile();
+            if (callback) {
+              callback();
+            }
+          },
+          onError: error => {
+            if (error instanceof CustomError) {
+              if (failCallback) {
+                failCallback(error);
+              }
+            }
+          },
+        },
+      );
     },
     [mutateLogin, refreshProfile],
   );

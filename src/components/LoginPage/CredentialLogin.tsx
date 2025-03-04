@@ -33,13 +33,15 @@ const CredentialLogin = () => {
         mode="contained"
         disabled={!email || !password}
         onPress={async () => {
-          const res = await login({email, password});
-          if (res) {
-            navigation.navigate('Home', {screen: 'Feed'});
-            return;
-          }
-
-          Alert.alert('로그인에 실패했습니다.');
+          login(
+            {email, password},
+            () => {
+              navigation.navigate('Home', {screen: 'Feed'});
+            },
+            error => {
+              Alert.alert(`${error.errorMessage}`);
+            },
+          );
         }}>
         로그인
       </S.SubmitButton>

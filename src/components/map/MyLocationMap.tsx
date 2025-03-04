@@ -2,12 +2,13 @@ import React from 'react';
 import {Marker} from 'react-native-naver-map';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+
 import S from './MyLocationMap.style';
-import {Dimensions} from 'react-native';
-const windowWidth = Dimensions.get('window').width;
+
 type RootStackParamList = {
   Detail: {screen: 'Market'; params: {marketId: number}};
 };
+
 const MyLocationMap = ({
   cords,
 }: {
@@ -28,7 +29,7 @@ const MyLocationMap = ({
     }
   };
   return (
-    <S.MapWrapper width={windowWidth - 30}>
+    <S.MapWrapper>
       <S.MapView
         center={{
           zoom: 12,

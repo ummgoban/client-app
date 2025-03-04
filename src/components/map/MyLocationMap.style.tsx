@@ -1,9 +1,8 @@
 import styled from '@emotion/native';
-import {View} from 'react-native';
+
 import NaverMapView from 'react-native-naver-map';
 
-const MapWrapper = styled(View)<{width: number}>`
-  width: ${({width}) => width}px;
+const MapWrapper = styled.View`
   margin-top: 10px;
 `;
 const MapView = styled(NaverMapView)`

@@ -91,24 +91,31 @@ const FeedScreen = ({navigation}: Props) => {
     }
 
     const validCords = [
+      // 현재 위치 정보
       {
         marketName: '현재위치',
         marketId: -1,
         latitude: location?.userLatitude || 37.582831666666664,
         longitude: location?.userLongitude || 127.06107333333334,
       },
+      // 유효한 마켓 정보 필터링 및 변환
       ...marketList
-        .filter(
-          market =>
+        .filter(market => {
+          // 위도/경도 유효성 검사
+          const hasValidCoordinates =
             market.latitude != null &&
             market.longitude != null &&
             market.latitude >= -90 &&
             market.latitude <= 90 &&
             market.longitude >= -180 &&
-            market.longitude <= 180 &&
-            market.products.length &&
-            market.products.some(p => p.stock),
-        )
+            market.longitude <= 180;
+
+          // 재고 있는 상품 확인
+          const hasProductsInStock =
+            market.products.length > 0 && market.products.some(p => p.stock);
+
+          return hasValidCoordinates && hasProductsInStock;
+        })
         .map(market => ({
           marketName: market.name,
           marketId: market.id,

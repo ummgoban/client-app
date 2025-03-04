@@ -8,6 +8,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useOrderHistoryQuery} from '@/apis/orders';
 
 import OrderHistory from '@/components/orderHistory/OrderHistory';
+import EmptyMarket from '@/components/common/EmptyMarket';
 
 import useProfile from '@/hooks/useProfile';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
@@ -42,14 +43,11 @@ const OrderHistoryScreen = () => {
 
   if (!historyList?.length) {
     return (
-      <View>
-        <Text>주문 내역이 없습니다.</Text>
-        <Button
-          onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
-          mode="contained">
-          주문하러가기
-        </Button>
-      </View>
+      <EmptyMarket
+        onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
+        title="주문 내역이 없습니다."
+        buttonText="주문하러 가기"
+      />
     );
   }
 

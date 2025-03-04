@@ -1,10 +1,14 @@
 import React from 'react';
 import S from './HeaderTitle.style';
 
-const HeaderTitle = () => {
+type HeaderTitleProps = {
+  title: string;
+};
+
+const HeaderTitle = ({title}: HeaderTitleProps) => {
   return (
     <S.LogoContainer>
-      <S.TitleText>내 주변</S.TitleText>
+      <S.TitleText>{title}</S.TitleText>
     </S.LogoContainer>
   );
 };

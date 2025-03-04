@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 import SettingsIcon from '@/components/common/SettingsNavigatorIcon';
 import {TabBar} from '@components/common';
@@ -28,7 +29,17 @@ const defaultScreenOptions: BottomTabNavigationOptions = {
 const myPageScreenOptions: BottomTabNavigationOptions = {
   ...defaultScreenOptions,
   headerRight: () => <SettingsIcon />,
-  title: '마이페이지',
+  headerTitle: () => <HeaderTitle title="마이페이지" />,
+};
+
+const subscribeScreenOptions: BottomTabNavigationOptions = {
+  ...defaultScreenOptions,
+  headerTitle: () => <HeaderTitle title="찜한 가게" />,
+};
+
+const orderHistoryScreenOptions: BottomTabNavigationOptions = {
+  ...defaultScreenOptions,
+  headerTitle: () => <HeaderTitle title="주문 내역" />,
 };
 
 const renderTabBar = (props: BottomTabBarProps) => <TabBar {...props} />;
@@ -45,13 +56,13 @@ const HomeNavigator = () => {
       />
       <Tab.Screen
         name="Subscribe"
-        options={{...defaultScreenOptions, title: '찜한 가게'}}
+        options={subscribeScreenOptions}
         component={SubscribeScreen}
       />
       <Tab.Screen
         name="OrderHistory"
         component={OrderHistoryScreen}
-        options={{...defaultScreenOptions, title: '주문 내역'}}
+        options={orderHistoryScreenOptions}
       />
       <Tab.Screen
         name="MyPage"

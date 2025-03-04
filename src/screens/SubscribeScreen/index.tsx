@@ -15,6 +15,7 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './SubscribeScreen.style';
 import {FlatList} from 'react-native-gesture-handler';
+import EmptyMarket from '@/components/common/EmptyMarket';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
@@ -76,6 +77,16 @@ const SubscribeScreen = ({navigation}: Props) => {
       <View>
         <Text>찜 리스트를 불러오는데 실패했습니다.</Text>
       </View>
+    );
+  }
+
+  if (!markets.length) {
+    return (
+      <EmptyMarket
+        title="찜한 가게가 없습니다."
+        onPress={() => navigation.navigate('Feed', {screen: 'Market'})}
+        buttonText="주문하러 가기"
+      />
     );
   }
 

@@ -6,7 +6,8 @@ import {useBucketList} from '@/apis/buckets';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-import EmptyCartPage from './EmptyCartPage';
+import EmptyMarket from '@/components/common/EmptyMarket';
+
 import ShoppingCartPage from './ShoppingCartPage';
 
 type Props = {
@@ -22,8 +23,10 @@ const ShoppingCartScreen = ({navigation}: Props) => {
 
   if (!cart || !cart.products) {
     return (
-      <EmptyCartPage
+      <EmptyMarket
+        title="장바구니가 비어있어요."
         onPress={() => navigation.navigate('Home', {screen: 'Feed'})}
+        buttonText="주문하러 가기"
       />
     );
   }

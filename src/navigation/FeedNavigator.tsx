@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 
-import HeaderTitle from '@/components/common/HeaderTitle';
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 import CartIcon from '@/components/common/CartNavigatorIcon';
 
 import MapScreen from '@/screens/MapScreen';
@@ -18,7 +18,7 @@ const screenOptions: StackNavigationOptions = {
   headerShown: true,
   headerRight: () => <CartIcon />,
   headerTitleAlign: 'left' as const,
-  headerTitle: () => <HeaderTitle />,
+  headerTitle: () => <HeaderTitle title="내 주변" />,
 };
 
 const mapScreenOptions: StackNavigationOptions = {

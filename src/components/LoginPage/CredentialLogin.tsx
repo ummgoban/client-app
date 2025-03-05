@@ -3,9 +3,12 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 
+import useProfile from '@/hooks/useProfile';
+
+import TextInput from '../common/TextInput/TextInput';
+
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-import useProfile from '@/hooks/useProfile';
 import S from './CredentialLogin.style';
 
 const CredentialLogin = () => {
@@ -18,13 +21,13 @@ const CredentialLogin = () => {
 
   return (
     <S.LoginFormWrapper>
-      <S.LoginTextInput
-        label={'아이디'}
+      <TextInput
+        placeholder={'아이디'}
         value={email}
         onChange={e => setEmail(e.nativeEvent.text)}
       />
-      <S.LoginTextInput
-        label={'비밀번호'}
+      <TextInput
+        placeholder={'비밀번호'}
         value={password}
         onChange={e => setPassword(e.nativeEvent.text)}
         secureTextEntry

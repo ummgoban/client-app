@@ -27,10 +27,11 @@ type Props = {
 const FeedScreen = ({navigation}: Props) => {
   const {location, init: initLocation} = useGPSLocation();
 
-  const {data, fetchNextPage, isFetchingNextPage, hasNextPage} = useMarketList({
-    userLatitude: location?.userLatitude,
-    userLongitude: location?.userLongitude,
-  });
+  const {data, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading} =
+    useMarketList({
+      userLatitude: location?.userLatitude,
+      userLongitude: location?.userLongitude,
+    });
 
   const marketList = data ? data.pages.flatMap(page => page.markets) : [];
 
@@ -95,7 +96,7 @@ const FeedScreen = ({navigation}: Props) => {
 
   const {refreshing, onRefresh} = usePullDownRefresh(initLocation);
 
-  if (marketList === null) {
+  if (marketList === null || isLoading) {
     return (
       <View>
         <ActivityIndicator animating={true} size="large" />

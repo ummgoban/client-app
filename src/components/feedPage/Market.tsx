@@ -10,6 +10,7 @@ type Props = {
   market: MarketType;
   onPress: (marketId: number) => void;
 };
+
 const Market = ({market, onPress}: Props) => {
   return (
     <S.MarketWrapper onPress={() => onPress(market.id)}>

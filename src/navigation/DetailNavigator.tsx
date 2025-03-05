@@ -1,22 +1,25 @@
-import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
-import CartIcon from '@/components/common/CartNavigatorIcon';
-import MarketDetailScreen from '@/screens/MarketDetailScreen';
-import OrderDetailScreen from '@/screens/OrderDetailScreen';
-import OrderDoneScreen from '@/screens/OrderDoneScreen';
-import PaymentScreen from '@/screens/PaymentScreen';
-import {DetailStackParamList} from '@/types/StackNavigationType';
 import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import React from 'react';
 
+import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
+import CartIcon from '@/components/common/CartNavigatorIcon';
+
+import MarketDetailScreen from '@/screens/MarketDetailScreen';
+import OrderDetailScreen from '@/screens/OrderDetailScreen';
+import OrderDoneScreen from '@/screens/OrderDoneScreen';
+import PaymentScreen from '@/screens/PaymentScreen';
+
+import {DetailStackParamList} from '@/types/StackNavigationType';
+
 const Stack = createStackNavigator<DetailStackParamList>();
 
 const screenOptions: StackNavigationOptions = {
-  headerShown: true,
+  ...defaultOptions,
   headerRight: () => <CartIcon />,
-  headerTitleAlign: 'left' as const,
 };
 
 const paymentScreenOptions: StackNavigationOptions = {

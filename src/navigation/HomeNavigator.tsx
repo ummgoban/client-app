@@ -22,8 +22,8 @@ const Tab = createBottomTabNavigator<HomeStackParamList>();
 
 const defaultScreenOptions: BottomTabNavigationOptions = {
   headerShown: true,
-  headerRight: () => <CartIcon />,
   headerTitleAlign: 'left' as const,
+  headerRight: () => <CartIcon />,
 };
 
 const myPageScreenOptions: BottomTabNavigationOptions = {

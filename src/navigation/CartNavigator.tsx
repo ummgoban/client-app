@@ -5,6 +5,8 @@ import {
 import React from 'react';
 
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
+import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
+
 import ShoppingCartScreen from '@/screens/ShoppingCartScreen';
 
 import {CartStackParamList} from '@/types/StackNavigationType';
@@ -12,8 +14,7 @@ import {CartStackParamList} from '@/types/StackNavigationType';
 const Stack = createStackNavigator<CartStackParamList>();
 
 const cartScreenOptions: StackNavigationOptions = {
-  headerShown: true,
-  headerTitleAlign: 'left' as const,
+  ...defaultOptions,
   headerTitle: () => <HeaderTitle title="장바구니" />,
 };
 

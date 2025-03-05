@@ -6,6 +6,7 @@ import React from 'react';
 
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 import CartIcon from '@/components/common/CartNavigatorIcon';
+import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 
 import MapScreen from '@/screens/MapScreen';
 import FeedScreen from '@/screens/FeedScreen';
@@ -15,9 +16,8 @@ import {FeedStackParamList} from '@/types/StackNavigationType';
 const Stack = createStackNavigator<FeedStackParamList>();
 
 const screenOptions: StackNavigationOptions = {
-  headerShown: true,
+  ...defaultOptions,
   headerRight: () => <CartIcon />,
-  headerTitleAlign: 'left' as const,
   headerTitle: () => <HeaderTitle title="내 주변" />,
 };
 

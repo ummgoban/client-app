@@ -1,5 +1,11 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import React from 'react';
+
+import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
+import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 
 import MyPageScreen from '@/screens/MyPageScreen';
 import NoticePage from '@/screens/MyPageScreen/NoticePage';
@@ -10,6 +16,26 @@ import {MyPageStackParamList} from '@/types/StackNavigationType';
 
 const Stack = createStackNavigator<MyPageStackParamList>();
 
+const myPageScreenOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="마이페이지" />,
+};
+
+const noticePageOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="공지사항" />,
+};
+
+const policyPageOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="효과점포" />,
+};
+
+const settingScreenOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="설정" />,
+};
+
 const MyPageNavigator = () => {
   return (
     <Stack.Navigator
@@ -18,30 +44,22 @@ const MyPageNavigator = () => {
       <Stack.Screen
         name="MyPage"
         component={MyPageScreen}
-        options={{
-          title: '마이페이지',
-        }}
+        options={myPageScreenOptions}
       />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
-        options={{
-          title: '설정',
-        }}
+        options={settingScreenOptions}
       />
       <Stack.Screen
         name={'Notice'}
         component={NoticePage}
-        options={{
-          title: '공지사항',
-        }}
+        options={noticePageOptions}
       />
       <Stack.Screen
         name={'Policy'}
         component={PolicyPage}
-        options={{
-          title: '약관 및 정책',
-        }}
+        options={policyPageOptions}
       />
     </Stack.Navigator>
   );

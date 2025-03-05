@@ -7,8 +7,6 @@ import {
 } from './client';
 import {MarketPaginationLocRequest} from './model';
 
-import {queryClient} from '@/context/ReactQueryProvider';
-
 export const useMarketList = ({
   userLatitude,
   userLongitude,
@@ -43,23 +41,6 @@ export const useMarketLike = (marketId: number | undefined) => {
     mutationFn: async () => {
       if (!marketId) return;
       return updateMarketLike(marketId);
-    },
-    onSuccess: data => {
-      if (!data) {
-        return;
-      }
-
-      if (marketId) {
-        queryClient.invalidateQueries({
-          queryKey: ['market', marketId],
-          refetchActive: 'none',
-        });
-      }
-
-      queryClient.invalidateQueries({
-        queryKey: ['subscribeList'],
-        refetchActive: 'none',
-      });
     },
   });
 };

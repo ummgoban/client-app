@@ -1,10 +1,12 @@
-import apiClient from '../ApiClient';
 import {
   CreateReviewRequest,
   UpdateReviewRequest,
   ReadReviewRequest,
   ReadReviewResponse,
 } from './model';
+
+import apiClient from '../ApiClient';
+import CustomError from '../CustomError';
 
 const entity = 'customer/review';
 
@@ -31,13 +33,7 @@ export const getReviewListForMarket = async (
       hasNext: false,
     };
   } catch (error) {
-    console.error(error);
-    return {
-      hasNext: false,
-      reviews: [],
-      reviewNum: 0,
-      averageRating: 0,
-    };
+    throw new CustomError(error);
   }
 };
 
@@ -58,8 +54,7 @@ export const createReview = async (
     }
     return false;
   } catch (error) {
-    console.error(error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -80,8 +75,7 @@ export const updateReview = async (
     }
     return false;
   } catch (error) {
-    console.error(error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -107,7 +101,6 @@ export const uploadReviewImage = async (
     }
     return null;
   } catch (error) {
-    console.error(error);
-    return null;
+    throw new CustomError(error);
   }
 };

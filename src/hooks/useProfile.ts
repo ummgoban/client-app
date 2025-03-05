@@ -1,4 +1,4 @@
-import {useQueryClient} from '@tanstack/react-query';
+import {MutateOptions, useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
 import {create} from 'zustand';
 
@@ -11,11 +11,14 @@ import {
   useProfileQuery,
   useSignUpQuery,
 } from '@/apis/auth/query';
+
 import type {
   LoginRequest,
-  SignUpRequest,
   OAuthLoginRequest,
+  SignUpRequest,
 } from '@/apis/auth/model';
+
+import CustomError from '@/apis/CustomError';
 
 type AdminUserType = UserType & {
   marketId: number | null;
@@ -43,9 +46,8 @@ const useProfile = () => {
 
   const {data: profile} = useProfileQuery();
 
-  const {mutateAsync: mutateLogout, isPending: logoutPending} =
-    useLogoutQuery();
-  const {mutateAsync: mutateLogin, isPending: loginPending} = useLoginQuery();
+  const {mutate: mutateLogout, isPending: logoutPending} = useLogoutQuery();
+  const {mutate: mutateLogin, isPending: loginPending} = useLoginQuery();
   const {mutateAsync: mutateLoginWithOAuth, isPending: oAuthPending} =
     useLoginWithOAuthQuery();
   const {mutateAsync: mutateSignUp, isPending: signUpPending} =
@@ -67,15 +69,34 @@ const useProfile = () => {
     [setCurrentMarketId],
   );
 
-  const logout = useCallback(async () => {
-    const res = await mutateLogout();
-    if (res) {
-      await refreshProfile();
-      return true;
-    }
-
-    return false;
-  }, [mutateLogout, refreshProfile]);
+  const logout = useCallback(
+    ({
+      onSuccess,
+      onError,
+      ...rest
+    }: {
+      onSuccess?: () => void;
+      onError?: (error: CustomError) => void;
+    } & MutateOptions<boolean, CustomError, void, unknown>) => {
+      mutateLogout(undefined, {
+        onSuccess: async () => {
+          await refreshProfile();
+          if (onSuccess) {
+            onSuccess();
+          }
+        },
+        onError: error => {
+          if (error instanceof CustomError) {
+            if (onError) {
+              onError(error);
+            }
+          }
+        },
+        ...rest,
+      });
+    },
+    [mutateLogout, refreshProfile],
+  );
 
   const signUp = useCallback(
     async ({email, password, name, phoneNumber}: SignUpRequest) => {
@@ -91,14 +112,25 @@ const useProfile = () => {
   );
 
   const login = useCallback(
-    async ({email, password}: LoginRequest) => {
-      const result = await mutateLogin({email, password});
-      if (result) {
-        await refreshProfile();
-        return true;
-      }
-
-      return false;
+    (
+      variables: LoginRequest,
+      options?: MutateOptions<boolean, CustomError, void, unknown>,
+    ) => {
+      mutateLogin(variables, {
+        onSuccess: async (_data, _variables, _context) => {
+          await refreshProfile();
+          if (options?.onSuccess) {
+            options.onSuccess(_data, undefined, _context);
+          }
+        },
+        onError: (error, _variables, _context) => {
+          if (error instanceof CustomError) {
+            if (options?.onError) {
+              options?.onError(error, undefined, _context);
+            }
+          }
+        },
+      });
     },
     [mutateLogin, refreshProfile],
   );

@@ -1,7 +1,9 @@
 import {OrderDetailType, OrderType} from '@/types/OrderType';
 
-import apiClient from '../ApiClient';
 import {CreateOrderRequest, OrderSuccessRequest} from './model';
+
+import apiClient from '../ApiClient';
+import CustomError from '../CustomError';
 
 const BASE_URL = '/customer/orders';
 
@@ -10,8 +12,7 @@ export const getOrderHistory = async (): Promise<OrderType[]> => {
     const res = await apiClient.get<OrderType[]>(`${BASE_URL}`);
     return res ?? [];
   } catch (error) {
-    console.error(error);
-    return [];
+    throw new CustomError(error);
   }
 };
 
@@ -20,8 +21,7 @@ export const getProgressingOrder = async (): Promise<OrderType[]> => {
     const res = await apiClient.get<OrderType[]>(`${BASE_URL}/progress`);
     return res ?? [];
   } catch (error) {
-    console.error(error);
-    return [];
+    throw new CustomError(error);
   }
 };
 
@@ -47,8 +47,7 @@ export const requestOrder = async ({
 
     return res?.data ?? null;
   } catch (error) {
-    console.debug(error);
-    return null;
+    throw new CustomError(error);
   }
 };
 
@@ -69,8 +68,7 @@ export const requestOrderSuccess = async ({
 
     return res?.code === 201;
   } catch (error) {
-    console.debug(error);
-    return null;
+    throw new CustomError(error);
   }
 };
 
@@ -83,7 +81,6 @@ export const getOrderDetail = async (
     );
     return res;
   } catch (error) {
-    console.error(error);
-    return null;
+    throw new CustomError(error);
   }
 };

@@ -1,7 +1,9 @@
 import {BucketType, BucketProductType} from '@/types/Bucket';
 
-import apiClient from '../ApiClient';
 import {AddBucketRequest, UpdateBucketRequest} from './model';
+
+import apiClient from '../ApiClient';
+import CustomError from '../CustomError';
 
 export const getBucketList = async (): Promise<BucketType | null> => {
   try {
@@ -9,8 +11,7 @@ export const getBucketList = async (): Promise<BucketType | null> => {
 
     return res;
   } catch (error) {
-    console.error('Error fetching getBurkets list:', error);
-    return null;
+    throw new CustomError(error);
   }
 };
 
@@ -24,8 +25,7 @@ export const validateBucket = async (marketId: number): Promise<boolean> => {
     }
     return false;
   } catch (error) {
-    console.error('Error fetching validateBucket:', error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -48,8 +48,7 @@ export const addToBucket = async ({
     }
     return false;
   } catch (error) {
-    console.error('addToBucket error:', error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -77,8 +76,7 @@ export const updateBucketProduct = async ({
     }
     return false;
   } catch (error) {
-    console.error('updateBucket error:', error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -100,7 +98,6 @@ export const deleteBucketProduct = async (
     }
     return false;
   } catch (error) {
-    console.error('updateBucket error:', error);
-    return false;
+    throw new CustomError(error);
   }
 };

@@ -1,8 +1,9 @@
 import {MarketDetailType} from '@/types/Market';
 
-import apiClient from '../ApiClient';
-
 import {MarketPaginationRequest, MarketListResponse} from './model';
+
+import apiClient from '../ApiClient';
+import CustomError from '../CustomError';
 
 export const getMarketList = async ({
   cursorDistance,
@@ -29,11 +30,7 @@ export const getMarketList = async ({
 
     return res;
   } catch (error) {
-    console.error('Error fetching market list:', error);
-    return {
-      markets: [],
-      hasNext: false,
-    };
+    throw new CustomError(error);
   }
 };
 
@@ -47,8 +44,7 @@ export const getMarket = async (
 
     return res;
   } catch (error) {
-    console.error(`Error fetching market: ${marketId}`, error);
-    return null;
+    throw new CustomError(error);
   }
 };
 
@@ -60,8 +56,7 @@ export const updateMarketLike = async (marketId: number): Promise<boolean> => {
     }
     return false;
   } catch (error) {
-    console.error('Error in updateMarketLike:', error);
-    return false;
+    throw new CustomError(error);
   }
 };
 
@@ -93,10 +88,6 @@ export const getSubscribeList = async ({
 
     return res;
   } catch (error) {
-    console.error('Error Subscribed market list:', error);
-    return {
-      markets: [],
-      hasNext: false,
-    };
+    throw new CustomError(error);
   }
 };

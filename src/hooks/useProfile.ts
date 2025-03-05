@@ -1,4 +1,4 @@
-import {useQueryClient} from '@tanstack/react-query';
+import {MutateOptions, useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
 import {create} from 'zustand';
 
@@ -70,21 +70,29 @@ const useProfile = () => {
   );
 
   const logout = useCallback(
-    (callback?: () => void, failCallback?: (error: CustomError) => void) => {
+    ({
+      onSuccess,
+      onError,
+      ...rest
+    }: {
+      onSuccess?: () => void;
+      onError?: (error: CustomError) => void;
+    } & MutateOptions<boolean, CustomError, void, unknown>) => {
       mutateLogout(undefined, {
         onSuccess: async () => {
           await refreshProfile();
-          if (callback) {
-            callback();
+          if (onSuccess) {
+            onSuccess();
           }
         },
         onError: error => {
           if (error instanceof CustomError) {
-            if (failCallback) {
-              failCallback(error);
+            if (onError) {
+              onError(error);
             }
           }
         },
+        ...rest,
       });
     },
     [mutateLogout, refreshProfile],
@@ -105,28 +113,24 @@ const useProfile = () => {
 
   const login = useCallback(
     (
-      {email, password}: LoginRequest,
-      callback?: () => void,
-      failCallback?: (error: CustomError) => void,
+      variables: LoginRequest,
+      options?: MutateOptions<boolean, CustomError, void, unknown>,
     ) => {
-      mutateLogin(
-        {email, password},
-        {
-          onSuccess: async () => {
-            await refreshProfile();
-            if (callback) {
-              callback();
-            }
-          },
-          onError: error => {
-            if (error instanceof CustomError) {
-              if (failCallback) {
-                failCallback(error);
-              }
-            }
-          },
+      mutateLogin(variables, {
+        onSuccess: async (_data, _variables, _context) => {
+          await refreshProfile();
+          if (options?.onSuccess) {
+            options.onSuccess(_data, undefined, _context);
+          }
         },
-      );
+        onError: (error, _variables, _context) => {
+          if (error instanceof CustomError) {
+            if (options?.onError) {
+              options?.onError(error, undefined, _context);
+            }
+          }
+        },
+      });
     },
     [mutateLogin, refreshProfile],
   );

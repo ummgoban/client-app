@@ -84,15 +84,17 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               fontColor="#888"
               isNotice={false}
               onPress={() => {
-                logout(() => {
-                  Alert.alert('로그아웃 되었습니다.', '', [
-                    {
-                      text: '확인',
-                      onPress: () => {
-                        navigation.navigate('Home', {screen: 'Feed'});
+                logout({
+                  onSuccess: () => {
+                    Alert.alert('로그아웃 되었습니다.', '', [
+                      {
+                        text: '확인',
+                        onPress: () => {
+                          navigation.navigate('Home', {screen: 'Feed'});
+                        },
                       },
-                    },
-                  ]);
+                    ]);
+                  },
                 });
               }}
             />

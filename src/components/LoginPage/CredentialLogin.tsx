@@ -35,11 +35,9 @@ const CredentialLogin = () => {
         onPress={async () => {
           login(
             {email, password},
-            () => {
-              navigation.navigate('Home', {screen: 'Feed'});
-            },
-            error => {
-              Alert.alert(`${error.errorMessage}`);
+            {
+              onSuccess: () => navigation.navigate('Home', {screen: 'Feed'}),
+              onError: error => Alert.alert(`${error.errorMessage}`),
             },
           );
         }}>

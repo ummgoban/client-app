@@ -6,8 +6,9 @@ import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 
-import apiClient from '../ApiClient';
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
+
+import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
 
 export const registerFCMToken = async (
@@ -26,7 +27,7 @@ export const registerFCMToken = async (
     );
     return !!res && res.code === 200;
   } catch (error) {
-    throw error as CustomError;
+    throw new CustomError(error);
   }
 };
 
@@ -58,7 +59,7 @@ export const credentialSignUp = async ({
 
     return res && res.code === 200;
   } catch (error) {
-    throw error;
+    throw new CustomError(error);
   }
 };
 
@@ -124,7 +125,7 @@ export const loginWithOAuth = async (
       const token = await messaging().getToken();
       await registerFCMToken(token);
     } catch (error) {
-      throw error;
+      throw new CustomError(error);
     }
     return true;
   }
@@ -151,7 +152,7 @@ export const logout = async (): Promise<boolean> => {
 
     return true;
   } catch (error) {
-    throw error;
+    throw new CustomError(error);
   }
 };
 
@@ -171,6 +172,6 @@ export const getProfile = async (): Promise<UserType | null> => {
       return null;
     }
   } catch (error) {
-    throw error;
+    throw new CustomError(error);
   }
 };

@@ -48,6 +48,7 @@ const CredentialSignUp = () => {
     <S.ScreenWrapper>
       <S.LoginFormWrapper>
         <TextInput
+          label={'이름'}
           placeholder={'이름'}
           value={name}
           onChange={e => setName(e.nativeEvent.text)}
@@ -55,6 +56,7 @@ const CredentialSignUp = () => {
           errorMessage="이름은 2자 이상 10자 이하로 입력해주세요."
         />
         <TextInput
+          label={'이메일'}
           placeholder={'이메일'}
           value={email}
           onChange={e => setEmail(e.nativeEvent.text)}
@@ -63,6 +65,7 @@ const CredentialSignUp = () => {
           keyboardType="email-address"
         />
         <TextInput
+          label={'비밀번호'}
           placeholder={'비밀번호'}
           value={password}
           onChange={e => setPassword(e.nativeEvent.text)}
@@ -71,6 +74,7 @@ const CredentialSignUp = () => {
           secureTextEntry
         />
         <TextInput
+          label={'비밀번호 확인'}
           placeholder={'비밀번호 확인'}
           value={passwordCheck}
           onChange={e => setPasswordCheck(e.nativeEvent.text)}
@@ -79,7 +83,8 @@ const CredentialSignUp = () => {
           errorMessage="비밀번호가 일치하지 않습니다."
         />
         <TextInput
-          placeholder={'전화번호 (010-1234-5678)'}
+          label={'전화번호'}
+          placeholder={'010-1234-5678'}
           value={phoneNumber}
           onChange={e => {
             const value = e.nativeEvent.text;

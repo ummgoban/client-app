@@ -8,9 +8,19 @@ const S = {
 
     width: 100%;
   `,
+
+  TextInputWrapper: styled.View`
+    display: flex;
+    gap: 8px;
+  `,
+
   TextInputContainer: styled.View`
     width: 100%;
     height: 48px;
+  `,
+
+  Label: styled(Text)`
+    ${({theme}) => theme.fonts.body2}
   `,
 
   ErrorContainer: styled.View`

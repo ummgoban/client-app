@@ -1,16 +1,15 @@
-export type DefaultError = {
-  errorCode: number;
-  errorMessage: string;
-};
+type CustomErrorType<T = unknown> = T extends Error ? T : unknown;
 
-type CustomErrorType<T = DefaultError> = T extends Error ? T : unknown;
+class CustomError<T = unknown> extends Error {
+  errorCode?: number;
+  errorMessage?: string;
 
-class CustomError<T extends DefaultError> extends Error {
   constructor(args: CustomErrorType<T>) {
     if (args instanceof Error) {
       super(args.message);
     } else {
       super('Unknown error');
+      this.errorMessage = 'Unknown error';
     }
     Object.assign(this, args);
   }

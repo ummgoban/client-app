@@ -3,5 +3,5 @@ export type SessionType = {
   refreshToken?: string;
   accessTokenExpiresAt?: number;
   refreshTokenExpiresAt?: number;
-  OAuthProvider: 'NAVER' | 'KAKAO' | 'APPLE';
+  OAuthProvider: 'NAVER' | 'KAKAO' | 'APPLE' | 'BASIC';
 };

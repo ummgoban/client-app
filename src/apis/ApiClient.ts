@@ -86,6 +86,8 @@ class ApiClient {
         }
       }
 
+      console.error('unknown error', JSON.stringify(error, null, 2));
+
       return null;
     }
   };
@@ -123,6 +125,8 @@ class ApiClient {
         }
       }
 
+      console.error('unknown error', JSON.stringify(error, null, 2));
+
       return null;
     }
   };
@@ -159,6 +163,9 @@ class ApiClient {
           throw new CustomError(error.response.data);
         }
       }
+
+      console.error('unknown error', JSON.stringify(error, null, 2));
+
       return null;
     }
   };
@@ -195,6 +202,9 @@ class ApiClient {
           throw new CustomError(error.response.data);
         }
       }
+
+      console.error('unknown error', JSON.stringify(error, null, 2));
+
       return null;
     }
   };
@@ -223,6 +233,8 @@ class ApiClient {
           throw new CustomError(error.response.data);
         }
       }
+
+      console.error('unknown error', JSON.stringify(error, null, 2));
 
       return null;
     }

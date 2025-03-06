@@ -9,6 +9,7 @@ import {
   registerFCMToken,
   sendEmailCode,
   verifyEmailCode,
+  withdraw,
 } from './client';
 
 import {
@@ -70,4 +71,10 @@ export const useVerifyEmailCodeMutation = () =>
     mutationKey: ['verify-email-code'],
     mutationFn: ({email, code}: VerifyEmailCodeRequest) =>
       verifyEmailCode({email, code}),
+  });
+
+export const useWithdrawMutation = () =>
+  useMutation({
+    mutationKey: ['withdraw'],
+    mutationFn: () => withdraw(),
   });

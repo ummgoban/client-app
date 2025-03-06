@@ -12,6 +12,7 @@ import {
   useSendEmailCodeMutation,
   useSignUpQuery,
   useVerifyEmailCodeMutation,
+  useWithdrawMutation,
 } from '@/apis/auth/query';
 
 import type {
@@ -57,6 +58,8 @@ const useProfile = () => {
     useSendEmailCodeMutation();
   const {mutate: mutateVerifyEmailCode, isPending: isPendingVerifyEmailCode} =
     useVerifyEmailCodeMutation();
+  const {mutate: mutateWithdraw, isPending: isPendingWithdraw} =
+    useWithdrawMutation();
 
   const loading =
     logoutPending || loginPending || oAuthPending || signUpPending;
@@ -167,6 +170,28 @@ const useProfile = () => {
     [mutateLoginWithOAuth, refreshProfile],
   );
 
+  const withdraw = useCallback(
+    (options?: MutateOptions<boolean, CustomError, void, unknown>) => {
+      mutateWithdraw(undefined, {
+        onSuccess: async (_data, _variables, _context) => {
+          await refreshProfile();
+          if (options?.onSuccess) {
+            options.onSuccess(_data, undefined, _context);
+          }
+        },
+        onError: (error, _variables, _context) => {
+          if (error instanceof CustomError) {
+            if (options?.onError) {
+              options.onError(error, undefined, _context);
+            }
+          }
+        },
+        ...options,
+      });
+    },
+    [mutateWithdraw, refreshProfile],
+  );
+
   return {
     profile,
     refreshProfile,
@@ -180,6 +205,8 @@ const useProfile = () => {
     verifyEmailCode: mutateVerifyEmailCode,
     isPendingSendEmailCode,
     isPendingVerifyEmailCode,
+    withdraw,
+    isPendingWithdraw,
   };
 };
 

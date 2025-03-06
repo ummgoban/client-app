@@ -56,6 +56,7 @@ export const credentialSignUp = async ({
       password,
       name,
       phoneNumber,
+      roles: 'ROLE_USER',
     });
 
     return !!res && res.code === 200;
@@ -207,6 +208,15 @@ export const verifyEmailCode = async ({
       code,
     });
 
+    return !!res;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
+export const withdraw = async () => {
+  try {
+    const res = await apiClient.del('/common/auth/withdraw');
     return !!res;
   } catch (error) {
     throw new CustomError(error);

@@ -2,10 +2,10 @@ import styled from '@emotion/native';
 import {Button} from 'react-native-paper';
 
 const S = {
-  ScreenWrapper: styled.View`
+  ScreenWrapper: styled.ScrollView`
     flex: 1;
 
-    margin-top: 16px;
+    margin: 16px 0;
   `,
 
   LoginFormWrapper: styled.View`
@@ -33,6 +33,25 @@ const S = {
     background-color: ${({theme}) => theme.colors.primaryDisabled};
 
     margin-bottom: 16px;
+  `,
+
+  EmailVerifyContainer: styled.View`
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+  `,
+
+  SendEmailCodeButton: styled(Button)`
+    width: 100%;
+    height: 48px;
+  `,
+
+  VerifyEmailCodeButton: styled(Button)`
+    width: 100%;
+    height: 48px;
   `,
 };
 

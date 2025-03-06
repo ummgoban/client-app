@@ -58,7 +58,7 @@ export const credentialSignUp = async ({
       phoneNumber,
     });
 
-    return res && res.code === 200;
+    return !!res && res.code === 200;
   } catch (error) {
     throw new CustomError(error);
   }
@@ -181,9 +181,15 @@ export const sendEmailCode = async ({
   email,
 }: SendEmailCodeRequest): Promise<boolean> => {
   try {
-    const res = await apiClient.post('/common/auth/email-code', {
-      email,
-    });
+    const res = await apiClient.post(
+      '/common/auth/send-code',
+      {},
+      {
+        params: {
+          email,
+        },
+      },
+    );
 
     return !!res;
   } catch (error) {

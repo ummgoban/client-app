@@ -4,9 +4,10 @@ import {
   TextInput as ReactNativePaperTextInput,
   type TextInputProps as ReactNativePaperTextInputProps,
 } from 'react-native-paper';
-import {StyleProp, StyleSheet, TextStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 import S from './TextInput.style';
+import theme from '@/context/theme';
 
 type TextInputProps = {
   label?: string;
@@ -14,6 +15,7 @@ type TextInputProps = {
   validation?: (value: string) => boolean;
   errorMessage?: string;
   errorStyle?: StyleProp<TextStyle>;
+  style?: StyleProp<ViewStyle>;
 } & Omit<ReactNativePaperTextInputProps, 'mode' | 'label'>;
 
 /**
@@ -27,11 +29,12 @@ const TextInput = ({
   validation,
   errorMessage,
   errorStyle,
+  style,
   ...props
 }: TextInputProps) => {
   const value = props.value;
   return (
-    <S.Container>
+    <S.Container style={style}>
       <S.TextInputWrapper
         style={
           label
@@ -47,6 +50,11 @@ const TextInput = ({
             mode="outlined"
             style={styles.input}
             label={undefined}
+            outlineStyle={
+              value && validation && !validation(value)
+                ? styles.errorInput
+                : null
+            }
           />
         </S.TextInputContainer>
       </S.TextInputWrapper>
@@ -63,6 +71,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     height: 48,
+  },
+  errorInput: {
+    borderColor: theme.colors.error,
   },
   labelTop: {
     display: 'flex',

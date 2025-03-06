@@ -9,7 +9,9 @@ import {
   useLoginWithOAuthQuery,
   useLogoutQuery,
   useProfileQuery,
+  useSendEmailCodeMutation,
   useSignUpQuery,
+  useVerifyEmailCodeMutation,
 } from '@/apis/auth/query';
 
 import type {
@@ -50,8 +52,11 @@ const useProfile = () => {
   const {mutate: mutateLogin, isPending: loginPending} = useLoginQuery();
   const {mutateAsync: mutateLoginWithOAuth, isPending: oAuthPending} =
     useLoginWithOAuthQuery();
-  const {mutateAsync: mutateSignUp, isPending: signUpPending} =
-    useSignUpQuery();
+  const {mutate: mutateSignUp, isPending: signUpPending} = useSignUpQuery();
+  const {mutate: mutateSendEmailCode, isPending: isPendingSendEmailCode} =
+    useSendEmailCodeMutation();
+  const {mutate: mutateVerifyEmailCode, isPending: isPendingVerifyEmailCode} =
+    useVerifyEmailCodeMutation();
 
   const loading =
     logoutPending || loginPending || oAuthPending || signUpPending;
@@ -99,14 +104,26 @@ const useProfile = () => {
   );
 
   const signUp = useCallback(
-    async ({email, password, name, phoneNumber}: SignUpRequest) => {
-      const res = await mutateSignUp({email, password, name, phoneNumber});
-      if (res) {
-        await refreshProfile();
-        return true;
-      }
-
-      return false;
+    (
+      variables: SignUpRequest,
+      options?: MutateOptions<boolean, CustomError, SignUpRequest, unknown>,
+    ) => {
+      mutateSignUp(variables, {
+        onSuccess: async (_data, _variables, _context) => {
+          await refreshProfile();
+          if (options?.onSuccess) {
+            options.onSuccess(_data, _variables, _context);
+          }
+        },
+        onError: (error, _variables, _context) => {
+          if (error instanceof CustomError) {
+            if (options?.onError) {
+              options.onError(error, _variables, _context);
+            }
+          }
+        },
+        ...options,
+      });
     },
     [mutateSignUp, refreshProfile],
   );
@@ -159,6 +176,10 @@ const useProfile = () => {
     login,
     loginWithOAuth,
     logout,
+    sendEmailCode: mutateSendEmailCode,
+    verifyEmailCode: mutateVerifyEmailCode,
+    isPendingSendEmailCode,
+    isPendingVerifyEmailCode,
   };
 };
 

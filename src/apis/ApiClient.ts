@@ -96,7 +96,12 @@ class ApiClient {
     config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      console.debug('POST', url, JSON.stringify(config, null, 2));
+      console.debug(
+        'POST',
+        url,
+        JSON.stringify(body, null, 2),
+        JSON.stringify(config, null, 2),
+      );
       const res: AxiosResponse<T, D> = await this.axiosInstance.post(
         url,
         body,
@@ -128,7 +133,12 @@ class ApiClient {
     config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      console.debug('PATCH', url, JSON.stringify(config, null, 2));
+      console.debug(
+        'PATCH',
+        url,
+        JSON.stringify(body, null, 2),
+        JSON.stringify(config, null, 2),
+      );
       const res: AxiosResponse<T, D> = await this.axiosInstance.patch(
         url,
         body,
@@ -159,7 +169,12 @@ class ApiClient {
     config?: AxiosRequestConfig<D> | undefined,
   ): Promise<T | null> => {
     try {
-      console.debug('PUT', url, JSON.stringify(config, null, 2));
+      console.debug(
+        'PUT',
+        url,
+        JSON.stringify(body, null, 2),
+        JSON.stringify(config, null, 2),
+      );
       const res: AxiosResponse<T, D> = await this.axiosInstance.put(
         url,
         body,

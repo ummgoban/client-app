@@ -15,10 +15,11 @@ import S from './Layout.style';
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
-  const insets = useSafeAreaInsets();
+  /** omit top, because of `@react-navigation/stack` appbar containing top safe area */
+  const {left, right, bottom} = useSafeAreaInsets();
 
   return (
-    <S.Layout {...insets}>
+    <S.Layout left={left} right={right} bottom={bottom}>
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{headerShown: false}}>

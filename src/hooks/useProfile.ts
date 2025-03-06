@@ -9,7 +9,9 @@ import {
   useLoginWithOAuthQuery,
   useLogoutQuery,
   useProfileQuery,
+  useSendEmailCodeMutation,
   useSignUpQuery,
+  useVerifyEmailCodeMutation,
 } from '@/apis/auth/query';
 
 import type {
@@ -52,6 +54,10 @@ const useProfile = () => {
     useLoginWithOAuthQuery();
   const {mutateAsync: mutateSignUp, isPending: signUpPending} =
     useSignUpQuery();
+  const {mutate: mutateSendEmailCode, isPending: isPendingSendEmailCode} =
+    useSendEmailCodeMutation();
+  const {mutate: mutateVerifyEmailCode, isPending: isPendingVerifyEmailCode} =
+    useVerifyEmailCodeMutation();
 
   const loading =
     logoutPending || loginPending || oAuthPending || signUpPending;
@@ -159,6 +165,10 @@ const useProfile = () => {
     login,
     loginWithOAuth,
     logout,
+    sendEmailCode: mutateSendEmailCode,
+    verifyEmailCode: mutateVerifyEmailCode,
+    isPendingSendEmailCode,
+    isPendingVerifyEmailCode,
   };
 };
 

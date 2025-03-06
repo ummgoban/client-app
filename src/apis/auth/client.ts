@@ -7,6 +7,7 @@ import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
+import {VerifyEmailCodeRequest, SendEmailCodeRequest} from './model';
 
 import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
@@ -171,6 +172,36 @@ export const getProfile = async (): Promise<UserType | null> => {
     } else {
       return null;
     }
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
+export const sendEmailCode = async ({
+  email,
+}: SendEmailCodeRequest): Promise<boolean> => {
+  try {
+    const res = await apiClient.post('/common/auth/email-code', {
+      email,
+    });
+
+    return !!res;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
+export const verifyEmailCode = async ({
+  email,
+  code,
+}: VerifyEmailCodeRequest): Promise<boolean> => {
+  try {
+    const res = await apiClient.post('/common/auth/verify-code', {
+      email,
+      code,
+    });
+
+    return !!res;
   } catch (error) {
     throw new CustomError(error);
   }

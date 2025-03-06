@@ -7,8 +7,17 @@ import {
   loginWithOAuth,
   logout,
   registerFCMToken,
+  sendEmailCode,
+  verifyEmailCode,
 } from './client';
-import {LoginRequest, OAuthLoginRequest, SignUpRequest} from './model';
+
+import {
+  LoginRequest,
+  OAuthLoginRequest,
+  SignUpRequest,
+  SendEmailCodeRequest,
+  VerifyEmailCodeRequest,
+} from './model';
 
 export const useProfileQuery = () =>
   useQuery({
@@ -48,4 +57,17 @@ export const useRegisterFCMTokenQuery = () =>
   useMutation({
     mutationKey: ['register-fcm-token'],
     mutationFn: (deviceToken: string) => registerFCMToken(deviceToken),
+  });
+
+export const useSendEmailCodeMutation = () =>
+  useMutation({
+    mutationKey: ['send-email-code'],
+    mutationFn: ({email}: SendEmailCodeRequest) => sendEmailCode({email}),
+  });
+
+export const useVerifyEmailCodeMutation = () =>
+  useMutation({
+    mutationKey: ['verify-email-code'],
+    mutationFn: ({email, code}: VerifyEmailCodeRequest) =>
+      verifyEmailCode({email, code}),
   });

@@ -15,22 +15,11 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
-const ShoppingCartScreen = ({navigation}: Props) => {
+const ValideShoppingCart = ({navigation}: Props) => {
   const {data: cart, isLoading} = useBucketList();
-  const {profile} = useProfile();
 
   if (isLoading) {
     return <ActivityIndicator animating size="large" />;
-  }
-
-  if (!profile) {
-    return (
-      <EmptyComponent
-        title="로그인 후 판매 중인 반찬을 예약해보세요."
-        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
-        buttonText="로그인하러 가기"
-      />
-    );
   }
 
   if (!cart || !cart.products) {
@@ -44,6 +33,21 @@ const ShoppingCartScreen = ({navigation}: Props) => {
   }
 
   return <ShoppingCartPage navigation={navigation} cartData={cart} />;
+};
+
+const ShoppingCartScreen = ({navigation}: Props) => {
+  const {profile} = useProfile();
+
+  if (!profile) {
+    return (
+      <EmptyComponent
+        title="로그인 후 판매 중인 반찬을 예약해보세요."
+        onPress={() => navigation.navigate('Register', {screen: 'Login'})}
+        buttonText="로그인하러 가기"
+      />
+    );
+  }
+  return <ValideShoppingCart navigation={navigation} />;
 };
 
 export default ShoppingCartScreen;

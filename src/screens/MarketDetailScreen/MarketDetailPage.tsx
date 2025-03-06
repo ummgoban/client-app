@@ -23,6 +23,7 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 import {zeroPad} from '@utils/date';
 
 import S from './MarketDetail.style';
+import useProfile from '@/hooks/useProfile';
 
 type CartItem = {
   productId: number;
@@ -58,6 +59,8 @@ const MarketDetailPage = ({
 
   const {mutateAsync: validateBucket} = useValidateBucket();
   const {mutateAsync: addToBucket} = useAddToBucket();
+
+  const {profile} = useProfile();
 
   const handleCountChange = (productId: number, newCount: number) => {
     handleCart(
@@ -408,8 +411,15 @@ const MarketDetailPage = ({
         ))}
       </S.MenuScrollView>
 
-      <BottomButton onPress={() => addProductToBucket(id, cart)}>
-        예약하기 ({cart.length})
+      <BottomButton
+        onPress={() => {
+          if (profile) {
+            addProductToBucket(id, cart);
+          } else {
+            navigation.navigate('Register', {screen: 'Login'});
+          }
+        }}>
+        {profile ? `예약하기 (${cart.length})` : `로그인하고 장바구니에 담기`}
       </BottomButton>
     </S.MarketDetailInfoView>
   );

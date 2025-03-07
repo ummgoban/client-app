@@ -45,6 +45,7 @@ const DetailNavigator = () => {
 
   return (
     <View
+      // TODO: lint warning fix
       style={{flex: 1, paddingBottom: insets.bottom, backgroundColor: 'white'}}>
       <Stack.Navigator
         initialRouteName="MarketDetail"

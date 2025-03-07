@@ -39,6 +39,7 @@ const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
   return (
     <S.TabBarContainer
+      // TODO: lint warning fix
       style={{paddingBottom: insets.bottom, backgroundColor: 'white'}}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];

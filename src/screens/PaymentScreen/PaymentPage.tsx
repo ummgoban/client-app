@@ -28,6 +28,7 @@ import {format} from '@/utils/date';
 
 import S from './PaymentPage.style';
 import {Button, Text} from 'react-native-paper';
+import {useQueryClient} from '@tanstack/react-query';
 
 const nowDate = format(new Date(), 'YYYY-MM-DD');
 
@@ -39,7 +40,7 @@ const PaymentPage = ({cart, marketId}: Props) => {
   const {data: market} = useMarket(marketId);
 
   const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
-
+  const queryClient = useQueryClient();
   const {mutateAsync: requestOrder} = useRequestOrderMutation();
 
   const {originPrice, discountPrice} = useMemo(
@@ -137,7 +138,7 @@ const PaymentPage = ({cart, marketId}: Props) => {
             Alert.alert('주문 정보를 가져오지 못했습니다.');
             return;
           }
-
+          await queryClient.invalidateQueries({queryKey: ['orderHistory']});
           // const tossPaymentRes = await paymentWidgetControl.requestPayment({
           //   orderId: orderRes.ordersId,
           //   orderName: orderRes.ordersName,

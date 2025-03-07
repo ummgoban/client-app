@@ -1,4 +1,5 @@
 import {useMarketLike} from '@/apis/markets';
+import {useQueryClient} from '@tanstack/react-query';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,6 +15,8 @@ const SubscribeIcon = ({
   marketId,
   handleSubscribe,
 }: SubscribeIconProps) => {
+  const queryClient = useQueryClient();
+
   const {mutateAsync: updateMarketLike} = useMarketLike(marketId);
 
   const handleLikePress = async () => {
@@ -21,6 +24,7 @@ const SubscribeIcon = ({
       const response = await updateMarketLike();
       if (response) {
         handleSubscribe();
+        queryClient.invalidateQueries({queryKey: ['subscribeList']});
       }
     }
   };

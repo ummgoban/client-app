@@ -1,7 +1,9 @@
 import styled from '@emotion/native';
 
 const SubscribeContainer = styled.View`
-  margin: 16px 0;
+  flex: 1;
+  background-color: white;
+  padding: 8px;
 `;
 
 const SubscribeMarketCartWrapper = styled.View`

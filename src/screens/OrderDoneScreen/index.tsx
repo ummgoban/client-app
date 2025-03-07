@@ -2,9 +2,10 @@ import {DetailStackParamList} from '@/types/StackNavigationType';
 import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {Text, View} from 'react-native';
-import {Button, Title} from 'react-native-paper';
+import {Title} from 'react-native-paper';
 import S from './OrderDoneScreen.style';
 import {to6DigitHash} from '@/utils/hash';
+import {BottomButton} from '@/components/common';
 
 type Props = StackScreenProps<DetailStackParamList, 'OrderDone'>;
 
@@ -46,9 +47,10 @@ const OrderDoneScreen = ({navigation, route}: Props) => {
           </S.PriceItem>
         </S.PriceView>
       </S.OrderDoneCard>
-      <Button onPress={() => navigation.navigate('Home', {screen: 'Feed'})}>
-        <Text>홈으로</Text>
-      </Button>
+      <BottomButton
+        onPress={() => navigation.navigate('Home', {screen: 'Feed'})}>
+        홈으로
+      </BottomButton>
     </S.OrderDoneContainer>
   );
 };

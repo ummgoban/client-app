@@ -11,6 +11,8 @@ import {HomeStackParamList} from '@/types/StackNavigationType';
 
 import S from './TabBar.style';
 
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 type TabBarComponentType = {
   [route in keyof HomeStackParamList]: {
     label: string;
@@ -34,8 +36,10 @@ const tabBarData: TabBarComponentType = {
 
 // TODO: resolve inline style
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
+  const insets = useSafeAreaInsets();
   return (
-    <S.TabBarContainer>
+    <S.TabBarContainer
+      style={{paddingBottom: insets.bottom, backgroundColor: 'white'}}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
 

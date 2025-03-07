@@ -14,6 +14,8 @@ import OrderDoneScreen from '@/screens/OrderDoneScreen';
 import PaymentScreen from '@/screens/PaymentScreen';
 
 import {DetailStackParamList} from '@/types/StackNavigationType';
+import {View} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator<DetailStackParamList>();
 
@@ -39,31 +41,36 @@ const orderDoneScreenOptions: StackNavigationOptions = {
 };
 
 const DetailNavigator = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Stack.Navigator
-      initialRouteName="MarketDetail"
-      screenOptions={{headerShown: true}}>
-      <Stack.Screen
-        name="MarketDetail"
-        options={screenOptions}
-        component={MarketDetailScreen}
-      />
-      <Stack.Screen
-        name="Payment"
-        component={PaymentScreen}
-        options={paymentScreenOptions}
-      />
-      <Stack.Screen
-        name="OrderDone"
-        component={OrderDoneScreen}
-        options={orderDoneScreenOptions}
-      />
-      <Stack.Screen
-        name="OrderDetail"
-        component={OrderDetailScreen}
-        options={orderDetailScreenOptions}
-      />
-    </Stack.Navigator>
+    <View
+      style={{flex: 1, paddingBottom: insets.bottom, backgroundColor: 'white'}}>
+      <Stack.Navigator
+        initialRouteName="MarketDetail"
+        screenOptions={{headerShown: true}}>
+        <Stack.Screen
+          name="MarketDetail"
+          options={screenOptions}
+          component={MarketDetailScreen}
+        />
+        <Stack.Screen
+          name="Payment"
+          component={PaymentScreen}
+          options={paymentScreenOptions}
+        />
+        <Stack.Screen
+          name="OrderDone"
+          component={OrderDoneScreen}
+          options={orderDoneScreenOptions}
+        />
+        <Stack.Screen
+          name="OrderDetail"
+          component={OrderDetailScreen}
+          options={orderDetailScreenOptions}
+        />
+      </Stack.Navigator>
+    </View>
   );
 };
 

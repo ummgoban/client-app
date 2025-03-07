@@ -4,6 +4,7 @@ import {Card, Text} from 'react-native-paper';
 
 const Container = styled.ScrollView`
   padding: 8px;
+  background-color: white;
 `;
 
 const NoticeCard = styled(Card)`

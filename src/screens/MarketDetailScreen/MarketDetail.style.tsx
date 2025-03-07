@@ -74,7 +74,7 @@ const S = {
 
   SideTagBarScrollView: styled.ScrollView`
     padding: 8px 0;
-    height: 124px;
+    height: 96px;
   `,
 
   SideBarView: styled.View<{selected: boolean}>`

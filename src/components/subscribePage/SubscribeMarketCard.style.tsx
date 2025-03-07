@@ -12,7 +12,8 @@ const SubscribeMarketCard = styled.TouchableOpacity`
 
   width: 100%;
   height: 120px;
-  padding: 16px 12px;
+  border: 2px solid;
+  border-color: ${props => props.theme.colors.primaryDisabled};
 `;
 
 const MarketInfo = styled.View`

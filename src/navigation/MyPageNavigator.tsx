@@ -28,7 +28,7 @@ const noticePageOptions: StackNavigationOptions = {
 
 const policyPageOptions: StackNavigationOptions = {
   ...defaultOptions,
-  headerTitle: () => <HeaderTitle title="효과점포" />,
+  headerTitle: () => <HeaderTitle title="약관 및 정책" />,
 };
 
 const settingScreenOptions: StackNavigationOptions = {

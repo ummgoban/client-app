@@ -5,6 +5,8 @@ const CartPage = styled.View`
   position: relative;
 
   flex: 1;
+
+  background-color: white;
 `;
 
 const ScrollView = styled.ScrollView``;

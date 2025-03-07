@@ -5,8 +5,8 @@ const S = {
   FloatingContainer: styled.View`
     position: fixed;
     bottom: 0;
-
     padding: 0 16px;
+    background-color: white;
   `,
 
   Button: styled(RNPButton)`

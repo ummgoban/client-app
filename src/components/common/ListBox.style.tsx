@@ -17,6 +17,8 @@ const ListItem = styled.View<{isFirst: boolean; isLast: boolean}>`
 
 const ListWrapper = styled.View`
   width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
 `;
 
 const ItemLabel = styled.Text`

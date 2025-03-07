@@ -6,6 +6,7 @@ import './gesture-handler';
 import RootProvider from './src/context';
 import AppNavigator from './src/navigation';
 import {setUpPushNotificationHandlers} from './src/utils/notification';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 // const isDarkMode = useColorScheme() === 'dark';
 
@@ -20,7 +21,9 @@ function App(): React.JSX.Element {
 
   return (
     <RootProvider>
-      <AppNavigator />
+      <SafeAreaProvider>
+        <AppNavigator />
+      </SafeAreaProvider>
     </RootProvider>
   );
 }

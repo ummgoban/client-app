@@ -4,6 +4,7 @@ import {Button, Modal, Text} from 'react-native-paper';
 const S = {
   MyPageContainer: styled.ScrollView`
     padding: 32px 16px;
+    background-color: white;
   `,
 
   ProfileImageSection: styled.View`

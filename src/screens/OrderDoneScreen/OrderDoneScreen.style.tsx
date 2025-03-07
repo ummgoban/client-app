@@ -4,6 +4,10 @@ import {Card} from 'react-native-paper';
 const OrderDoneContainer = styled.View`
   display: flex;
   flex-direction: column;
+
+  background-color: white;
+  width: 100%;
+  height: 100%;
 `;
 
 const OrderDoneCard = styled(Card)`

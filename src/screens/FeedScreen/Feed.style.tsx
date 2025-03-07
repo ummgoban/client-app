@@ -5,6 +5,8 @@ const S = {
     position: relative;
 
     flex: 1;
+
+    background-color: white;
   `,
 
   SearchWrapper: styled.View`

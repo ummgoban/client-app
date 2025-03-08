@@ -23,7 +23,7 @@ import {
 export const useProfileQuery = () =>
   useQuery({
     queryKey: ['profile'],
-    queryFn: () => getProfile(),
+    queryFn: getProfile,
     retry: false,
   });
 

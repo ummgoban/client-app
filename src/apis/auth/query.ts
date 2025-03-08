@@ -20,6 +20,8 @@ import {
   VerifyEmailCodeRequest,
 } from './model';
 
+import CustomError from '../CustomError';
+
 export const useProfileQuery = () =>
   useQuery({
     queryKey: ['profile'],
@@ -61,7 +63,7 @@ export const useRegisterFCMTokenQuery = () =>
   });
 
 export const useSendEmailCodeMutation = () =>
-  useMutation({
+  useMutation<boolean, CustomError, SendEmailCodeRequest, unknown>({
     mutationKey: ['send-email-code'],
     mutationFn: ({email}: SendEmailCodeRequest) => sendEmailCode({email}),
   });

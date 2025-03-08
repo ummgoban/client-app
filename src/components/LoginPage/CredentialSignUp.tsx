@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 
 import useProfile from '@/hooks/useProfile';
 
@@ -12,11 +13,11 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 import S from './CredentialLogin.style';
 
 const validateNameLength = (val: string) => {
-  return val.length >= 2 && val.length <= 10;
+  return /^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$/i.test(val);
 };
 
 const validateEmail = (val: string) => {
-  return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+  return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/i.test(val);
 };
 
 const validateEmailCode = (val: string) => {
@@ -86,15 +87,26 @@ const CredentialSignUp = () => {
           <S.SendEmailCodeButton
             disabled={!validateEmail(email) || isPendingSendEmailCode}
             onPress={() => {
+              setIsValidationEmail(false);
+              setEmailCode('');
               sendEmailCode(
                 {email},
                 {
                   onSuccess: setIsPendingValidationEmail,
+                  onError: error =>
+                    Alert.alert(error.errorMessage ?? error.message),
                 },
               );
             }}>
-            {isPendingValidationEmail ? '인증번호 재발송' : '인증번호 발송'}
+            {isPendingSendEmailCode
+              ? '인증번호 발송 중'
+              : isPendingValidationEmail
+                ? '인증번호 재발송'
+                : '인증번호 발송'}
           </S.SendEmailCodeButton>
+          {isPendingSendEmailCode && (
+            <ActivityIndicator size="small" animating={true} />
+          )}
         </S.EmailVerifyContainer>
         {isPendingValidationEmail && (
           <S.EmailVerifyContainer>
@@ -105,10 +117,13 @@ const CredentialSignUp = () => {
               onChange={e => setEmailCode(e.nativeEvent.text)}
               validation={validateEmailCode}
               errorMessage="인증코드 6자리를 입력해주세요."
+              disabled={isValidationEmail}
             />
             <S.VerifyEmailCodeButton
               disabled={
-                !validateEmailCode(emailCode) || isPendingVerifyEmailCode
+                !validateEmailCode(emailCode) ||
+                isPendingVerifyEmailCode ||
+                isValidationEmail
               }
               onPress={() =>
                 verifyEmailCode(

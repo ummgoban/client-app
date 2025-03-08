@@ -36,8 +36,17 @@ const SubscribeIcon = ({
   };
 
   const navigateLoginScreen = () => {
-    Alert.alert('로그인 후 가게를 찜해보세요!');
-    navigation.navigate('Register', {screen: 'Login'});
+    Alert.alert('로그인 후 가게를 찜해보세요!', '', [
+      {
+        text: '확인',
+        onPress: () => {
+          navigation.navigate('Register', {screen: 'Login'});
+        },
+      },
+      {
+        text: '취소',
+      },
+    ]);
   };
 
   return (

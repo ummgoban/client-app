@@ -1,8 +1,5 @@
 import {MutateOptions, useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
-import {create} from 'zustand';
-
-import {UserType} from '@/types/UserType';
 
 import {
   useLoginQuery,
@@ -23,31 +20,8 @@ import type {
 
 import CustomError from '@/apis/CustomError';
 
-type AdminUserType = UserType & {
-  marketId: number | null;
-};
-
-type ProfileStore = {
-  profile: AdminUserType | null;
-  setCurrentMarketId: (marketId: number) => void;
-};
-
-const useProfileStore = create<ProfileStore>(set => ({
-  profile: null,
-  setCurrentMarketId: marketId => {
-    set(state => {
-      if (!state.profile) {
-        return state;
-      }
-      return {profile: {...state.profile, marketId}};
-    });
-  },
-}));
-
 const useProfile = () => {
-  const {setCurrentMarketId} = useProfileStore();
-
-  const {data: profile} = useProfileQuery();
+  const {data: profileData, error: profileError} = useProfileQuery();
 
   const {mutate: mutateLogout, isPending: logoutPending} = useLogoutQuery();
   const {mutate: mutateLogin, isPending: loginPending} = useLoginQuery();
@@ -69,13 +43,6 @@ const useProfile = () => {
   const refreshProfile = useCallback(async () => {
     await queryClient.invalidateQueries({queryKey: ['profile']});
   }, [queryClient]);
-
-  const selectMarket = useCallback(
-    (marketId: number) => {
-      setCurrentMarketId(marketId);
-    },
-    [setCurrentMarketId],
-  );
 
   const logout = useCallback(
     ({
@@ -193,9 +160,8 @@ const useProfile = () => {
   );
 
   return {
-    profile,
+    profile: profileError ? null : profileData,
     refreshProfile,
-    selectMarket,
     signUp,
     loading,
     login,

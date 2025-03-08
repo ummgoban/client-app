@@ -102,7 +102,6 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               }}
             />
             <S.VerticalDivider />
-            {/* TODO: 회원탈퇴 로직 적용 */}
             <NavigationTextButton
               text="회원탈퇴"
               fontSize="12px"

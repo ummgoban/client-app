@@ -25,7 +25,7 @@ import CustomError from '../CustomError';
 export const useProfileQuery = () =>
   useQuery({
     queryKey: ['profile'],
-    queryFn: () => getProfile(),
+    queryFn: getProfile,
     retry: false,
   });
 

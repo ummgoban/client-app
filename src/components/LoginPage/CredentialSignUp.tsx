@@ -87,10 +87,14 @@ const CredentialSignUp = () => {
           <S.SendEmailCodeButton
             disabled={!validateEmail(email) || isPendingSendEmailCode}
             onPress={() => {
+              setIsValidationEmail(false);
+              setEmailCode('');
               sendEmailCode(
                 {email},
                 {
                   onSuccess: setIsPendingValidationEmail,
+                  onError: error =>
+                    Alert.alert(error.errorMessage ?? error.message),
                 },
               );
             }}>
@@ -113,10 +117,13 @@ const CredentialSignUp = () => {
               onChange={e => setEmailCode(e.nativeEvent.text)}
               validation={validateEmailCode}
               errorMessage="인증코드 6자리를 입력해주세요."
+              disabled={isValidationEmail}
             />
             <S.VerifyEmailCodeButton
               disabled={
-                !validateEmailCode(emailCode) || isPendingVerifyEmailCode
+                !validateEmailCode(emailCode) ||
+                isPendingVerifyEmailCode ||
+                isValidationEmail
               }
               onPress={() =>
                 verifyEmailCode(

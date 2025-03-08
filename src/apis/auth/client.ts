@@ -188,6 +188,7 @@ export const sendEmailCode = async ({
       {
         params: {
           email,
+          roles: 'ROLE_USER',
         },
       },
     );

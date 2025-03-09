@@ -16,7 +16,6 @@ type TextInputProps = {
   errorMessage?: string;
   errorStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
-  inputStyle?: StyleProp<TextStyle>;
 } & Omit<ReactNativePaperTextInputProps, 'mode' | 'label'>;
 
 /**

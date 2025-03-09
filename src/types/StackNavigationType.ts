@@ -1,5 +1,6 @@
 import {ParamListBase} from '@react-navigation/native';
 import {OrderType} from './OrderType';
+import {ProductType} from './ProductType';
 
 type StackParamType<T> = {
   screen?: keyof T;
@@ -29,6 +30,11 @@ export interface DetailStackParamList extends ParamListBase {
   };
   OrderDetail: {
     ordersId: string;
+  };
+  Review: {
+    orderId: string;
+    marketName: string;
+    reviewContents: (ProductType & {count: number})[];
   };
 }
 

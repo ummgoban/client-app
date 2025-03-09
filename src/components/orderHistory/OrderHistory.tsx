@@ -86,7 +86,25 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                             height={24}
                           />
                         </S.TouchableStoreName>
-                        {/* TODO: 주문 상세 페이지 추가 @l-lyun */}
+                        {order.ordersStatus === 'PICKEDUP' && !order.review && (
+                          <S.ReviewCreateButtonContainer>
+                            <S.ReviewCreateButton
+                              onPress={() =>
+                                navigation.navigate('Detail', {
+                                  screen: 'Review',
+                                  params: {
+                                    orderId: order.ordersId,
+                                    marketName: order.marketName,
+                                    reviewContents: order.products,
+                                  },
+                                })
+                              }>
+                              <S.ReviewCreateButtonText>
+                                리뷰 작성
+                              </S.ReviewCreateButtonText>
+                            </S.ReviewCreateButton>
+                          </S.ReviewCreateButtonContainer>
+                        )}
                         <S.OrderDetailButtonContainer>
                           <S.OrderDetailButton
                             onPress={() =>

@@ -18,6 +18,7 @@ export type OrderType = {
     | 'PICKEDUP_OR_CANCELED';
   customerRequest: string;
   products: (ProductType & {count: number})[];
+  review: boolean;
 };
 
 export type OrderDetailType = OrderType & {

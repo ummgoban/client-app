@@ -16,6 +16,7 @@ type TextInputProps = {
   errorMessage?: string;
   errorStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<TextStyle>;
 } & Omit<ReactNativePaperTextInputProps, 'mode' | 'label'>;
 
 /**
@@ -30,6 +31,7 @@ const TextInput = ({
   errorMessage,
   errorStyle,
   style,
+  inputStyle,
   ...props
 }: TextInputProps) => {
   const value = props.value;
@@ -48,7 +50,7 @@ const TextInput = ({
           <ReactNativePaperTextInput
             {...props}
             mode="outlined"
-            style={styles.input}
+            style={[styles.input, inputStyle]}
             label={undefined}
             outlineStyle={
               value && validation && !validation(value)

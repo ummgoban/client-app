@@ -4,158 +4,164 @@ import {Platform} from 'react-native';
 // TODO: 각 씬의 margin horizontal을 24px로 설정
 // programmatic하게 margin을 주기
 
-const OrderContainer = styled.View`
-  display: flex;
+const S = {
+  OrderContainer: styled.View`
+    display: flex;
 
-  padding: 20px 0;
-`;
+    padding: 20px 0;
+  `,
 
-const Title = styled.Text`
-  font-size: 20px;
-  line-height: 30px;
-  font-weight: 600;
+  Title: styled.Text`
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 600;
 
-  margin: 0 24px 12px;
-`;
+    margin: 0 24px 12px;
+  `,
 
-const HistoryList = styled.View`
-  display: flex;
-  gap: 12px;
-`;
+  HistoryList: styled.View`
+    display: flex;
+    gap: 12px;
+  `,
 
-const HistoryItemCSS = css`
-  display: flex;
-  gap: 24px;
+  HistoryItem: styled.View`
+    display: flex;
+    gap: 24px;
 
-  padding: 20px 24px;
-  background-color: #ffffff;
+    padding: 20px 24px;
+    background-color: #ffffff;
 
-  box-shadow: 0px 4px;
-  box-shadow-color: rgba(0, 0, 0, 0.08);
-`;
+    box-shadow: 0px 4px;
+    box-shadow-color: rgba(0, 0, 0, 0.08);
 
-const HistoryItem = styled.View`
-  ${HistoryItemCSS}
-
-  ${Platform.OS === 'ios'
-    ? `shadow-radius: 4px;
+    ${Platform.OS === 'ios'
+      ? `shadow-radius: 4px;
       shadow-offset: 0px 4px;
       shadow-opacity: 0.08;`
-    : Platform.OS === 'android'
-      ? 'elevation: 11;'
-      : ''}
-`;
+      : Platform.OS === 'android'
+        ? 'elevation: 11;'
+        : ''}
+  `,
 
-const HistoryItemSkeleton = styled.View`
-  ${HistoryItemCSS}
+  HistoryItemSkeleton: styled.View`
+    display: flex;
+    gap: 24px;
 
-  min-height: 200px;
-`;
+    padding: 20px 24px;
+    background-color: #ffffff;
 
-const HistoryItemSummary = styled.View`
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-`;
+    box-shadow: 0px 4px;
+    box-shadow-color: rgba(0, 0, 0, 0.08);
 
-const ItemInfo = styled.View`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    min-height: 200px;
+  `,
 
-  flex: 1;
-`;
+  HistoryItemSummary: styled.View`
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  `,
 
-const StoreImage = styled.Image`
-  width: 64px;
-  height: 64px;
+  ItemInfo: styled.View`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
-  border-radius: 32px;
-`;
+    flex: 1;
+  `,
 
-const InfoHeader = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+  StoreImage: styled.Image`
+    width: 64px;
+    height: 64px;
 
-const TouchableStoreName = styled.TouchableOpacity`
-  display: flex;
-  flex-direction: row;
+    border-radius: 32px;
+  `,
 
-  align-items: center;
-  gap: 4px;
+  InfoHeader: styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  `,
 
-  max-width: 60%;
-`;
+  TouchableStoreName: styled.TouchableOpacity`
+    display: flex;
+    flex-direction: row;
 
-const StoreName = styled.Text`
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 600;
-`;
+    align-items: center;
+    gap: 4px;
 
-const OrderDetailButtonContainer = styled.View`
-  width: auto;
-  height: 26px;
+    max-width: 60%;
+  `,
 
-  box-sizing: border-box;
+  StoreName: styled.Text`
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+  `,
 
-  border-radius: 15px;
-  border: 1px solid #ebebeb;
-`;
+  OrderDetailButtonContainer: styled.View`
+    width: auto;
+    height: 26px;
 
-const OrderDetailButton = styled.TouchableOpacity``;
+    box-sizing: border-box;
 
-const OrderDetailButtonText = styled.Text`
-  padding: 2px 10px;
-  color: #222222;
+    border-radius: 15px;
+    border: 1px solid #ebebeb;
+  `,
 
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: -0.408px;
-`;
+  OrderDetailButton: styled.TouchableOpacity``,
 
-const CreatedAt = styled.Text`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
+  OrderDetailButtonText: styled.Text`
+    padding: 2px 10px;
+    color: #222222;
 
-  color: #b5b5b5;
-`;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+  `,
 
-const Description = styled.Text`
-  font-size: 14px;
-  line-height: 20px;
+  ReviewCreateButtonContainer: styled.View`
+    width: auto;
+    height: 26px;
 
-  word-wrap: break-word;
-  word-break: keep-all;
-`;
+    box-sizing: border-box;
 
-const HistoryTimelineContainer = styled.View`
-  display: flex;
-  flex-direction: column;
-`;
+    border-radius: 15px;
+    border: 1px solid #ebebeb;
+  `,
 
-const S = {
-  OrderContainer,
-  Title,
-  HistoryList,
-  HistoryItem,
-  HistoryItemSkeleton,
-  HistoryItemSummary,
-  ItemInfo,
-  StoreImage,
-  InfoHeader,
-  TouchableStoreName,
-  StoreName,
-  OrderDetailButtonContainer,
-  OrderDetailButton,
-  OrderDetailButtonText,
-  CreatedAt,
-  Description,
-  HistoryTimelineContainer,
+  ReviewCreateButton: styled.TouchableOpacity``,
+
+  ReviewCreateButtonText: styled.Text`
+    padding: 2px 10px;
+    color: #222222;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+  `,
+  CreatedAt: styled.Text`
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    color: #b5b5b5;
+  `,
+
+  Description: styled.Text`
+    font-size: 14px;
+    line-height: 20px;
+
+    word-wrap: break-word;
+    word-break: keep-all;
+  `,
+
+  HistoryTimelineContainer: styled.View`
+    display: flex;
+    flex-direction: column;
+  `,
 };
 
 export default S;

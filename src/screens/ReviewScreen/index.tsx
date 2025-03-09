@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
 import RatingStars from '@/components/review/RatingStarts';
 import S from './ReviewScreen.style';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -90,10 +89,6 @@ const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
         <RatingStars rating={rating} setRating={setRating} />
         <TextInput
           placeholder="반찬에 대한 리뷰를 남겨주세요!"
-          style={{height: 100}}
-          inputStyle={{
-            height: 100,
-          }}
           value={review}
           onChange={e => setReview(e.nativeEvent.text)}
         />

@@ -1,4 +1,4 @@
-import styled, {css} from '@emotion/native';
+import styled from '@emotion/native';
 import {Platform} from 'react-native';
 
 // TODO: 각 씬의 margin horizontal을 24px로 설정

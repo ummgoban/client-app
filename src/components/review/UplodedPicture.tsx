@@ -1,8 +1,6 @@
 import React from 'react';
 import S from './UploadedPicture.style';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import {Image} from 'react-native';
-import {useReadReviewListForMarket} from '@/apis/review';
 
 type UploadedPictureProps = {
   imageUrls?: string[];
@@ -22,13 +20,9 @@ const UploadedPicture = ({imageUrls, setImageUrls}: UploadedPictureProps) => {
       {imageUrls &&
         imageUrls.length > 0 &&
         imageUrls.map(url => (
-          <S.UploadedImage key={url}>
-            <Image
-              source={{uri: url}}
-              style={{width: '100%', height: '100%'}}
-              resizeMode="cover"
-            />
-          </S.UploadedImage>
+          <S.UploadedImageWrapper key={url}>
+            <S.UploadedImage source={{uri: url}} resizeMode="cover" />
+          </S.UploadedImageWrapper>
         ))}
     </S.Container>
   );

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import S from './RaitingStarts.style';
 import Icon from 'react-native-vector-icons/AntDesign';
 

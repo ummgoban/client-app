@@ -21,7 +21,7 @@ const S = {
     margin-right: 8px;
   `,
 
-  UploadedImage: styled.View`
+  UploadedImageWrapper: styled.View`
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -32,6 +32,10 @@ const S = {
     border-color: ${props => props.theme.colors.tertiaryDisabled};
     border-radius: 8px;
     margin-right: 8px;
+  `,
+  UploadedImage: styled.Image`
+    width: 100%;
+    height: 100%;
   `,
   ImageUploadText: styled.Text`
     ${({theme}) => theme.fonts.body2};

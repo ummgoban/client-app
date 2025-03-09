@@ -48,7 +48,7 @@ const S = {
   ReviewInputContainer: styled.View`
     display: flex;
     gap: 16px;
-    height: 312px;
+    height: 256px;
   `,
 };
 

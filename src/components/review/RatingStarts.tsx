@@ -15,7 +15,7 @@ const RatingStars = ({rating, setRating}: RatingStarsProps) => {
         <TouchableOpacity key={value} onPress={() => setRating(value)}>
           <Icon
             name={value <= rating ? 'star' : 'staro'}
-            size={42}
+            size={48}
             color="#FFD700"
           />
         </TouchableOpacity>

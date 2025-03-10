@@ -4403,6 +4403,7 @@ __metadata:
     react-native-geolocation-service: ^5.3.1
     react-native-gesture-handler: ^2.18.1
     react-native-image-modal: ^3.0.13
+    react-native-image-picker: ^8.2.0
     react-native-linear-gradient: ^2.8.3
     react-native-naver-map: "https://github.com/zerocho/react-native-naver-map"
     react-native-paper: ^5.12.5
@@ -10180,6 +10181,16 @@ __metadata:
   version: 3.0.13
   resolution: "react-native-image-modal@npm:3.0.13"
   checksum: 8a1aa36f73039f4d9dfb546049ebb88815c33763efc511cdc962bd29429fb7fe977189e0f53842857ce5dd12c565fe88d0c98791a9bc575827678720114d2d33
+  languageName: node
+  linkType: hard
+
+"react-native-image-picker@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "react-native-image-picker@npm:8.2.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: d261d4f0571b771c5d2d8a1d5c129743a4993318a454e5bf7850db0fa452d4d5da2215a2f2af3879cd38211b864b3ba77d1d09255ff1f43112b3dcf985d6c233
   languageName: node
   linkType: hard
 

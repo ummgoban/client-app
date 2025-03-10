@@ -48,9 +48,9 @@ export const useUploadReviewImageMutation = () =>
     mutationKey: ['uploadReviewImage'],
     mutationFn: ({
       marketId,
-      updateImage,
+      uploadImage,
     }: {
       marketId: number;
-      updateImage: FormData;
-    }) => uploadReviewImage({marketId, updateImage}),
+      uploadImage: FormData;
+    }) => uploadReviewImage({marketId, uploadImage}),
   });

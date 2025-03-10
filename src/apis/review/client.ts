@@ -81,10 +81,10 @@ export const updateReview = async (
 
 export const uploadReviewImage = async ({
   marketId,
-  updateImage,
+  uploadImage,
 }: {
   marketId: number;
-  updateImage: FormData;
+  uploadImage: FormData;
 }): Promise<string | null> => {
   try {
     const res = await apiClient.post<{
@@ -93,7 +93,7 @@ export const uploadReviewImage = async ({
       data: {
         imageUrl: string;
       };
-    }>(`${entity}/images/${marketId}`, updateImage, {
+    }>(`${entity}/images/${marketId}`, uploadImage, {
       headers: {
         'Content-Type': 'multipart/form-data; boundary="boundary"',
       },

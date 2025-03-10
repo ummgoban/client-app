@@ -95,6 +95,7 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                                   params: {
                                     orderId: order.ordersId,
                                     marketName: order.marketName,
+                                    marketId: order.marketId,
                                     reviewContents: order.products,
                                   },
                                 })

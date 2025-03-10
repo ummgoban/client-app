@@ -11,16 +11,19 @@ import {
   useUploadReviewImageMutation,
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
-type ReviewScreenProps = StackScreenProps<DetailStackParamList, 'Review'>;
 import {Alert} from 'react-native';
 
+type ReviewScreenProps = StackScreenProps<DetailStackParamList, 'Review'>;
+
 const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
-  const {orderId, reviewContents, marketName} = route.params;
+  const {orderId, reviewContents, marketName, marketId} = route.params;
+
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState<string>('');
+  const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
+
   const {mutateAsync: reviewImageUploadMutate} = useUploadReviewImageMutation();
   const {mutate: reviewCreateMutate} = useCreateReviewMutation(orderId);
-  const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
 
   const handleImageUpload = async () => {
     const res = await pickImage();
@@ -38,8 +41,11 @@ const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
       uri: res,
     });
 
-    const s3Url = await reviewImageUploadMutate(formdata);
-    console.log('asdfasdfsdaf: ', s3Url);
+    const s3Url = await reviewImageUploadMutate({
+      marketId,
+      uploadImage: formdata,
+    });
+
     if (!s3Url) {
       console.error('uploadProductImage Error: no s3Url');
       Alert.alert('이미지를 업로드하지 못했습니다.');

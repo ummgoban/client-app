@@ -16,7 +16,7 @@ import PaymentScreen from '@/screens/PaymentScreen';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import ReviewScreen from '@/screens/ReviewScreen';
+import ReviewCreateScreen from '@/screens/ReviewCreateScreen';
 
 const Stack = createStackNavigator<DetailStackParamList>();
 
@@ -41,7 +41,7 @@ const orderDoneScreenOptions: StackNavigationOptions = {
   headerLeft: () => null,
 };
 
-const reviewScreenOptions: StackNavigationOptions = {
+const reviewCreateScreenOptions: StackNavigationOptions = {
   ...screenOptions,
   headerTitle: () => <HeaderTitle title="리뷰 작성" />,
 };
@@ -79,8 +79,8 @@ const DetailNavigator = () => {
         />
         <Stack.Screen
           name="Review"
-          component={ReviewScreen}
-          options={reviewScreenOptions}
+          component={ReviewCreateScreen}
+          options={reviewCreateScreenOptions}
         />
       </Stack.Navigator>
     </View>

@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 
 const S = {
-  ReviewScreenContainer: styled.View`
+  ReviewCreateScreenContainer: styled.View`
     flex: 1;
     background-color: white;
     padding: 16px 16px;

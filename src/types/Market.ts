@@ -19,4 +19,7 @@ export type MarketDetailType = MarketType & {
   hasLike: boolean;
   imageUrls: string[];
   summary: string;
+  reviewNum: number;
+  likeNum: number;
+  averageRating: number | null;
 };

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import RatingStars from '@/components/review/RatingStarts';
-import S from './ReviewScreen.style';
+import S from './ReviewCreateScreen.style';
 import {StackScreenProps} from '@react-navigation/stack';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@/components/common';
@@ -11,13 +11,11 @@ import {
   useUploadReviewImageMutation,
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
+type ReviewCreateScreenProps = StackScreenProps<DetailStackParamList, 'Review'>;
 import {Alert} from 'react-native';
 
-type ReviewScreenProps = StackScreenProps<DetailStackParamList, 'Review'>;
-
-const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
+const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
   const {orderId, reviewContents, marketName, marketId} = route.params;
-
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState<string>('');
   const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
@@ -71,7 +69,7 @@ const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
   };
 
   return (
-    <S.ReviewScreenContainer>
+    <S.ReviewCreateScreenContainer>
       <S.ReviewRequestTextContainer>
         <S.ReviewRequsetText>
           주문에 대한 리뷰를 작성해주세요!
@@ -108,8 +106,8 @@ const ReviewScreen = ({navigation, route}: ReviewScreenProps) => {
         onPress={handleReviewCreateMutate}>
         리뷰 작성하기
       </BottomButton>
-    </S.ReviewScreenContainer>
+    </S.ReviewCreateScreenContainer>
   );
 };
 
-export default ReviewScreen;
+export default ReviewCreateScreen;

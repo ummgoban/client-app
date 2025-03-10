@@ -35,6 +35,7 @@ export interface DetailStackParamList extends ParamListBase {
     orderId: string;
     marketName: string;
     reviewContents: (ProductType & {count: number})[];
+    marketId: number;
   };
 }
 

@@ -2,6 +2,7 @@ import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform, Alert, Linking} from 'react-native';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
 export const requestNotificationPermission = async () => {
   if (Platform.OS === 'ios') {
     const authStatus = await messaging().requestPermission();
@@ -72,6 +73,7 @@ export const changeNotificationPermission = async () => {
   );
 };
 
+/** TODO: Background Message Handler, On Notification Opened App, On Background Event 설정 */
 export const setUpPushNotificationHandlers = async () => {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Messaddge:', remoteMessage);
@@ -83,8 +85,18 @@ export const setUpPushNotificationHandlers = async () => {
     await displayNotification(remoteMessage);
   });
 
+  messaging().onNotificationOpenedApp(async remoteMessage => {
+    console.log('On Notification Opened App:', remoteMessage);
+  });
+
   notifee.onBackgroundEvent(async ({type, detail}) => {
+    console.log('onBackgroundEvent');
     console.log('Notifee Background Event:', type, detail);
+  });
+
+  notifee.onForegroundEvent(async ({type, detail}) => {
+    console.log('onForegroundEvent');
+    console.log('Notifee Foreground Event:', type, detail);
   });
 };
 

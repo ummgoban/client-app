@@ -2,6 +2,7 @@ import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {PermissionsAndroid, Platform, Alert, Linking} from 'react-native';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
 export const requestNotificationPermission = async () => {
   if (Platform.OS === 'ios') {
     const authStatus = await messaging().requestPermission();
@@ -84,7 +85,13 @@ export const setUpPushNotificationHandlers = async () => {
   });
 
   notifee.onBackgroundEvent(async ({type, detail}) => {
+    console.log('onBackgroundEvent');
     console.log('Notifee Background Event:', type, detail);
+  });
+
+  notifee.onForegroundEvent(async ({type, detail}) => {
+    console.log('onForegroundEvent');
+    console.log('Notifee Foreground Event:', type, detail);
   });
 };
 

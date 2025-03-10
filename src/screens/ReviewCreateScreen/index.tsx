@@ -11,7 +11,10 @@ import {
   useUploadReviewImageMutation,
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
-type ReviewCreateScreenProps = StackScreenProps<DetailStackParamList, 'Review'>;
+type ReviewCreateScreenProps = StackScreenProps<
+  DetailStackParamList,
+  'ReviewCreate'
+>;
 import {Alert} from 'react-native';
 
 const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {

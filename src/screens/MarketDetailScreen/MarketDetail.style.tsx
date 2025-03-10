@@ -65,10 +65,11 @@ const S = {
     font-weight: 600;
   `,
 
-  MarketSubscribeIconWrapper: styled.View`
+  MarketBottomInfo: styled.View`
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
   `,
 
@@ -129,6 +130,35 @@ const S = {
   TagWrapper: styled.View`
     display: flex;
     padding-left: 16px;
+  `,
+
+  ReviewInfoWrapper: styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  `,
+
+  ReviewTouchableOpacity: styled.TouchableOpacity`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  `,
+  ReviewScoreText: styled.Text`
+    ${props => props.theme.fonts.titleMedium};
+    color: black;
+    font-family: Pretendard;
+    font-weight: 600;
+  `,
+
+  ReviewCountText: styled.Text`
+    ${props => props.theme.fonts.titleMedium};
+    color: black;
+    font-family: Pretendard;
+    font-weight: 600;
+    padding-left: 2px;
+    margin-right: -14px;
   `,
 };
 

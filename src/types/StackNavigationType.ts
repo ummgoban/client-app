@@ -31,10 +31,13 @@ export interface DetailStackParamList extends ParamListBase {
   OrderDetail: {
     ordersId: string;
   };
-  Review: {
+  ReviewCreate: {
     orderId: string;
     marketName: string;
     reviewContents: (ProductType & {count: number})[];
+    marketId: number;
+  };
+  MarketReview: {
     marketId: number;
   };
 }

@@ -51,7 +51,11 @@ const SubscribeIcon = ({
 
   return (
     <TouchableOpacity onPress={profile ? handleLikePress : navigateLoginScreen}>
-      <Icon name={marketIsLiked ? 'heart' : 'hearto'} size={24} />
+      <Icon
+        name={marketIsLiked ? 'heart' : 'hearto'}
+        size={24}
+        color="#FF4033"
+      />
     </TouchableOpacity>
   );
 };

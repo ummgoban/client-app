@@ -73,6 +73,7 @@ export const changeNotificationPermission = async () => {
   );
 };
 
+/** TODO: Background Message Handler, On Notification Opened App, On Background Event 설정 */
 export const setUpPushNotificationHandlers = async () => {
   messaging().onMessage(async remoteMessage => {
     console.log('Foreground Messaddge:', remoteMessage);
@@ -82,6 +83,10 @@ export const setUpPushNotificationHandlers = async () => {
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Background Message:', remoteMessage);
     await displayNotification(remoteMessage);
+  });
+
+  messaging().onNotificationOpenedApp(async remoteMessage => {
+    console.log('On Notification Opened App:', remoteMessage);
   });
 
   notifee.onBackgroundEvent(async ({type, detail}) => {

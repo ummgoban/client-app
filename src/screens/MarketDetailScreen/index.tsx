@@ -45,6 +45,8 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       summary={marketDetail.summary}
       latitude={marketDetail.latitude}
       longitude={marketDetail.longitude}
+      averageRating={marketDetail.averageRating}
+      reviewNum={marketDetail.reviewNum}
     />
   );
 };

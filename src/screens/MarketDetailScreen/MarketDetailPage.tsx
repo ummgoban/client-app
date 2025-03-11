@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import ChevronRightIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import StarIcon from 'react-native-vector-icons/Fontisto';
 
 import {useValidateBucket, useAddToBucket} from '@/apis/buckets';
 
@@ -40,8 +42,13 @@ const MarketDetailPage = ({
   id,
   specificAddress,
   summary,
+  reviewNum,
+  averageRating,
   // TODO: 영업 및 픽업시간 현재 분리, 통일 및 어떤 시간 사용할지 논의
-}: Omit<MarketDetailType, 'images' | 'openAt' | 'closeAt' | 'imageUrls'>) => {
+}: Omit<
+  MarketDetailType,
+  'images' | 'openAt' | 'closeAt' | 'imageUrls' | 'likeNum'
+>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('');
@@ -339,6 +346,14 @@ const MarketDetailPage = ({
     setMarketIsLiked(hasLike);
   }, [hasLike]);
 
+  const navigateReviewScreen = () => {
+    navigation.navigate('Detail', {
+      screen: 'MarketReview',
+      params: {
+        marketId: id,
+      },
+    });
+  };
   return (
     <S.MarketDetailInfoView>
       <S.MarketInfoWrapper>
@@ -359,13 +374,31 @@ const MarketDetailPage = ({
             {address} {specificAddress}
           </S.MarketSideInfo>
         </S.MarketSideInfoWrapper>
-        <S.MarketSubscribeIconWrapper>
+        <S.MarketBottomInfo>
+          <S.ReviewInfoWrapper>
+            {reviewNum !== 0 && averageRating && (
+              <>
+                <StarIcon name="star" color="#FFD700" size={24} />
+                <S.ReviewScoreText>
+                  {averageRating.toFixed(1)}
+                </S.ReviewScoreText>
+                <S.ReviewTouchableOpacity onPress={navigateReviewScreen}>
+                  <S.ReviewCountText>리뷰 {reviewNum}개</S.ReviewCountText>
+                  <ChevronRightIcon
+                    name="chevron-right"
+                    size={36}
+                    color="#495057"
+                  />
+                </S.ReviewTouchableOpacity>
+              </>
+            )}
+          </S.ReviewInfoWrapper>
           <SubscribeIcon
             marketIsLiked={marketIsLiked}
             marketId={id}
             handleSubscribe={handleSubscribe}
           />
-        </S.MarketSubscribeIconWrapper>
+        </S.MarketBottomInfo>
       </S.MarketInfoWrapper>
       <S.SideTagBarScrollView
         horizontal

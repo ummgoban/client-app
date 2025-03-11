@@ -36,6 +36,7 @@ const S = {
   UploadedImage: styled.Image`
     width: 100%;
     height: 100%;
+    border-radius: 8px;
   `,
   ImageUploadText: styled.Text`
     ${({theme}) => theme.fonts.body2};

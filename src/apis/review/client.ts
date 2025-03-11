@@ -14,7 +14,7 @@ export const getReviewListForMarket = async (
   req: ReadReviewRequest,
 ): Promise<ReadReviewResponse> => {
   try {
-    const res = await apiClient.get<{code: number; data: ReadReviewResponse}>(
+    const res = await apiClient.get<ReadReviewResponse>(
       `${entity}/market/${req.marketId}`,
       {
         params: {
@@ -23,8 +23,8 @@ export const getReviewListForMarket = async (
         },
       },
     );
-    if (res && res.code === 200) {
-      return res.data;
+    if (res) {
+      return res;
     }
     return {
       reviews: [],

@@ -91,7 +91,7 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                             <S.ReviewCreateButton
                               onPress={() =>
                                 navigation.navigate('Detail', {
-                                  screen: 'Review',
+                                  screen: 'ReviewCreate',
                                   params: {
                                     orderId: order.ordersId,
                                     marketName: order.marketName,

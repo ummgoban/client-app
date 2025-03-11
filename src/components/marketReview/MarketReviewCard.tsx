@@ -20,7 +20,6 @@ const MarketReviewCard = ({review}: MarketReviewCardProps) => {
     imageUrls,
     // reviewReplies,
   } = review;
-  console.log('id', id);
   return (
     <S.Container>
       <S.ReviewHeaderWrapper>

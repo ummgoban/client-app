@@ -4,6 +4,7 @@ import StarIcon from 'react-native-vector-icons/Fontisto';
 import S from './MarketReviewCard.style';
 import CustomImageModal from '../common/CustomImageModal';
 import {format} from '@/utils/date';
+import MarketReviewReplyCard from './MarketReviewReplyCard';
 
 type MarketReviewCardProps = {
   review: ReviewInfo;
@@ -18,7 +19,7 @@ const MarketReviewCard = ({review}: MarketReviewCardProps) => {
     products,
     createdAt,
     imageUrls,
-    // reviewReplies,
+    reviewReplies,
   } = review;
   return (
     <S.Container>
@@ -59,6 +60,13 @@ const MarketReviewCard = ({review}: MarketReviewCardProps) => {
           </S.OrderInfoTextWrapper>
         </S.OrderInfoWrapper>
       ))}
+      {reviewReplies && (
+        <MarketReviewReplyCard
+          reviewReplyId={reviewReplies.reviewReplyId}
+          createAt={reviewReplies.createAt}
+          content={reviewReplies.content}
+        />
+      )}
     </S.Container>
   );
 };

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import RatingStars from '@/components/review/RatingStarts';
+import RatingStars from '@/components/reviewCreate/RatingStarts';
 import S from './ReviewCreateScreen.style';
 import {StackScreenProps} from '@react-navigation/stack';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {BottomButton} from '@/components/common';
 import TextInput from '@/components/common/TextInput/TextInput';
-import UploadedPicture from '@/components/review/UplodedPicture';
+import UploadedPicture from '@/components/reviewCreate/UplodedPicture';
 import {
   useCreateReviewMutation,
   useUploadReviewImageMutation,
@@ -82,7 +82,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
       <S.ReviewContentContainer>
         <S.ContentInformationText>주문 정보 </S.ContentInformationText>
         {reviewContents.map(content => (
-          <S.TextRowWrapper key={content.id}>
+          <S.TextRowWrapper key={`${orderId}-${content.id}`}>
             <S.ContentDescription>
               {content.name} {content.count}개
             </S.ContentDescription>

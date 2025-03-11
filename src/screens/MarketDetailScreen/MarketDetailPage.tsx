@@ -44,9 +44,11 @@ const MarketDetailPage = ({
   summary,
   reviewNum,
   averageRating,
-  likeNum,
   // TODO: 영업 및 픽업시간 현재 분리, 통일 및 어떤 시간 사용할지 논의
-}: Omit<MarketDetailType, 'images' | 'openAt' | 'closeAt' | 'imageUrls'>) => {
+}: Omit<
+  MarketDetailType,
+  'images' | 'openAt' | 'closeAt' | 'imageUrls' | 'likeNum'
+>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('');

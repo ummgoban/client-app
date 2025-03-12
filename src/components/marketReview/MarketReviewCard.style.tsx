@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 const S = {
   Container: styled.View`
     background-color: white;
+    margin-bottom: 20px;
   `,
   CustomerNameText: styled.Text`
     ${props => props.theme.fonts.titleMedium};
@@ -33,7 +34,7 @@ const S = {
     display: flex;
     align-items: flex-start;
     width: auto;
-    margin: 12px 0px;
+    margin: 16px 0px;
   `,
 
   OrderInfoTextWrapper: styled.View`
@@ -82,19 +83,6 @@ const S = {
     width: 100%;
     height: 100%;
     border-radius: 8px;
-  `,
-  SideBarView: styled.View<{selected: boolean}>`
-    width: 100px;
-    height: 36px;
-    justify-content: center;
-    align-items: center;
-    padding: 4px;
-    background-color: ${({selected, theme}) =>
-      selected ? theme.colors.primary : 'white'};
-    border: ${({selected, theme}) =>
-      selected ? '' : `1px solid ${theme.colors.primary}`};
-    margin: 5px;
-    border-radius: 10px;
   `,
 };
 

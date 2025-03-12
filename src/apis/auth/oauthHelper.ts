@@ -167,7 +167,10 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
     });
 
     // 애플에서 반환한 jwt
-    const token = appleAuthRequestResponse.identityToken;
+    const token = appleAuthRequestResponse.authorizationCode;
+    const familyName =
+      appleAuthRequestResponse.fullName?.familyName ?? undefined;
+    const givenName = appleAuthRequestResponse.fullName?.givenName ?? undefined;
 
     // 인증 상태 확인
     const credentialState = await appleAuth.getCredentialStateForUser(
@@ -189,7 +192,8 @@ export const signInWithApple = async (): Promise<SessionType | null> => {
       provider: 'APPLE',
       roles: 'ROLE_USER',
       accessToken: token,
-      oauthRefreshToken: token,
+      familyName,
+      givenName,
     });
     console.log(response);
 

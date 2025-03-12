@@ -1,6 +1,6 @@
 {
   "name": "ClientApp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "ENVFILE=.env react-native run-android",
@@ -17,8 +17,8 @@
     "build:android-debug-aab": "cd android && ENVFILE=.env ./gradlew bundleDebug",
     "build:android-release-apk": "cd android && ENVFILE=.env.release ./gradlew build",
     "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease",
-    "build:android-store": "yarn build:android-clean && yarn build:android-aab",
-    "build:android-release": "yarn build:android-clean && yarn build:android-apk"
+    "build:android-store": "yarn build:android-clean && yarn build:android-release-aab",
+    "build:android-release": "yarn build:android-clean && yarn build:android-release-apk"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",

@@ -91,20 +91,13 @@ android {
         applicationId "com.ummgoban.momchanpick"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13 // update version code
-        versionName "1.0.0-alpha.4" // update version name
+        versionCode 14 // update version code
+        versionName "1.0.0-alpha.5" // update version name
         resValue "string", "NAVER_MAP_CLIENT_ID", project.env.get("NAVER_MAP_CLIENT_ID") ?: ""
         resValue "string", "build_config_package", "com.ummgoban.momchanpick"
 
     }
     
-    // 코어 라이브러리 디슈가링 활성화
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-        // 디슈가링 활성화
-        coreLibraryDesugaringEnabled true
-    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -152,9 +145,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
-    
-    // 코어 라이브러리 디슈가링 의존성 추가
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

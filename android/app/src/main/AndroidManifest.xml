@@ -15,6 +15,7 @@ xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
+      android:extractNativeLibs="true"
       android:theme="@style/AppTheme"
       tools:replace="android:appComponentFactory"
       android:appComponentFactory="androidx.core.app.CoreComponentFactory"

@@ -1,13 +1,26 @@
-import {ReviewInfo} from '@/types/Review';
+import {CustomerReviewInfo, MarketReviewInfo} from '@/types/Review';
 
-export type ReadReviewRequest = {
+export type ReadMarketReviewRequest = {
   marketId: number;
   cursorId: number;
   size: number;
 };
 
-export type ReadReviewResponse = {
-  reviews: ReviewInfo[];
+export type ReadCustomerReviewRequest = {
+  memberId: number;
+  cursorId: number;
+  size: number;
+};
+
+export type ReadMarketReviewResponse = {
+  reviews: MarketReviewInfo[];
+  reviewNum: number;
+  averageRating: number;
+  hasNext: boolean;
+};
+
+export type ReadCustomerReviewResponse = {
+  reviews: CustomerReviewInfo[];
   reviewNum: number;
   averageRating: number;
   hasNext: boolean;

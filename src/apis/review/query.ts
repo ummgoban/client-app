@@ -4,20 +4,36 @@ import {
   updateReview,
   uploadReviewImage,
   getReviewListForMarket,
+  getReviewListForCustomer,
 } from './client';
 import {
   CreateReviewRequest,
-  ReadReviewRequest,
+  ReadMarketReviewRequest,
   UpdateReviewRequest,
+  ReadCustomerReviewRequest,
 } from './model';
 
 export const useReadReviewListForMarket = (
-  marketId: ReadReviewRequest['marketId'],
+  marketId: ReadMarketReviewRequest['marketId'],
 ) =>
   useInfiniteQuery({
     queryKey: ['readReviewListForMarket', marketId],
     queryFn: ({pageParam = 0}) =>
       getReviewListForMarket({marketId, cursorId: pageParam, size: 5}),
+    initialPageParam: 0,
+    getNextPageParam: lastPage =>
+      lastPage.hasNext
+        ? lastPage.reviews[lastPage.reviews.length - 1].id
+        : undefined,
+  });
+
+export const useReadReviewListForCustomer = (
+  memberId: ReadCustomerReviewRequest['memberId'],
+) =>
+  useInfiniteQuery({
+    queryKey: ['readReviewListForCustomer', memberId],
+    queryFn: ({pageParam = 0}) =>
+      getReviewListForCustomer({memberId, cursorId: pageParam, size: 5}),
     initialPageParam: 0,
     getNextPageParam: lastPage =>
       lastPage.hasNext

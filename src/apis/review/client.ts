@@ -1,8 +1,10 @@
 import {
   CreateReviewRequest,
   UpdateReviewRequest,
-  ReadReviewRequest,
-  ReadReviewResponse,
+  ReadMarketReviewRequest,
+  ReadMarketReviewResponse,
+  ReadCustomerReviewRequest,
+  ReadCustomerReviewResponse,
 } from './model';
 
 import apiClient from '../ApiClient';
@@ -11,11 +13,38 @@ import CustomError from '../CustomError';
 const entity = 'customer/review';
 
 export const getReviewListForMarket = async (
-  req: ReadReviewRequest,
-): Promise<ReadReviewResponse> => {
+  req: ReadMarketReviewRequest,
+): Promise<ReadMarketReviewResponse> => {
   try {
-    const res = await apiClient.get<ReadReviewResponse>(
+    const res = await apiClient.get<ReadMarketReviewResponse>(
       `${entity}/market/${req.marketId}`,
+      {
+        params: {
+          cursorId: req.cursorId,
+          size: req.size,
+        },
+      },
+    );
+    if (res) {
+      return res;
+    }
+    return {
+      reviews: [],
+      reviewNum: 0,
+      averageRating: 0,
+      hasNext: false,
+    };
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
+export const getReviewListForCustomer = async (
+  req: ReadCustomerReviewRequest,
+): Promise<ReadCustomerReviewResponse> => {
+  try {
+    const res = await apiClient.get<ReadCustomerReviewResponse>(
+      `${entity}/${req.memberId}`,
       {
         params: {
           cursorId: req.cursorId,

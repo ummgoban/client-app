@@ -1,17 +1,22 @@
 import React, {useCallback} from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
-import {DetailStackParamList} from '@/types/StackNavigationType';
-import {useReadReviewListForMarket} from '@/apis/review';
+import {MyPageStackParamList} from '@/types/StackNavigationType';
+import {useReadReviewListForCustomer} from '@/apis/review';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import S from './MarketReviewScreen.style';
-import MarketReviewCard from '@/components/marketReview/MarketReviewCard';
+import S from './CustomerReviewScreen.style';
+import {CustomerReviewCard} from '@/components/common/customerReview';
 import {ActivityIndicator} from 'react-native-paper';
-type MarketReviewScreenProps = StackScreenProps<
-  DetailStackParamList,
-  'MarketReview'
+
+type CustomerReviewScreenProps = StackScreenProps<
+  MyPageStackParamList,
+  'CustomerReview'
 >;
-const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
+
+const CustomerReviewScreen = ({
+  navigation,
+  route,
+}: CustomerReviewScreenProps) => {
   const {
     data: reviewList,
     refetch,
@@ -19,7 +24,8 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useReadReviewListForMarket(route.params.marketId);
+  } = useReadReviewListForCustomer(route.params.memberId);
+
   const handleEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -41,6 +47,14 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
     );
   }
 
+  const navigateMarketDetail = (marketId: number) => {
+    navigation.navigate('Detail', {
+      screen: 'MarketDetail',
+      params: {
+        marketId: marketId,
+      },
+    });
+  };
   return (
     <S.Container>
       <FlatList
@@ -48,9 +62,11 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        keyExtractor={(item, index) => `${item.id}-${index}-${item.name}`}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={({item}) => {
-          return <MarketReviewCard review={item} />;
+          return (
+            <CustomerReviewCard review={item} onPress={navigateMarketDetail} />
+          );
         }}
         ListFooterComponent={
           isFetchingNextPage ? (
@@ -66,4 +82,4 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
   );
 };
 
-export default MarketReviewScreen;
+export default CustomerReviewScreen;

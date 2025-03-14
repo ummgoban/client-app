@@ -3,7 +3,7 @@ import S from './NavigateTextButton.style';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 type NavigationTextButtonProps = {
-  text: string;
+  text?: string;
   onPress?: () => void;
   fontColor?: string;
   fontSize?: string;
@@ -22,9 +22,11 @@ const NavigationTextButton = ({
   return (
     <S.TouchableButtonContainer onPress={onPress} disabled={!onPress}>
       <S.TouchableWrapper>
-        <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
-          {text}
-        </S.NoticeText>
+        {text && (
+          <S.NoticeText fontColor={fontColor} fontSize={fontSize}>
+            {text}
+          </S.NoticeText>
+        )}
         {isNotice && <Icon name="right" size={iconSize} color={fontColor} />}
       </S.TouchableWrapper>
     </S.TouchableButtonContainer>

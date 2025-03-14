@@ -17,25 +17,27 @@ const ListBox = ({items}: ListBoxProps) => {
         const isFirst = index === 0;
         const isLast = index === items.length - 1;
         return (
-          <S.ListItem key={index} isFirst={isFirst} isLast={isLast}>
+          <S.ListItem
+            key={`${index}-${item.label}`}
+            isFirst={isFirst}
+            isLast={isLast}>
             <S.ItemLabel>{item.label}</S.ItemLabel>
-            {item.value &&
-              (item.onPress ? (
-                <NavigationTextButton
-                  text={item.value}
-                  onPress={item.onPress}
-                  fontColor="#888"
-                  fontSize="16px"
-                  iconSize={20}
-                />
-              ) : (
-                <NavigationTextButton
-                  text={item.value}
-                  fontColor="#888"
-                  fontSize="16px"
-                  isNotice={false}
-                />
-              ))}
+            {item.onPress ? (
+              <NavigationTextButton
+                text={item.value ? item.value : ''}
+                onPress={item.onPress}
+                fontColor="#888"
+                fontSize="16px"
+                iconSize={20}
+              />
+            ) : (
+              <NavigationTextButton
+                text={item.value ? item.value : ''}
+                fontColor="#888"
+                fontSize="16px"
+                isNotice={false}
+              />
+            )}
           </S.ListItem>
         );
       })}

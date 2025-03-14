@@ -18,7 +18,6 @@ import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ReviewCreateScreen from '@/screens/ReviewCreateScreen';
 import MarketReviewScreen from '@/screens/MarketReviewScreen';
-import CustomerReviewScreen from '@/screens/CustomerReviewScreen';
 
 const Stack = createStackNavigator<DetailStackParamList>();
 
@@ -50,10 +49,6 @@ const reviewCreateScreenOptions: StackNavigationOptions = {
 const marketReviewScreenOptions: StackNavigationOptions = {
   ...screenOptions,
   headerTitle: () => <HeaderTitle title="리뷰" />,
-};
-const customerReviewScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="내가 쓴 리뷰" />,
 };
 
 const DetailNavigator = () => {
@@ -96,11 +91,6 @@ const DetailNavigator = () => {
           name="MarketReview"
           component={MarketReviewScreen}
           options={marketReviewScreenOptions}
-        />
-        <Stack.Screen
-          name="CustomerReview"
-          component={CustomerReviewScreen}
-          options={customerReviewScreenOptions}
         />
       </Stack.Navigator>
     </View>

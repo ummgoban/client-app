@@ -59,7 +59,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             label: '내가 쓴 리뷰',
             value: '조회',
             onPress: () =>
-              navigation.navigate('Detail', {
+              navigation.navigate('MyPageRoot', {
                 screen: 'CustomerReview',
                 params: {memberId: profile.id},
               }),

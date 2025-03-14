@@ -11,6 +11,7 @@ import MyPageScreen from '@/screens/MyPageScreen';
 import NoticePage from '@/screens/MyPageScreen/NoticePage';
 import PolicyPage from '@/screens/MyPageScreen/PolicyPage';
 import SettingScreen from '@/screens/SettingScreen';
+import CustomerReviewScreen from '@/screens/CustomerReviewScreen';
 
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 
@@ -36,6 +37,10 @@ const settingScreenOptions: StackNavigationOptions = {
   headerTitle: () => <HeaderTitle title="설정" />,
 };
 
+const customerReviewScreenOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
+};
 const MyPageNavigator = () => {
   return (
     <Stack.Navigator
@@ -60,6 +65,11 @@ const MyPageNavigator = () => {
         name={'Policy'}
         component={PolicyPage}
         options={policyPageOptions}
+      />
+      <Stack.Screen
+        name="CustomerReview"
+        component={CustomerReviewScreen}
+        options={customerReviewScreenOptions}
       />
     </Stack.Navigator>
   );

@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
-import {DetailStackParamList} from '@/types/StackNavigationType';
+import {MyPageStackParamList} from '@/types/StackNavigationType';
 import {useReadReviewListForCustomer} from '@/apis/review';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import S from './CustomerReviewScreen.style';
@@ -9,7 +9,7 @@ import {CustomerReviewCard} from '@/components/common/customerReview';
 import {ActivityIndicator} from 'react-native-paper';
 
 type CustomerReviewScreenProps = StackScreenProps<
-  DetailStackParamList,
+  MyPageStackParamList,
   'CustomerReview'
 >;
 

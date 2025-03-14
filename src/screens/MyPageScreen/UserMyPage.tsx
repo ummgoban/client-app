@@ -47,6 +47,10 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             value: `${profile.name}`,
           },
           {
+            label: '닉네임',
+            value: profile.nickname ?? '닉네임 미등록',
+          },
+          {
             label: '이메일',
             value: profile.email ?? '이메일 미등록',
           },

@@ -169,6 +169,9 @@ export const getProfile = async (): Promise<UserType | null> => {
         id: res.id,
         name: res.name || '고객',
         provider: res.provider,
+        nickname: res.nickname,
+        email: res.email,
+        phoneNumber: res.phoneNumber,
       };
     } else {
       return null;

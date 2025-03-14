@@ -1,7 +1,13 @@
 import {ReviewInfo} from '@/types/Review';
 
-export type ReadReviewRequest = {
+export type ReadMarketReviewRequest = {
   marketId: number;
+  cursorId: number;
+  size: number;
+};
+
+export type ReadCustomerReviewRequest = {
+  memberId: number;
   cursorId: number;
   size: number;
 };

@@ -43,7 +43,7 @@ export const getReviewListForCustomer = async (
 ): Promise<ReadReviewResponse> => {
   try {
     const res = await apiClient.get<ReadReviewResponse>(
-      `${entity}/market/${req.memberId}`,
+      `${entity}/${req.memberId}`,
       {
         params: {
           cursorId: req.cursorId,

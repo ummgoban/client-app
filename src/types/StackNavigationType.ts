@@ -40,6 +40,9 @@ export interface DetailStackParamList extends ParamListBase {
   MarketReview: {
     marketId: number;
   };
+  CustomerReview: {
+    memberId: number;
+  };
 }
 
 export interface FeedStackParamList extends ParamListBase {

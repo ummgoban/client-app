@@ -1,17 +1,22 @@
 import React, {useCallback} from 'react';
-import {View, FlatList, RefreshControl} from 'react-native';
+import {View, FlatList, RefreshControl, Text} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {DetailStackParamList} from '@/types/StackNavigationType';
-import {useReadReviewListForMarket} from '@/apis/review';
+import {useReadReviewListForCustomer} from '@/apis/review';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
-import S from './MarketReviewScreen.style';
+import S from './CustomerReviewScreen.style';
 import MarketReviewCard from '@/components/marketReview/MarketReviewCard';
 import {ActivityIndicator} from 'react-native-paper';
-type MarketReviewScreenProps = StackScreenProps<
+
+type CustomerReviewScreenProps = StackScreenProps<
   DetailStackParamList,
-  'MarketReview'
+  'CustomerReview'
 >;
-const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
+
+const CustomerReviewScreen = ({
+  navigation,
+  route,
+}: CustomerReviewScreenProps) => {
   const {
     data: reviewList,
     refetch,
@@ -19,7 +24,8 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useReadReviewListForMarket(route.params.marketId);
+  } = useReadReviewListForCustomer(route.params.memberId);
+
   const handleEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -40,7 +46,6 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
       </View>
     );
   }
-
   return (
     <S.Container>
       <FlatList
@@ -66,4 +71,4 @@ const MarketReviewScreen = ({route}: MarketReviewScreenProps) => {
   );
 };
 
-export default MarketReviewScreen;
+export default CustomerReviewScreen;

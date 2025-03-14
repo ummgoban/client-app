@@ -55,6 +55,14 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             label: '소셜 로그인',
             value: convertOAuthProviderToKorean(profile.provider),
           },
+          {
+            label: '내가 쓴 리뷰',
+            onPress: () =>
+              navigation.navigate('Detail', {
+                screen: 'CustomerReview',
+                params: {memberId: profile.id},
+              }),
+          },
         ]}
       />
       <S.NoticeSection>

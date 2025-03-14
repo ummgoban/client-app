@@ -4,6 +4,7 @@ import {SessionType} from './Session';
 export type UserType = {
   id: number | string;
   name: string;
+  nickname: string;
   image?: string;
   provider: SessionType['OAuthProvider'];
   phoneNumber?: string;

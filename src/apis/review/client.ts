@@ -2,8 +2,9 @@ import {
   CreateReviewRequest,
   UpdateReviewRequest,
   ReadMarketReviewRequest,
-  ReadReviewResponse,
+  ReadMarketReviewResponse,
   ReadCustomerReviewRequest,
+  ReadCustomerReviewResponse,
 } from './model';
 
 import apiClient from '../ApiClient';
@@ -13,9 +14,9 @@ const entity = 'customer/review';
 
 export const getReviewListForMarket = async (
   req: ReadMarketReviewRequest,
-): Promise<ReadReviewResponse> => {
+): Promise<ReadMarketReviewResponse> => {
   try {
-    const res = await apiClient.get<ReadReviewResponse>(
+    const res = await apiClient.get<ReadMarketReviewResponse>(
       `${entity}/market/${req.marketId}`,
       {
         params: {
@@ -40,9 +41,9 @@ export const getReviewListForMarket = async (
 
 export const getReviewListForCustomer = async (
   req: ReadCustomerReviewRequest,
-): Promise<ReadReviewResponse> => {
+): Promise<ReadCustomerReviewResponse> => {
   try {
-    const res = await apiClient.get<ReadReviewResponse>(
+    const res = await apiClient.get<ReadCustomerReviewResponse>(
       `${entity}/${req.memberId}`,
       {
         params: {

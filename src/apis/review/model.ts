@@ -1,4 +1,4 @@
-import {ReviewInfo} from '@/types/Review';
+import {CustomerReviewInfo, MarketReviewInfo} from '@/types/Review';
 
 export type ReadMarketReviewRequest = {
   marketId: number;
@@ -12,8 +12,15 @@ export type ReadCustomerReviewRequest = {
   size: number;
 };
 
-export type ReadReviewResponse = {
-  reviews: ReviewInfo[];
+export type ReadMarketReviewResponse = {
+  reviews: MarketReviewInfo[];
+  reviewNum: number;
+  averageRating: number;
+  hasNext: boolean;
+};
+
+export type ReadCustomerReviewResponse = {
+  reviews: CustomerReviewInfo[];
   reviewNum: number;
   averageRating: number;
   hasNext: boolean;

@@ -1,11 +1,11 @@
 import React, {useCallback} from 'react';
-import {View, FlatList, RefreshControl, Text} from 'react-native';
+import {View, FlatList, RefreshControl} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import {useReadReviewListForCustomer} from '@/apis/review';
 import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import S from './CustomerReviewScreen.style';
-import MarketReviewCard from '@/components/marketReview/MarketReviewCard';
+import {CustomerReviewCard} from '@/components/common/customerReview';
 import {ActivityIndicator} from 'react-native-paper';
 
 type CustomerReviewScreenProps = StackScreenProps<
@@ -46,6 +46,15 @@ const CustomerReviewScreen = ({
       </View>
     );
   }
+
+  const navigateMarketDetail = (marketId: number) => {
+    navigation.navigate('Detail', {
+      screen: 'MarketDetail',
+      params: {
+        marketId: marketId,
+      },
+    });
+  };
   return (
     <S.Container>
       <FlatList
@@ -53,9 +62,11 @@ const CustomerReviewScreen = ({
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        keyExtractor={(item, index) => `${item.id}-${index}-${item.name}`}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={({item}) => {
-          return <MarketReviewCard review={item} />;
+          return (
+            <CustomerReviewCard review={item} onPress={navigateMarketDetail} />
+          );
         }}
         ListFooterComponent={
           isFetchingNextPage ? (

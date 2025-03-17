@@ -49,6 +49,10 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
           {
             label: '닉네임',
             value: profile.nickname ?? '닉네임 미등록',
+            onPress: () =>
+              navigation.navigate('MyPageRoot', {
+                screen: 'Nickname',
+              }),
           },
           {
             label: '이메일',

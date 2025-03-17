@@ -66,6 +66,7 @@ export interface MyPageStackParamList extends ParamListBase {
   CustomerReview: {
     memberId: number;
   };
+  Nickname: undefined;
 }
 
 export interface RootStackParamList extends ParamListBase {

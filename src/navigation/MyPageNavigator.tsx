@@ -12,6 +12,7 @@ import NoticePage from '@/screens/MyPageScreen/NoticePage';
 import PolicyPage from '@/screens/MyPageScreen/PolicyPage';
 import SettingScreen from '@/screens/SettingScreen';
 import CustomerReviewScreen from '@/screens/CustomerReviewScreen';
+import NicknamePatchPage from '@/screens/MyPageScreen/NicknamePatchPage';
 
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 
@@ -41,6 +42,11 @@ const customerReviewScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
   headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
 };
+
+const NicknameScreenOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="닉네임 변경" />,
+};
 const MyPageNavigator = () => {
   return (
     <Stack.Navigator
@@ -67,9 +73,14 @@ const MyPageNavigator = () => {
         options={policyPageOptions}
       />
       <Stack.Screen
-        name="CustomerReview"
+        name={'CustomerReview'}
         component={CustomerReviewScreen}
         options={customerReviewScreenOptions}
+      />
+      <Stack.Screen
+        name={'Nickname'}
+        component={NicknamePatchPage}
+        options={NicknameScreenOptions}
       />
     </Stack.Navigator>
   );

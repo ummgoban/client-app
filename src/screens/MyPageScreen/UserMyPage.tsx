@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {Alert, RefreshControl} from 'react-native';
+import {Alert, Linking, RefreshControl} from 'react-native';
 
 import ListBox from '@/components/common/ListBox';
 import NavigationTextButton from '@/components/common/NavigateTextButton';
@@ -74,20 +74,16 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
         <S.NoticeSectionTitle>문의 및 알림</S.NoticeSectionTitle>
         <S.ButtonContainer>
           <NavigationTextButton
-            text="공지사항"
-            fontSize="20px"
-            onPress={() =>
-              navigation.navigate('MyPageRoot', {screen: 'Notice'})
-            }
+            text="개인정보 처리방침"
+            fontSize="16px"
             isNotice={false}
+            onPress={() => Linking.openURL('https://ummgoban.github.io')}
           />
           <NavigationTextButton
-            text="약관 및 정책"
-            fontSize="20px"
-            onPress={() =>
-              navigation.navigate('MyPageRoot', {screen: 'Policy'})
-            }
+            text="서비스 이용 약관"
+            fontSize="16px"
             isNotice={false}
+            onPress={() => Linking.openURL('https://ummgoban.github.io')}
           />
         </S.ButtonContainer>
       </S.NoticeSection>

@@ -60,8 +60,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             value: convertOAuthProviderToKorean(profile.provider),
           },
           {
-            label: '내가 쓴 리뷰',
-            value: '조회',
+            label: '내가 쓴 리뷰 보기',
             onPress: () =>
               navigation.navigate('MyPageRoot', {
                 screen: 'CustomerReview',
@@ -71,7 +70,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
         ]}
       />
       <S.NoticeSection>
-        <S.NoticeSectionTitle>문의 및 알림</S.NoticeSectionTitle>
+        <S.NoticeSectionTitle>고객지원</S.NoticeSectionTitle>
         <S.ButtonContainer>
           <NavigationTextButton
             text="개인정보 처리방침"

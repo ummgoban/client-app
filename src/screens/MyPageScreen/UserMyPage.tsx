@@ -72,14 +72,14 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
       <S.NoticeSection>
         <S.NoticeSectionTitle>고객지원</S.NoticeSectionTitle>
         <S.ButtonContainer>
-          <NavigationTextButton
+          {/* <NavigationTextButton
             text="개인정보 처리방침"
             fontSize="16px"
             isNotice={false}
             onPress={() => Linking.openURL('https://ummgoban.github.io')}
-          />
+          /> */}
           <NavigationTextButton
-            text="서비스 이용 약관"
+            text="서비스 이용약관"
             fontSize="16px"
             isNotice={false}
             onPress={() => Linking.openURL('https://ummgoban.github.io')}

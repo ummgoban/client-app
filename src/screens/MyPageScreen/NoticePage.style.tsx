@@ -11,6 +11,7 @@ const S = {
   NoticeCard: styled(Card)`
     background-color: white;
     padding: 12px 8px;
+    margin-bottom: 16px;
   `,
 
   NoticeCardContent: styled.View`
@@ -22,10 +23,13 @@ const S = {
 
   Title: styled(Text)`
     ${({theme}) => theme.fonts.subtitle1};
+    font-weight: 600;
   `,
 
   Description: styled(Text)`
     ${({theme}) => theme.fonts.body2};
+    line-height: 20px;
+    margin-bottom: 12px;
   `,
 };
 

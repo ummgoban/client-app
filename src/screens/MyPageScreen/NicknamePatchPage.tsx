@@ -18,7 +18,7 @@ type NicknamePatchScreenProps = StackScreenProps<
 const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
   const queryClient = useQueryClient();
-  const [nickname, setNickname] = useState<string>('');
+  const [inputNickname, setInputNickname] = useState<string>('');
   const {mutate: nicknamePatchMutate} = usePatchNicknameMutation();
 
   const handleNicknamePatchMutate = (nickname: string) => {
@@ -40,13 +40,13 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
       <TextInput
         label="변경할 닉네임을 입력해주세요!"
         placeholder={profile?.nickname ?? ''}
-        value={nickname}
-        onChange={e => setNickname(e.nativeEvent.text)}
+        value={inputNickname}
+        onChange={e => setInputNickname(e.nativeEvent.text)}
       />
       <BottomButton
-        disabled={!nickname}
+        disabled={!inputNickname}
         onPress={() => {
-          handleNicknamePatchMutate(nickname);
+          handleNicknamePatchMutate(inputNickname);
         }}>
         닉네임 변경하기
       </BottomButton>

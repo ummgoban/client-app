@@ -86,7 +86,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             text="서비스 이용약관"
             fontSize="16px"
             isNotice={false}
-            onPress={() => Linking.openURL('https://ummgoban.github.io')}
+            onPress={() => Linking.openURL('https://ummgoban.com')}
           />
         </S.ButtonContainer>
       </S.NoticeSection>

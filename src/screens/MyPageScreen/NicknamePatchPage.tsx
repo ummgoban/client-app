@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 
-import S from './NoticePage.style';
 import useProfile from '@/hooks/useProfile';
 import TextInput from '@/components/common/TextInput/TextInput';
 import {usePatchNicknameMutation} from '@/apis/auth';
@@ -9,6 +8,8 @@ import {BottomButton} from '@/components/common';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 import {useQueryClient} from '@tanstack/react-query';
+
+import S from './NoticePage.style';
 
 type NicknamePatchScreenProps = StackScreenProps<
   MyPageStackParamList,

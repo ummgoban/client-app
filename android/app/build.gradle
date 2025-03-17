@@ -94,8 +94,8 @@ android {
         applicationId "com.ummgoban.momchanpick"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 17 // update version code
-        versionName "1.0.0-alpha.8" // update version name
+        versionCode 19 // update version code
+        versionName "1.0.0" // update version name
         resValue "string", "NAVER_MAP_CLIENT_ID", project.env.get("NAVER_MAP_CLIENT_ID") ?: ""
         resValue "string", "build_config_package", "com.ummgoban.momchanpick"
 

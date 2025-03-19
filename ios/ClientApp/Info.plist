@@ -74,15 +74,13 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>이 앱은 항상 위치 정보를 사용합니다.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>이 앱은 위치 정보를 사용합니다.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take pictures.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to display images.</string>
+<string>This app requires access to your location at all times to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app requires access to your location while in use to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+<key>NSCameraUsageDescription</key>
+<string>This app requires access to your camera to take photos. You can upload pictures of your ordered side dishes when leaving a review.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app requires access to your photo library to upload and display images.  You can upload pictures of your ordered side dishes when leaving a review.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -50,18 +50,15 @@ const LoginScreen = () => {
           }}>
           <NaverLoginButton />
         </S.LoginButtonWrapper> */}
-
-          {Platform.OS === 'ios' && (
-            <S.LoginButtonWrapper
-              onPress={async () => {
-                const res = await loginWithOAuth('APPLE');
-                if (res) {
-                  navigation.navigate('Home', {screen: 'Feed'});
-                }
-              }}>
-              <AppleLoginButton />
-            </S.LoginButtonWrapper>
-          )}
+          <S.LoginButtonWrapper
+            onPress={async () => {
+              const res = await loginWithOAuth('APPLE');
+              if (res) {
+                navigation.navigate('Home', {screen: 'Feed'});
+              }
+            }}>
+            <AppleLoginButton />
+          </S.LoginButtonWrapper>
         </S.LoginButtonContainer>
       )}
     </S.LoginPageContainer>

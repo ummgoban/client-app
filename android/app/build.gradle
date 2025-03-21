@@ -65,6 +65,9 @@ react {
 
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ * Default is false.
+ * !난독화 진행시 kakao sdk에서 에러가 발생!
+ * trade off: 빌드 번들 사이즈 증가
  */
 def enableProguardInReleaseBuilds = false
 
@@ -91,12 +94,13 @@ android {
         applicationId "com.ummgoban.momchanpick"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "0.0.1-alpha.5"
+        versionCode 20 // update version code
+        versionName "1.0.0" // update version name
         resValue "string", "NAVER_MAP_CLIENT_ID", project.env.get("NAVER_MAP_CLIENT_ID") ?: ""
         resValue "string", "build_config_package", "com.ummgoban.momchanpick"
 
     }
+    
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -144,6 +148,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
+    
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

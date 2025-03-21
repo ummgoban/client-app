@@ -6,6 +6,7 @@ import {
   getProfile,
   loginWithOAuth,
   logout,
+  patchNickname,
   registerFCMToken,
   sendEmailCode,
   verifyEmailCode,
@@ -80,3 +81,10 @@ export const useWithdrawMutation = () =>
     mutationKey: ['withdraw'],
     mutationFn: () => withdraw(),
   });
+
+export const usePatchNicknameMutation = () => {
+  return useMutation({
+    mutationKey: ['patchNickname'],
+    mutationFn: (nickName: string) => patchNickname(nickName),
+  });
+};

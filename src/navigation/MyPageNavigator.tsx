@@ -8,10 +8,9 @@ import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 
 import MyPageScreen from '@/screens/MyPageScreen';
-import NoticePage from '@/screens/MyPageScreen/NoticePage';
-import PolicyPage from '@/screens/MyPageScreen/PolicyPage';
 import SettingScreen from '@/screens/SettingScreen';
 import CustomerReviewScreen from '@/screens/CustomerReviewScreen';
+import NicknamePatchPage from '@/screens/MyPageScreen/NicknamePatchPage';
 
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 
@@ -22,16 +21,6 @@ const myPageScreenOptions: StackNavigationOptions = {
   headerTitle: () => <HeaderTitle title="마이페이지" />,
 };
 
-const noticePageOptions: StackNavigationOptions = {
-  ...defaultOptions,
-  headerTitle: () => <HeaderTitle title="공지사항" />,
-};
-
-const policyPageOptions: StackNavigationOptions = {
-  ...defaultOptions,
-  headerTitle: () => <HeaderTitle title="약관 및 정책" />,
-};
-
 const settingScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
   headerTitle: () => <HeaderTitle title="설정" />,
@@ -40,6 +29,11 @@ const settingScreenOptions: StackNavigationOptions = {
 const customerReviewScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
   headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
+};
+
+const NicknameScreenOptions: StackNavigationOptions = {
+  ...defaultOptions,
+  headerTitle: () => <HeaderTitle title="닉네임 변경" />,
 };
 const MyPageNavigator = () => {
   return (
@@ -57,19 +51,14 @@ const MyPageNavigator = () => {
         options={settingScreenOptions}
       />
       <Stack.Screen
-        name={'Notice'}
-        component={NoticePage}
-        options={noticePageOptions}
-      />
-      <Stack.Screen
-        name={'Policy'}
-        component={PolicyPage}
-        options={policyPageOptions}
-      />
-      <Stack.Screen
-        name="CustomerReview"
+        name={'CustomerReview'}
         component={CustomerReviewScreen}
         options={customerReviewScreenOptions}
+      />
+      <Stack.Screen
+        name={'Nickname'}
+        component={NicknamePatchPage}
+        options={NicknameScreenOptions}
       />
     </Stack.Navigator>
   );

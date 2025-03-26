@@ -152,6 +152,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                       {
                         text: '탈퇴하기',
                         onPress: () => {
+                          setIsOpen(false);
                           withdraw({
                             onSuccess: () => {
                               navigation.navigate('Home', {screen: 'Feed'});

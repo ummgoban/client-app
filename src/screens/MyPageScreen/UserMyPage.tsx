@@ -158,7 +158,15 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                           setIsOpen(false);
                           withdraw({
                             onSuccess: () => {
-                              navigation.navigate('Home', {screen: 'Feed'});
+                              navigation.navigate('Home', {
+                                screen: 'Feed',
+                              });
+                              Alert.alert('탈퇴되었습니다.', '', [
+                                {
+                                  onPress: () => {},
+                                  text: '확인',
+                                },
+                              ]);
                             },
                             onError: error => {
                               Alert.alert(

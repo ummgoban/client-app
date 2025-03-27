@@ -56,7 +56,10 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
           },
           {
             label: '이메일',
-            value: profile.email ?? '이메일 미등록',
+            value:
+              !profile.email || profile.email === 'null'
+                ? '이메일 미등록'
+                : profile.email,
           },
           {label: '전화번호', value: profile.phoneNumber ?? '전화번호 미등록'},
           {

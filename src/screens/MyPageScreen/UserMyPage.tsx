@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {Alert, RefreshControl} from 'react-native';
+import {Alert, Linking, RefreshControl} from 'react-native';
 
 import ListBox from '@/components/common/ListBox';
 import NavigationTextButton from '@/components/common/NavigateTextButton';
@@ -49,10 +49,17 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
           {
             label: '닉네임',
             value: profile.nickname ?? '닉네임 미등록',
+            onPress: () =>
+              navigation.navigate('MyPageRoot', {
+                screen: 'Nickname',
+              }),
           },
           {
             label: '이메일',
-            value: profile.email ?? '이메일 미등록',
+            value:
+              !profile.email || profile.email === 'null'
+                ? '이메일 미등록'
+                : profile.email,
           },
           {label: '전화번호', value: profile.phoneNumber ?? '전화번호 미등록'},
           {
@@ -60,8 +67,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
             value: convertOAuthProviderToKorean(profile.provider),
           },
           {
-            label: '내가 쓴 리뷰',
-            value: '조회',
+            label: '내가 쓴 리뷰 보기',
             onPress: () =>
               navigation.navigate('MyPageRoot', {
                 screen: 'CustomerReview',
@@ -71,23 +77,19 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
         ]}
       />
       <S.NoticeSection>
-        <S.NoticeSectionTitle>문의 및 알림</S.NoticeSectionTitle>
+        <S.NoticeSectionTitle>고객지원</S.NoticeSectionTitle>
         <S.ButtonContainer>
-          <NavigationTextButton
-            text="공지사항"
-            fontSize="20px"
-            onPress={() =>
-              navigation.navigate('MyPageRoot', {screen: 'Notice'})
-            }
+          {/* <NavigationTextButton
+            text="개인정보 처리방침"
+            fontSize="16px"
             isNotice={false}
-          />
+            onPress={() => Linking.openURL('https://ummgoban.github.io')}
+          /> */}
           <NavigationTextButton
-            text="약관 및 정책"
-            fontSize="20px"
-            onPress={() =>
-              navigation.navigate('MyPageRoot', {screen: 'Policy'})
-            }
+            text="서비스 이용약관"
+            fontSize="16px"
             isNotice={false}
+            onPress={() => Linking.openURL('https://ummgoban.com')}
           />
         </S.ButtonContainer>
       </S.NoticeSection>
@@ -153,9 +155,18 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                       {
                         text: '탈퇴하기',
                         onPress: () => {
+                          setIsOpen(false);
                           withdraw({
                             onSuccess: () => {
-                              navigation.navigate('Home', {screen: 'Feed'});
+                              navigation.navigate('Home', {
+                                screen: 'Feed',
+                              });
+                              Alert.alert('탈퇴되었습니다.', '', [
+                                {
+                                  onPress: () => {},
+                                  text: '확인',
+                                },
+                              ]);
                             },
                             onError: error => {
                               Alert.alert(

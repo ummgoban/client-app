@@ -14,7 +14,7 @@ const S = {
   NoticeSection: styled.View`
     display: flex;
     margin: 48px 16px;
-    width: 75%;
+
     gap: 8px;
   `,
 
@@ -38,6 +38,9 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    padding-bottom: 48px;
+
     width: 100%;
   `,
 

@@ -3,15 +3,16 @@ import React from 'react';
 import {Platform} from 'react-native';
 
 import AppleLoginButton from '@assets/AppleLoginButton.svg';
-import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
+// import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
 import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
-import NaverLoginButton from '@assets/NaverLoginButton.svg';
+// import NaverLoginButton from '@assets/NaverLoginButton.svg';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import CredentialLogin from '@/components/LoginPage/CredentialLogin';
 
 import useProfile from '@/hooks/useProfile';
+
 import S from './LoginScreen.style';
 
 const LoginScreen = () => {
@@ -25,9 +26,13 @@ const LoginScreen = () => {
         <MomChanPickLogo width={160} height={160} />
       </S.MomChanPickLogoWrapper>
       <CredentialLogin />
-      <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
-      <S.LoginButtonContainer>
-        <S.LoginButtonWrapper
+      {/* TODO: 앱 배포 후 소셜 로그인 허용 */}
+      {Platform.OS === 'ios' && (
+        <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
+      )}
+      {Platform.OS === 'ios' && (
+        <S.LoginButtonContainer>
+          {/* <S.LoginButtonWrapper
           onPress={async () => {
             const res = await loginWithOAuth('KAKAO');
             if (res) {
@@ -44,9 +49,7 @@ const LoginScreen = () => {
             }
           }}>
           <NaverLoginButton />
-        </S.LoginButtonWrapper>
-
-        {Platform.OS === 'ios' && (
+        </S.LoginButtonWrapper> */}
           <S.LoginButtonWrapper
             onPress={async () => {
               const res = await loginWithOAuth('APPLE');
@@ -56,8 +59,8 @@ const LoginScreen = () => {
             }}>
             <AppleLoginButton />
           </S.LoginButtonWrapper>
-        )}
-      </S.LoginButtonContainer>
+        </S.LoginButtonContainer>
+      )}
     </S.LoginPageContainer>
   );
 };

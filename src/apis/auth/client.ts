@@ -181,6 +181,17 @@ export const getProfile = async (): Promise<UserType | null> => {
   }
 };
 
+export const patchNickname = async (nickname: string) => {
+  try {
+    const res = await apiClient.patch('/common/members/nickname', {
+      nickname,
+    });
+    return !!res;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
 export const sendEmailCode = async ({
   email,
 }: SendEmailCodeRequest): Promise<boolean> => {

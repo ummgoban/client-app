@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 
-import './gesture-handler';
+import './gesture-handler'; // react-native-gesture-handler 필수
 
 import RootProvider from './src/context';
 import AppNavigator from './src/navigation';
@@ -15,9 +15,6 @@ function App(): React.JSX.Element {
     setUpPushNotificationHandlers();
     SplashScreen.hide();
   }, []);
-
-  // TODO: App 초기 실행 시 호출할 함수들 관리
-  useEffect(() => {}, []);
 
   return (
     <RootProvider>

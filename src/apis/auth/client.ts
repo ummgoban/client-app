@@ -12,6 +12,28 @@ import {VerifyEmailCodeRequest, SendEmailCodeRequest} from './model';
 import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
 
+export const refreshAccessToken = async (
+  refreshToken: string,
+): Promise<SessionType | null> => {
+  try {
+    const res = await apiClient.post<{
+      code: number;
+      data: SessionType;
+    }>('/auth/refresh', {
+      refreshToken,
+    });
+
+    if (res && res.code === 200) {
+      await setStorage('session', res.data);
+      return res.data;
+    }
+
+    return null;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
 export const registerFCMToken = async (
   deviceToken: string,
 ): Promise<boolean> => {

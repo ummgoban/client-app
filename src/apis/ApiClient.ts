@@ -10,12 +10,40 @@ import Config from 'react-native-config';
 import {SessionType} from '@/types/Session';
 import {getStorage} from '@/utils/storage';
 import CustomError from './CustomError';
+import {refreshAccessToken} from './auth/client';
 
 class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
   private _jwt: string | null = null;
+
+  private async setAuthorizationHeader(
+    config: InternalAxiosRequestConfig,
+  ): Promise<void> {
+    const session: SessionType | null = await getStorage('session');
+    this._jwt = session?.accessToken ?? null;
+
+    if (!this._jwt) return;
+
+    const isAccessTokenExpired =
+      session?.accessTokenExpiresAt &&
+      session.accessTokenExpiresAt < Date.now();
+
+    console.log('토큰 만료시간 | 현재시간');
+
+    console.log(session?.accessTokenExpiresAt, Date.now());
+
+    if (isAccessTokenExpired && session?.refreshToken) {
+      const newSession = await refreshAccessToken(session.refreshToken);
+      if (newSession) {
+        config.headers.Authorization = `Bearer ${newSession.accessToken}`;
+        return;
+      }
+    }
+
+    config.headers.Authorization = `Bearer ${this._jwt}`;
+  }
 
   private constructor() {
     this.axiosInstance = axios.create({
@@ -27,24 +55,17 @@ class ApiClient {
 
     this.axiosInstance.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
-        const session: SessionType | null = await getStorage('session');
-
-        this._jwt = session?.accessToken ?? null;
-
-        if (this._jwt) {
-          config.headers.Authorization = `Bearer ${this._jwt}`;
-        }
+        await this.setAuthorizationHeader(config);
         return config;
       },
       error => Promise.reject(error),
     );
 
-    // 응답 인터셉터: 응답에서 토큰을 받아 저장
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
-        if (response.data && response.data.token) {
-          this._jwt = response.data.token; // 토큰 갱신
-          console.debug('토큰 갱신:', this._jwt);
+        if (response.data?.token) {
+          this._jwt = response.data.token; // Update token
+          console.debug('Token updated:', this._jwt);
         }
         return response;
       },

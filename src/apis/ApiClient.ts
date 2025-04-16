@@ -10,7 +10,6 @@ import Config from 'react-native-config';
 import {SessionType} from '@/types/Session';
 import {getStorage} from '@/utils/storage';
 import CustomError from './CustomError';
-import {refreshAccessToken} from './auth/client';
 
 class ApiClient {
   private static instance: ApiClient;
@@ -25,22 +24,6 @@ class ApiClient {
     this._jwt = session?.accessToken ?? null;
 
     if (!this._jwt) return;
-
-    const isAccessTokenExpired =
-      session?.accessTokenExpiresAt &&
-      session.accessTokenExpiresAt < Date.now();
-
-    console.log('토큰 만료시간 | 현재시간');
-
-    console.log(session?.accessTokenExpiresAt, Date.now());
-
-    if (isAccessTokenExpired && session?.refreshToken) {
-      const newSession = await refreshAccessToken(session.refreshToken);
-      if (newSession) {
-        config.headers.Authorization = `Bearer ${newSession.accessToken}`;
-        return;
-      }
-    }
 
     config.headers.Authorization = `Bearer ${this._jwt}`;
   }

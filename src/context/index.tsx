@@ -6,7 +6,7 @@ import ReactNativePaperProvider from './ReactNativePaperProvider';
 import EmotionProvider from './EmotionProvider';
 import TossPaymentProvider from './TossPaymentProvider';
 import ReactQueryProvider from './ReactQueryProvider';
-import NotificationProvider from './NoticifationProvider';
+import NotificationProvider from './NotificationProvider';
 
 const RootProvider = ({children}: {children: React.ReactNode}) => {
   return (

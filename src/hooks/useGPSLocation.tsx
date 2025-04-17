@@ -4,10 +4,7 @@ import Geolocation from 'react-native-geolocation-service';
 
 import {create} from 'zustand';
 
-import {
-  requestLocationPermission,
-  requestNotificationPermission,
-} from '@/utils/notification';
+import {requestLocationPermission} from '@/utils/notification';
 
 type LocationStore = {
   location: {
@@ -60,7 +57,6 @@ const useGPSLocation = () => {
   const {location, fetchLocation, loading} = gpsLocationStore();
 
   const init = useCallback(async () => {
-    await requestNotificationPermission();
     await fetchLocation();
   }, [fetchLocation]);
 

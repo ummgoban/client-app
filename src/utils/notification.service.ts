@@ -35,7 +35,6 @@ export class NotificationsService {
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       );
     }
-    await new Promise(resolve => setTimeout(resolve, 500)); // 0.5초 대기
     return await this.isGranted();
   }
 

@@ -15,7 +15,7 @@ import notifee, {
 import messaging from '@react-native-firebase/messaging';
 
 import notificationService from '@/utils/notification.service';
-import {navigationRef} from '@/utils/navigtaionRef';
+import {navigationRef} from './NavigationProvider';
 
 type NotificationContextType = {
   goToNotificationSettings: () => void;
@@ -25,7 +25,7 @@ type NotificationContextType = {
 type NotificationPayload = {
   routeName: string;
   screen?: string;
-  params?: Record<string, any>;
+  params?: string;
 };
 
 const NotificationContext = createContext<NotificationContextType>({
@@ -36,19 +36,20 @@ const NotificationContext = createContext<NotificationContextType>({
 const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
   const onPressedNotification = useCallback(
     async (notification: Notification) => {
-      console.log('steest');
-
       if (!notification?.data) {
-        console.log('noon');
+        console.log('none data');
         return;
       }
 
       try {
         const payload = notification.data as NotificationPayload;
-        if (payload.routeName) {
-          navigationRef.current?.navigate(payload.routeName, {
+        const parsedParams = payload.params
+          ? JSON.parse(payload.params)
+          : undefined;
+        if (payload.routeName && navigationRef.current?.isReady()) {
+          navigationRef.current.navigate(payload.routeName, {
             screen: payload.screen,
-            params: payload.params,
+            params: parsedParams,
           });
         }
       } catch (err) {
@@ -137,7 +138,7 @@ const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
   useEffect(() => {
     const unsubscribe = messaging().onNotificationOpenedApp(remoteMessage => {
       if (remoteMessage?.data) {
-        void onPressedNotification({data: remoteMessage.data} as Notification);
+        onPressedNotification({data: remoteMessage.data} as Notification);
       }
     });
     return unsubscribe;
@@ -148,7 +149,7 @@ const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
     (async () => {
       const initialMessage = await messaging().getInitialNotification();
       if (initialMessage?.data) {
-        void onPressedNotification({data: initialMessage.data} as Notification);
+        onPressedNotification({data: initialMessage.data} as Notification);
       }
     })();
   }, [onPressedNotification]);
@@ -157,7 +158,7 @@ const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
   useEffect(() => {
     const unsubscribe = notifee.onForegroundEvent(({type, detail}) => {
       if (type === EventType.PRESS || type === EventType.ACTION_PRESS) {
-        void onPressedNotification(detail.notification as Notification);
+        onPressedNotification(detail.notification as Notification);
       }
     });
     return unsubscribe;

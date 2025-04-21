@@ -16,6 +16,7 @@ import messaging from '@react-native-firebase/messaging';
 
 import notificationService from '@/utils/notification.service';
 import {navigationRef} from './NavigationProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type NotificationContextType = {
   goToNotificationSettings: () => void;
@@ -43,10 +44,10 @@ const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
 
       try {
         const payload = notification.data as NotificationPayload;
-        const parsedParams = payload.params
-          ? JSON.parse(payload.params)
-          : undefined;
         if (payload.routeName && navigationRef.current?.isReady()) {
+          const parsedParams = payload.params
+            ? JSON.parse(payload.params)
+            : undefined;
           navigationRef.current.navigate(payload.routeName, {
             screen: payload.screen,
             params: parsedParams,
@@ -113,14 +114,21 @@ const NotificationProvider: React.FC<PropsWithChildren> = ({children}) => {
     (async () => {
       const granted = await requestPermissions();
       console.log('푸시 권한 여부:', granted);
+
       if (granted) {
         const token = await notificationService.getToken();
         console.log('FCM_TOKEN:', token);
       } else {
-        Alert.alert(
-          '알림 권한 거부됨',
-          '알림을 받으려면 권한 설정이 필요합니다.',
+        const isNotificationAlertShown = await AsyncStorage.getItem(
+          'isNotificationAlertShown',
         );
+        if (!isNotificationAlertShown) {
+          Alert.alert(
+            '알림 권한 거부됨',
+            '알림을 받으려면 권한 설정이 필요합니다.',
+          );
+          await AsyncStorage.setItem('isNotificationAlertShown', 'true');
+        }
       }
     })();
   }, [requestPermissions]);

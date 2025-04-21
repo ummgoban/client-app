@@ -1641,6 +1641,8 @@ PODS:
     - React-utils (= 0.75.2)
   - RNAppleAuthentication (2.4.0):
     - React-Core
+  - RNCAsyncStorage (2.1.2):
+    - React-Core
   - RNFBApp (21.3.0):
     - Firebase/CoreOnly (<= 11.4.0)
     - React-Core
@@ -1865,6 +1867,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -2047,6 +2050,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBMessaging:
@@ -2163,6 +2168,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 81b80bf3fcf9fe55b614b1f1a3d8d27ffe411c84
   ReactCommon: 860a0ad92824ca3782e0345b7f48cfb7816eabc5
   RNAppleAuthentication: 8d313d93fe2238d6b7ff0a39c67ebcf298d96653
+  RNCAsyncStorage: b9f5f78da5d16a853fe3dc22e8268d932fc45a83
   RNFBApp: 11378008aa0db97cf00c6d5bee62168fe69f861f
   RNFBMessaging: 0c0a3cd761d1cc3bc0516b8aa3edc0cd3f3692cc
   RNGestureHandler: 0bb0149abbdcf277fb89789fb2c56cdc59e3f556

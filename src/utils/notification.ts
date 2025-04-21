@@ -103,6 +103,7 @@ export const setUpPushNotificationHandlers = async () => {
 export const displayNotification = async (remoteMessage: any) => {
   let title = remoteMessage.notification?.title;
   let body = remoteMessage.notification?.body;
+  let data = remoteMessage.notification?.data;
 
   if (!title && !body) {
     title = remoteMessage.data?.title || '맘찬픽';
@@ -112,6 +113,7 @@ export const displayNotification = async (remoteMessage: any) => {
   const notificationOptions = {
     title,
     body,
+    data,
     android:
       Platform.OS === 'android'
         ? {

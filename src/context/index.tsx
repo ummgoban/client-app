@@ -6,18 +6,21 @@ import ReactNativePaperProvider from './ReactNativePaperProvider';
 import EmotionProvider from './EmotionProvider';
 import TossPaymentProvider from './TossPaymentProvider';
 import ReactQueryProvider from './ReactQueryProvider';
+import NotificationProvider from './NotificationProvider';
 
 const RootProvider = ({children}: {children: React.ReactNode}) => {
   return (
     <SafeAreaProvider>
       <NavigationProvider>
-        <ReactQueryProvider>
-          <EmotionProvider>
-            <ReactNativePaperProvider>
-              <TossPaymentProvider>{children}</TossPaymentProvider>
-            </ReactNativePaperProvider>
-          </EmotionProvider>
-        </ReactQueryProvider>
+        <NotificationProvider>
+          <ReactQueryProvider>
+            <EmotionProvider>
+              <ReactNativePaperProvider>
+                <TossPaymentProvider>{children}</TossPaymentProvider>
+              </ReactNativePaperProvider>
+            </EmotionProvider>
+          </ReactQueryProvider>
+        </NotificationProvider>
       </NavigationProvider>
     </SafeAreaProvider>
   );

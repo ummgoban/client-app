@@ -90,9 +90,15 @@ export const credentialLogin = async ({
 
     if (res && res.code === 200) {
       await setStorage('session', res.data);
+      try {
+        console.log('test FCM after login');
+        const token = await messaging().getToken();
+        await registerFCMToken(token);
+      } catch (error) {
+        throw new CustomError(error);
+      }
       return true;
     }
-
     return false;
   } catch (error) {
     throw new CustomError(error);

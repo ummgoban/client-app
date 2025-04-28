@@ -28,20 +28,12 @@ class ApiClient {
 
     const isAccessTokenExpired =
       session?.accessTokenExpiresAt &&
-      session.accessTokenExpiresAt < Date.now();
+      session.accessTokenExpiresAt > Date.now();
 
     const isValidRefreshToken =
       session?.refreshToken &&
       session.refreshTokenExpiresAt &&
-      session.refreshTokenExpiresAt < Date.now();
-
-    console.log('토큰 만료시간 | 리프레쉬 토큰 만료시간 | 현재시간');
-
-    console.log(
-      session?.accessTokenExpiresAt,
-      session?.refreshTokenExpiresAt,
-      Date.now(),
-    );
+      session.refreshTokenExpiresAt > Date.now();
 
     if (isAccessTokenExpired && isValidRefreshToken && session.refreshToken) {
       const newSession = await refreshAccessToken(session.refreshToken);
@@ -51,8 +43,6 @@ class ApiClient {
       }
     } else {
       await setStorage('session', {});
-      console.log('세션 만료');
-      console.log('세션 만료로 로그아웃 처리');
     }
 
     config.headers.Authorization = `Bearer ${this._jwt}`;

@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Pretendard-Bold.ttf",
+      "sha1": "8e36ddc72702f1116ddf59d14e68b24a7278ab96"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Light.ttf",
+      "sha1": "5fcd4236897db1ce594869de571f7d02912377fd"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Medium.ttf",
+      "sha1": "35dc00ddf24d1f94e9903a415b2a8df81d7ba17d"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Regular.ttf",
+      "sha1": "ab5f4934a1927e0c7d13577b9b1e3e77e99fc245"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-SemiBold.ttf",
+      "sha1": "326a0893a94992a446ccce6fb59649214e7c4733"
+    }
+  ]
+}

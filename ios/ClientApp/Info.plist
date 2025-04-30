@@ -73,16 +73,21 @@
 			</dict>
 		</dict>
 	</dict>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>This app requires access to your location at all times to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>This app requires access to your location while in use to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
-<key>NSCameraUsageDescription</key>
-<string>This app requires access to your camera to take photos. You can upload pictures of your ordered side dishes when leaving a review.</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>This app requires access to your photo library to upload and display images.  You can upload pictures of your ordered side dishes when leaving a review.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your camera to take photos. You can upload pictures of your ordered side dishes when leaving a review.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires access to your location at all times to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires access to your location while in use to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to upload and display images.  You can upload pictures of your ordered side dishes when leaving a review.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-Light.ttf</string>
+		<string>Pretendard-Medium.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

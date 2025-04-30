@@ -8,14 +8,15 @@ import {
 type Props = {} & DatePickerProps;
 
 const DatePicker = (props: Props) => {
+  const {date, confirmText, cancelText, ...rest} = props;
   return (
     <RNDatePicker
-      {...props}
+      {...rest}
       modal
       mode="time"
-      date={props.date ?? new Date()}
-      confirmText={props.confirmText ?? '확인'}
-      cancelText={props.cancelText ?? '취소'}
+      date={date ?? new Date()}
+      confirmText={confirmText ?? '확인'}
+      cancelText={cancelText ?? '취소'}
     />
   );
 };

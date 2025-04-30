@@ -3,9 +3,9 @@ import React from 'react';
 import {Platform} from 'react-native';
 
 import AppleLoginButton from '@assets/AppleLoginButton.svg';
-// import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
+import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
 import MomChanPickLogo from '@assets/MomChanPickLogo.svg';
-// import NaverLoginButton from '@assets/NaverLoginButton.svg';
+import NaverLoginButton from '@assets/NaverLoginButton.svg';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
@@ -32,24 +32,24 @@ const LoginScreen = () => {
       )}
       {Platform.OS === 'ios' && (
         <S.LoginButtonContainer>
-          {/* <S.LoginButtonWrapper
-          onPress={async () => {
-            const res = await loginWithOAuth('KAKAO');
-            if (res) {
-              navigation.navigate('Home', {screen: 'Feed'});
-            }
-          }}>
-          <KakaoLoginButton />
-        </S.LoginButtonWrapper>
-        <S.LoginButtonWrapper
-          onPress={async () => {
-            const res = await loginWithOAuth('NAVER');
-            if (res) {
-              navigation.navigate('Home', {screen: 'Feed'});
-            }
-          }}>
-          <NaverLoginButton />
-        </S.LoginButtonWrapper> */}
+          <S.LoginButtonWrapper
+            onPress={async () => {
+              const res = await loginWithOAuth('KAKAO');
+              if (res) {
+                navigation.navigate('Home', {screen: 'Feed'});
+              }
+            }}>
+            <KakaoLoginButton />
+          </S.LoginButtonWrapper>
+          <S.LoginButtonWrapper
+            onPress={async () => {
+              const res = await loginWithOAuth('NAVER');
+              if (res) {
+                navigation.navigate('Home', {screen: 'Feed'});
+              }
+            }}>
+            <NaverLoginButton />
+          </S.LoginButtonWrapper>
           <S.LoginButtonWrapper
             onPress={async () => {
               const res = await loginWithOAuth('APPLE');

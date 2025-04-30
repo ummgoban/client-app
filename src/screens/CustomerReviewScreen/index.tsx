@@ -7,6 +7,7 @@ import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import S from './CustomerReviewScreen.style';
 import {CustomerReviewCard} from '@/components/common/customerReview';
 import {ActivityIndicator} from 'react-native-paper';
+import EmptyComponent from '@/components/common/EmptyComponent';
 
 type CustomerReviewScreenProps = StackScreenProps<
   MyPageStackParamList,
@@ -55,6 +56,17 @@ const CustomerReviewScreen = ({
       },
     });
   };
+
+  if (reviews.length === 0) {
+    return (
+      <EmptyComponent
+        title="리뷰 내역이 없어요. 주문 후 리뷰를 남겨보세요."
+        onPress={() => navigation.navigate('Home', {screen: 'Feed'})}
+        buttonText="주문하러 가기"
+      />
+    );
+  }
+
   return (
     <S.Container>
       <FlatList

@@ -26,7 +26,6 @@ const LoginScreen = () => {
         <MomChanPickLogo width={160} height={160} />
       </S.MomChanPickLogoWrapper>
       <CredentialLogin />
-      {/* TODO: 앱 배포 후 소셜 로그인 허용 */}
       {Platform.OS === 'ios' && (
         <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
       )}

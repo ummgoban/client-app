@@ -2,6 +2,7 @@ import styled from '@emotion/native';
 import {Button, Text} from 'react-native-paper';
 
 import C from './Common.style';
+import {View} from 'react-native';
 
 const Card = styled(C.CommonCard)`
   display: flex;
@@ -20,6 +21,14 @@ const PlaneText = styled(Text)`
   font-style: normal;
   font-weight: 600;
   line-height: 30px;
+`;
+
+const DatePickerContainer = styled(View)`
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  gap: 8px;
 `;
 
 const DatePickerButton = styled(Button)`
@@ -42,9 +51,9 @@ const DatePickerText = styled(Text)`
 
 const PickupAbleTextContainer = styled.View`
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+
+  align-items: flex-start;
 
   gap: 8px;
 
@@ -63,6 +72,8 @@ const PickupAbleText = styled(Text)`
 const S = {
   Card,
   PlaneText,
+  DatePickerContainer,
+
   DatePickerButton,
   DatePickerText,
   PickupAbleTextContainer,

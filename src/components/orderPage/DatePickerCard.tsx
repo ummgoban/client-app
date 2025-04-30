@@ -6,6 +6,8 @@ import {format} from '@/utils/date';
 
 import S from './DatePickerCard.style';
 
+const nowDate = format(new Date(), 'YYYY-MM-DD');
+
 const DatePickerCard = ({
   pickupReservedAt,
   onChange,
@@ -28,13 +30,23 @@ const DatePickerCard = ({
     <>
       <S.Card>
         <S.DatePickerButton onPress={() => setIsOpen(true)}>
-          <S.DatePickerText>
-            {format(pickupReservedAt, 'a HH : mm')}
-          </S.DatePickerText>
-          <Icon source={'menu-down'} size={24} />
+          <S.DatePickerContainer>
+            <S.DatePickerText>
+              {format(pickupReservedAt, 'YYYY-MM-DD')}
+            </S.DatePickerText>
+            <S.DatePickerText>
+              {format(pickupReservedAt, 'a HH : mm')}
+            </S.DatePickerText>
+            <Icon source={'menu-down'} size={24} />
+          </S.DatePickerContainer>
         </S.DatePickerButton>
         <S.PlaneText>{'으로 픽업 예약을 확정할게요'}</S.PlaneText>
         <S.PickupAbleTextContainer>
+          {nowDate !== format(pickupReservedAt, 'YYYY-MM-DD') && (
+            <S.PickupAbleText>
+              {`* 내일 반찬 예약은 가게 사정상 취소될 수도 있어요!`}
+            </S.PickupAbleText>
+          )}
           <S.PickupAbleText>
             {`* 픽업 가능 시간: ${format(minimumDate, 'HH:mm')} ~ ${format(maximumDate, 'HH:mm')}`}
           </S.PickupAbleText>

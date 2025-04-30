@@ -32,6 +32,11 @@ import {useQueryClient} from '@tanstack/react-query';
 
 const nowDate = format(new Date(), 'YYYY-MM-DD');
 
+const tomorrowDate = format(
+  new Date(new Date().setDate(new Date().getDate() + 1)),
+  'YYYY-MM-DD',
+);
+
 type Props = {cart: BucketType; marketId: number};
 
 const PaymentPage = ({cart, marketId}: Props) => {
@@ -39,7 +44,24 @@ const PaymentPage = ({cart, marketId}: Props) => {
 
   const {data: market} = useMarket(marketId);
 
-  const [pickupReservedAt, setPickupReservedAt] = useState(new Date());
+  const [pickupReservedAt, setPickupReservedAt] = useState(() => {
+    if (!market) {
+      return new Date();
+    }
+    const nowTime = new Date().getTime();
+    const {pickupStartAt, pickupEndAt} = market;
+
+    const startTime = new Date(`${nowDate}T${pickupStartAt}`).getTime();
+    const endTime = new Date(`${nowDate}T${pickupEndAt}`).getTime();
+
+    if (nowTime < startTime) {
+      return new Date(startTime);
+    } else if (nowTime > endTime) {
+      return new Date(`${tomorrowDate}T${pickupStartAt}`);
+    }
+    return new Date(nowTime);
+  });
+
   const queryClient = useQueryClient();
   const {mutateAsync: requestOrder} = useRequestOrderMutation();
 

@@ -46,21 +46,13 @@ const S = {
     letter-spacing: -0.13px;
   `,
 
-  MarketWrapper: styled.TouchableOpacity`
+  MarketWrapper: styled.Pressable`
     display: flex;
     padding: 12px 0px 12px 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     align-self: stretch;
-  `,
-
-  MarketImageContainer: styled.ScrollView`
-    display: flex;
-    flex-direction: row;
-
-    width: 100%;
-    height: 140px;
   `,
 
   MenuGradation: styled(LinearGradient)`

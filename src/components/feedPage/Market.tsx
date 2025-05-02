@@ -1,9 +1,7 @@
 import React from 'react';
-
+import {FlatList, Pressable} from 'react-native';
 import DotIndicator from '@/assets/icons/dot.svg';
-
 import {MarketType} from '@/types/Market';
-
 import S from './Market.style';
 
 type Props = {
@@ -12,16 +10,24 @@ type Props = {
 };
 
 const Market = ({market, onPress}: Props) => {
+  const productData = market.products.filter(
+    p => p.stock && p.productStatus !== 'HIDDEN',
+  );
+
   return (
+    // TODO: 터치할 때 opacity
     <S.MarketWrapper onPress={() => onPress(market.id)}>
-      <S.MarketImageContainer
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}>
-        {market.products
-          .filter(p => p.stock && p.productStatus !== 'HIDDEN')
-          .map(product => (
-            <S.MarketImageBox key={product.id}>
-              <S.MarketImage source={{uri: product.image}} />
+      <FlatList
+        horizontal
+        data={productData}
+        keyExtractor={item => String(item.id)}
+        showsHorizontalScrollIndicator={false}
+        // eslint-disable-next-line react-native/no-inline-styles
+        contentContainerStyle={{paddingRight: 4}}
+        renderItem={({item}) => (
+          <Pressable onPress={() => onPress(market.id)}>
+            <S.MarketImageBox>
+              <S.MarketImage source={{uri: item.image}} />
               <S.MenuGradation
                 colors={[
                   'rgba(0, 0, 0, 0.7)',
@@ -33,14 +39,15 @@ const Market = ({market, onPress}: Props) => {
                 end={{x: 0.5, y: 1}}
               />
               <S.LableWrapper>
-                <S.MenuLabel numberOfLines={1}>{product.name}</S.MenuLabel>
+                <S.MenuLabel numberOfLines={1}>{item.name}</S.MenuLabel>
                 <S.PriceLabel>
-                  {product.discountPrice.toLocaleString()}원
+                  {item.discountPrice.toLocaleString()}원
                 </S.PriceLabel>
               </S.LableWrapper>
             </S.MarketImageBox>
-          ))}
-      </S.MarketImageContainer>
+          </Pressable>
+        )}
+      />
       <S.MarketInfoDiscription>
         <S.MarketTitle>{market.name}</S.MarketTitle>
         <S.DescriptionContainer>

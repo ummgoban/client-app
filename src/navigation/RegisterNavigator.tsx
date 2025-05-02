@@ -20,22 +20,28 @@ const registerScreenOptions: StackNavigationOptions = {
   headerTintColor: theme.colors.dark,
 };
 
+const loginScreenOptions: StackNavigationOptions = {
+  ...registerScreenOptions,
+  headerTitle: () => <HeaderTitle title="로그인" />,
+};
+
+const signupScreenOptions: StackNavigationOptions = {
+  ...registerScreenOptions,
+  headerTitle: () => <HeaderTitle title="회원가입" />,
+};
+
 const RegisterNavigator = () => {
   return (
     <Stack.Navigator screenOptions={registerScreenOptions}>
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{
-          headerTitle: () => <HeaderTitle title="로그인" />,
-        }}
+        options={loginScreenOptions}
       />
       <Stack.Screen
         name="SignUp"
         component={SignupScreen}
-        options={{
-          headerTitle: () => <HeaderTitle title="회원가입" />,
-        }}
+        options={signupScreenOptions}
       />
     </Stack.Navigator>
   );

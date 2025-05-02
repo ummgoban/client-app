@@ -22,6 +22,26 @@ const myPageScreenOptions: StackNavigationOptions = {
   headerTintColor: theme.colors.dark,
 };
 
+const myPageOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
+  headerTitle: () => <HeaderTitle title="마이페이지" />,
+};
+
+const settingOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
+  headerTitle: () => <HeaderTitle title="설정" />,
+};
+
+const customerReviewOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
+  headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
+};
+
+const nicknameOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
+  headerTitle: () => <HeaderTitle title="닉네임 변경" />,
+};
+
 const MyPageNavigator = () => {
   return (
     <Stack.Navigator
@@ -30,30 +50,22 @@ const MyPageNavigator = () => {
       <Stack.Screen
         name="MyPage"
         component={MyPageScreen}
-        options={{
-          headerTitle: () => <HeaderTitle title="마이페이지" />,
-        }}
+        options={myPageOptions}
       />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
-        options={{
-          headerTitle: () => <HeaderTitle title="설정" />,
-        }}
+        options={settingOptions}
       />
       <Stack.Screen
         name="CustomerReview"
         component={CustomerReviewScreen}
-        options={{
-          headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
-        }}
+        options={customerReviewOptions}
       />
       <Stack.Screen
         name="Nickname"
         component={NicknamePatchPage}
-        options={{
-          headerTitle: () => <HeaderTitle title="닉네임 변경" />,
-        }}
+        options={nicknameOptions}
       />
     </Stack.Navigator>
   );

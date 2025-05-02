@@ -27,6 +27,32 @@ const screenOptions: StackNavigationOptions = {
   headerRight: () => <CartIcon />,
 };
 
+const paymentScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="예약하기" />,
+};
+
+const orderDoneScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="주문 완료" />,
+  headerLeft: () => null,
+};
+
+const orderDetailScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="주문내역" />,
+};
+
+const reviewCreateScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="리뷰 작성" />,
+};
+
+const marketReviewScreenOptions: StackNavigationOptions = {
+  ...screenOptions,
+  headerTitle: () => <HeaderTitle title="리뷰" />,
+};
+
 const DetailNavigator = () => {
   const insets = useSafeAreaInsets();
 
@@ -42,38 +68,27 @@ const DetailNavigator = () => {
         <Stack.Screen
           name="Payment"
           component={PaymentScreen}
-          options={{
-            headerTitle: () => <HeaderTitle title="예약하기" />,
-          }}
+          options={paymentScreenOptions}
         />
         <Stack.Screen
           name="OrderDone"
           component={OrderDoneScreen}
-          options={{
-            headerTitle: () => <HeaderTitle title="주문 완료" />,
-            headerLeft: () => null,
-          }}
+          options={orderDoneScreenOptions}
         />
         <Stack.Screen
           name="OrderDetail"
           component={OrderDetailScreen}
-          options={{
-            headerTitle: () => <HeaderTitle title="주문내역" />,
-          }}
+          options={orderDetailScreenOptions}
         />
         <Stack.Screen
           name="ReviewCreate"
           component={ReviewCreateScreen}
-          options={{
-            headerTitle: () => <HeaderTitle title="리뷰 작성" />,
-          }}
+          options={reviewCreateScreenOptions}
         />
         <Stack.Screen
           name="MarketReview"
           component={MarketReviewScreen}
-          options={{
-            headerTitle: () => <HeaderTitle title="리뷰" />,
-          }}
+          options={marketReviewScreenOptions}
         />
       </Stack.Navigator>
     </View>

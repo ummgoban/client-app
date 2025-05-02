@@ -15,6 +15,7 @@ const Market = ({market, onPress}: Props) => {
   );
 
   return (
+    // TODO: 터치할 때 opacity
     <S.MarketWrapper onPress={() => onPress(market.id)}>
       <FlatList
         horizontal

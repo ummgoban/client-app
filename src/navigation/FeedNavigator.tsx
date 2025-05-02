@@ -12,6 +12,7 @@ import MapScreen from '@/screens/MapScreen';
 import FeedScreen from '@/screens/FeedScreen';
 
 import {FeedStackParamList} from '@/types/StackNavigationType';
+import theme from '@/context/theme';
 
 const Stack = createStackNavigator<FeedStackParamList>();
 
@@ -19,6 +20,7 @@ const screenOptions: StackNavigationOptions = {
   ...defaultOptions,
   headerRight: () => <CartIcon />,
   headerTitle: () => <HeaderTitle title="내 주변" />,
+  headerTintColor: theme.colors.dark,
 };
 
 const mapScreenOptions: StackNavigationOptions = {

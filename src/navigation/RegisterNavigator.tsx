@@ -11,31 +11,31 @@ import LoginScreen from '@screens/RegisterScreen/LoginScreen';
 import SignupScreen from '@screens/RegisterScreen/SignupScreen';
 
 import {RegisterStackParamList} from '@/types/StackNavigationType';
+import theme from '@/context/theme';
 
 const Stack = createStackNavigator<RegisterStackParamList>();
 
-const loginScreenOptions: StackNavigationOptions = {
+const registerScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
-  headerTitle: () => <HeaderTitle title="로그인" />,
-};
-
-const signupScreenOptions: StackNavigationOptions = {
-  ...defaultOptions,
-  headerTitle: () => <HeaderTitle title="회원가입" />,
+  headerTintColor: theme.colors.dark,
 };
 
 const RegisterNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: true}}>
+    <Stack.Navigator screenOptions={registerScreenOptions}>
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={loginScreenOptions}
+        options={{
+          headerTitle: () => <HeaderTitle title="로그인" />,
+        }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignupScreen}
-        options={signupScreenOptions}
+        options={{
+          headerTitle: () => <HeaderTitle title="회원가입" />,
+        }}
       />
     </Stack.Navigator>
   );

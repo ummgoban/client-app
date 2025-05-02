@@ -12,8 +12,8 @@ import MarketDetailScreen from '@/screens/MarketDetailScreen';
 import OrderDetailScreen from '@/screens/OrderDetailScreen';
 import OrderDoneScreen from '@/screens/OrderDoneScreen';
 import PaymentScreen from '@/screens/PaymentScreen';
-
 import {DetailStackParamList} from '@/types/StackNavigationType';
+import theme from '@/context/theme';
 import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ReviewCreateScreen from '@/screens/ReviewCreateScreen';
@@ -23,32 +23,8 @@ const Stack = createStackNavigator<DetailStackParamList>();
 
 const screenOptions: StackNavigationOptions = {
   ...defaultOptions,
+  headerTintColor: theme.colors.dark,
   headerRight: () => <CartIcon />,
-};
-
-const paymentScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="예약하기" />,
-};
-
-const orderDetailScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="주문내역" />,
-};
-
-const orderDoneScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="주문 완료" />,
-  headerLeft: () => null,
-};
-
-const reviewCreateScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="리뷰 작성" />,
-};
-const marketReviewScreenOptions: StackNavigationOptions = {
-  ...screenOptions,
-  headerTitle: () => <HeaderTitle title="리뷰" />,
 };
 
 const DetailNavigator = () => {
@@ -61,36 +37,43 @@ const DetailNavigator = () => {
       style={{flex: 1, paddingBottom: insets.bottom, backgroundColor: 'white'}}>
       <Stack.Navigator
         initialRouteName="MarketDetail"
-        screenOptions={{headerShown: true}}>
-        <Stack.Screen
-          name="MarketDetail"
-          options={screenOptions}
-          component={MarketDetailScreen}
-        />
+        screenOptions={screenOptions}>
+        <Stack.Screen name="MarketDetail" component={MarketDetailScreen} />
         <Stack.Screen
           name="Payment"
           component={PaymentScreen}
-          options={paymentScreenOptions}
+          options={{
+            headerTitle: () => <HeaderTitle title="예약하기" />,
+          }}
         />
         <Stack.Screen
           name="OrderDone"
           component={OrderDoneScreen}
-          options={orderDoneScreenOptions}
+          options={{
+            headerTitle: () => <HeaderTitle title="주문 완료" />,
+            headerLeft: () => null,
+          }}
         />
         <Stack.Screen
           name="OrderDetail"
           component={OrderDetailScreen}
-          options={orderDetailScreenOptions}
+          options={{
+            headerTitle: () => <HeaderTitle title="주문내역" />,
+          }}
         />
         <Stack.Screen
           name="ReviewCreate"
           component={ReviewCreateScreen}
-          options={reviewCreateScreenOptions}
+          options={{
+            headerTitle: () => <HeaderTitle title="리뷰 작성" />,
+          }}
         />
         <Stack.Screen
           name="MarketReview"
           component={MarketReviewScreen}
-          options={marketReviewScreenOptions}
+          options={{
+            headerTitle: () => <HeaderTitle title="리뷰" />,
+          }}
         />
       </Stack.Navigator>
     </View>

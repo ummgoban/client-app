@@ -15,6 +15,7 @@ import SubscribeScreen from '@/screens/SubscribeScreen';
 import MyPageScreen from '@screens/MyPageScreen';
 
 import FeedNavigator from './FeedNavigator';
+import theme from '@/context/theme';
 
 import {HomeStackParamList} from '@/types/StackNavigationType';
 
@@ -24,6 +25,7 @@ const defaultScreenOptions: BottomTabNavigationOptions = {
   headerShown: true,
   headerTitleAlign: 'left' as const,
   headerRight: () => <CartIcon />,
+  headerTintColor: theme.colors.dark,
 };
 
 const myPageScreenOptions: BottomTabNavigationOptions = {

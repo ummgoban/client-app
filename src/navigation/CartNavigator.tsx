@@ -11,12 +11,14 @@ import ShoppingCartScreen from '@/screens/ShoppingCartScreen';
 
 import {CartStackParamList} from '@/types/StackNavigationType';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import theme from '@/context/theme';
 
 const Stack = createStackNavigator<CartStackParamList>();
 
 const cartScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
   headerTitle: () => <HeaderTitle title="장바구니" />,
+  headerTintColor: theme.colors.dark,
 };
 
 const CartNavigator = () => {

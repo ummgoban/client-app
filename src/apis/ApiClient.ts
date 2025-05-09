@@ -8,14 +8,43 @@ import axios, {
 import Config from 'react-native-config';
 
 import {SessionType} from '@/types/Session';
-import {getStorage} from '@/utils/storage';
+import {getStorage, setStorage} from '@/utils/storage';
 import CustomError from './CustomError';
+import {refreshAccessToken} from './auth/client';
 
 class ApiClient {
   private static instance: ApiClient;
   private axiosInstance: AxiosInstance;
 
   private _jwt: string | null = null;
+
+  private async expiredSession() {
+    await setStorage('session', {});
+    this._jwt = null;
+    const expiredError = new CustomError({
+      errorCode: 401,
+      errorMessage: '세션이 만료되어 로그아웃되었습니다.',
+    });
+    throw expiredError;
+  }
+
+  private async setAuthorizationHeader(
+    config: InternalAxiosRequestConfig,
+  ): Promise<void> {
+    const session: SessionType | null = await getStorage('session');
+    this._jwt = session?.accessToken ?? null;
+
+    if (!this._jwt) {
+      return;
+    }
+
+    // accessToken이 있으면 Authorization 헤더에 추가
+    if (this._jwt) {
+      config.headers.Authorization = `Bearer ${this._jwt}`;
+    } else {
+      config.headers.Authorization = null;
+    }
+  }
 
   private constructor() {
     this.axiosInstance = axios.create({
@@ -27,28 +56,53 @@ class ApiClient {
 
     this.axiosInstance.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
-        const session: SessionType | null = await getStorage('session');
-
-        this._jwt = session?.accessToken ?? null;
-
-        if (this._jwt) {
-          config.headers.Authorization = `Bearer ${this._jwt}`;
+        if (config.url?.includes('/auth/refresh')) {
+          // Skip authorization header for refresh token request
+          return config;
         }
+
+        await this.setAuthorizationHeader(config);
         return config;
       },
       error => Promise.reject(error),
     );
 
-    // 응답 인터셉터: 응답에서 토큰을 받아 저장
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
-        if (response.data && response.data.token) {
-          this._jwt = response.data.token; // 토큰 갱신
-          console.debug('토큰 갱신:', this._jwt);
+        if (response.data?.token) {
+          this._jwt = response.data.token; // Update token
+          console.debug('Token updated:', this._jwt);
         }
+
         return response;
       },
-      error => Promise.reject(error),
+      async error => {
+        const errorCode = error.response?.data?.errorCode;
+
+        const session: SessionType | null = await getStorage('session');
+
+        console.debug(`[${errorCode}] ${error.response?.data?.errorMessage}`);
+
+        if (errorCode === 401 && session?.refreshToken) {
+          try {
+            const newSession = await refreshAccessToken(session.refreshToken);
+            if (newSession) {
+              await setStorage('session', newSession);
+              this._jwt = newSession.accessToken;
+            } else {
+              await this.expiredSession();
+            }
+          } catch (refreshError) {
+            console.error('Error refreshing access token:', refreshError);
+            await this.expiredSession();
+          }
+        }
+        if (errorCode === 400) {
+          // 400 에러에 대한 추가 처리 필요 시 여기에 작성
+        }
+
+        return Promise.reject(error);
+      },
     );
   }
 

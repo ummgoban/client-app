@@ -22,6 +22,7 @@ const Market = ({market, onPress}: Props) => {
         data={productData}
         keyExtractor={item => String(item.id)}
         showsHorizontalScrollIndicator={false}
+        scrollEnabled={productData.length > 2}
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingRight: 4}}
         renderItem={({item}) => (

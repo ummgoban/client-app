@@ -28,49 +28,12 @@ class ApiClient {
       return;
     }
 
-    /**
-     * OAuth 서비스에 따라 refreshToken이 없는 경우가 있어. AccessToken 만료 시 강제 로그아웃 처리
-     */
-    const isOAuthTokenExpired =
-      session &&
-      session.OAuthProvider !== 'BASIC' &&
-      session.accessTokenExpiresAt &&
-      session.accessTokenExpiresAt < Date.now();
-
-    // Oauth 토큰이 만료된 경우에 강제 로그아웃
-    if (isOAuthTokenExpired) {
-      console.debug('OAuth token expired. Force Sign Out');
-      // setStorage('session', {});
-      this._jwt = null;
+    // accessToken이 있으면 Authorization 헤더에 추가
+    if (this._jwt) {
+      config.headers.Authorization = `Bearer ${this._jwt}`;
+    } else {
       config.headers.Authorization = null;
-      return;
     }
-
-    // 리프레쉬 토큰이 있는 경우 갱신
-    // 리프레쉬 토큰 갱신 실패 시 강제 로그아웃
-    if (session?.refreshToken) {
-      try {
-        const newSession = await refreshAccessToken(session.refreshToken);
-
-        if (newSession) {
-          setStorage('session', newSession);
-
-          config.headers.Authorization = `Bearer ${newSession.accessToken}`;
-          return;
-        } else {
-          setStorage('session', {});
-          this._jwt = null;
-          config.headers.Authorization = null;
-        }
-      } catch (error) {
-        console.error('Error refreshing access token:', error);
-        setStorage('session', {});
-        this._jwt = null;
-        config.headers.Authorization = null;
-      }
-    }
-
-    config.headers.Authorization = `Bearer ${this._jwt}`;
   }
 
   private constructor() {
@@ -104,13 +67,41 @@ class ApiClient {
       },
       async error => {
         const errorCode = error.response?.data?.errorCode;
-        if (errorCode === 401) {
-          console.debug('Token expired. Force Sign Out');
-          await this.setAuthorizationHeader(error.config);
-        } else if (errorCode === 400) {
-        }
+        const originalRequest = error.config;
+        const session: SessionType | null = await getStorage('session');
+
         console.debug(`[${errorCode}] ${error.response?.data?.errorMessage}`);
-        Promise.reject(error);
+
+        if (
+          errorCode === 401 &&
+          session?.refreshToken &&
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true;
+          try {
+            const newSession = await refreshAccessToken(session.refreshToken);
+            if (newSession) {
+              await setStorage('session', newSession);
+              this._jwt = newSession.accessToken;
+              originalRequest.headers.Authorization = `Bearer ${newSession.accessToken}`;
+              return this.axiosInstance(originalRequest);
+            } else {
+              await setStorage('session', {});
+              this._jwt = null;
+              return Promise.reject(error);
+            }
+          } catch (refreshError) {
+            console.error('Error refreshing access token:', refreshError);
+            await setStorage('session', {});
+            this._jwt = null;
+            return Promise.reject(error);
+          }
+        }
+        if (errorCode === 400) {
+          // 400 에러에 대한 추가 처리 필요 시 여기에 작성
+        }
+
+        return Promise.reject(error);
       },
     );
   }

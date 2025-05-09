@@ -102,7 +102,16 @@ class ApiClient {
         }
         return response;
       },
-      error => Promise.reject(error),
+      async error => {
+        const errorCode = error.response?.data?.errorCode;
+        if (errorCode === 401) {
+          console.debug('Token expired. Force Sign Out');
+          await this.setAuthorizationHeader(error.config);
+        } else if (errorCode === 400) {
+        }
+        console.debug(`[${errorCode}] ${error.response?.data?.errorMessage}`);
+        Promise.reject(error);
+      },
     );
   }
 

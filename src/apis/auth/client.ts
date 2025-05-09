@@ -12,6 +12,15 @@ import {VerifyEmailCodeRequest, SendEmailCodeRequest} from './model';
 import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
 
+export const throwRefreshError = async () => {
+  try {
+    const res = await apiClient.get('/common/auth/refresh-test');
+    return res;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
 export const refreshAccessToken = async (
   refreshToken: string,
 ): Promise<SessionType | null> => {
@@ -19,7 +28,7 @@ export const refreshAccessToken = async (
     const res = await apiClient.post<{
       code: number;
       data: SessionType;
-    }>('/auth/refresh', {
+    }>('/common/auth/refresh', {
       refreshToken,
     });
 

@@ -67,24 +67,17 @@ class ApiClient {
       },
       async error => {
         const errorCode = error.response?.data?.errorCode;
-        const originalRequest = error.config;
+
         const session: SessionType | null = await getStorage('session');
 
         console.debug(`[${errorCode}] ${error.response?.data?.errorMessage}`);
 
-        if (
-          errorCode === 401 &&
-          session?.refreshToken &&
-          !originalRequest._retry
-        ) {
-          originalRequest._retry = true;
+        if (errorCode === 401 && session?.refreshToken) {
           try {
             const newSession = await refreshAccessToken(session.refreshToken);
             if (newSession) {
               await setStorage('session', newSession);
               this._jwt = newSession.accessToken;
-              originalRequest.headers.Authorization = `Bearer ${newSession.accessToken}`;
-              return this.axiosInstance(originalRequest);
             } else {
               await setStorage('session', {});
               this._jwt = null;

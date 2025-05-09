@@ -18,6 +18,16 @@ class ApiClient {
 
   private _jwt: string | null = null;
 
+  private async expiredSession() {
+    await setStorage('session', {});
+    this._jwt = null;
+    const expiredError = new CustomError({
+      errorCode: 401,
+      errorMessage: '세션이 만료되어 로그아웃되었습니다.',
+    });
+    throw expiredError;
+  }
+
   private async setAuthorizationHeader(
     config: InternalAxiosRequestConfig,
   ): Promise<void> {
@@ -63,6 +73,7 @@ class ApiClient {
           this._jwt = response.data.token; // Update token
           console.debug('Token updated:', this._jwt);
         }
+
         return response;
       },
       async error => {
@@ -79,15 +90,11 @@ class ApiClient {
               await setStorage('session', newSession);
               this._jwt = newSession.accessToken;
             } else {
-              await setStorage('session', {});
-              this._jwt = null;
-              return Promise.reject(error);
+              await this.expiredSession();
             }
           } catch (refreshError) {
             console.error('Error refreshing access token:', refreshError);
-            await setStorage('session', {});
-            this._jwt = null;
-            return Promise.reject(error);
+            await this.expiredSession();
           }
         }
         if (errorCode === 400) {

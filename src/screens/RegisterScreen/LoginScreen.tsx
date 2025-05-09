@@ -26,29 +26,27 @@ const LoginScreen = () => {
         <MomChanPickLogo width={160} height={160} />
       </S.MomChanPickLogoWrapper>
       <CredentialLogin />
-      {Platform.OS === 'ios' && (
-        <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
-      )}
-      {Platform.OS === 'ios' && (
-        <S.LoginButtonContainer>
-          <S.LoginButtonWrapper
-            onPress={async () => {
-              const res = await loginWithOAuth('KAKAO');
-              if (res) {
-                navigation.navigate('Home', {screen: 'Feed'});
-              }
-            }}>
-            <KakaoLoginButton />
-          </S.LoginButtonWrapper>
-          <S.LoginButtonWrapper
-            onPress={async () => {
-              const res = await loginWithOAuth('NAVER');
-              if (res) {
-                navigation.navigate('Home', {screen: 'Feed'});
-              }
-            }}>
-            <NaverLoginButton />
-          </S.LoginButtonWrapper>
+      <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
+      <S.LoginButtonContainer>
+        <S.LoginButtonWrapper
+          onPress={async () => {
+            const res = await loginWithOAuth('KAKAO');
+            if (res) {
+              navigation.navigate('Home', {screen: 'Feed'});
+            }
+          }}>
+          <KakaoLoginButton />
+        </S.LoginButtonWrapper>
+        <S.LoginButtonWrapper
+          onPress={async () => {
+            const res = await loginWithOAuth('NAVER');
+            if (res) {
+              navigation.navigate('Home', {screen: 'Feed'});
+            }
+          }}>
+          <NaverLoginButton />
+        </S.LoginButtonWrapper>
+        {Platform.OS === 'ios' && (
           <S.LoginButtonWrapper
             onPress={async () => {
               const res = await loginWithOAuth('APPLE');
@@ -58,8 +56,8 @@ const LoginScreen = () => {
             }}>
             <AppleLoginButton />
           </S.LoginButtonWrapper>
-        </S.LoginButtonContainer>
-      )}
+        )}
+      </S.LoginButtonContainer>
     </S.LoginPageContainer>
   );
 };

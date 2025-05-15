@@ -10,9 +10,7 @@ type Props = {
 };
 
 const Market = ({market, onPress}: Props) => {
-  const productData = market.products.filter(
-    p => p.stock && p.productStatus !== 'HIDDEN',
-  );
+  const productData = market.products.filter(p => p.productStatus !== 'HIDDEN');
 
   return (
     // TODO: 터치할 때 opacity

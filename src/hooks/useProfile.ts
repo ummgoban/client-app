@@ -92,7 +92,7 @@ const useProfile = () => {
             }
           }
         },
-        ...options,
+        ...options?.onSettled,
       });
     },
     [mutateSignUp, refreshProfile],
@@ -140,7 +140,6 @@ const useProfile = () => {
   const withdraw = useCallback(
     (options?: MutateOptions<boolean, CustomError, void, unknown>) => {
       mutateWithdraw(undefined, {
-        ...options,
         onSuccess: async (_data, _variables, _context) => {
           await refreshProfile();
           if (options?.onSuccess) {
@@ -154,6 +153,7 @@ const useProfile = () => {
             }
           }
         },
+        ...options?.onSettled,
       });
     },
     [mutateWithdraw, refreshProfile],

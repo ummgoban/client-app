@@ -109,6 +109,7 @@ const FeedScreen = ({navigation}: Props) => {
       </View>
     );
   }
+
   return (
     <S.Container>
       {/* TODO: 검색바 */}
@@ -116,6 +117,7 @@ const FeedScreen = ({navigation}: Props) => {
       <S.MarketWrapper>
         <FlatList
           data={marketList}
+          removeClippedSubviews={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

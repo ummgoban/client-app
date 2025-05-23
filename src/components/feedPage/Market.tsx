@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {FlatList, Pressable} from 'react-native';
 import DotIndicator from '@/assets/icons/dot.svg';
 import {MarketType} from '@/types/Market';
@@ -10,7 +10,10 @@ type Props = {
 };
 
 const Market = ({market, onPress}: Props) => {
-  const productData = market.products.filter(p => p.productStatus !== 'HIDDEN');
+  const productData = useMemo(
+    () => market.products.filter(p => p.productStatus !== 'HIDDEN'),
+    [market.products],
+  );
 
   return (
     // TODO: 터치할 때 opacity
@@ -18,10 +21,10 @@ const Market = ({market, onPress}: Props) => {
       <FlatList
         horizontal
         data={productData}
-        keyExtractor={item => String(item.id)}
+        removeClippedSubviews={false}
+        keyExtractor={item => item.id.toString()}
         showsHorizontalScrollIndicator={false}
         scrollEnabled={productData.length > 2}
-        // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingRight: 4}}
         renderItem={({item}) => (
           <Pressable onPress={() => onPress(market.id)}>
@@ -29,8 +32,8 @@ const Market = ({market, onPress}: Props) => {
               <S.MarketImage source={{uri: item.image}} />
               <S.MenuGradation
                 colors={[
-                  'rgba(0, 0, 0, 0.7)',
-                  'rgba(0, 0, 0, 0.28)',
+                  'rgba(0, 0, 0, 0.6)',
+                  'rgba(0, 0, 0, 0.3)',
                   'rgba(0, 0, 0, 0)',
                 ]}
                 locations={[0, 0.3, 0.7]}

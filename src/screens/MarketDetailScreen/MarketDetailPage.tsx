@@ -329,7 +329,7 @@ const MarketDetailPage = ({
     }
 
     if (remainingHour < 0) {
-      return '픽업 가능 시간이 지났습니다.';
+      return '픽업 가능 시간이 지냈어요.\n지금 예약하면 내일 픽업 가능해요!';
     }
 
     return `예약 종료까지 ${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;

@@ -13,52 +13,59 @@ import CustomerReviewScreen from '@/screens/CustomerReviewScreen';
 import NicknamePatchPage from '@/screens/MyPageScreen/NicknamePatchPage';
 
 import {MyPageStackParamList} from '@/types/StackNavigationType';
+import theme from '@/context/theme';
 
 const Stack = createStackNavigator<MyPageStackParamList>();
 
 const myPageScreenOptions: StackNavigationOptions = {
   ...defaultOptions,
+  headerTintColor: theme.colors.dark,
+};
+
+const myPageOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
   headerTitle: () => <HeaderTitle title="마이페이지" />,
 };
 
-const settingScreenOptions: StackNavigationOptions = {
-  ...defaultOptions,
+const settingOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
   headerTitle: () => <HeaderTitle title="설정" />,
 };
 
-const customerReviewScreenOptions: StackNavigationOptions = {
-  ...defaultOptions,
+const customerReviewOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
   headerTitle: () => <HeaderTitle title="내 리뷰 조회" />,
 };
 
-const NicknameScreenOptions: StackNavigationOptions = {
-  ...defaultOptions,
+const nicknameOptions: StackNavigationOptions = {
+  ...myPageScreenOptions,
   headerTitle: () => <HeaderTitle title="닉네임 변경" />,
 };
+
 const MyPageNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="MyPageRoot"
-      screenOptions={{headerShown: true}}>
+      screenOptions={myPageScreenOptions}>
       <Stack.Screen
         name="MyPage"
         component={MyPageScreen}
-        options={myPageScreenOptions}
+        options={myPageOptions}
       />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
-        options={settingScreenOptions}
+        options={settingOptions}
       />
       <Stack.Screen
-        name={'CustomerReview'}
+        name="CustomerReview"
         component={CustomerReviewScreen}
-        options={customerReviewScreenOptions}
+        options={customerReviewOptions}
       />
       <Stack.Screen
-        name={'Nickname'}
+        name="Nickname"
         component={NicknamePatchPage}
-        options={NicknameScreenOptions}
+        options={nicknameOptions}
       />
     </Stack.Navigator>
   );

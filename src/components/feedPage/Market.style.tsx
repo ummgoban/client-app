@@ -70,7 +70,6 @@ const S = {
   MarketInfoDiscription: styled.View`
     display: flex;
     flex-direction: column;
-    gap: 4px;
   `,
 
   MarketTitle: styled.Text`

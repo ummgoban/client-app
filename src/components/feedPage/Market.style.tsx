@@ -2,50 +2,6 @@ import styled from '@emotion/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const S = {
-  MarketPickupTime: styled.View`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2px;
-  `,
-
-  LableWrapper: styled.View`
-    position: absolute;
-    width: 100%;
-
-    z-index: 10;
-
-    display: flex;
-    padding: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: stretch;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  `,
-  MenuLabel: styled.Text`
-    color: #fff;
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px; /* 150% */
-    letter-spacing: -0.12px;
-  `,
-
-  PriceLabel: styled.Text`
-    color: #fff;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 18px; /* 138.462% */
-    letter-spacing: -0.13px;
-  `,
-
   MarketWrapper: styled.Pressable`
     display: flex;
     padding: 12px 0px 12px 16px;
@@ -55,32 +11,60 @@ const S = {
     align-self: stretch;
   `,
 
-  MenuGradation: styled(LinearGradient)`
-    z-index: 5;
-    height: 100%;
-    width: 100%;
-    border-radius: 12px;
-    position: absolute;
-  `,
-
   MarketImageBox: styled.View`
-    display: flex;
-    flex: 1;
-
     max-width: 140px;
     margin-right: 4px;
-
     border: 1px solid rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
     border-radius: 12px;
+    overflow: hidden;
+    position: relative;
   `,
 
   MarketImage: styled.Image`
-    z-index: 1;
-    border-radius: 12px;
-
     width: 140px;
     height: 140px;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+  `,
+
+  MenuGradation: styled(LinearGradient)`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    z-index: 2;
+  `,
+
+  LableWrapper: styled.View`
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px;
+    width: 100%;
+    z-index: 3;
+  `,
+
+  MenuLabel: styled.Text`
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.12px;
+  `,
+
+  PriceLabel: styled.Text`
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.13px;
   `,
 
   MarketInfoDiscription: styled.View`
@@ -95,9 +79,15 @@ const S = {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px; /* 150% */
-
+    line-height: 24px;
     margin-bottom: 4px;
+  `,
+
+  MarketPickupTime: styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
   `,
 
   LightText: styled.Text`
@@ -106,7 +96,7 @@ const S = {
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
-    line-height: 18px; /* 138.462% */
+    line-height: 18px;
   `,
 
   DarkText: styled.Text`
@@ -115,7 +105,7 @@ const S = {
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
-    line-height: 18px; /* 138.462% */
+    line-height: 18px;
   `,
 
   DescriptionContainer: styled.View`

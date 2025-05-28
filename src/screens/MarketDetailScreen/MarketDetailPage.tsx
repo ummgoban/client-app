@@ -330,7 +330,7 @@ const MarketDetailPage = ({
         : `영업 종료까지 ${zeroPad(hours)}시간 ${zeroPad(minutes)}분 남았어요!`,
       isMarketClosed: closed,
     };
-  }, []);
+  }, [closeAt]);
 
   useEffect(() => {
     const firstTag = Object.keys(sortedProductsByTags)[0];

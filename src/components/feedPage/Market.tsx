@@ -25,6 +25,7 @@ const Market = ({market, onPress}: Props) => {
         keyExtractor={item => item.id.toString()}
         showsHorizontalScrollIndicator={false}
         scrollEnabled={productData.length > 2}
+        // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingRight: 4}}
         renderItem={({item}) => (
           <Pressable onPress={() => onPress(market.id)}>

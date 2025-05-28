@@ -16,7 +16,7 @@ type Props = {
 
 const ShoppingCartPage = ({navigation, cartData}: Props) => {
   const {mutateAsync: updateBucketProduct} = useUpdateBucket();
-
+  const market = cartData.market;
   const {originPrice, discountPrice} = useMemo(() => {
     return cartData.products.reduce(
       (acc, cur) => ({
@@ -28,7 +28,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
   }, [cartData]);
 
   const {isMarketClosed} = useMemo(() => {
-    const [endHour, endMinute] = cartData.market.closeAt.split(':').map(Number);
+    const [endHour, endMinute] = market.closeAt.split(':').map(Number);
     const now = new Date();
     const closeDate = new Date();
     closeDate.setHours(endHour, endMinute, 0, 0);
@@ -39,7 +39,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     return {
       isMarketClosed: closed,
     };
-  }, []);
+  }, [market.closeAt]);
 
   const onPressStore = () => {
     navigation.navigate('Detail', {
@@ -57,7 +57,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
 
   return (
     <S.CartPage>
-      <MarketInfo onPress={onPressStore} market={cartData.market} />
+      <MarketInfo onPress={onPressStore} market={market} />
       <S.ScrollView>
         {cartData.products.map(product => (
           <S.CardContainer key={product.id}>

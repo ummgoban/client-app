@@ -49,15 +49,15 @@ const PaymentPage = ({cart, marketId}: Props) => {
       return new Date();
     }
     const nowTime = new Date().getTime();
-    const {pickupStartAt, pickupEndAt} = market;
+    const {openAt, closeAt} = market;
 
-    const startTime = new Date(`${nowDate}T${pickupStartAt}`).getTime();
-    const endTime = new Date(`${nowDate}T${pickupEndAt}`).getTime();
+    const startTime = new Date(`${nowDate}T${openAt}`).getTime();
+    const endTime = new Date(`${nowDate}T${closeAt}`).getTime();
 
     if (nowTime < startTime) {
       return new Date(startTime);
     } else if (nowTime > endTime) {
-      return new Date(`${tomorrowDate}T${pickupStartAt}`);
+      return new Date(`${tomorrowDate}T${openAt}`);
     }
     return new Date(nowTime);
   });
@@ -96,8 +96,8 @@ const PaymentPage = ({cart, marketId}: Props) => {
         <DatePickerCard
           pickupReservedAt={pickupReservedAt}
           onChange={setPickupReservedAt}
-          minimumDate={new Date(`${nowDate}T${market.pickupStartAt}`)}
-          maximumDate={new Date(`${nowDate}T${market.pickupEndAt}`)}
+          minimumDate={new Date(`${nowDate}T${market.openAt}`)}
+          maximumDate={new Date(`${nowDate}T${market.closeAt}`)}
         />
         {/* <PaymentMethod>
           <PaymentMethodWidget

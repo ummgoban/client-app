@@ -27,6 +27,20 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     );
   }, [cartData]);
 
+  const {isMarketClosed} = useMemo(() => {
+    const [endHour, endMinute] = cartData.market.closeAt.split(':').map(Number);
+    const now = new Date();
+    const closeDate = new Date();
+    closeDate.setHours(endHour, endMinute, 0, 0);
+
+    const diff = closeDate.getTime() - now.getTime();
+    const closed = diff <= 0;
+
+    return {
+      isMarketClosed: closed,
+    };
+  }, []);
+
   const onPressStore = () => {
     navigation.navigate('Detail', {
       screen: 'MarketDetail',
@@ -62,7 +76,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
           discountPrice={discountPrice}
         />
       </S.ScrollView>
-      <BottomButton onPress={onPressPayment}>
+      <BottomButton disabled={isMarketClosed} onPress={onPressPayment}>
         {`${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
       </BottomButton>
     </S.CartPage>

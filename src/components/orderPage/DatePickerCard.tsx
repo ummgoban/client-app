@@ -48,7 +48,7 @@ const DatePickerCard = ({
             </S.PickupAbleText>
           )}
           <S.PickupAbleText>
-            {`* 픽업 가능 시간: ${format(minimumDate, 'HH:mm')} ~ ${format(maximumDate, 'HH:mm')}`}
+            {`* 영업 시간: ${format(minimumDate, 'HH:mm')} ~ ${format(maximumDate, 'HH:mm')}`}
           </S.PickupAbleText>
         </S.PickupAbleTextContainer>
       </S.Card>

@@ -33,10 +33,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     const closeDate = new Date();
     closeDate.setHours(endHour, endMinute, 0, 0);
 
-    const diff = closeDate.getTime() - now.getTime();
-    const closed = diff <= 0;
-
-    return closed;
+    return closeDate.getTime() - now.getTime() <= 0;
   }, [market.closeAt]);
 
   const onPressStore = () => {

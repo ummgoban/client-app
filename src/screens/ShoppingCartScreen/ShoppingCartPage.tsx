@@ -27,7 +27,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     );
   }, [cartData]);
 
-  const {isMarketClosed} = useMemo(() => {
+  const closed = useMemo(() => {
     const [endHour, endMinute] = market.closeAt.split(':').map(Number);
     const now = new Date();
     const closeDate = new Date();
@@ -36,9 +36,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     const diff = closeDate.getTime() - now.getTime();
     const closed = diff <= 0;
 
-    return {
-      isMarketClosed: closed,
-    };
+    return closed;
   }, [market.closeAt]);
 
   const onPressStore = () => {
@@ -76,8 +74,10 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
           discountPrice={discountPrice}
         />
       </S.ScrollView>
-      <BottomButton disabled={isMarketClosed} onPress={onPressPayment}>
-        {`${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
+      <BottomButton disabled={closed} onPress={onPressPayment}>
+        {closed
+          ? '영업이 종료되었어요.'
+          : `${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
       </BottomButton>
     </S.CartPage>
   );

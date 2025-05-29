@@ -450,7 +450,11 @@ const MarketDetailPage = ({
             navigation.navigate('Register', {screen: 'Login'});
           }
         }}>
-        {profile ? `예약하기 (${cart.length})` : `로그인하고 장바구니에 담기`}
+        {isMarketClosed
+          ? '영업이 종료되었어요.'
+          : profile
+            ? `예약하기 (${cart.length})`
+            : `로그인하고 장바구니에 담기`}
       </BottomButton>
     </S.MarketDetailInfoView>
   );

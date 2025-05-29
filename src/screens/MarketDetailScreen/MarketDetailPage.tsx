@@ -420,6 +420,7 @@ const MarketDetailPage = ({
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
+        showsVerticalScrollIndicator={false}
         onLayout={updateSectionOffsets}
         decelerationRate="fast">
         {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (

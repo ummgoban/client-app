@@ -1,6 +1,6 @@
 {
   "name": "ClientApp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "android": "ENVFILE=.env react-native run-android",
@@ -17,7 +17,7 @@
     "build:android-debug-aab": "cd android && ENVFILE=.env ./gradlew bundleDebug",
     "build:android-release-apk": "cd android && ENVFILE=.env.release ./gradlew build",
     "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease",
-    "build:android-store": "yarn build:android-clean && yarn build:android-release-aab",
+    "build:android-store": "sh ./.script/android-build.sh",
     "build:android-release": "yarn build:android-clean && yarn build:android-release-apk"
   },
   "dependencies": {
@@ -46,7 +46,7 @@
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.18.1",
-    "react-native-image-picker": "^8.2.0",
+    "react-native-image-picker": "^7.1.2",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-naver-map": "https://github.com/zerocho/react-native-naver-map",
     "react-native-paper": "^5.12.5",

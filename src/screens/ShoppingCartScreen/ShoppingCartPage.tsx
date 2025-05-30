@@ -30,7 +30,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
       }),
       {originPrice: 0, discountPrice: 0},
     );
-  }, [marketData]);
+  }, [products]);
 
   const closed = useMemo(() => {
     const [endHour, endMinute] = market.closeAt.split(':').map(Number);

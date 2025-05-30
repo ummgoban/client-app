@@ -71,7 +71,7 @@ export const updateBucketProduct = async ({
         },
       },
     );
-    if (res && res.code == 200) {
+    if (res && res.code === 200) {
       return res.data;
     } else {
       return null;

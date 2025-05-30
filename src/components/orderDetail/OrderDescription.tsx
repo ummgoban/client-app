@@ -68,7 +68,7 @@ const OrderCustomerInfo = ({id, navigation, orderDetail}: Props) => {
           {`픽업 예정 시간: ${format(orderDetail.pickupReservedAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
         </S.OrderDescriptionText>
         <S.OrderDescriptionText>
-          {`완료 시간: ${format(orderDetail.approvedAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
+          {`완료 시간: ${format(orderDetail.doneAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
         </S.OrderDescriptionText>
       </S.OrderDescription>
     </S.Container>

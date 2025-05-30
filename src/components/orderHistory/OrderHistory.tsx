@@ -135,27 +135,29 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                   <S.HistoryTimelineContainer>
                     <HistoryTimeline
                       title="픽업 대기"
-                      timestamp={order.pickupReservedAt}
+                      timestamp={order.createdAt}
                       description={`${format(
                         order.pickupReservedAt,
                         'YYYY.MM.DD HH시 mm분',
                       )}까지 가게로 방문해주세요.`}
                     />
-                    {/* TODO: 픽업 완료 시간 추가 */}
-                    {order.ordersStatus === 'PICKEDUP' && (
-                      <HistoryTimeline
-                        title="픽업 완료"
-                        timestamp={order.pickupReservedAt + 1000 * 60}
-                        description={'픽업이 완료되었습니다.'}
-                      />
-                    )}
-                    {/* TODO: 주문 취소 시간 추가 */}
-                    {order.ordersStatus === 'CANCELED' && (
-                      <HistoryTimeline
-                        title="주문 취소"
-                        timestamp={order.pickupReservedAt + 1000 * 60}
-                        description={'주문이 취소되었습니다.'}
-                      />
+                    {order.doneAt != null && (
+                      <>
+                        {order.ordersStatus === 'PICKEDUP' && (
+                          <HistoryTimeline
+                            title="픽업 완료"
+                            timestamp={order.doneAt}
+                            description={'픽업이 완료되었습니다.'}
+                          />
+                        )}
+                        {order.ordersStatus === 'CANCELED' && (
+                          <HistoryTimeline
+                            title="주문 취소"
+                            timestamp={order.doneAt}
+                            description={'주문이 취소되었습니다.'}
+                          />
+                        )}
+                      </>
                     )}
                   </S.HistoryTimelineContainer>
                 </S.HistoryItem>

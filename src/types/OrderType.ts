@@ -36,4 +36,6 @@ export type OrderDetailType = OrderType & {
   paymentKey: string;
   /** 주문자 주소 */
   address: string;
+  /** 주문 완료 시간 (ISO 8601) */
+  doneAt: string;
 };

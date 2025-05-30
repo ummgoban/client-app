@@ -16,7 +16,7 @@ type Props = {
 
 const ShoppingCartPage = ({navigation, cartData}: Props) => {
   const {mutateAsync: updateBucketProduct} = useUpdateBucket();
-
+  const market = cartData.market;
   const {originPrice, discountPrice} = useMemo(() => {
     return cartData.products.reduce(
       (acc, cur) => ({
@@ -26,6 +26,15 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
       {originPrice: 0, discountPrice: 0},
     );
   }, [cartData]);
+
+  const closed = useMemo(() => {
+    const [endHour, endMinute] = market.closeAt.split(':').map(Number);
+    const now = new Date();
+    const closeDate = new Date();
+    closeDate.setHours(endHour, endMinute, 0, 0);
+
+    return closeDate.getTime() - now.getTime() <= 0;
+  }, [market.closeAt]);
 
   const onPressStore = () => {
     navigation.navigate('Detail', {
@@ -43,7 +52,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
 
   return (
     <S.CartPage>
-      <MarketInfo onPress={onPressStore} market={cartData.market} />
+      <MarketInfo onPress={onPressStore} market={market} />
       <S.ScrollView>
         {cartData.products.map(product => (
           <S.CardContainer key={product.id}>
@@ -62,8 +71,10 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
           discountPrice={discountPrice}
         />
       </S.ScrollView>
-      <BottomButton onPress={onPressPayment}>
-        {`${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
+      <BottomButton disabled={closed} onPress={onPressPayment}>
+        {closed
+          ? '영업이 종료되었어요.'
+          : `${discountPrice.toLocaleString()}원 예약하기 (${cartData.products.length})`}
       </BottomButton>
     </S.CartPage>
   );

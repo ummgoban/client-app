@@ -3,7 +3,7 @@ import {ProductType} from './ProductType';
 
 //TODO: type explict define
 export type BucketType = {
-  market: Pick<MarketType, 'id' | 'name' | 'images'>;
+  market: Pick<MarketType, 'id' | 'name' | 'images' | 'closeAt' | 'openAt'>;
   products: ({count: number} & ProductType)[];
 };
 

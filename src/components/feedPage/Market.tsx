@@ -25,6 +25,7 @@ const Market = ({market, onPress}: Props) => {
         keyExtractor={item => item.id.toString()}
         showsHorizontalScrollIndicator={false}
         scrollEnabled={productData.length > 2}
+        // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingRight: 4}}
         renderItem={({item}) => (
           <Pressable onPress={() => onPress(market.id)}>
@@ -54,8 +55,8 @@ const Market = ({market, onPress}: Props) => {
         <S.MarketTitle>{market.name}</S.MarketTitle>
         <S.DescriptionContainer>
           <S.MarketPickupTime>
-            <S.LightText>{'픽업'}</S.LightText>
-            <S.DarkText>{`${market.pickupStartAt}~${market.pickupEndAt}`}</S.DarkText>
+            <S.LightText>{'영업'}</S.LightText>
+            <S.DarkText>{`${market.openAt}~${market.closeAt}`}</S.DarkText>
           </S.MarketPickupTime>
           <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
           {/* TODO: 주소 대신 현재 위치에서 거리 표시 (600m dot 도보 4분) 형태 */}

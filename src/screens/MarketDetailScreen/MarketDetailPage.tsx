@@ -34,8 +34,8 @@ type CartItem = {
 };
 
 const MarketDetailPage = ({
-  pickupStartAt,
-  pickupEndAt,
+  openAt,
+  closeAt,
   address,
   products,
   hasLike,
@@ -44,10 +44,9 @@ const MarketDetailPage = ({
   summary,
   reviewNum,
   averageRating,
-  // TODO: 영업 및 픽업시간 현재 분리, 통일 및 어떤 시간 사용할지 논의
 }: Omit<
   MarketDetailType,
-  'images' | 'openAt' | 'closeAt' | 'imageUrls' | 'likeNum'
+  'images' | 'pickupStartAt' | 'pickupEndAt' | 'imageUrls' | 'likeNum'
 >) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -312,28 +311,26 @@ const MarketDetailPage = ({
     handleCheckout(marketId, addProducts);
     setCart([]);
   };
-
-  const remainingPickupTime = useMemo(() => {
+  const {remainingPickupTime, isMarketClosed} = useMemo(() => {
+    const [endHour, endMinute] = closeAt.split(':').map(Number);
     const now = new Date();
-    const hour = now.getHours();
-    const miniute = now.getMinutes();
+    const closeDate = new Date();
+    closeDate.setHours(endHour, endMinute, 0, 0);
 
-    const [pickupEndHour, pickupEndMinute] = pickupEndAt.split(':').map(Number);
+    const diff = closeDate.getTime() - now.getTime();
+    const closed = diff <= 0;
 
-    let remainingHour = pickupEndHour - hour;
-    let remainingMinute = pickupEndMinute - miniute;
+    const diffMinutes = Math.floor(diff / 1000 / 60);
+    const hours = Math.floor(diffMinutes / 60);
+    const minutes = diffMinutes % 60;
 
-    if (remainingMinute < 0) {
-      remainingHour -= 1;
-      remainingMinute += 60;
-    }
-
-    if (remainingHour < 0) {
-      return '픽업 가능 시간이 지냈어요.\n지금 예약하면 내일 픽업 가능해요!';
-    }
-
-    return `예약 종료까지 ${zeroPad(remainingHour)}시간 ${zeroPad(remainingMinute)}분 남았어요!`;
-  }, [pickupEndAt]);
+    return {
+      remainingPickupTime: closed
+        ? '영업이 종료되었어요.'
+        : `영업 종료까지 ${zeroPad(hours)}시간 ${zeroPad(minutes)}분 남았어요!`,
+      isMarketClosed: closed,
+    };
+  }, [closeAt]);
 
   useEffect(() => {
     const firstTag = Object.keys(sortedProductsByTags)[0];
@@ -365,9 +362,9 @@ const MarketDetailPage = ({
             {remainingPickupTime}
           </S.MarketTimeDescription>
           <S.MarketPickupTimeWrapper>
-            <S.MarketSideInfo>픽업 가능 시간: </S.MarketSideInfo>
+            <S.MarketSideInfo>영업 시간: </S.MarketSideInfo>
             <S.MarketPickupTime>
-              {`${pickupStartAt.slice(0, 2)}시 ${pickupStartAt.slice(-2)}분 - ${pickupEndAt.slice(0, 2)}시 ${pickupEndAt.slice(-2)}분`}
+              {`${openAt.slice(0, 2)}시 ${openAt.slice(-2)}분 - ${closeAt.slice(0, 2)}시 ${closeAt.slice(-2)}분`}
             </S.MarketPickupTime>
           </S.MarketPickupTimeWrapper>
           <S.MarketSideInfo>
@@ -423,6 +420,7 @@ const MarketDetailPage = ({
       <S.MenuScrollView
         ref={scrollViewRef}
         onScroll={handleScroll}
+        showsVerticalScrollIndicator={false}
         onLayout={updateSectionOffsets}
         decelerationRate="fast">
         {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
@@ -445,6 +443,7 @@ const MarketDetailPage = ({
       </S.MenuScrollView>
 
       <BottomButton
+        disabled={isMarketClosed}
         onPress={() => {
           if (profile) {
             addProductToBucket(id, cart);
@@ -452,7 +451,11 @@ const MarketDetailPage = ({
             navigation.navigate('Register', {screen: 'Login'});
           }
         }}>
-        {profile ? `예약하기 (${cart.length})` : `로그인하고 장바구니에 담기`}
+        {isMarketClosed
+          ? '영업이 종료되었어요.'
+          : profile
+            ? `예약하기 (${cart.length})`
+            : `로그인하고 장바구니에 담기`}
       </BottomButton>
     </S.MarketDetailInfoView>
   );

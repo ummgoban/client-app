@@ -1,3 +1,7 @@
 #!/bin/bash
 
-yarn preinstall && yarn install && yarn postinstall
+sh ./.script/pre-install.sh
+
+yarn install
+
+sh ./.script/post-install.sh

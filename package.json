@@ -3,8 +3,6 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "sh ./.script/pre-install.sh",
-    "postinstall": "sh ./.script/post-install.sh",
     "ci": "sh ./.script/ci.sh",
     "android": "ENVFILE=.env react-native run-android",
     "android-release": "ENVFILE=.env.release react-native run-android --mode=release",

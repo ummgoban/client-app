@@ -23,6 +23,12 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Set .env
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "NPM_TOKEN=${{ secrets.NPM_TOKEN }}" > .env
+
       - name: Set Yarn Version
         id: set-version
         run: |
@@ -43,26 +49,11 @@ jobs:
             ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Install dependencies
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
           NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")
           if [[ "$CACHE_HIT" != 'true' || "$NODE_MODULES_EXISTS" == 'false' ]]; then
-            # pre-install
-            # 원본 유지
-            cp .yarnrc.yml .yarnrc.yml.temp
-
-            NPM_TOKEN=${{ secrets.NPM_TOKEN }} envsubst < .yarnrc.yml.template > .yarnrc.yml
-
-            yarn install
-
-            # post-install
-            # 원본 복구
-            cp .yarnrc.yml.temp .yarnrc.yml
-
-            # 임시 파일 삭제
-            rm .yarnrc.yml.temp
+            sh ./.script/ci.sh
           fi
 
       - name: Lint check
@@ -73,3 +64,7 @@ jobs:
 
       - name: TS check
         run: yarn tsc
+
+      - name: Clear
+        run: |
+          rm .env

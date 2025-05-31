@@ -49,7 +49,7 @@ jobs:
           CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
           NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")
           if [[ "$CACHE_HIT" != 'true' || "$NODE_MODULES_EXISTS" == 'false' ]]; then
-            yarn run ci
+            yarn install
           fi
 
       - name: Lint check

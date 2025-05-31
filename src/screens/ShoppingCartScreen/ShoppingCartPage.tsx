@@ -1,4 +1,5 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
+import {Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {BucketType} from '@/types/Bucket';
 import PaymentSummary from '@/components/orderPage/PaymentSummary';
@@ -15,17 +16,21 @@ type Props = {
 };
 
 const ShoppingCartPage = ({navigation, cartData}: Props) => {
-  const {mutateAsync: updateBucketProduct} = useUpdateBucket();
-  const market = cartData.market;
+  const {mutate: updateBucketProduct} = useUpdateBucket();
+  const [marketData, setMarketData] = useState<BucketType | null>(cartData);
+
+  const market = marketData?.market ?? cartData.market;
+  const products = marketData?.products ?? cartData.products;
+
   const {originPrice, discountPrice} = useMemo(() => {
-    return cartData.products.reduce(
+    return products.reduce(
       (acc, cur) => ({
         originPrice: acc.originPrice + cur.originPrice * cur.count,
         discountPrice: acc.discountPrice + cur.discountPrice * cur.count,
       }),
       {originPrice: 0, discountPrice: 0},
     );
-  }, [cartData]);
+  }, [products]);
 
   const closed = useMemo(() => {
     const [endHour, endMinute] = market.closeAt.split(':').map(Number);
@@ -50,18 +55,30 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
     });
   };
 
+  const handlePatchCartProducts = (productId: number, count: number) => {
+    updateBucketProduct(
+      {productId, count},
+      {
+        onSuccess: data => {
+          setMarketData(data);
+        },
+        onError: () => {
+          Alert.alert('네트워크 오류입니다. 다시 시도해주세요.');
+        },
+      },
+    );
+  };
+
   return (
     <S.CartPage>
       <MarketInfo onPress={onPressStore} market={market} />
       <S.ScrollView>
-        {cartData.products.map(product => (
+        {products.map(product => (
           <S.CardContainer key={product.id}>
             <Menu
               product={product}
               initCount={product.count}
-              onCountChange={async (productId: number, count: number) => {
-                return await updateBucketProduct({productId, count});
-              }}
+              onCountChange={handlePatchCartProducts}
               isCart
             />
           </S.CardContainer>

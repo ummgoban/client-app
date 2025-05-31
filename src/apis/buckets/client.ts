@@ -55,12 +55,12 @@ export const addToBucket = async ({
 export const updateBucketProduct = async ({
   productId,
   count,
-}: UpdateBucketRequest): Promise<boolean> => {
+}: UpdateBucketRequest): Promise<BucketType | null> => {
   try {
     const res = await apiClient.patch<{
       code: number;
       message: string;
-      data: string;
+      data: BucketType;
     }>(
       `/customer/buckets`,
       {},
@@ -71,10 +71,11 @@ export const updateBucketProduct = async ({
         },
       },
     );
-    if (res && res.code === 200 && (res.data === 'SUCCESS' || 'CREATE')) {
-      return true;
+    if (res && res.code === 200) {
+      return res.data;
+    } else {
+      return null;
     }
-    return false;
   } catch (error) {
     throw new CustomError(error);
   }

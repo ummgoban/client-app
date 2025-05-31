@@ -1,4 +1,4 @@
-import {ProductType} from './ProductType';
+import {ProductType} from '@ummgoban/shared/types';
 
 export type OrderType = {
   ordersId: string;

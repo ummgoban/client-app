@@ -23,6 +23,12 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Set .env
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "NPM_TOKEN=${{ secrets.NPM_TOKEN }}" > .env
+
       - name: Set Yarn Version
         id: set-version
         run: |
@@ -47,7 +53,7 @@ jobs:
           CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
           NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")
           if [[ "$CACHE_HIT" != 'true' || "$NODE_MODULES_EXISTS" == 'false' ]]; then
-            yarn install
+            sh ./.script/ci.sh
           fi
 
       - name: Lint check
@@ -58,3 +64,7 @@ jobs:
 
       - name: TS check
         run: yarn tsc
+
+      - name: Clear
+        run: |
+          rm .env

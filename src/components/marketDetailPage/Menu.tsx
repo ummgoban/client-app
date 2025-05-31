@@ -5,7 +5,7 @@ import {useDeleteFromBucket} from '@/apis/buckets';
 
 import CustomImageModal from '@/components/common/CustomImageModal';
 
-import {ProductType} from '@/types/ProductType';
+import {ProductType} from '@ummgoban/shared/types';
 
 import S from './Menu.style';
 type Props = {

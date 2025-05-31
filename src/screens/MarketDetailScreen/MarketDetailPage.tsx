@@ -19,8 +19,9 @@ import SubscribeIcon from '@/components/common/SubscribeIcon';
 import Menu from '@/components/marketDetailPage/Menu';
 
 import {MarketDetailType} from '@/types/Market';
-import {ProductType} from '@ummgoban/shared';
 import {RootStackParamList} from '@/types/StackNavigationType';
+import {BucketProductType} from '@/types/Bucket';
+import {ProductType} from '@ummgoban/shared';
 
 import {zeroPad} from '@utils/date';
 
@@ -240,7 +241,7 @@ const MarketDetailPage = ({
 
   const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
     try {
-      const bucketProducts = cartItems.map(cartItem => {
+      const bucketProducts: BucketProductType[] = cartItems.map(cartItem => {
         const productDetails = products.find(
           (product): product is ProductType =>
             product.id === cartItem.productId,

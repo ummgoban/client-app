@@ -1,6 +1,6 @@
 import {ParamListBase} from '@react-navigation/native';
 import {OrderType} from './OrderType';
-import {ProductType} from '@ummgoban/shared';
+import {ProductType} from '@ummgoban/shared/types';
 
 type StackParamType<T> = {
   screen?: keyof T;

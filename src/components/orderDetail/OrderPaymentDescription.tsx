@@ -1,5 +1,5 @@
 import React from 'react';
-import {ProductType} from '@ummgoban/shared';
+import {ProductType} from '@ummgoban/shared/types';
 import S from './OrderPaymentDescription.style';
 
 type Props = {

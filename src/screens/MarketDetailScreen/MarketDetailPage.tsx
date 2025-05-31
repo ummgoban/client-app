@@ -257,6 +257,7 @@ const MarketDetailPage = ({
           image: productDetails.image,
           originPrice: productDetails.originPrice,
           discountPrice: productDetails.discountPrice,
+          discountRate: productDetails.discountRate,
         };
       });
 

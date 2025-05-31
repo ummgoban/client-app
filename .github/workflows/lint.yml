@@ -49,7 +49,20 @@ jobs:
           CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
           NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")
           if [[ "$CACHE_HIT" != 'true' || "$NODE_MODULES_EXISTS" == 'false' ]]; then
-            sh ./.script/ci.sh
+            # pre-install
+            # 원본 유지
+            cp .yarnrc.yml .yarnrc.yml.temp
+
+            NPM_TOKEN=${{ secrets.NPM_TOKEN }} envsubst < .yarnrc.yml.template > .yarnrc.yml
+
+            yarn install
+
+            # post-install
+            # 원본 복구
+            cp .yarnrc.yml.temp .yarnrc.yml
+
+            # 임시 파일 삭제
+            rm .yarnrc.yml.temp
           fi
 
       - name: Lint check

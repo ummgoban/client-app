@@ -3,8 +3,9 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "NPM_TOKEN=$(grep NPM_TOKEN .env | cut -d '=' -f2 | tr -d '\"' | xargs) envsubst < .yarnrc.yml.template > .yarnrc.yml",
-    "postinstall": "cp .yarnrc.yml.template .yarnrc.yml",
+    "preinstall": "sh ./.script/pre-install.sh",
+    "postinstall": "sh ./.script/post-install.sh",
+    "ci": "sh ./.script/ci.sh",
     "android": "ENVFILE=.env react-native run-android",
     "android-release": "ENVFILE=.env.release react-native run-android --mode=release",
     "ios": "react-native run-ios",

@@ -43,6 +43,8 @@ jobs:
             ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Install dependencies
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           CACHE_HIT="${{ steps.yarn-cache.outputs.cache-hit }}"
           NODE_MODULES_EXISTS=$(test -d "node_modules" && echo "true" || echo "false")

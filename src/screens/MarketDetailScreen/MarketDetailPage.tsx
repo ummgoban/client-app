@@ -19,7 +19,7 @@ import SubscribeIcon from '@/components/common/SubscribeIcon';
 import Menu from '@/components/marketDetailPage/Menu';
 
 import {MarketDetailType} from '@/types/Market';
-import {ProductType} from '@/types/ProductType';
+import {ProductType} from '@ummgoban/shared';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import {zeroPad} from '@utils/date';

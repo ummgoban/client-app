@@ -4361,12 +4361,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ummgoban/shared@npm:0.0.1-alpha.7":
-  version: 0.0.1-alpha.7
-  resolution: "@ummgoban/shared@npm:0.0.1-alpha.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40ummgoban%2Fshared%2F0.0.1-alpha.7%2Fc978829a99803442ae6d6fd27337a63a74f2bedb"
+"@ummgoban/shared@npm:0.0.1-alpha.16":
+  version: 0.0.1-alpha.16
+  resolution: "@ummgoban/shared@npm:0.0.1-alpha.16::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40ummgoban%2Fshared%2F0.0.1-alpha.16%2F33abcf3746093dc3b412defe37815f6c45020d7e"
   peerDependencies:
+    axios: ">=1.7.4"
     react: ">=18.0.0"
-  checksum: c14a877a260d55e8b9bf80274b8eb986f34960eef7b099c390cc93283e54ba1f8fb420cc4fbeb9714252d7db5659c6c76c3f6a15622d488ade76bc0bcabbb080
+  checksum: fab6ee76af7ab2a16420c3677c43f213e1342ca18292c125ebca6830372ce20c9aa74172a3bc491ecfdd9c295488c65fc6f40b483219cd6965514d287c595a0c
   languageName: node
   linkType: hard
 
@@ -4407,7 +4408,7 @@ __metadata:
     "@types/react": ^18.2.6
     "@types/react-native-vector-icons": ^6.4.18
     "@types/react-test-renderer": ^18.0.0
-    "@ummgoban/shared": 0.0.1-alpha.7
+    "@ummgoban/shared": 0.0.1-alpha.16
     axios: ^1.7.4
     babel-jest: ^29.6.3
     babel-plugin-module-resolver: ^5.0.2

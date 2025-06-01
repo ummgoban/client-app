@@ -1,4 +1,4 @@
-import {ProductType} from '@ummgoban/shared/types';
+import {ProductType} from '@ummgoban/shared/lib';
 
 export type MarketType = {
   id: number;

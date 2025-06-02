@@ -28,7 +28,7 @@ const providers = [
   {
     provider: TossPaymentProvider,
   },
-] as const satisfies Providers<
+] satisfies Providers<
   [
     ProviderEntry<typeof NavigationProvider>,
     ProviderEntry<typeof NotificationProvider>,

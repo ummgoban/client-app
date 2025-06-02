@@ -6,7 +6,7 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
-const NavigationProvider = ({children}: {children: React.ReactNode}) => {
+const NavigationProvider = ({children}: {children?: React.ReactNode}) => {
   return (
     <NavigationContainer ref={navigationRef}>{children}</NavigationContainer>
   );

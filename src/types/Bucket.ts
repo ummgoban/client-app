@@ -1,5 +1,5 @@
 import {MarketType} from './Market';
-import {ProductType} from '@ummgoban/shared/types';
+import {ProductType} from '@ummgoban/shared/lib';
 
 //TODO: type explict define
 export type BucketType = {

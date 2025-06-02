@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {OrderDetailType} from '@/types/OrderType';
 
 import {format} from '@/utils/date';
-import {to6DigitHash} from '@/utils/hash';
+import {to6DigitHash} from '@ummgoban/shared';
 
 import {DetailStackParamList} from '@/types/StackNavigationType';
 

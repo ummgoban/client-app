@@ -21,7 +21,7 @@ import Menu from '@/components/marketDetailPage/Menu';
 import {MarketDetailType} from '@/types/Market';
 import {RootStackParamList} from '@/types/StackNavigationType';
 import {BucketProductType} from '@/types/Bucket';
-import {ProductType} from '@ummgoban/shared/types';
+import {ProductType} from '@ummgoban/shared/lib';
 
 import {zeroPad} from '@utils/date';
 

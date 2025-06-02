@@ -4,7 +4,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {Title} from 'react-native-paper';
 import S from './OrderDoneScreen.style';
-import {to6DigitHash} from '@/utils/hash';
+import {to6DigitHash} from '@ummgoban/shared';
 import {BottomButton} from '@/components/common';
 
 type Props = StackScreenProps<DetailStackParamList, 'OrderDone'>;

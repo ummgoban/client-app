@@ -74,13 +74,14 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera to take photos. You can upload pictures of your ordered side dishes when leaving a review.</string>
+	<string>리뷰 작성 시 주문한 반찬 사진을 촬영하여 업로드할 수 있도록 카메라 접근 권한이 필요합니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app requires access to your location at all times to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+	<string>반찬가게 사장님 앱에 등록된 주변 가게를 거리순으로 보여주기 위해 항상 위치 접근 권한이 필요합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires access to your location while in use to display nearby side dish stores registered in the owner app, sorted by proximity.</string>
+	<string>반찬가게 사장님 앱에 등록된 주변 가게를 거리순으로 보여주기 위해 사용 중 위치 접근 권한이 필요합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to your photo library to upload and display images.  You can upload pictures of your ordered side dishes when leaving a review.</string>
+	<string>리뷰 작성 시 주문한 반찬 사진을 업로드하거나, 저장된 이미지를 표시하기 위해 사진 앨범 접근 권한이 필요합니다.</string>
+
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.ttf</string>

@@ -13,6 +13,7 @@ import {
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
 import {Alert} from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 
 type ReviewCreateScreenProps = StackScreenProps<
   DetailStackParamList,
@@ -24,6 +25,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState<string>('');
   const [reviewImageUris, setReviewImageUris] = useState<string[]>([]);
+  const [isReviewUploading, setIsReveiwUploding] = useState<boolean>(false);
 
   const {mutateAsync: reviewImageUploadMutate} = useUploadReviewImageMutation();
   const {mutate: reviewCreateMutate} = useCreateReviewMutation(orderId);
@@ -40,6 +42,8 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
 
   const handleReviewCreateMutate = async () => {
     try {
+      setIsReveiwUploding(true);
+
       const uploadedUrls: string[] = [];
 
       for (const uri of reviewImageUris) {
@@ -73,6 +77,9 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
             // FIXME: 에러 핸들링
             Alert.alert('리뷰 작성에 실패했어요. 다시 시도해주세요!');
           },
+          onSettled: () => {
+            setIsReveiwUploding(false);
+          },
         },
       );
     } catch (e) {
@@ -83,6 +90,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
 
   return (
     <S.ReviewCreateScreenContainer>
+      {isReviewUploading && <ActivityIndicator size="small" animating={true} />}
       <S.ReviewRequestTextContainer>
         <S.ReviewRequsetText>
           주문에 대한 리뷰를 작성해주세요!

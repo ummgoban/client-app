@@ -1,4 +1,3 @@
-// 기존 import 유지
 import React, {useState} from 'react';
 import RatingStars from '@/components/reviewCreate/RatingStarts';
 import S from './ReviewCreateScreen.style';

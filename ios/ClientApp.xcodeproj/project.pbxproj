@@ -22,6 +22,8 @@
 		D59F52E114C3494E86E9223B /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 052059E428F84DBDB7FBB122 /* Pretendard-Medium.ttf */; };
 		FA0061112CF6A7F2009C6C6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA0061102CF6A7F2009C6C6E /* Assets.xcassets */; };
 		FA2F185C2C9BC72C007629B4 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2F185B2C9BC72C007629B4 /* SwiftBridge.swift */; };
+		FA6913462DEF166600659DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6913442DEF166600659DD2 /* Localizable.strings */; };
+		FA6913492DEF169900659DD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6913472DEF169900659DD2 /* InfoPlist.strings */; };
 		FAA3AC372DAD2A6C009F89F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAA3AC362DAD2A6C009F89F4 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		FA0061102CF6A7F2009C6C6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA2F185A2C9BC72C007629B4 /* ClientApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClientApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA2F185B2C9BC72C007629B4 /* SwiftBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
+		FA6913452DEF166600659DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FA6913482DEF169900659DD2 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA79284D2CDD056300B2C9E2 /* ClientApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ClientApp.entitlements; path = ClientApp/ClientApp.entitlements; sourceTree = "<group>"; };
 		FAA3AC362DAD2A6C009F89F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD230592CB5955600F07473 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				FA6913472DEF169900659DD2 /* InfoPlist.strings */,
+				FA6913442DEF166600659DD2 /* Localizable.strings */,
 				FAD230592CB5955600F07473 /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* ClientApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -262,6 +268,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -287,7 +294,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				FA6913492DEF169900659DD2 /* InfoPlist.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				FA6913462DEF166600659DD2 /* Localizable.strings in Resources */,
 				FAA3AC372DAD2A6C009F89F4 /* GoogleService-Info.plist in Resources */,
 				1AEF1DDAEA082183D637D172 /* PrivacyInfo.xcprivacy in Resources */,
 				FA0061112CF6A7F2009C6C6E /* Assets.xcassets in Resources */,
@@ -490,6 +499,25 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FA6913442DEF166600659DD2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA6913452DEF166600659DD2 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		FA6913472DEF169900659DD2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA6913482DEF169900659DD2 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {

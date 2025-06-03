@@ -7,13 +7,8 @@ export async function pickImage(): Promise<string> {
     const image: CropImage = await ImageCropPicker.openPicker({
       mediaType: 'photo',
       cropping: true,
-      // 사진 사이즈, 필요 시 조정 가능
-      width: 512,
-      height: 512,
+      cropperAspectRatio: {x: 1, y: 1},
       cropperToolbarTitle: '사진 자르기',
-      // 비율 변경 못하게 고정
-      freeStyleCropEnabled: false,
-      cropperCircleOverlay: false,
       cropperChooseText: '확인',
       cropperChooseColor: '#e2e2e2',
       cropperCancelText: '취소',
@@ -34,13 +29,7 @@ export async function takePhoto(cropping: boolean = true): Promise<string> {
       cropping,
       compressImageQuality: 0.8,
       cropperToolbarTitle: '사진 자르기',
-      forceJpg: true,
-      // 사진 사이즈, 필요 시 조정 가능
-      width: 512,
-      height: 512,
-      // 비율 변경 못하게 고정
-      freeStyleCropEnabled: false,
-      cropperCircleOverlay: false,
+      cropperAspectRatio: {x: 1, y: 1},
       cropperChooseText: '확인',
       cropperCancelText: '취소',
     });

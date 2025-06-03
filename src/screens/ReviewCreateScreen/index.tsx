@@ -1,3 +1,4 @@
+// 기존 import 유지
 import React, {useState} from 'react';
 import RatingStars from '@/components/reviewCreate/RatingStarts';
 import S from './ReviewCreateScreen.style';
@@ -11,17 +12,18 @@ import {
   useUploadReviewImageMutation,
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
+import {Alert} from 'react-native';
+
 type ReviewCreateScreenProps = StackScreenProps<
   DetailStackParamList,
   'ReviewCreate'
 >;
-import {Alert} from 'react-native';
 
 const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
   const {orderId, reviewContents, marketName, marketId} = route.params;
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState<string>('');
-  const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
+  const [reviewImageUris, setReviewImageUris] = useState<string[]>([]);
 
   const {mutateAsync: reviewImageUploadMutate} = useUploadReviewImageMutation();
   const {mutate: reviewCreateMutate} = useCreateReviewMutation(orderId);
@@ -33,42 +35,50 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
       Alert.alert('이미지를 불러오지 못했습니다.');
       return;
     }
-
-    const formdata = new FormData();
-
-    formdata.append('updateImage', {
-      name: res.split('/').pop(),
-      type: `image/jpeg`,
-      uri: res,
-    });
-
-    const s3Url = await reviewImageUploadMutate({
-      marketId,
-      uploadImage: formdata,
-    });
-
-    if (!s3Url) {
-      console.error('uploadProductImage Error: no s3Url');
-      Alert.alert('이미지를 업로드하지 못했습니다.');
-      return;
-    }
-    setReviewImageUrls(prev => [...prev, s3Url]);
+    setReviewImageUris(prev => [...prev, res]);
   };
 
-  const handleReviewCreateMutate = () => {
-    reviewCreateMutate(
-      {rating, imageUrls: reviewImageUrls, content: review},
-      {
-        onSuccess: () => {
-          Alert.alert('리뷰 작성이 완료되었어요!');
-          navigation.navigate('Home', {screen: 'Feed'});
+  const handleReviewCreateMutate = async () => {
+    try {
+      const uploadedUrls: string[] = [];
+
+      for (const uri of reviewImageUris) {
+        const formdata = new FormData();
+        formdata.append('updateImage', {
+          name: uri.split('/').pop(),
+          type: `image/jpeg`,
+          uri,
+        });
+
+        const s3Url = await reviewImageUploadMutate({
+          marketId,
+          uploadImage: formdata,
+        });
+
+        if (!s3Url) {
+          Alert.alert('이미지 업로드에 실패했습니다.');
+          return;
+        }
+        uploadedUrls.push(s3Url);
+      }
+
+      reviewCreateMutate(
+        {rating, imageUrls: uploadedUrls, content: review},
+        {
+          onSuccess: () => {
+            Alert.alert('리뷰 작성이 완료되었어요!');
+            navigation.navigate('Home', {screen: 'Feed'});
+          },
+          onError: () => {
+            // FIXME: 에러 핸들링
+            Alert.alert('리뷰 작성에 실패했어요. 다시 시도해주세요!');
+          },
         },
-        onError: () => {
-          // FIXME: 에러 핸들링
-          Alert.alert('리뷰 작성에 실패했어요. 다시 시도해주세요!');
-        },
-      },
-    );
+      );
+    } catch (e) {
+      console.error('리뷰 작성 실패:', e);
+      Alert.alert('리뷰 작성 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -100,7 +110,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
           onChange={e => setReview(e.nativeEvent.text)}
         />
         <UploadedPicture
-          imageUrls={reviewImageUrls}
+          imageUrls={reviewImageUris}
           setImageUrls={handleImageUpload}
         />
       </S.ReviewInputContainer>

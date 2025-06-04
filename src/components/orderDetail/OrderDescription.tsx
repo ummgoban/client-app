@@ -67,9 +67,11 @@ const OrderCustomerInfo = ({id, navigation, orderDetail}: Props) => {
         <S.OrderDescriptionText>
           {`픽업 예정 시간: ${format(orderDetail.pickupReservedAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
         </S.OrderDescriptionText>
-        <S.OrderDescriptionText>
-          {`완료 시간: ${format(orderDetail.doneAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
-        </S.OrderDescriptionText>
+        {orderDetail.doneAt != null && (
+          <S.OrderDescriptionText>
+            {`완료 시간: ${format(orderDetail.doneAt, 'YYYY. MM. DD. (dd) A hh:mm')}`}
+          </S.OrderDescriptionText>
+        )}
       </S.OrderDescription>
     </S.Container>
   );

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {RefreshControl} from 'react-native';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {useOrderHistoryQuery} from '@/apis/orders';
@@ -26,6 +26,12 @@ const OrderHistoryScreen = () => {
   const {refreshing, onRefresh} = usePullDownRefresh(async () => {
     refetch();
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   if (!profile) {
     return (

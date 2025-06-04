@@ -4425,8 +4425,8 @@ __metadata:
     react-native-encrypted-storage: ^4.0.3
     react-native-geolocation-service: ^5.3.1
     react-native-gesture-handler: ^2.18.1
+    react-native-image-crop-picker: ^0.50.1
     react-native-image-modal: ^3.0.13
-    react-native-image-picker: ^7.1.2
     react-native-linear-gradient: ^2.8.3
     react-native-naver-map: "https://github.com/zerocho/react-native-naver-map"
     react-native-paper: ^5.12.5
@@ -10216,20 +10216,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-crop-picker@npm:^0.50.1":
+  version: 0.50.1
+  resolution: "react-native-image-crop-picker@npm:0.50.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 35d4fae23e7da88da388fea740b39aeb2d5f9adecfd971a1efb04c8331e636dff777baedb4c94755a2ae18d9d43bacb68a25d39343e63c7dd14562c5d6934816
+  languageName: node
+  linkType: hard
+
 "react-native-image-modal@npm:^3.0.13":
   version: 3.0.13
   resolution: "react-native-image-modal@npm:3.0.13"
   checksum: 8a1aa36f73039f4d9dfb546049ebb88815c33763efc511cdc962bd29429fb7fe977189e0f53842857ce5dd12c565fe88d0c98791a9bc575827678720114d2d33
-  languageName: node
-  linkType: hard
-
-"react-native-image-picker@npm:^7.1.2":
-  version: 7.2.3
-  resolution: "react-native-image-picker@npm:7.2.3"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 96d67516e8e1c1768c593ca1b0a507d5212d8ac5df2610ad9d6f38c188b8d0720966559867849f74b6c19d2500664ce17c907e5fa37ab72487abd363cf493e7d
   languageName: node
   linkType: hard
 

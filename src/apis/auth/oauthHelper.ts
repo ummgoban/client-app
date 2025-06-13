@@ -109,6 +109,7 @@ export const signInWithKakao = async (): Promise<SessionType | null> => {
   try {
     token = await kakaoLogin();
   } catch (error) {
+    console.error('카카오 로그인 에러:', error);
     Alert.alert('카카오 로그인 에러');
   }
 

@@ -269,6 +269,7 @@ export const verifyEmailCode = async ({
 export const withdraw = async () => {
   try {
     const res = await apiClient.del('/common/auth/withdraw');
+    await logout();
     return !!res;
   } catch (error) {
     throw new CustomError(error);

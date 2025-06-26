@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Alert, Linking, RefreshControl} from 'react-native';
 
 import ListBox from '@/components/common/ListBox';
@@ -31,6 +31,18 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {logout, withdraw} = useProfile();
+
+  const logoutCallback = useCallback(() => {
+    Alert.alert('로그아웃 되었습니다.', '', [
+      {
+        onPress: () =>
+          navigation.navigate('Home', {
+            screen: 'Feed',
+          }),
+        text: '확인',
+      },
+    ]);
+  }, [navigation]);
 
   return (
     <S.MyPageContainer
@@ -103,16 +115,8 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               isNotice={false}
               onPress={() => {
                 logout({
-                  onSuccess: () => {
-                    Alert.alert('로그아웃 되었습니다.', '', [
-                      {
-                        text: '확인',
-                        onPress: () => {
-                          navigation.navigate('Home', {screen: 'Feed'});
-                        },
-                      },
-                    ]);
-                  },
+                  onSuccess: logoutCallback,
+                  onError: logoutCallback,
                 });
               }}
             />

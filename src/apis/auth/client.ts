@@ -6,8 +6,8 @@ import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 
+import {SendEmailCodeRequest, VerifyEmailCodeRequest} from './model';
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
-import {VerifyEmailCodeRequest, SendEmailCodeRequest} from './model';
 
 import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
@@ -184,11 +184,11 @@ export const logout = async (): Promise<boolean> => {
       await NaverLogin.logout();
     }
 
-    await setStorage('session', {});
-
     return true;
   } catch (error) {
     throw new CustomError(error);
+  } finally {
+    await setStorage('session', {});
   }
 };
 

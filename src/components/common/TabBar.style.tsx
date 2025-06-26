@@ -1,12 +1,22 @@
 import styled from '@emotion/native';
 
-const TabBarContainer = styled.View`
+const TabBarContainer = styled.View<{
+  $padding: {
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+  };
+}>`
   display: flex;
   flex-direction: row;
 
-  padding: 0 12px;
-
   border-top: 1px solid #c1c9d6;
+
+  padding-top: ${({$padding}) => $padding?.top}px;
+  padding-bottom: ${({$padding}) => $padding?.bottom}px;
+  padding-left: ${({$padding}) => ($padding?.left || 0) + 12}px;
+  padding-right: ${({$padding}) => ($padding?.right || 0) + 12}px;
 
   background-color: white;
 `;

@@ -141,7 +141,6 @@ export const credentialLogin = async ({
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
-// TODO: 로그인 후 리프레쉬
 export const loginWithOAuth = async (
   oAuthProvider: SessionType['OAuthProvider'],
 ): Promise<boolean> => {
@@ -172,9 +171,7 @@ export const loginWithOAuth = async (
   return false;
 };
 
-// TODO: 로그아웃 후 리프레쉬
 export const logout = async (): Promise<boolean> => {
-  // TODO: credentail logout 추가
   try {
     const storageRes: SessionType | null = await getStorage('session');
     if (!storageRes) {

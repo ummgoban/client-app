@@ -61,8 +61,8 @@ const useProfile = () => {
           }
         },
         onError: async error => {
+          await refreshProfile();
           if (error instanceof CustomError) {
-            await refreshProfile();
             if (onError) {
               onError(error);
             }

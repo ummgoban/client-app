@@ -1,13 +1,13 @@
 import {OrderType} from '@/types/OrderType';
 import {format} from '@/utils/date';
 import React from 'react';
-import {Image} from 'react-native';
 import HistoryTimeline from './HistoryTimeline';
 
-import S from './OrderHistory.style';
+import ChevronLeft from '@/assets/icons/chevron-left.svg';
+import {RootStackParamList} from '@/types/StackNavigationType';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '@/types/StackNavigationType';
+import S from './OrderHistory.style';
 
 const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -77,13 +77,11 @@ const OrderHistory = ({historyList, onPressMarket}: Props) => {
                           <S.StoreName numberOfLines={1}>
                             {order.marketName}
                           </S.StoreName>
-                          <Image
-                            source={{
-                              // TODO: replace with chevron-right icon
-                              uri: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/chevron-right-1667908-2039431.png?f=webp&w=256',
-                            }}
+                          <ChevronLeft
+                            color={'black'}
                             width={24}
                             height={24}
+                            style={{transform: [{rotate: '180deg'}]}}
                           />
                         </S.TouchableStoreName>
                         {order.ordersStatus === 'PICKEDUP' && !order.review && (

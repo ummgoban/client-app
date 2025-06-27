@@ -34,14 +34,13 @@ const tabBarData: TabBarComponentType = {
   },
 };
 
-// TODO: resolve inline style
 const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
   return (
     <S.TabBarContainer
-      // TODO: lint warning fix
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{paddingBottom: insets.bottom, backgroundColor: 'white'}}>
+      $padding={{
+        bottom: insets.bottom,
+      }}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
 

@@ -6,8 +6,8 @@ import {SessionType} from '@/types/Session';
 import {UserType} from '@/types/UserType';
 import {getStorage, setStorage} from '@/utils/storage';
 
+import {SendEmailCodeRequest, VerifyEmailCodeRequest} from './model';
 import {signInWithApple, signInWithKakao, signInWithNaver} from './oauthHelper';
-import {VerifyEmailCodeRequest, SendEmailCodeRequest} from './model';
 
 import apiClient from '../ApiClient';
 import CustomError from '../CustomError';
@@ -141,7 +141,6 @@ export const credentialLogin = async ({
  * @param {SessionType['OAuthProvider']} OAuthProvider
  * @returns {Promise<boolean>} 성공 시 true, 실패 시 false
  */
-// TODO: 로그인 후 리프레쉬
 export const loginWithOAuth = async (
   oAuthProvider: SessionType['OAuthProvider'],
 ): Promise<boolean> => {
@@ -172,9 +171,7 @@ export const loginWithOAuth = async (
   return false;
 };
 
-// TODO: 로그아웃 후 리프레쉬
 export const logout = async (): Promise<boolean> => {
-  // TODO: credentail logout 추가
   try {
     const storageRes: SessionType | null = await getStorage('session');
     if (!storageRes) {
@@ -187,11 +184,11 @@ export const logout = async (): Promise<boolean> => {
       await NaverLogin.logout();
     }
 
-    await setStorage('session', {});
-
     return true;
   } catch (error) {
     throw new CustomError(error);
+  } finally {
+    await setStorage('session', {});
   }
 };
 
@@ -269,6 +266,7 @@ export const verifyEmailCode = async ({
 export const withdraw = async () => {
   try {
     const res = await apiClient.del('/common/auth/withdraw');
+    await logout();
     return !!res;
   } catch (error) {
     throw new CustomError(error);

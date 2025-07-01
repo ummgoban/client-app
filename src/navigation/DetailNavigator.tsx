@@ -60,7 +60,11 @@ const DetailNavigator = () => {
     <View
       // TODO: lint warning fix
       // eslint-disable-next-line react-native/no-inline-styles
-      style={{flex: 1, paddingBottom: insets.bottom, backgroundColor: 'white'}}>
+      style={{
+        flex: 1,
+        paddingBottom: insets.bottom - 8,
+        backgroundColor: 'white',
+      }}>
       <Stack.Navigator
         initialRouteName="MarketDetail"
         screenOptions={screenOptions}>

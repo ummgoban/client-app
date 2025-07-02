@@ -12,7 +12,7 @@ import apiClient from '../ApiClient';
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
 
-const initializeNaver = ({
+const initializeNaver = async ({
   appName,
   consumerKey,
   consumerSecret,
@@ -53,12 +53,16 @@ const naverLoginParams = {
  * @returns {Promise<SessionType | null>} 성공 시 세션 정보, 실패 시 null
  */
 export const signInWithNaver = async (): Promise<SessionType | null> => {
-  initializeNaver(naverLoginParams);
+  await initializeNaver(naverLoginParams);
   try {
     // Oauth 토큰 생성
     const loginResult = await naverLogin();
 
     if (!(loginResult.isSuccess && loginResult.successResponse)) {
+      Alert.alert(
+        '네이버 호출부터 실패',
+        JSON.stringify(loginResult.failureResponse),
+      );
       console.debug('네이버 로그인 실패:', loginResult.failureResponse);
       return null;
     }
@@ -80,6 +84,7 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     });
 
     if (!response) {
+      Alert.alert('백엔드 통신 실패', '서버 응답 없음');
       console.debug('네이버 로그인 실패');
       return null;
     }
@@ -96,6 +101,10 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     };
   } catch (error) {
     console.error('네이버 로그인 에러:', error);
+    Alert.alert(
+      '캐치에서 잡힘',
+      typeof error === 'string' ? error : JSON.stringify(error),
+    );
     return null;
   }
 };

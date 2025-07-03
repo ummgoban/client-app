@@ -16,7 +16,6 @@ const AppNavigator = () => {
   // const {left, right, bottom} = useSafeAreaInsets();
 
   return (
-    // <S.Layout>
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{headerShown: false}}>
@@ -26,7 +25,6 @@ const AppNavigator = () => {
       <Stack.Screen name="CartRoot" component={CartNavigator} />
       <Stack.Screen name="MyPageRoot" component={MyPageNavigator} />
     </Stack.Navigator>
-    // </S.Layout>
   );
 };
 

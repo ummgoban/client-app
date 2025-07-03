@@ -3,7 +3,6 @@ import {
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import React from 'react';
-
 import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 

@@ -59,10 +59,6 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     const loginResult = await naverLogin();
 
     if (!(loginResult.isSuccess && loginResult.successResponse)) {
-      Alert.alert(
-        '네이버 호출부터 실패',
-        JSON.stringify(loginResult.failureResponse),
-      );
       console.debug('네이버 로그인 실패:', loginResult.failureResponse);
       return null;
     }
@@ -84,7 +80,6 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     });
 
     if (!response) {
-      Alert.alert('백엔드 통신 실패', '서버 응답 없음');
       console.debug('네이버 로그인 실패');
       return null;
     }
@@ -101,10 +96,7 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     };
   } catch (error) {
     console.error('네이버 로그인 에러:', error);
-    Alert.alert(
-      '캐치에서 잡힘',
-      typeof error === 'string' ? error : JSON.stringify(error),
-    );
+    Alert.alert('네이버 로그인 에러');
     return null;
   }
 };

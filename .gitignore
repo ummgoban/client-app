@@ -81,7 +81,7 @@ yarn-error.log
 ios/tmp.xcconfig
 
 # Firebase configuration files
-GoogleService-Info.plist
+ios/GoogleService-Info.plist
 google-services.json
 
 # iOS entitlements

@@ -12,7 +12,7 @@ import apiClient from '../ApiClient';
 // 네이버 로그인 관련 설정
 const {RNNaverLogin} = NativeModules;
 
-const initializeNaver = ({
+const initializeNaver = async ({
   appName,
   consumerKey,
   consumerSecret,
@@ -45,7 +45,7 @@ const naverLoginParams = {
   consumerKey: Config.NAVER_CONSUMER_KEY,
   consumerSecret: Config.NAVER_CONSUMER_SECRET_KEY,
   serviceUrlSchemeIOS: Config.NAVER_URL_SCHEME,
-  disableNaverAppAuthIOS: false,
+  disableNaverAppAuthIOS: true,
 };
 
 /**
@@ -53,7 +53,7 @@ const naverLoginParams = {
  * @returns {Promise<SessionType | null>} 성공 시 세션 정보, 실패 시 null
  */
 export const signInWithNaver = async (): Promise<SessionType | null> => {
-  initializeNaver(naverLoginParams);
+  await initializeNaver(naverLoginParams);
   try {
     // Oauth 토큰 생성
     const loginResult = await naverLogin();
@@ -96,6 +96,7 @@ export const signInWithNaver = async (): Promise<SessionType | null> => {
     };
   } catch (error) {
     console.error('네이버 로그인 에러:', error);
+    Alert.alert('네이버 로그인 에러');
     return null;
   }
 };

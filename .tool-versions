@@ -1,9 +1,1 @@
-<<<<<<< HEAD
 nodejs 20.15.0
-=======
-nodejs 20.15.0
-<<<<<<< HEAD
->>>>>>> 95243ee (fix: 네이버 로그인 버그 픽스 (#216))
-=======
->>>>>>> d99b073 (deps: tool-versions로 nvm 버전 명시)
->>>>>>> 31cf1e0 (deps: tool-versions로 nvm 버전 명시)

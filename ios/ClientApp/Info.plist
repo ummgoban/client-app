@@ -37,7 +37,7 @@
 			<string>naver</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>clientapp</string>
+				<string>$(NAVER_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>

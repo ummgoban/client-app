@@ -45,7 +45,7 @@ const naverLoginParams = {
   consumerKey: Config.NAVER_CONSUMER_KEY,
   consumerSecret: Config.NAVER_CONSUMER_SECRET_KEY,
   serviceUrlSchemeIOS: Config.NAVER_URL_SCHEME,
-  disableNaverAppAuthIOS: false,
+  disableNaverAppAuthIOS: true,
 };
 
 /**

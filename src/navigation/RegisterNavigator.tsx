@@ -3,7 +3,6 @@ import {
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import React from 'react';
-import {View} from 'react-native';
 
 import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
@@ -13,7 +12,6 @@ import SignupScreen from '@screens/RegisterScreen/SignupScreen';
 
 import {RegisterStackParamList} from '@/types/StackNavigationType';
 import theme from '@/context/theme';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator<RegisterStackParamList>();
 
@@ -33,29 +31,19 @@ const signupScreenOptions: StackNavigationOptions = {
 };
 
 const RegisterNavigator = () => {
-  const insets = useSafeAreaInsets();
   return (
-    <View
-      // TODO: lint warning fix
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flex: 1,
-        paddingBottom: insets.bottom - 8,
-        backgroundColor: 'white',
-      }}>
-      <Stack.Navigator screenOptions={registerScreenOptions}>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={loginScreenOptions}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignupScreen}
-          options={signupScreenOptions}
-        />
-      </Stack.Navigator>
-    </View>
+    <Stack.Navigator screenOptions={registerScreenOptions}>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={loginScreenOptions}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignupScreen}
+        options={signupScreenOptions}
+      />
+    </Stack.Navigator>
   );
 };
 

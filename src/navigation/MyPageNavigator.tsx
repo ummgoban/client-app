@@ -3,8 +3,6 @@ import {
   StackNavigationOptions,
 } from '@react-navigation/stack';
 import React from 'react';
-import {View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
 
@@ -44,42 +42,31 @@ const nicknameOptions: StackNavigationOptions = {
 };
 
 const MyPageNavigator = () => {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View
-      // TODO: lint warning fix
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flex: 1,
-        paddingBottom: insets.bottom - 8,
-        backgroundColor: 'white',
-      }}>
-      <Stack.Navigator
-        initialRouteName="MyPageRoot"
-        screenOptions={myPageScreenOptions}>
-        <Stack.Screen
-          name="MyPage"
-          component={MyPageScreen}
-          options={myPageOptions}
-        />
-        <Stack.Screen
-          name="Setting"
-          component={SettingScreen}
-          options={settingOptions}
-        />
-        <Stack.Screen
-          name="CustomerReview"
-          component={CustomerReviewScreen}
-          options={customerReviewOptions}
-        />
-        <Stack.Screen
-          name="Nickname"
-          component={NicknamePatchPage}
-          options={nicknameOptions}
-        />
-      </Stack.Navigator>
-    </View>
+    <Stack.Navigator
+      initialRouteName="MyPageRoot"
+      screenOptions={myPageScreenOptions}>
+      <Stack.Screen
+        name="MyPage"
+        component={MyPageScreen}
+        options={myPageOptions}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={settingOptions}
+      />
+      <Stack.Screen
+        name="CustomerReview"
+        component={CustomerReviewScreen}
+        options={customerReviewOptions}
+      />
+      <Stack.Screen
+        name="Nickname"
+        component={NicknamePatchPage}
+        options={nicknameOptions}
+      />
+    </Stack.Navigator>
   );
 };
 

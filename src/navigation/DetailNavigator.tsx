@@ -14,8 +14,6 @@ import OrderDoneScreen from '@/screens/OrderDoneScreen';
 import PaymentScreen from '@/screens/PaymentScreen';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 import theme from '@/context/theme';
-import {View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ReviewCreateScreen from '@/screens/ReviewCreateScreen';
 import MarketReviewScreen from '@/screens/MarketReviewScreen';
 
@@ -54,48 +52,37 @@ const marketReviewScreenOptions: StackNavigationOptions = {
 };
 
 const DetailNavigator = () => {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View
-      // TODO: lint warning fix
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flex: 1,
-        paddingBottom: insets.bottom - 8,
-        backgroundColor: 'white',
-      }}>
-      <Stack.Navigator
-        initialRouteName="MarketDetail"
-        screenOptions={screenOptions}>
-        <Stack.Screen name="MarketDetail" component={MarketDetailScreen} />
-        <Stack.Screen
-          name="Payment"
-          component={PaymentScreen}
-          options={paymentScreenOptions}
-        />
-        <Stack.Screen
-          name="OrderDone"
-          component={OrderDoneScreen}
-          options={orderDoneScreenOptions}
-        />
-        <Stack.Screen
-          name="OrderDetail"
-          component={OrderDetailScreen}
-          options={orderDetailScreenOptions}
-        />
-        <Stack.Screen
-          name="ReviewCreate"
-          component={ReviewCreateScreen}
-          options={reviewCreateScreenOptions}
-        />
-        <Stack.Screen
-          name="MarketReview"
-          component={MarketReviewScreen}
-          options={marketReviewScreenOptions}
-        />
-      </Stack.Navigator>
-    </View>
+    <Stack.Navigator
+      initialRouteName="MarketDetail"
+      screenOptions={screenOptions}>
+      <Stack.Screen name="MarketDetail" component={MarketDetailScreen} />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={paymentScreenOptions}
+      />
+      <Stack.Screen
+        name="OrderDone"
+        component={OrderDoneScreen}
+        options={orderDoneScreenOptions}
+      />
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetailScreen}
+        options={orderDetailScreenOptions}
+      />
+      <Stack.Screen
+        name="ReviewCreate"
+        component={ReviewCreateScreen}
+        options={reviewCreateScreenOptions}
+      />
+      <Stack.Screen
+        name="MarketReview"
+        component={MarketReviewScreen}
+        options={marketReviewScreenOptions}
+      />
+    </Stack.Navigator>
   );
 };
 

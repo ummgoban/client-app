@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {Alert} from 'react-native';
 import {useQueryClient} from '@tanstack/react-query';
 
@@ -23,6 +23,8 @@ type NicknamePatchScreenProps = StackScreenProps<
 
 const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
+  const [isValid, setIsValid] = useState(false);
+
   const queryClient = useQueryClient();
 
   const inputRef = useRef<TextInputRef>(null);
@@ -56,9 +58,12 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
         TextInputProps={{
           placeholder: profile?.nickname ?? '',
         }}
+        onChange={text => {
+          setIsValid(!!text);
+        }}
       />
       <BottomButton
-        disabled={!inputRef.current?.value}
+        disabled={!isValid}
         onPress={() => {
           handleNicknamePatchMutate(inputRef.current?.value);
         }}>

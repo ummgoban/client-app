@@ -1,15 +1,20 @@
-import React, {useState} from 'react';
-
-import useProfile from '@/hooks/useProfile';
-import TextInput from '@/components/common/TextInput/TextInput';
-import {usePatchNicknameMutation} from '@/apis/auth';
+import React, {useRef} from 'react';
 import {Alert} from 'react-native';
-import {BottomButton} from '@/components/common';
-import {StackScreenProps} from '@react-navigation/stack';
-import {MyPageStackParamList} from '@/types/StackNavigationType';
 import {useQueryClient} from '@tanstack/react-query';
 
+import {StackScreenProps} from '@react-navigation/stack';
+import {TextInputRef} from '@ummgoban/shared';
+
+import useProfile from '@/hooks/useProfile';
+
+import {usePatchNicknameMutation} from '@/apis/auth';
+
+import {BottomButton} from '@/components/common';
+
+import {MyPageStackParamList} from '@/types/StackNavigationType';
+
 import S from './NoticePage.style';
+import {NickNameTextInput} from './NicknamePatchPage.style';
 
 type NicknamePatchScreenProps = StackScreenProps<
   MyPageStackParamList,
@@ -19,10 +24,16 @@ type NicknamePatchScreenProps = StackScreenProps<
 const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
   const queryClient = useQueryClient();
-  const [inputNickname, setInputNickname] = useState<string>('');
+
+  const inputRef = useRef<TextInputRef>(null);
+
   const {mutate: nicknamePatchMutate} = usePatchNicknameMutation();
 
-  const handleNicknamePatchMutate = (nickname: string) => {
+  const handleNicknamePatchMutate = (nickname?: string) => {
+    if (!nickname) {
+      Alert.alert('닉네임을 입력해주세요!');
+      return;
+    }
     nicknamePatchMutate(nickname, {
       onSuccess: () => {
         Alert.alert('닉네임이 변경되었어요!');
@@ -38,16 +49,18 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
 
   return (
     <S.Container>
-      <TextInput
+      <NickNameTextInput
+        ref={inputRef}
         label="변경할 닉네임을 입력해주세요!"
-        placeholder={profile?.nickname ?? ''}
-        value={inputNickname}
-        onChange={e => setInputNickname(e.nativeEvent.text)}
+        full
+        TextInputProps={{
+          placeholder: profile?.nickname ?? '',
+        }}
       />
       <BottomButton
-        disabled={!inputNickname}
+        disabled={!inputRef.current?.value}
         onPress={() => {
-          handleNicknamePatchMutate(inputNickname);
+          handleNicknamePatchMutate(inputRef.current?.value);
         }}>
         닉네임 변경하기
       </BottomButton>

@@ -57,9 +57,10 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
         full
         TextInputProps={{
           placeholder: profile?.nickname ?? '',
+          autoCapitalize: 'none',
         }}
         onChange={text => {
-          setIsValid(!!text);
+          setIsValid(text.length > 2);
         }}
       />
       <BottomButton

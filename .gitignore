@@ -83,6 +83,7 @@ ios/tmp.xcconfig
 # Firebase configuration files
 ios/GoogleService-Info.plist
 google-services.json
+GoogleService-Info.plist
 
 # iOS entitlements
 ClientApp.entitlements

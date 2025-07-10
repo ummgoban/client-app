@@ -1,6 +1,6 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, Keyboard, TouchableWithoutFeedback} from 'react-native';
 
 import AppleLoginButton from '@assets/AppleLoginButton.svg';
 import KakaoLoginButton from '@assets/KakaoLoginButton.svg';
@@ -21,44 +21,48 @@ const LoginScreen = () => {
   const {loginWithOAuth} = useProfile();
 
   return (
-    <S.LoginPageContainer>
-      <S.MomChanPickLogoWrapper>
-        <MomChanPickLogo width={160} height={160} />
-      </S.MomChanPickLogoWrapper>
-      <CredentialLogin />
-      <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
-      <S.LoginButtonContainer>
-        <S.LoginButtonWrapper
-          onPress={async () => {
-            const res = await loginWithOAuth('KAKAO');
-            if (res) {
-              navigation.navigate('Home', {screen: 'Feed'});
-            }
-          }}>
-          <KakaoLoginButton />
-        </S.LoginButtonWrapper>
-        <S.LoginButtonWrapper
-          onPress={async () => {
-            const res = await loginWithOAuth('NAVER');
-            if (res) {
-              navigation.navigate('Home', {screen: 'Feed'});
-            }
-          }}>
-          <NaverLoginButton />
-        </S.LoginButtonWrapper>
-        {Platform.OS === 'ios' && (
-          <S.LoginButtonWrapper
-            onPress={async () => {
-              const res = await loginWithOAuth('APPLE');
-              if (res) {
-                navigation.navigate('Home', {screen: 'Feed'});
-              }
-            }}>
-            <AppleLoginButton />
-          </S.LoginButtonWrapper>
-        )}
-      </S.LoginButtonContainer>
-    </S.LoginPageContainer>
+    <S.Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <S.LoginPageContainer>
+          <S.MomChanPickLogoWrapper>
+            <MomChanPickLogo width={160} height={160} />
+          </S.MomChanPickLogoWrapper>
+          <CredentialLogin />
+          <S.SocialLoginText>{'소셜 로그인'}</S.SocialLoginText>
+          <S.LoginButtonContainer>
+            <S.LoginButtonWrapper
+              onPress={async () => {
+                const res = await loginWithOAuth('KAKAO');
+                if (res) {
+                  navigation.navigate('Home', {screen: 'Feed'});
+                }
+              }}>
+              <KakaoLoginButton />
+            </S.LoginButtonWrapper>
+            <S.LoginButtonWrapper
+              onPress={async () => {
+                const res = await loginWithOAuth('NAVER');
+                if (res) {
+                  navigation.navigate('Home', {screen: 'Feed'});
+                }
+              }}>
+              <NaverLoginButton />
+            </S.LoginButtonWrapper>
+            {Platform.OS === 'ios' && (
+              <S.LoginButtonWrapper
+                onPress={async () => {
+                  const res = await loginWithOAuth('APPLE');
+                  if (res) {
+                    navigation.navigate('Home', {screen: 'Feed'});
+                  }
+                }}>
+                <AppleLoginButton />
+              </S.LoginButtonWrapper>
+            )}
+          </S.LoginButtonContainer>
+        </S.LoginPageContainer>
+      </TouchableWithoutFeedback>
+    </S.Container>
   );
 };
 

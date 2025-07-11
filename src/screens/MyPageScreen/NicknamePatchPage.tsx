@@ -1,20 +1,19 @@
+import {useQueryClient} from '@tanstack/react-query';
 import React, {useRef, useState} from 'react';
 import {Alert} from 'react-native';
-import {useQueryClient} from '@tanstack/react-query';
 
 import {StackScreenProps} from '@react-navigation/stack';
-import {TextInputRef} from '@ummgoban/shared';
+import {TextInput, TextInputRef} from '@ummgoban/shared';
 
 import useProfile from '@/hooks/useProfile';
 
 import {usePatchNicknameMutation} from '@/apis/auth';
 
-import {BottomButton} from '@/components/common';
+import {BottomButton, Spacer} from '@/components/common';
 
 import {MyPageStackParamList} from '@/types/StackNavigationType';
 
 import S from './NoticePage.style';
-import {NickNameTextInput} from './NicknamePatchPage.style';
 
 type NicknamePatchScreenProps = StackScreenProps<
   MyPageStackParamList,
@@ -51,18 +50,21 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
 
   return (
     <S.Container>
-      <NickNameTextInput
+      <TextInput
         ref={inputRef}
-        label="변경할 닉네임을 입력해주세요!"
+        label="변경할 닉네임을 입력해주세요 (3글자 이상)"
+        errorMessage="닉네임은 3글자 이상 입력해주세요"
+        placeholder={profile?.nickname ?? ''}
+        validation={text => text.length > 2}
+        autoCapitalize="none"
         full
-        TextInputProps={{
-          placeholder: profile?.nickname ?? '',
-          autoCapitalize: 'none',
-        }}
-        onChange={text => {
+        onChangeText={text => {
           setIsValid(text.length > 2);
+          console.log(text);
         }}
       />
+      <Spacer size={16} />
+
       <BottomButton
         disabled={!isValid}
         onPress={() => {

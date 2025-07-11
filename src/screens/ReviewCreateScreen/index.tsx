@@ -11,7 +11,12 @@ import {
   useUploadReviewImageMutation,
 } from '@/apis/review';
 import {pickImage} from '@/utils/image-picker';
-import {Alert} from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Platform,
+} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 
 type ReviewCreateScreenProps = StackScreenProps<
@@ -87,51 +92,55 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
     }
   };
   return (
-    <>
-      <S.ReviewCreateScreenContainer>
-        <S.ReviewRequestTextContainer>
-          <S.ReviewRequsetText>
-            주문에 대한 리뷰를 작성해주세요!
-          </S.ReviewRequsetText>
-        </S.ReviewRequestTextContainer>
-        <S.MarketName>{marketName}</S.MarketName>
-        <S.ReviewContentContainer>
-          <S.ContentInformationText>주문 정보 </S.ContentInformationText>
-          {reviewContents.map(content => (
-            <S.TextRowWrapper key={`${orderId}-${content.id}`}>
-              <S.ContentDescription>
-                {content.name} {content.count}개
-              </S.ContentDescription>
-              <S.ContentDescription>
-                {(content.discountPrice * content.count).toLocaleString()}원
-              </S.ContentDescription>
-            </S.TextRowWrapper>
-          ))}
-        </S.ReviewContentContainer>
-        <S.ReviewInputContainer>
-          <RatingStars rating={rating} setRating={setRating} />
-          <TextInput
-            placeholder="반찬에 대한 리뷰를 남겨주세요!"
-            value={review}
-            onChange={e => setReview(e.nativeEvent.text)}
-          />
-          <UploadedPicture
-            imageUrls={reviewImageUris}
-            setImageUrls={handleImageUpload}
-          />
-        </S.ReviewInputContainer>
-        <BottomButton
-          disabled={!review || review.length === 0}
-          onPress={handleReviewCreateMutate}>
-          리뷰 작성하기
-        </BottomButton>
-      </S.ReviewCreateScreenContainer>
-      {isReviewUploading && (
-        <S.LoadingOverlay>
-          <ActivityIndicator size="small" animating />
-        </S.LoadingOverlay>
-      )}
-    </>
+    <S.Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <>
+          <S.ReviewCreateScreenContainer>
+            <S.ReviewRequestTextContainer>
+              <S.ReviewRequsetText>
+                주문에 대한 리뷰를 작성해주세요!
+              </S.ReviewRequsetText>
+            </S.ReviewRequestTextContainer>
+            <S.MarketName>{marketName}</S.MarketName>
+            <S.ReviewContentContainer>
+              <S.ContentInformationText>주문 정보 </S.ContentInformationText>
+              {reviewContents.map(content => (
+                <S.TextRowWrapper key={`${orderId}-${content.id}`}>
+                  <S.ContentDescription>
+                    {content.name} {content.count}개
+                  </S.ContentDescription>
+                  <S.ContentDescription>
+                    {(content.discountPrice * content.count).toLocaleString()}원
+                  </S.ContentDescription>
+                </S.TextRowWrapper>
+              ))}
+            </S.ReviewContentContainer>
+            <S.ReviewInputContainer>
+              <RatingStars rating={rating} setRating={setRating} />
+              <TextInput
+                placeholder="반찬에 대한 리뷰를 남겨주세요!"
+                value={review}
+                onChange={e => setReview(e.nativeEvent.text)}
+              />
+              <UploadedPicture
+                imageUrls={reviewImageUris}
+                setImageUrls={handleImageUpload}
+              />
+            </S.ReviewInputContainer>
+            <BottomButton
+              disabled={!review || review.length === 0}
+              onPress={handleReviewCreateMutate}>
+              리뷰 작성하기
+            </BottomButton>
+          </S.ReviewCreateScreenContainer>
+          {isReviewUploading && (
+            <S.LoadingOverlay>
+              <ActivityIndicator size="small" animating />
+            </S.LoadingOverlay>
+          )}
+        </>
+      </TouchableWithoutFeedback>
+    </S.Container>
   );
 };
 

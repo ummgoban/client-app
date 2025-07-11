@@ -1,6 +1,9 @@
 import styled from '@emotion/native';
 
 const S = {
+  Container: styled.KeyboardAvoidingView`
+    flex: 1;
+  `,
   ReviewCreateScreenContainer: styled.View`
     flex: 1;
     background-color: white;

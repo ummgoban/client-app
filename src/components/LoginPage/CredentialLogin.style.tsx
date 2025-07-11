@@ -2,6 +2,9 @@ import styled from '@emotion/native';
 import {Button} from 'react-native-paper';
 
 const S = {
+  Container: styled.KeyboardAvoidingView`
+    flex: 1;
+  `,
   ScreenWrapper: styled.ScrollView`
     flex: 1;
 

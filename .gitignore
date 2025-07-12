@@ -87,3 +87,13 @@ GoogleService-Info.plist
 
 # iOS entitlements
 ClientApp.entitlements
+
+# Fastlane API Key
+fastlane/AuthKey_*.p8
+
+# Fastlane build artifacts
+*.ipa
+*.dSYM.zip
+
+# Optional: lockfile (only if not syncing gem versions)
+# Gemfile.lock

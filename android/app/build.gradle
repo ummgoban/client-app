@@ -1,8 +1,4 @@
 apply plugin: "com.android.application"
-project.ext.envConfigFiles = [
-    debug: ".env",
-    release: ".env.release",
-]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply plugin: "org.jetbrains.kotlin.android"
@@ -98,7 +94,6 @@ android {
         versionName "1.1.2.2" // TODO: update version name
         resValue "string", "NAVER_MAP_CLIENT_ID", project.env.get("NAVER_MAP_CLIENT_ID") ?: ""
         resValue "string", "build_config_package", "com.ummgoban.momchanpick"
-
     }
     
     signingConfigs {

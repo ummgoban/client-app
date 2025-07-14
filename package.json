@@ -19,7 +19,9 @@
     "build:android-debug-apk": "cd android && ENVFILE=.env ./gradlew build",
     "build:android-debug-aab": "cd android && ENVFILE=.env ./gradlew bundleDebug",
     "build:android-release-apk": "cd android && ENVFILE=.env.release ./gradlew build",
-    "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease"
+    "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease",
+    "build:android-store": "sh ./.script/android-build.sh",
+    "build:android-release": "yarn build:android-clean && yarn build:android-release-apk"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",

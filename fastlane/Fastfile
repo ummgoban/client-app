@@ -92,7 +92,7 @@ platform :android do
     upload_to_play_store(
       aab: Dir["android/app/build/outputs/bundle/release/*.aab"].first,
       track: 'internal',
-      json_key: ENV["ANDROID_JSON_KEY_PATH"]
+      json_key: ENV["ANDROID_JSON_KEY_PATH_FASTFILE"]
     )
   end
 end

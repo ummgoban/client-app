@@ -97,3 +97,10 @@ fastlane/AuthKey_*.p8
 
 # Optional: lockfile (only if not syncing gem versions)
 # Gemfile.lock
+
+# fastlane secrets
+fastlane/*
+!fastlane/README.md
+Appfile
+android/service-account.json
+.env*

@@ -16,14 +16,10 @@
     "check:all": "yarn lint && yarn tsc && yarn format:check",
     "fix:all": "yarn lint --fix && yarn tsc --noEmit && yarn format:fix",
     "build:android-clean": "cd android && ./gradlew clean",
-    "build:android-debug-apk": "cd android && ./gradlew assembleDevelopDebug",
-    "build:android-debug-aab": "cd android && ./gradlew bundleDevelopDebug",
-    "build:android-stage-apk": "cd android && ./gradlew assembleStageRelease",
-    "build:android-stage-aab": "cd android && ./gradlew bundleStageRelease",
-    "build:android-release-apk": "cd android && ./gradlew assembleProductRelease",
-    "build:android-release-aab": "cd android && ./gradlew bundleProductRelease",
-    "build:android-store": "sh ./.script/android-build.sh",
-    "build:android-release": "yarn build:android-clean && yarn build:android-release-apk"
+    "build:android-debug-apk": "cd android && ENVFILE=.env ./gradlew build",
+    "build:android-debug-aab": "cd android && ENVFILE=.env ./gradlew bundleDebug",
+    "build:android-release-apk": "cd android && ENVFILE=.env.release ./gradlew build",
+    "build:android-release-aab": "cd android && ENVFILE=.env.release ./gradlew bundleRelease"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",

@@ -13,7 +13,7 @@ xcode-select --install
 
 2. **fastlane 설치**
 ```sh
-[sudo] gem install fastlane -NV
+[sudo] brew install bundler
 # 또는 Bundler 사용하는 경우:
 bundle install
 ```

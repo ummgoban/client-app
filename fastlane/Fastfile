@@ -1,0 +1,98 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+require 'dotenv'
+
+default_platform(:android)
+
+platform :ios do
+  desc "Upload a new build to TestFlight (development server)"
+  lane :develop do
+    sh "cp ../.env.development ../.env"
+    Dotenv.load('.env')  
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: ENV["APP_STORE_KEY_PATH"]
+    )
+
+    increment_build_number(xcodeproj: "ios/ClientApp.xcodeproj")
+
+    build_app(
+      workspace: "ios/ClientApp.xcworkspace",
+      scheme: "ClientApp",
+      export_method: "app-store",
+      output_directory: "ios/build",
+      export_options: { 
+        provisioningProfiles: {
+          ENV["APP_BUNDLE_ID"] => ENV["IOS_PROVISIONING_PROFILE_NAME"]
+        }
+      }
+    )
+
+    upload_to_testflight
+  end
+
+  desc "Push a new release build to the App Store (production server)"
+  lane :release do
+    sh "cp ../.env.release ../.env"
+    Dotenv.load('.env') 
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: ENV["APP_STORE_KEY_PATH"]
+    )
+
+    increment_build_number(xcodeproj: "ios/ClientApp.xcodeproj")
+
+    build_app(
+      workspace: "ios/ClientApp.xcworkspace",
+      scheme: "ClientApp",
+      export_method: "app-store",
+       output_directory: "ios/build",
+      export_options: {
+        provisioningProfiles: {
+          ENV["APP_BUNDLE_ID"] => ENV["IOS_PROVISIONING_PROFILE_NAME"]
+        }
+      }
+    )
+
+    upload_to_app_store
+  end
+end
+
+platform :android do
+  desc "Deploy a development build to local device"
+  lane :dev do
+    sh "cp ../.env.development ../.env"
+    Dotenv.load('.env') 
+    sh "cd ../android && ./gradlew clean installDebug"
+  end
+
+  desc "Build release aab and upload to internal track"
+  lane :release do
+    sh "cp ../.env.release ../.env"
+    Dotenv.load('.env')  
+
+    sh "cd ../android && ./gradlew clean bundleRelease"
+
+    upload_to_play_store(
+      aab: Dir["android/app/build/outputs/bundle/release/*.aab"].first,
+      track: 'internal',
+      json_key: ENV["ANDROID_JSON_KEY_PATH"]
+    )
+  end
+end

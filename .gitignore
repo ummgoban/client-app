@@ -99,8 +99,6 @@ fastlane/AuthKey_*.p8
 # Gemfile.lock
 
 # fastlane secrets
-fastlane/*
-!fastlane/README.md
 Appfile
 android/service-account.json
 .env*

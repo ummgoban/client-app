@@ -4,10 +4,8 @@
   "private": true,
   "scripts": {
     "ci": "sh ./.script/ci.sh",
-    "android:build-install": "cd android && ./gradlew installDevelopDebug",
-    "android:start-app": "adb shell am start -n com.ummgoban.momchanpick/.MainActivity",
-    "android": " yarn android:build-install && yarn android:start-app",
-    "android-release": "ENVFILE=.env.release react-native run-android --mode=release",
+    "android": "cp .env.development .env && npx react-native run-android",
+    "android:release": "cp .env.release .env && cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "tsc": "tsc",

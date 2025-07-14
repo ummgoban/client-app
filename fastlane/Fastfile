@@ -90,7 +90,7 @@ platform :android do
     sh "cd ../android && ./gradlew clean bundleRelease"
 
     upload_to_play_store(
-      aab: Dir["android/app/build/outputs/bundle/release/*.aab"].first,
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
       track: 'internal',
       json_key: ENV["ANDROID_JSON_KEY_PATH_FASTFILE"]
     )

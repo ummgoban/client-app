@@ -6,7 +6,6 @@ import {
   NativeSyntheticEvent,
   ScrollView,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -426,7 +425,6 @@ const MarketDetailPage = ({
           onScroll={handleScroll}
           showsVerticalScrollIndicator={false}
           onLayout={updateSectionOffsets}
-          contentContainerStyle={{flexGrow: 1}}
           decelerationRate="fast">
           {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
             <S.MenuView key={tag} onLayout={handleLayout(tag)}>

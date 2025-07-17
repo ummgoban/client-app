@@ -75,7 +75,7 @@ const S = {
 
   SideTagBarScrollView: styled.ScrollView`
     padding: 8px 0;
-    height: 104px;
+    flex-grow: 0;
   `,
 
   SideBarView: styled.View<{selected: boolean}>`
@@ -88,7 +88,7 @@ const S = {
       selected ? theme.colors.primary : 'white'};
     border: ${({selected, theme}) =>
       selected ? '' : `1px solid ${theme.colors.primary}`};
-    margin: 5px;
+    margin: 4px;
     border-radius: 10px;
   `,
   SideBarText: styled.Text<{selected: boolean}>`
@@ -101,6 +101,10 @@ const S = {
     width: 390px;
     height: 8px;
     background: #ecf3f1;
+  `,
+
+  MenuWrapper: styled.View`
+    flex: 1;
   `,
 
   MenuScrollView: styled.ScrollView``,

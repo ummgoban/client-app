@@ -419,30 +419,32 @@ const MarketDetailPage = ({
         ))}
       </S.SideTagBarScrollView>
 
-      <S.MenuScrollView
-        ref={scrollViewRef}
-        onScroll={handleScroll}
-        showsVerticalScrollIndicator={false}
-        onLayout={updateSectionOffsets}
-        decelerationRate="fast">
-        {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
-          <S.MenuView key={tag} onLayout={handleLayout(tag)}>
-            <S.TagWrapper>
-              <S.MenuText>{tag}</S.MenuText>
-            </S.TagWrapper>
-            {productsByTag.map(product => (
-              <Menu
-                key={product.id}
-                product={product}
-                initCount={
-                  cart.find(item => item.productId === product.id)?.count || 0
-                }
-                onCountChange={handleCountChange}
-              />
-            ))}
-          </S.MenuView>
-        ))}
-      </S.MenuScrollView>
+      <S.MenuWrapper>
+        <S.MenuScrollView
+          ref={scrollViewRef}
+          onScroll={handleScroll}
+          showsVerticalScrollIndicator={false}
+          onLayout={updateSectionOffsets}
+          decelerationRate="fast">
+          {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
+            <S.MenuView key={tag} onLayout={handleLayout(tag)}>
+              <S.TagWrapper>
+                <S.MenuText>{tag}</S.MenuText>
+              </S.TagWrapper>
+              {productsByTag.map(product => (
+                <Menu
+                  key={product.id}
+                  product={product}
+                  initCount={
+                    cart.find(item => item.productId === product.id)?.count || 0
+                  }
+                  onCountChange={handleCountChange}
+                />
+              ))}
+            </S.MenuView>
+          ))}
+        </S.MenuScrollView>
+      </S.MenuWrapper>
 
       <BottomButton
         disabled={isMarketClosed}

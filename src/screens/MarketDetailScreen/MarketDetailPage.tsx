@@ -23,6 +23,8 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 import {BucketProductType} from '@/types/Bucket';
 import {ProductType} from '@ummgoban/shared/lib';
 
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
+
 import {zeroPad} from '@utils/date';
 
 import S from './MarketDetail.style';
@@ -60,6 +62,9 @@ const MarketDetailPage = ({
   const [sectionHeights, setSectionHeights] = useState<{[key: string]: number}>(
     {},
   );
+
+  const [isCartPending, setIsCartPending] = useState(false);
+
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
   const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -241,6 +246,7 @@ const MarketDetailPage = ({
 
   const handleCheckout = async (marketId: number, cartItems: CartItem[]) => {
     try {
+      setIsCartPending(true);
       const bucketProducts: BucketProductType[] = cartItems.map(cartItem => {
         const productDetails = products.find(
           (product): product is ProductType =>
@@ -277,6 +283,8 @@ const MarketDetailPage = ({
       }
     } catch (error) {
       console.error('Error in handleCheckout:', error);
+    } finally {
+      setIsCartPending(false);
     }
   };
   const addProductToBucket = async (
@@ -447,7 +455,7 @@ const MarketDetailPage = ({
       </S.MenuWrapper>
 
       <BottomButton
-        disabled={isMarketClosed}
+        disabled={isMarketClosed || isCartPending}
         onPress={() => {
           if (profile) {
             addProductToBucket(id, cart);
@@ -458,9 +466,12 @@ const MarketDetailPage = ({
         {isMarketClosed
           ? '영업이 종료되었어요.'
           : profile
-            ? `예약하기 (${cart.length})`
+            ? isCartPending
+              ? '잠시 기다려주세요.'
+              : `예약하기 (${cart.length})`
             : `로그인하고 장바구니에 담기`}
       </BottomButton>
+      {isCartPending && <CustomActivityIndicator />}
     </S.MarketDetailInfoView>
   );
 };

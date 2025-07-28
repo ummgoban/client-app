@@ -13,7 +13,7 @@ export type MarketType = {
   images: string[];
 };
 
-export type MarketDetailType = MarketType & {
+export type MarketDetailType = Omit<MarketType, 'openAt' | 'closeAt'> & {
   hasLike: boolean;
   summary: string;
   reviewNum: number;

@@ -1,7 +1,5 @@
 import styled from '@emotion/native';
 
-const Container = styled.View``;
-
 const S = {
   Container: styled.View`
     position: absolute;

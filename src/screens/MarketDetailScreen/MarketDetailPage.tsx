@@ -45,10 +45,7 @@ const MarketDetailPage = ({
   summary,
   reviewNum,
   averageRating,
-}: Omit<
-  MarketDetailType,
-  'images' | 'pickupStartAt' | 'pickupEndAt' | 'imageUrls' | 'likeNum'
->) => {
+}: Omit<MarketDetailType, 'images'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('');

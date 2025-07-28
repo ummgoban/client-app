@@ -17,7 +17,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 
 type ReviewCreateScreenProps = StackScreenProps<
   DetailStackParamList,
@@ -29,7 +29,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState<string>('');
   const [reviewImageUris, setReviewImageUris] = useState<string[]>([]);
-  const [isReviewUploading, setIsReveiwUploding] = useState<boolean>(false);
+  const [isReviewUploading, setisReviewUploading] = useState<boolean>(false);
 
   const {mutateAsync: reviewImageUploadMutate} = useUploadReviewImageMutation();
   const {mutate: reviewCreateMutate} = useCreateReviewMutation(orderId);
@@ -46,7 +46,7 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
 
   const handleReviewCreateMutate = async () => {
     try {
-      setIsReveiwUploding(true);
+      setisReviewUploading(true);
 
       const uploadedUrls: string[] = [];
 
@@ -78,21 +78,20 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
             navigation.navigate('Home', {screen: 'Feed'});
           },
           onError: () => {
-            // FIXME: 에러 핸들링
             Alert.alert('리뷰 작성에 실패했어요. 다시 시도해주세요!');
-          },
-          onSettled: () => {
-            setIsReveiwUploding(false);
           },
         },
       );
     } catch (e) {
       console.error('리뷰 작성 실패:', e);
       Alert.alert('리뷰 작성 중 오류가 발생했습니다.');
+    } finally {
+      setisReviewUploading(false);
     }
   };
   return (
     <S.Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      {isReviewUploading && <CustomActivityIndicator />}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
           <S.ReviewCreateScreenContainer>
@@ -128,16 +127,11 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
               />
             </S.ReviewInputContainer>
             <BottomButton
-              disabled={!review || review.length === 0}
+              disabled={!review || review.length === 0 || isReviewUploading}
               onPress={handleReviewCreateMutate}>
               리뷰 작성하기
             </BottomButton>
           </S.ReviewCreateScreenContainer>
-          {isReviewUploading && (
-            <S.LoadingOverlay>
-              <ActivityIndicator size="small" animating />
-            </S.LoadingOverlay>
-          )}
         </>
       </TouchableWithoutFeedback>
     </S.Container>

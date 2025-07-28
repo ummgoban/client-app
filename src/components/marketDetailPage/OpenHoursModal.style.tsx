@@ -1,4 +1,3 @@
-// MarketOpenHourModal.style.ts
 import styled from '@emotion/native';
 
 const S = {

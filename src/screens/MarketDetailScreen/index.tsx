@@ -36,7 +36,7 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
       hasLike={marketDetail.hasLike}
       openAt={marketDetail.openAt}
       closeAt={marketDetail.closeAt}
-      marketOpenHours={marketDetail.marketOpenHours}
+      marketOpenHour={marketDetail.marketOpenHour}
       address={marketDetail.address}
       products={marketDetail.products.filter(
         product => product.productStatus !== 'HIDDEN',

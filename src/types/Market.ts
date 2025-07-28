@@ -18,7 +18,7 @@ export type MarketDetailType = MarketType & {
   summary: string;
   reviewNum: number;
   averageRating: number | null;
-  marketOpenHours: MarketOpenHourType[];
+  marketOpenHour: MarketOpenHourType[];
 };
 
 export type MarketOpenHourType = {

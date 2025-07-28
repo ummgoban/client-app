@@ -57,6 +57,16 @@ const S = {
     align-items: flex-start;
     align-self: stretch;
   `,
+  MarketPickupTimeRow: styled.View`
+    flex-direction: row;
+    align-items: center;
+  `,
+  MarketPickupTimeText: styled.Text`
+    ${props => props.theme.fonts.titleMedium};
+    color: black;
+    font-family: Pretendard;
+    font-weight: bold;
+  `,
 
   MarketSideInfo: styled.Text`
     ${props => props.theme.fonts.titleMedium};
@@ -104,6 +114,7 @@ const S = {
   `,
 
   MenuWrapper: styled.View`
+    z-index: 1;
     flex: 1;
   `,
 
@@ -163,6 +174,11 @@ const S = {
     font-weight: 600;
     padding-left: 2px;
     margin-right: -14px;
+  `,
+
+  DropdownItemWrapper: styled.View`
+    height: 40px;
+    width: 120px;
   `,
 };
 

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import ChevronRightIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ChevronIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import StarIcon from 'react-native-vector-icons/Fontisto';
 
 import {useValidateBucket, useAddToBucket} from '@/apis/buckets';
@@ -27,6 +27,7 @@ import {zeroPad} from '@utils/date';
 
 import S from './MarketDetail.style';
 import useProfile from '@/hooks/useProfile';
+import MarketOpenHourModal from '@/components/marketDetailPage/OpenHoursModal';
 
 type CartItem = {
   productId: number;
@@ -45,6 +46,7 @@ const MarketDetailPage = ({
   summary,
   reviewNum,
   averageRating,
+  marketOpenHour,
 }: Omit<MarketDetailType, 'images'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -59,6 +61,8 @@ const MarketDetailPage = ({
   );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
   const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const {mutateAsync: validateBucket} = useValidateBucket();
@@ -351,114 +355,133 @@ const MarketDetailPage = ({
     });
   };
   return (
-    <S.MarketDetailInfoView>
-      <S.MarketInfoWrapper>
-        <S.MarketMainInfoWrapper>
-          <S.MarketDescription>{summary}</S.MarketDescription>
-        </S.MarketMainInfoWrapper>
-        <S.MarketSideInfoWrapper>
-          <S.MarketTimeDescription>
-            {remainingPickupTime}
-          </S.MarketTimeDescription>
-          <S.MarketPickupTimeWrapper>
-            <S.MarketSideInfo>영업 시간: </S.MarketSideInfo>
-            <S.MarketPickupTime>
-              {`${openAt.slice(0, 2)}시 ${openAt.slice(-2)}분 - ${closeAt.slice(0, 2)}시 ${closeAt.slice(-2)}분`}
-            </S.MarketPickupTime>
-          </S.MarketPickupTimeWrapper>
-          <S.MarketSideInfo>
-            {address} {specificAddress}
-          </S.MarketSideInfo>
-        </S.MarketSideInfoWrapper>
-        <S.MarketBottomInfo>
-          <S.ReviewInfoWrapper>
-            {reviewNum !== 0 && averageRating && (
-              <>
-                <StarIcon name="star" color="#FFD700" size={24} />
-                <S.ReviewScoreText>
-                  {averageRating.toFixed(1)}
-                </S.ReviewScoreText>
-                <S.ReviewTouchableOpacity onPress={navigateReviewScreen}>
-                  <S.ReviewCountText>리뷰 {reviewNum}개</S.ReviewCountText>
-                  <ChevronRightIcon
-                    name="chevron-right"
-                    size={36}
-                    color="#495057"
-                  />
-                </S.ReviewTouchableOpacity>
-              </>
-            )}
-          </S.ReviewInfoWrapper>
-          <SubscribeIcon
-            marketIsLiked={marketIsLiked}
-            marketId={id}
-            handleSubscribe={handleSubscribe}
-          />
-        </S.MarketBottomInfo>
-      </S.MarketInfoWrapper>
-      <S.SideTagBarScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        ref={tagScrollViewRef}>
-        {Object.keys(sortedProductsByTags).map(tag => (
-          <TouchableOpacity
-            key={tag}
-            onLayout={handleTagLayout(tag)}
-            onPress={() => {
-              handleTagPress(tag);
-            }}>
-            <S.SideBarView selected={selectedTag === tag}>
-              <S.SideBarText selected={selectedTag === tag}>
-                {tag}
-              </S.SideBarText>
-            </S.SideBarView>
-          </TouchableOpacity>
-        ))}
-      </S.SideTagBarScrollView>
+    <>
+      <S.MarketDetailInfoView>
+        <S.MarketInfoWrapper>
+          <S.MarketMainInfoWrapper>
+            <S.MarketDescription>{summary}</S.MarketDescription>
+          </S.MarketMainInfoWrapper>
+          <S.MarketSideInfoWrapper>
+            <S.MarketTimeDescription>
+              {remainingPickupTime}
+            </S.MarketTimeDescription>
+            <S.MarketPickupTimeWrapper>
+              <S.MarketPickupTimeRow>
+                <S.MarketSideInfo>영업 시간: </S.MarketSideInfo>
 
-      <S.MenuWrapper>
-        <S.MenuScrollView
-          ref={scrollViewRef}
-          onScroll={handleScroll}
-          showsVerticalScrollIndicator={false}
-          onLayout={updateSectionOffsets}
-          decelerationRate="fast">
-          {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
-            <S.MenuView key={tag} onLayout={handleLayout(tag)}>
-              <S.TagWrapper>
-                <S.MenuText>{tag}</S.MenuText>
-              </S.TagWrapper>
-              {productsByTag.map(product => (
-                <Menu
-                  key={product.id}
-                  product={product}
-                  initCount={
-                    cart.find(item => item.productId === product.id)?.count || 0
-                  }
-                  onCountChange={handleCountChange}
-                />
-              ))}
-            </S.MenuView>
+                <S.MarketPickupTimeText>
+                  {`${openAt.slice(0, 2)}시 ${openAt.slice(-2)}분 - ${closeAt.slice(
+                    0,
+                    2,
+                  )}시 ${closeAt.slice(-2)}분`}
+                </S.MarketPickupTimeText>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                  <ChevronIcon name="chevron-right" size={36} color="#495057" />
+                </TouchableOpacity>
+              </S.MarketPickupTimeRow>
+            </S.MarketPickupTimeWrapper>
+            <S.MarketSideInfo>
+              {address} {specificAddress}
+            </S.MarketSideInfo>
+          </S.MarketSideInfoWrapper>
+          <S.MarketBottomInfo>
+            <S.ReviewInfoWrapper>
+              {reviewNum !== 0 && averageRating && (
+                <>
+                  <StarIcon name="star" color="#FFD700" size={24} />
+                  <S.ReviewScoreText>
+                    {averageRating.toFixed(1)}
+                  </S.ReviewScoreText>
+                  <S.ReviewTouchableOpacity onPress={navigateReviewScreen}>
+                    <S.ReviewCountText>리뷰 {reviewNum}개</S.ReviewCountText>
+                    <ChevronIcon
+                      name="chevron-right"
+                      size={36}
+                      color="#495057"
+                    />
+                  </S.ReviewTouchableOpacity>
+                </>
+              )}
+            </S.ReviewInfoWrapper>
+            <SubscribeIcon
+              marketIsLiked={marketIsLiked}
+              marketId={id}
+              handleSubscribe={handleSubscribe}
+            />
+          </S.MarketBottomInfo>
+        </S.MarketInfoWrapper>
+        <S.SideTagBarScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          ref={tagScrollViewRef}>
+          {Object.keys(sortedProductsByTags).map(tag => (
+            <TouchableOpacity
+              key={tag}
+              onLayout={handleTagLayout(tag)}
+              onPress={() => {
+                handleTagPress(tag);
+              }}>
+              <S.SideBarView selected={selectedTag === tag}>
+                <S.SideBarText selected={selectedTag === tag}>
+                  {tag}
+                </S.SideBarText>
+              </S.SideBarView>
+            </TouchableOpacity>
           ))}
-        </S.MenuScrollView>
-      </S.MenuWrapper>
+        </S.SideTagBarScrollView>
 
-      <BottomButton
-        disabled={isMarketClosed}
-        onPress={() => {
-          if (profile) {
-            addProductToBucket(id, cart);
-          } else {
-            navigation.navigate('Register', {screen: 'Login'});
-          }
-        }}>
-        {isMarketClosed
-          ? '영업이 종료되었어요.'
-          : profile
-            ? `예약하기 (${cart.length})`
-            : `로그인하고 장바구니에 담기`}
-      </BottomButton>
-    </S.MarketDetailInfoView>
+        <S.MenuWrapper>
+          <S.MenuScrollView
+            ref={scrollViewRef}
+            onScroll={handleScroll}
+            showsVerticalScrollIndicator={false}
+            onLayout={updateSectionOffsets}
+            decelerationRate="fast">
+            {Object.entries(sortedProductsByTags).map(
+              ([tag, productsByTag]) => (
+                <S.MenuView key={tag} onLayout={handleLayout(tag)}>
+                  <S.TagWrapper>
+                    <S.MenuText>{tag}</S.MenuText>
+                  </S.TagWrapper>
+                  {productsByTag.map(product => (
+                    <Menu
+                      key={product.id}
+                      product={product}
+                      initCount={
+                        cart.find(item => item.productId === product.id)
+                          ?.count || 0
+                      }
+                      onCountChange={handleCountChange}
+                    />
+                  ))}
+                </S.MenuView>
+              ),
+            )}
+          </S.MenuScrollView>
+        </S.MenuWrapper>
+
+        <BottomButton
+          disabled={isMarketClosed}
+          onPress={() => {
+            if (profile) {
+              addProductToBucket(id, cart);
+            } else {
+              navigation.navigate('Register', {screen: 'Login'});
+            }
+          }}>
+          {isMarketClosed
+            ? '영업이 종료되었어요.'
+            : profile
+              ? `예약하기 (${cart.length})`
+              : `로그인하고 장바구니에 담기`}
+        </BottomButton>
+      </S.MarketDetailInfoView>
+      <MarketOpenHourModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        openHours={marketOpenHour}
+      />
+    </>
   );
 };
 

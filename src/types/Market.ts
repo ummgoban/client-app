@@ -15,11 +15,25 @@ export type MarketType = {
   images: string[];
 };
 
-export type MarketDetailType = MarketType & {
+export type MarketDetailType = Omit<MarketType, 'openAt' | 'closeAt'> & {
   hasLike: boolean;
   imageUrls: string[];
   summary: string;
   reviewNum: number;
   likeNum: number;
   averageRating: number | null;
+  marketOpenHours: MarketOpenHourType[];
+};
+
+export type MarketOpenHourType = {
+  dayOfWeek:
+    | 'MONDAY'
+    | 'TUESDAY'
+    | 'WEDNESDAY'
+    | 'THURSDAY'
+    | 'FRIDAY'
+    | 'SATURDAY'
+    | 'SUNDAY';
+  openTime: string;
+  closeTime: string;
 };

@@ -29,6 +29,7 @@ import {format} from '@/utils/date';
 import S from './PaymentPage.style';
 import {Button, Text} from 'react-native-paper';
 import {useQueryClient} from '@tanstack/react-query';
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 
 const nowDate = format(new Date(), 'YYYY-MM-DD');
 
@@ -65,6 +66,7 @@ const PaymentPage = ({cart, marketId}: Props) => {
   const queryClient = useQueryClient();
   const {mutateAsync: requestOrder} = useRequestOrderMutation();
 
+  const [isOrderPending, setIsOrderPending] = useState(false);
   const {originPrice, discountPrice} = useMemo(
     () =>
       cart.products.reduce(
@@ -90,8 +92,12 @@ const PaymentPage = ({cart, marketId}: Props) => {
     );
   }
 
+  // if (isOrderPending) {
+  //   return <CustomActivityIndicator />;
+  // }
   return (
     <S.PaymentPage>
+      {isOrderPending && <CustomActivityIndicator />}
       <S.ScrollView>
         <DatePickerCard
           pickupReservedAt={pickupReservedAt}
@@ -135,7 +141,11 @@ const PaymentPage = ({cart, marketId}: Props) => {
         />
       </S.ScrollView>
       <BottomButton
+        disabled={isOrderPending}
         onPress={async () => {
+          if (isOrderPending) return;
+          setIsOrderPending(true);
+
           // if (paymentWidgetControl == null || agreementWidgetControl == null) {
           //   Alert.alert('주문 정보가 초기화되지 않았습니다.');
           //   return;
@@ -198,7 +208,9 @@ const PaymentPage = ({cart, marketId}: Props) => {
           // }
         }}>
         {/* TODO: 결제하기로 변경 */}
-        {`${discountPrice.toLocaleString()}원 예약하기`}
+        {isOrderPending
+          ? '예약 중..'
+          : `${discountPrice.toLocaleString()}원 예약하기`}
       </BottomButton>
     </S.PaymentPage>
   );

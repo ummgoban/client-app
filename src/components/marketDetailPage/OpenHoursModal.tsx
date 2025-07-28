@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'react-native';
+import {Modal, TouchableWithoutFeedback} from 'react-native';
 import ChevronIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import S from './OpenHoursModal.style';
 
@@ -31,31 +31,31 @@ const MarketOpenHourModal = ({
   openHours,
 }: MarketOpenHourModalProps) => {
   return (
-    <Modal
-      visible={visible}
-      onRequestClose={onClose}
-      transparent
-      animationType="fade">
-      <S.ModalOverlay>
-        <S.ModalContent>
-          <S.ModalHeader>
-            <S.ModalHeaderText>영업시간</S.ModalHeaderText>
-            <S.CloseButton onPress={onClose}>
-              <ChevronIcon name="close" size={24} color="#495057" />
-            </S.CloseButton>
-          </S.ModalHeader>
+    <Modal visible={visible} onRequestClose={onClose} transparent>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <S.ModalOverlay>
+          <TouchableWithoutFeedback onPress={() => {}}>
+            <S.ModalContent>
+              <S.ModalHeader>
+                <S.ModalHeaderText>영업시간</S.ModalHeaderText>
+                <S.CloseButton onPress={onClose}>
+                  <ChevronIcon name="close" size={24} color="#495057" />
+                </S.CloseButton>
+              </S.ModalHeader>
 
-          <S.HourList>
-            {openHours.map(({dayOfWeek, openTime, closeTime}) => (
-              <S.HourItem key={dayOfWeek}>
-                <S.HourText>
-                  {dayMap[dayOfWeek]}요일 {openTime} - {closeTime}
-                </S.HourText>
-              </S.HourItem>
-            ))}
-          </S.HourList>
-        </S.ModalContent>
-      </S.ModalOverlay>
+              <S.HourList>
+                {openHours.map(({dayOfWeek, openTime, closeTime}) => (
+                  <S.HourItem key={dayOfWeek}>
+                    <S.HourText>
+                      {dayMap[dayOfWeek]}요일 {openTime} - {closeTime}
+                    </S.HourText>
+                  </S.HourItem>
+                ))}
+              </S.HourList>
+            </S.ModalContent>
+          </TouchableWithoutFeedback>
+        </S.ModalOverlay>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

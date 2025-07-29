@@ -48,7 +48,8 @@ export function zeroPad(num: number): string {
  * @param dateB 비교할 시간
  * @param unit 비교 단위
  * @returns `boolean` dateA가 dateB보다 이후인지 여부
- * @example isAfter(new Date(), new Date() + 10000) // true
+ * @example isAfter(new Date(), new Date(Date.now() + 10000)) // true
+ * @see https://day.js.org/docs/en/query/is-after
  */
 export function isAfter(
   dateA: Date,
@@ -63,7 +64,8 @@ export function isAfter(
  * @param target 비교할 시간
  * @param unit 비교 단위
  * @returns `boolean` 현재 시간이 target 시간 이후인지 여부
- * @example isAfter(new Date() + 10000) // true
+ * @example isAfter(new Date(Date.now() + 10000)) // true
+ * @see https://day.js.org/docs/en/query/is-after
  */
 export function isAfterNow(target: Date, unit?: dayjs.OpUnitType): boolean {
   return dayjs().isAfter(target, unit);

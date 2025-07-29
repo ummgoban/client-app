@@ -37,7 +37,7 @@ const MarketOpenHourModal = ({
           <TouchableWithoutFeedback onPress={() => {}}>
             <S.ModalContent>
               <S.ModalHeader>
-                <S.ModalHeaderText>영업시간</S.ModalHeaderText>
+                <S.ModalHeaderText>영업 시간</S.ModalHeaderText>
                 <S.CloseButton onPress={onClose}>
                   <ChevronIcon name="close" size={24} color="#495057" />
                 </S.CloseButton>
@@ -47,7 +47,7 @@ const MarketOpenHourModal = ({
                 {openHours.map(({dayOfWeek, openTime, closeTime}) => (
                   <S.HourItem key={dayOfWeek}>
                     <S.HourText>
-                      {dayMap[dayOfWeek]}요일 {openTime} - {closeTime}
+                      {dayMap[dayOfWeek]}요일 {openTime} ~ {closeTime}
                     </S.HourText>
                   </S.HourItem>
                 ))}

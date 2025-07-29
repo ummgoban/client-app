@@ -15,8 +15,8 @@ describe('to6DigitHash', () => {
     const hashSet = new Set(
       Array.from({length: trial}, (_, i) => to6DigitHash(`${i}`)),
     );
-    console.log(hashSet.size);
 
-    expect(hashSet.size).not.toEqual(trial);
+    expect(hashSet.size).toBeLessThan(trial);
+    expect(hashSet.size).toEqual(996611); // always return 996611
   });
 });

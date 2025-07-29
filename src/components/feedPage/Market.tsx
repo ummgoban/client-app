@@ -3,6 +3,9 @@ import {FlatList, Pressable} from 'react-native';
 import DotIndicator from '@/assets/icons/dot.svg';
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
+import StarIcon from 'react-native-vector-icons/Fontisto';
+import HeartIcon from 'react-native-vector-icons/Entypo';
+import {floor} from '@/utils/math';
 
 type Props = {
   market: MarketType;
@@ -21,6 +24,7 @@ const Market = ({market, onPress}: Props) => {
     likeNum,
     summary,
     cursorDistance,
+    averageRating,
   } = market;
   const productData = useMemo(
     () => market.products.filter(p => p.productStatus !== 'HIDDEN'),
@@ -63,9 +67,25 @@ const Market = ({market, onPress}: Props) => {
         )}
       />
       <S.MarketInfoDiscription>
-        <S.Row>
+        <S.Row gap={8}>
           <S.MarketTitle>{name}</S.MarketTitle>
-          <S.LightText>{cursorDistance}km</S.LightText>
+          <S.LightText>{floor(cursorDistance, 1)}km</S.LightText>
+
+          {reviewNum > 0 && (
+            <S.Row gap={4}>
+              <StarIcon name="star" color="#8d96a9" size={12} />
+              <S.LightText>
+                {floor(averageRating, 1)}({reviewNum})
+              </S.LightText>
+            </S.Row>
+          )}
+
+          {likeNum > 0 && (
+            <S.Row>
+              <HeartIcon name="heart" color="#8d96a9" size={16} />
+              <S.LightText>{likeNum}</S.LightText>
+            </S.Row>
+          )}
         </S.Row>
         <S.DescriptionContainer>
           <S.MarketPickupTime>
@@ -73,11 +93,11 @@ const Market = ({market, onPress}: Props) => {
             <S.DarkText>{`${openAt}~${closeAt}`}</S.DarkText>
           </S.MarketPickupTime>
           <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
-          {/* TODO: 주소 대신 현재 위치에서 거리 표시 (600m dot 도보 4분) 형태 */}
           <S.DarkText>
             {address} {specificAddress}
           </S.DarkText>
         </S.DescriptionContainer>
+        <S.DarkText>{summary}</S.DarkText>
       </S.MarketInfoDiscription>
     </S.MarketWrapper>
   );

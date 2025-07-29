@@ -4,18 +4,18 @@ import LinearGradient from 'react-native-linear-gradient';
 const S = {
   MarketWrapper: styled.Pressable`
     display: flex;
-    padding: 12px 0px 12px 16px;
+    padding: 8px 0px 8px 16px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
     align-self: stretch;
   `,
 
-  Row: styled.View`
+  Row: styled.View<{gap?: number}>`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: ${({gap}) => gap}px;
   `,
 
   MarketImageBox: styled.View`
@@ -77,6 +77,7 @@ const S = {
   MarketInfoDiscription: styled.View`
     display: flex;
     flex-direction: column;
+    gap: 4px;
   `,
 
   MarketTitle: styled.Text`
@@ -118,7 +119,6 @@ const S = {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
   `,
 };
 

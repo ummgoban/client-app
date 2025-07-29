@@ -370,10 +370,7 @@ const MarketDetailPage = ({
                 <S.MarketSideInfo>영업 시간: </S.MarketSideInfo>
 
                 <S.MarketPickupTimeText>
-                  {`${openAt.slice(0, 2)}시 ${openAt.slice(-2)}분 - ${closeAt.slice(
-                    0,
-                    2,
-                  )}시 ${closeAt.slice(-2)}분`}
+                  {`${openAt}~${closeAt}`}
                 </S.MarketPickupTimeText>
                 <TouchableOpacity onPress={() => setModalVisible(true)}>
                   <ChevronIcon name="chevron-right" size={36} color="#495057" />

@@ -3,8 +3,6 @@ import {ProductType} from '@ummgoban/shared/lib';
 export type MarketType = {
   id: number;
   name: string;
-  pickupStartAt: string;
-  pickupEndAt: string;
   address: string;
   products: ProductType[];
   specificAddress: string;
@@ -17,9 +15,21 @@ export type MarketType = {
 
 export type MarketDetailType = MarketType & {
   hasLike: boolean;
-  imageUrls: string[];
   summary: string;
   reviewNum: number;
-  likeNum: number;
   averageRating: number | null;
+  marketOpenHour: MarketOpenHourType[];
+};
+
+export type MarketOpenHourType = {
+  dayOfWeek:
+    | 'MONDAY'
+    | 'TUESDAY'
+    | 'WEDNESDAY'
+    | 'THURSDAY'
+    | 'FRIDAY'
+    | 'SATURDAY'
+    | 'SUNDAY';
+  openTime: string;
+  closeTime: string;
 };

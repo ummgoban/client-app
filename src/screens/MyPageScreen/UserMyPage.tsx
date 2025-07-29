@@ -6,7 +6,7 @@ import {Alert, Linking, RefreshControl} from 'react-native';
 import ListBox from '@/components/common/ListBox';
 import NavigationTextButton from '@/components/common/NavigateTextButton';
 import {Profile} from '@components/myPage';
-
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 import useProfile from '@/hooks/useProfile';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
@@ -31,8 +31,10 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {logout, withdraw} = useProfile();
+  const [isPending, setIsPending] = useState(false);
 
   const logoutCallback = useCallback(() => {
+    setIsPending(false);
     Alert.alert('로그아웃 되었습니다.', '', [
       {
         onPress: () =>
@@ -49,6 +51,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
+      {isPending && <CustomActivityIndicator />}
       <S.ProfileImageSection>
         <Profile image={profile.image} />
       </S.ProfileImageSection>
@@ -114,6 +117,8 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
               fontColor="#888"
               isNotice={false}
               onPress={() => {
+                if (isPending) return;
+                setIsPending(true);
                 logout({
                   onSuccess: logoutCallback,
                   onError: logoutCallback,
@@ -159,9 +164,12 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                       {
                         text: '탈퇴하기',
                         onPress: () => {
+                          if (isPending) return;
+                          setIsPending(true);
                           setIsOpen(false);
                           withdraw({
                             onSuccess: () => {
+                              setIsPending(false);
                               navigation.navigate('Home', {
                                 screen: 'Feed',
                               });
@@ -173,6 +181,7 @@ const UserMyPage = ({profile, refreshing, onRefresh}: UserMyPageProps) => {
                               ]);
                             },
                             onError: error => {
+                              setIsPending(false);
                               Alert.alert(
                                 '탈퇴 중에 오류가 발생해요.',
                                 error.errorMessage,

@@ -25,10 +25,8 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const [isValid, setIsValid] = useState(false);
 
   const queryClient = useQueryClient();
-
-  const inputRef = useRef<TextInputRef>(null);
-
-  const {mutate: nicknamePatchMutate} = usePatchNicknameMutation();
+  const [inputNickname, setInputNickname] = useState<string>('');
+  const {mutate: nicknamePatchMutate, isPending} = usePatchNicknameMutation();
 
   const handleNicknamePatchMutate = (nickname?: string) => {
     if (!nickname) {
@@ -66,7 +64,7 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
       <Spacer size={16} />
 
       <BottomButton
-        disabled={!isValid}
+        disabled={!inputNickname || isPending}
         onPress={() => {
           handleNicknamePatchMutate(inputRef.current?.value);
         }}>

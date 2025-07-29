@@ -14,14 +14,16 @@ import CredentialLogin from '@/components/LoginPage/CredentialLogin';
 import useProfile from '@/hooks/useProfile';
 
 import S from './LoginScreen.style';
+import CustomActivityIndicator from '@/components/common/ActivityIndicator';
 
 const LoginScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const {loginWithOAuth} = useProfile();
+  const {loginWithOAuth, loading} = useProfile();
 
   return (
     <S.Container behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      {loading && <CustomActivityIndicator />}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <S.LoginPageContainer>
           <S.MomChanPickLogoWrapper>

@@ -4,20 +4,22 @@ export type MarketType = {
   id: number;
   name: string;
   address: string;
-  products: ProductType[];
   specificAddress: string;
+  products: ProductType[];
   latitude: number;
   longitude: number;
   openAt: string;
   closeAt: string;
+  summary: string;
+  likeNum: number;
+  reviewNum: number;
+  averageRating: number;
   images: string[];
+  cursorDistance: number;
 };
 
 export type MarketDetailType = MarketType & {
   hasLike: boolean;
-  summary: string;
-  reviewNum: number;
-  averageRating: number | null;
   marketOpenHour: MarketOpenHourType[];
 };
 

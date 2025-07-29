@@ -11,8 +11,15 @@ const S = {
     align-self: stretch;
   `,
 
+  Row: styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  `,
+
   MarketImageBox: styled.View`
-    max-width: 140px;
+    max-width: 120px;
     margin-right: 4px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -21,8 +28,8 @@ const S = {
   `,
 
   MarketImage: styled.Image`
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     border-radius: 12px;
     position: relative;
     z-index: 1;

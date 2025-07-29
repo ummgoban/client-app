@@ -55,8 +55,12 @@ const MarketDetailPage = ({
   const [selectedTag, setSelectedTag] = useState<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
   const tagScrollViewRef = useRef<ScrollView>(null);
-  const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>({});
-  const [sectionHeights, setSectionHeights] = useState<{[key: string]: number}>({});
+  const [sectionOffsets, setSectionOffsets] = useState<{[key: string]: number}>(
+    {},
+  );
+  const [sectionHeights, setSectionHeights] = useState<{[key: string]: number}>(
+    {},
+  );
   const [tagWidths, setTagWidths] = useState<{[key: string]: number}>({});
   const [marketIsLiked, setMarketIsLiked] = useState<boolean>(hasLike);
   const [modalVisible, setModalVisible] = useState(false);
@@ -75,12 +79,18 @@ const MarketDetailPage = ({
     );
   };
 
-  const handleCart = (productId: number, productName: string, count: number) => {
+  const handleCart = (
+    productId: number,
+    productName: string,
+    count: number,
+  ) => {
     setCart(prevCart => {
       if (count === 0) {
         return prevCart.filter(item => item.productId !== productId);
       }
-      const existingItemIndex = prevCart.findIndex(item => item.productId === productId);
+      const existingItemIndex = prevCart.findIndex(
+        item => item.productId === productId,
+      );
       if (existingItemIndex !== -1) {
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex] = {productId, productName, count};
@@ -91,20 +101,23 @@ const MarketDetailPage = ({
     });
   };
 
-  const productsByTags = products.reduce((acc: {[key: string]: ProductType[]}, product) => {
-    if (product.tags.length === 0) {
-      if (!acc['메뉴']) acc['메뉴'] = [];
-      acc['메뉴'].push(product);
-      return acc;
-    }
+  const productsByTags = products.reduce(
+    (acc: {[key: string]: ProductType[]}, product) => {
+      if (product.tags.length === 0) {
+        if (!acc['메뉴']) acc['메뉴'] = [];
+        acc['메뉴'].push(product);
+        return acc;
+      }
 
-    product.tags.forEach(tagObj => {
-      const tag = tagObj.tagName;
-      if (!acc[tag]) acc[tag] = [];
-      acc[tag].push(product);
-    });
-    return acc;
-  }, {});
+      product.tags.forEach(tagObj => {
+        const tag = tagObj.tagName;
+        if (!acc[tag]) acc[tag] = [];
+        acc[tag].push(product);
+      });
+      return acc;
+    },
+    {},
+  );
 
   const sortedProductsByTags = Object.entries(productsByTags)
     .sort(([tagA, productsA], [tagB, productsB]) => {
@@ -120,7 +133,11 @@ const MarketDetailPage = ({
   const scrollToSection = useCallback(
     (tag: string) => {
       if (scrollViewRef.current && sectionOffsets[tag] !== undefined) {
-        scrollViewRef.current.scrollTo({x: 0, y: sectionOffsets[tag] + 1, animated: true});
+        scrollViewRef.current.scrollTo({
+          x: 0,
+          y: sectionOffsets[tag] + 1,
+          animated: true,
+        });
       }
     },
     [sectionOffsets],
@@ -150,12 +167,18 @@ const MarketDetailPage = ({
       const sectionHeight = sectionHeights[tag] || 0;
       const sectionOffset = sectionOffsets[tag];
       const sectionEndOffset = sectionOffset + sectionHeight;
-      if (contentOffsetY >= sectionOffset && contentOffsetY < sectionEndOffset) {
+      if (
+        contentOffsetY >= sectionOffset &&
+        contentOffsetY < sectionEndOffset
+      ) {
         newSelectedTag = tag;
       }
     });
 
-    if (newSelectedTag !== lastTag && contentOffsetY >= sectionOffsets[lastTag]) {
+    if (
+      newSelectedTag !== lastTag &&
+      contentOffsetY >= sectionOffsets[lastTag]
+    ) {
       newSelectedTag = lastTag;
     }
 
@@ -228,7 +251,10 @@ const MarketDetailPage = ({
     }
   };
 
-  const addProductToBucket = async (marketId: number, addProducts: CartItem[]) => {
+  const addProductToBucket = async (
+    marketId: number,
+    addProducts: CartItem[],
+  ) => {
     if (addProducts.length === 0) {
       Alert.alert('장바구니가 비어있습니다.');
       return;
@@ -305,7 +331,9 @@ const MarketDetailPage = ({
             <S.MarketDescription>{summary}</S.MarketDescription>
           </S.MarketMainInfoWrapper>
           <S.MarketSideInfoWrapper>
-            <S.MarketTimeDescription>{remainingPickupTime}</S.MarketTimeDescription>
+            <S.MarketTimeDescription>
+              {remainingPickupTime}
+            </S.MarketTimeDescription>
             <S.MarketPickupTimeWrapper>
               <S.MarketPickupTimeRow>
                 <S.MarketSideInfo>영업 시간: </S.MarketSideInfo>
@@ -315,17 +343,25 @@ const MarketDetailPage = ({
                 </TouchableOpacity>
               </S.MarketPickupTimeRow>
             </S.MarketPickupTimeWrapper>
-            <S.MarketSideInfo>{address} {specificAddress}</S.MarketSideInfo>
+            <S.MarketSideInfo>
+              {address} {specificAddress}
+            </S.MarketSideInfo>
           </S.MarketSideInfoWrapper>
           <S.MarketBottomInfo>
             <S.ReviewInfoWrapper>
               {reviewNum !== 0 && averageRating && (
                 <>
                   <StarIcon name="star" color="#FFD700" size={24} />
-                  <S.ReviewScoreText>{averageRating.toFixed(1)}</S.ReviewScoreText>
+                  <S.ReviewScoreText>
+                    {averageRating.toFixed(1)}
+                  </S.ReviewScoreText>
                   <S.ReviewTouchableOpacity onPress={navigateReviewScreen}>
                     <S.ReviewCountText>리뷰 {reviewNum}개</S.ReviewCountText>
-                    <ChevronIcon name="chevron-right" size={36} color="#495057" />
+                    <ChevronIcon
+                      name="chevron-right"
+                      size={36}
+                      color="#495057"
+                    />
                   </S.ReviewTouchableOpacity>
                 </>
               )}
@@ -348,7 +384,9 @@ const MarketDetailPage = ({
               onLayout={handleTagLayout(tag)}
               onPress={() => handleTagPress(tag)}>
               <S.SideBarView selected={selectedTag === tag}>
-                <S.SideBarText selected={selectedTag === tag}>{tag}</S.SideBarText>
+                <S.SideBarText selected={selectedTag === tag}>
+                  {tag}
+                </S.SideBarText>
               </S.SideBarView>
             </TouchableOpacity>
           ))}
@@ -361,21 +399,26 @@ const MarketDetailPage = ({
             showsVerticalScrollIndicator={false}
             onLayout={updateSectionOffsets}
             decelerationRate="fast">
-            {Object.entries(sortedProductsByTags).map(([tag, productsByTag]) => (
-              <S.MenuView key={tag} onLayout={handleLayout(tag)}>
-                <S.TagWrapper>
-                  <S.MenuText>{tag}</S.MenuText>
-                </S.TagWrapper>
-                {productsByTag.map(product => (
-                  <Menu
-                    key={product.id}
-                    product={product}
-                    initCount={cart.find(item => item.productId === product.id)?.count || 0}
-                    onCountChange={handleCountChange}
-                  />
-                ))}
-              </S.MenuView>
-            ))}
+            {Object.entries(sortedProductsByTags).map(
+              ([tag, productsByTag]) => (
+                <S.MenuView key={tag} onLayout={handleLayout(tag)}>
+                  <S.TagWrapper>
+                    <S.MenuText>{tag}</S.MenuText>
+                  </S.TagWrapper>
+                  {productsByTag.map(product => (
+                    <Menu
+                      key={product.id}
+                      product={product}
+                      initCount={
+                        cart.find(item => item.productId === product.id)
+                          ?.count || 0
+                      }
+                      onCountChange={handleCountChange}
+                    />
+                  ))}
+                </S.MenuView>
+              ),
+            )}
           </S.MenuScrollView>
         </S.MenuWrapper>
 

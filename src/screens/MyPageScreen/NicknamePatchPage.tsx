@@ -20,7 +20,7 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
   const queryClient = useQueryClient();
   const [inputNickname, setInputNickname] = useState<string>('');
-  const {mutate: nicknamePatchMutate} = usePatchNicknameMutation();
+  const {mutate: nicknamePatchMutate, isPending} = usePatchNicknameMutation();
 
   const handleNicknamePatchMutate = (nickname: string) => {
     nicknamePatchMutate(nickname, {
@@ -45,7 +45,7 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
         onChange={e => setInputNickname(e.nativeEvent.text)}
       />
       <BottomButton
-        disabled={!inputNickname}
+        disabled={!inputNickname || isPending}
         onPress={() => {
           handleNicknamePatchMutate(inputNickname);
         }}>

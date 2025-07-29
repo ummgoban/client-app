@@ -20,7 +20,7 @@ const CredentialLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {login} = useProfile();
+  const {login, loading} = useProfile();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -31,7 +31,7 @@ const CredentialLogin = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <S.LoginFormWrapper>
           <TextInput
-            placeholder={'아이디'}
+            placeholder={'이메일'}
             value={email}
             onChange={e => setEmail(e.nativeEvent.text)}
           />
@@ -43,7 +43,7 @@ const CredentialLogin = () => {
           />
           <S.SubmitButton
             mode="contained"
-            disabled={!email || !password}
+            disabled={!email || !password || loading}
             onPress={async () => {
               login(
                 {email, password},

@@ -5,7 +5,7 @@ import {MarketType} from '@/types/Market';
 import S from './Market.style';
 import StarIcon from 'react-native-vector-icons/Fontisto';
 import HeartIcon from 'react-native-vector-icons/Entypo';
-import {floor} from '@/utils/math';
+import {formatFixedFloor} from '@/utils/math';
 
 type Props = {
   market: MarketType;
@@ -69,13 +69,13 @@ const Market = ({market, onPress}: Props) => {
       <S.MarketInfoDiscription>
         <S.Row gap={8}>
           <S.MarketTitle>{name}</S.MarketTitle>
-          <S.LightText>{floor(cursorDistance, 1)}km</S.LightText>
+          <S.LightText>{formatFixedFloor(cursorDistance, 1)}km</S.LightText>
 
           {reviewNum > 0 && (
             <S.Row gap={4}>
               <StarIcon name="star" color="#FFD700" size={12} />
               <S.LightText>
-                {floor(averageRating, 1)}({reviewNum})
+                {formatFixedFloor(averageRating, 1)}({reviewNum})
               </S.LightText>
             </S.Row>
           )}
@@ -91,11 +91,11 @@ const Market = ({market, onPress}: Props) => {
           <S.MarketPickupTime>
             <S.LightText>{'영업'}</S.LightText>
             <S.DarkText>{`${openAt}~${closeAt}`}</S.DarkText>
+            <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
+            <S.DarkText>
+              {address} {specificAddress}
+            </S.DarkText>
           </S.MarketPickupTime>
-          <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
-          <S.DarkText>
-            {address} {specificAddress}
-          </S.DarkText>
         </S.DescriptionContainer>
         <S.DarkText numberOfLines={1} ellipsizeMode="tail">
           {summary}

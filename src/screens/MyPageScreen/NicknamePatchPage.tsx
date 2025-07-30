@@ -24,8 +24,9 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
   const [isValid, setIsValid] = useState(false);
 
+  const inputRef = useRef<TextInputRef>(null);
+
   const queryClient = useQueryClient();
-  const [inputNickname, setInputNickname] = useState<string>('');
   const {mutate: nicknamePatchMutate, isPending} = usePatchNicknameMutation();
 
   const handleNicknamePatchMutate = (nickname?: string) => {
@@ -57,14 +58,12 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
         autoCapitalize="none"
         full
         onChangeText={text => {
-          setIsValid(text.length > 2);
-          console.log(text);
+          setIsValid(text.length > 2 && text !== profile?.nickname);
         }}
       />
       <Spacer size={16} />
-
       <BottomButton
-        disabled={!inputNickname || isPending}
+        disabled={!isValid || isPending}
         onPress={() => {
           handleNicknamePatchMutate(inputRef.current?.value);
         }}>

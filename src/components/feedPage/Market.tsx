@@ -81,7 +81,7 @@ const Market = ({market, onPress}: Props) => {
           )}
 
           {likeNum > 0 && (
-            <S.Row>
+            <S.Row gap={4}>
               <HeartIcon name="heart" color="#8d96a9" size={16} />
               <S.LightText>{likeNum}</S.LightText>
             </S.Row>

@@ -3,6 +3,9 @@ import {FlatList, Pressable} from 'react-native';
 import DotIndicator from '@/assets/icons/dot.svg';
 import {MarketType} from '@/types/Market';
 import S from './Market.style';
+import StarIcon from 'react-native-vector-icons/Fontisto';
+import HeartIcon from 'react-native-vector-icons/Entypo';
+import {formatFixedFloor} from '@/utils/math';
 
 type Props = {
   market: MarketType;
@@ -10,13 +13,26 @@ type Props = {
 };
 
 const Market = ({market, onPress}: Props) => {
+  const {
+    id,
+    name,
+    openAt,
+    closeAt,
+    address,
+    specificAddress,
+    reviewNum,
+    likeNum,
+    summary,
+    cursorDistance,
+    averageRating,
+  } = market;
   const productData = useMemo(
     () => market.products.filter(p => p.productStatus !== 'HIDDEN'),
     [market.products],
   );
 
   return (
-    <S.MarketWrapper onPress={() => onPress(market.id)}>
+    <S.MarketWrapper onPress={() => onPress(id)}>
       <FlatList
         horizontal
         data={productData}
@@ -27,7 +43,7 @@ const Market = ({market, onPress}: Props) => {
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingRight: 4}}
         renderItem={({item}) => (
-          <Pressable onPress={() => onPress(market.id)}>
+          <Pressable onPress={() => onPress(id)}>
             <S.MarketImageBox>
               <S.MarketImage source={{uri: item.image}} />
               <S.MenuGradation
@@ -51,16 +67,39 @@ const Market = ({market, onPress}: Props) => {
         )}
       />
       <S.MarketInfoDiscription>
-        <S.MarketTitle>{market.name}</S.MarketTitle>
+        <S.Row gap={8}>
+          <S.MarketTitle>{name}</S.MarketTitle>
+          <S.LightText>{formatFixedFloor(cursorDistance, 1)}km</S.LightText>
+
+          {reviewNum > 0 && (
+            <S.Row gap={4}>
+              <StarIcon name="star" color="#FFD700" size={12} />
+              <S.LightText>
+                {formatFixedFloor(averageRating, 1)}({reviewNum})
+              </S.LightText>
+            </S.Row>
+          )}
+
+          {likeNum > 0 && (
+            <S.Row gap={4}>
+              <HeartIcon name="heart" color="#FF4033" size={16} />
+              <S.LightText>{likeNum}</S.LightText>
+            </S.Row>
+          )}
+        </S.Row>
         <S.DescriptionContainer>
           <S.MarketPickupTime>
             <S.LightText>{'영업'}</S.LightText>
-            <S.DarkText>{`${market.openAt}~${market.closeAt}`}</S.DarkText>
+            <S.DarkText>{`${openAt}~${closeAt}`}</S.DarkText>
+            <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
+            <S.DarkText>
+              {address} {specificAddress}
+            </S.DarkText>
           </S.MarketPickupTime>
-          <DotIndicator width={2} height={2} color="rgba(174, 174, 174, 1)" />
-          {/* TODO: 주소 대신 현재 위치에서 거리 표시 (600m dot 도보 4분) 형태 */}
-          <S.DarkText>{market.address}</S.DarkText>
         </S.DescriptionContainer>
+        <S.DarkText numberOfLines={1} ellipsizeMode="tail">
+          {summary}
+        </S.DarkText>
       </S.MarketInfoDiscription>
     </S.MarketWrapper>
   );

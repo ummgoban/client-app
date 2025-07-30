@@ -49,7 +49,8 @@ const MarketDetailPage = ({
   reviewNum,
   averageRating,
   marketOpenHour,
-}: Omit<MarketDetailType, 'images'>) => {
+  // TODO: 디자인 확정 후 페이지 사용 데이터 추가
+}: Omit<MarketDetailType, 'images' | 'likeNum' | 'cursorDistance'>) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedTag, setSelectedTag] = useState<string>('');

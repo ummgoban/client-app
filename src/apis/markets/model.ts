@@ -11,6 +11,6 @@ export type MarketPaginationRequest = {
 } & MarketPaginationLocRequest;
 
 export type MarketListResponse = {
-  markets: (MarketType & {cursorDistance: number})[];
+  markets: MarketType[];
   hasNext: boolean;
 };

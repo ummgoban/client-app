@@ -73,7 +73,7 @@ const Market = ({market, onPress}: Props) => {
 
           {reviewNum > 0 && (
             <S.Row gap={4}>
-              <StarIcon name="star" color="#8d96a9" size={12} />
+              <StarIcon name="star" color="#FFD700" size={12} />
               <S.LightText>
                 {floor(averageRating, 1)}({reviewNum})
               </S.LightText>
@@ -82,7 +82,7 @@ const Market = ({market, onPress}: Props) => {
 
           {likeNum > 0 && (
             <S.Row gap={4}>
-              <HeartIcon name="heart" color="#8d96a9" size={16} />
+              <HeartIcon name="heart" color="#FF4033" size={16} />
               <S.LightText>{likeNum}</S.LightText>
             </S.Row>
           )}

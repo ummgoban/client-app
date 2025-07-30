@@ -97,7 +97,9 @@ const Market = ({market, onPress}: Props) => {
             {address} {specificAddress}
           </S.DarkText>
         </S.DescriptionContainer>
-        <S.DarkText>{summary}</S.DarkText>
+        <S.DarkText numberOfLines={1} ellipsizeMode="tail">
+          {summary}
+        </S.DarkText>
       </S.MarketInfoDiscription>
     </S.MarketWrapper>
   );

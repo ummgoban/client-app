@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import {useQueryClient} from '@tanstack/react-query';
+import React, {useRef, useState} from 'react';
+import {Alert} from 'react-native';
+
+import {StackScreenProps} from '@react-navigation/stack';
+import {TextInput, TextInputRef} from '@ummgoban/shared';
 
 import useProfile from '@/hooks/useProfile';
-import TextInput from '@/components/common/TextInput/TextInput';
+
 import {usePatchNicknameMutation} from '@/apis/auth';
-import {Alert} from 'react-native';
-import {BottomButton} from '@/components/common';
-import {StackScreenProps} from '@react-navigation/stack';
+
+import {BottomButton, Spacer} from '@/components/common';
+
 import {MyPageStackParamList} from '@/types/StackNavigationType';
-import {useQueryClient} from '@tanstack/react-query';
 
 import S from './NoticePage.style';
 
@@ -18,11 +22,18 @@ type NicknamePatchScreenProps = StackScreenProps<
 
 const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   const {profile} = useProfile();
+  const [isValid, setIsValid] = useState(false);
+
+  const inputRef = useRef<TextInputRef>(null);
+
   const queryClient = useQueryClient();
-  const [inputNickname, setInputNickname] = useState<string>('');
   const {mutate: nicknamePatchMutate, isPending} = usePatchNicknameMutation();
 
-  const handleNicknamePatchMutate = (nickname: string) => {
+  const handleNicknamePatchMutate = (nickname?: string) => {
+    if (!nickname) {
+      Alert.alert('닉네임을 입력해주세요!');
+      return;
+    }
     nicknamePatchMutate(nickname, {
       onSuccess: () => {
         Alert.alert('닉네임이 변경되었어요!');
@@ -39,15 +50,22 @@ const NicknamePatchPage = ({navigation}: NicknamePatchScreenProps) => {
   return (
     <S.Container>
       <TextInput
-        label="변경할 닉네임을 입력해주세요!"
+        ref={inputRef}
+        label="변경할 닉네임을 입력해주세요 (3글자 이상)"
+        errorMessage="닉네임은 3글자 이상 입력해주세요"
         placeholder={profile?.nickname ?? ''}
-        value={inputNickname}
-        onChange={e => setInputNickname(e.nativeEvent.text)}
+        validation={text => text.length > 2}
+        autoCapitalize="none"
+        full
+        onChangeText={text => {
+          setIsValid(text.length > 2 && text !== profile?.nickname);
+        }}
       />
+      <Spacer size={16} />
       <BottomButton
-        disabled={!inputNickname || isPending}
+        disabled={!isValid || isPending}
         onPress={() => {
-          handleNicknamePatchMutate(inputNickname);
+          handleNicknamePatchMutate(inputRef.current?.value);
         }}>
         닉네임 변경하기
       </BottomButton>

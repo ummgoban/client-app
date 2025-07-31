@@ -60,7 +60,7 @@ export class ImagePickerError extends Error {
       throw new ImagePickerError(error.message, ImagePickerErrorCode.E_UNKNOWN);
     }
     throw new ImagePickerError(
-      error as string,
+      String(error),
       ImagePickerErrorCode.E_UNEXPECTED,
     );
   }

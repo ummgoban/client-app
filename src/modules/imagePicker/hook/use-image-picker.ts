@@ -45,7 +45,7 @@ export const useImagePicker = () => {
             error instanceof ImagePickerError
               ? error
               : new ImagePickerError(
-                  error as string,
+                  error?.toString?.() ?? 'Unknown error',
                   ImagePickerErrorCode.E_UNKNOWN,
                 ),
         },

@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick">
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -10,8 +9,10 @@ xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick
 
   <!-- 이미지/카메라 -->
   <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-  <!-- <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+  <uses-feature android:name="android.hardware.camera" android:required="false"/>
   
     <application
       android:name=".MainApplication"
@@ -27,8 +28,8 @@ xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick
       android:usesCleartextTraffic="true">
 
     <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-           android:value="@string/NAVER_MAP_CLIENT_ID" />
+        android:name="com.naver.maps.map.CLIENT_ID"
+        android:value="@string/NAVER_MAP_CLIENT_ID" />
            
     <meta-data
         android:name="com.google.firebase.messaging.default_notification_channel_id"
@@ -58,16 +59,16 @@ xmlns:tools="http://schemas.android.com/tools" package="com.ummgoban.momchanpick
         <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
         <!-- TODO: kakao앱키 kakao~-->
         <data android:host="oauth"
-            android:scheme="@string/KAKAO_NATIVE_KEY" />
+              android:scheme="@string/KAKAO_NATIVE_KEY" />
       </intent-filter>
     </activity>
   
-    <service android:name="com.google.android.gms.metadata.ModuleDependencies" android:enabled="false" android:exported="false">
+    <!-- <service android:name="com.google.android.gms.metadata.ModuleDependencies" android:enabled="false" android:exported="false">
       <intent-filter>
         <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
       </intent-filter>
       <meta-data android:name="photopicker_activity:0:required" android:value="" />
-    </service>
+    </service> -->
 
     </application>
 </manifest>

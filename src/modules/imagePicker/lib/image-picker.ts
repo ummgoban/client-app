@@ -1,6 +1,7 @@
 import ImageCropPicker, {
   Image as CropImage,
 } from 'react-native-image-crop-picker';
+import {ImagePickerError, ImagePickerErrorCode} from './image-picker.error';
 
 export async function pickImage(): Promise<string> {
   try {
@@ -15,10 +16,16 @@ export async function pickImage(): Promise<string> {
       cropperCancelColor: '#999999',
     });
 
-    return image.path ?? '';
-  } catch (error: any) {
-    console.error('이미지 선택 실패:', error?.message);
-    return '';
+    if (!image || !image.path) {
+      throw new ImagePickerError(
+        '이미지 선택 실패',
+        ImagePickerErrorCode.E_PATH_NOT_FOUND,
+      );
+    }
+
+    return image.path;
+  } catch (error) {
+    ImagePickerError.throwError(error);
   }
 }
 
@@ -34,9 +41,15 @@ export async function takePhoto(cropping: boolean = true): Promise<string> {
       cropperCancelText: '취소',
     });
 
-    return image.path ?? '';
-  } catch (error: any) {
-    console.error('카메라 실행 실패', error?.message);
-    return '';
+    if (!image || !image.path) {
+      throw new ImagePickerError(
+        '카메라 선택 실패',
+        ImagePickerErrorCode.E_PATH_NOT_FOUND,
+      );
+    }
+
+    return image.path;
+  } catch (error) {
+    ImagePickerError.throwError(error);
   }
 }

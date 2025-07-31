@@ -43,6 +43,7 @@ const orderDetailScreenOptions: StackNavigationOptions = {
 
 const reviewCreateScreenOptions: StackNavigationOptions = {
   ...screenOptions,
+  headerRight: () => null,
   headerTitle: () => <HeaderTitle title="리뷰 작성" />,
 };
 

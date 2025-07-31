@@ -10,7 +10,7 @@ import {
   useCreateReviewMutation,
   useUploadReviewImageMutation,
 } from '@/apis/review';
-import {pickImage} from '@/utils/image-picker';
+import {useImagePicker} from '@/modules/imagePicker';
 import {
   Alert,
   Keyboard,
@@ -34,11 +34,11 @@ const ReviewCreateScreen = ({navigation, route}: ReviewCreateScreenProps) => {
   const {mutateAsync: reviewImageUploadMutate} = useUploadReviewImageMutation();
   const {mutate: reviewCreateMutate} = useCreateReviewMutation(orderId);
 
+  const {pickImage} = useImagePicker();
+
   const handleImageUpload = async () => {
     const res = await pickImage();
     if (!res) {
-      console.error('pickImage Error: no image');
-      Alert.alert('이미지를 불러오지 못했습니다.');
       return;
     }
     setReviewImageUris(prev => [...prev, res]);

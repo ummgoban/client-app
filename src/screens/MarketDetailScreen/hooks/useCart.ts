@@ -128,7 +128,7 @@ export const useCart = (products: ProductType[]) => {
 
       const validationResult = await validateBucket(marketId);
 
-      if (validationResult) {
+      if (!validationResult) {
         Alert.alert(
           '장바구니',
           '장바구니에 담으시겠습니까?',
@@ -148,7 +148,7 @@ export const useCart = (products: ProductType[]) => {
                     marketId,
                     products: bucketProducts,
                   });
-                  navigation.navigate('Bucket');
+                  navigation.navigate('CartRoot', {screen: 'Cart'});
                 } catch (error) {
                   Alert.alert('오류', '장바구니 처리 중 오류가 발생했습니다.');
                 } finally {
@@ -160,7 +160,32 @@ export const useCart = (products: ProductType[]) => {
           {cancelable: false},
         );
       } else {
-        Alert.alert('장바구니 오류', '장바구니에 담을 수 없습니다.');
+        try {
+          await addToBucket({
+            marketId,
+            products: addProducts.map(product => ({
+              id: product.productId,
+              name: product.productName,
+              image:
+                products.find(p => p.id === product.productId)?.image || '',
+              originPrice:
+                products.find(p => p.id === product.productId)?.originPrice ||
+                0,
+              discountPrice:
+                products.find(p => p.id === product.productId)?.discountPrice ||
+                0,
+              discountRate:
+                products.find(p => p.id === product.productId)?.discountRate ||
+                0,
+              count: product.count,
+            })),
+          });
+          navigation.navigate('CartRoot', {screen: 'Cart'});
+        } catch (error) {
+          Alert.alert('오류', '장바구니 처리 중 오류가 발생했습니다.');
+        } finally {
+          setIsCartPending(false);
+        }
       }
     } catch (error) {
       Alert.alert('오류', '장바구니 처리 중 오류가 발생했습니다.');

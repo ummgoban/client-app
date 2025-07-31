@@ -4,6 +4,8 @@ const S = {
   Container: styled.View`
     background-color: white;
     margin-bottom: 20px;
+
+    padding: 0 16px;
   `,
   CustomerNameText: styled.Text`
     ${props => props.theme.fonts.titleMedium};
@@ -75,6 +77,7 @@ const S = {
     gap: 8px;
     justify-content: center;
     align-items: center;
+
     width: 128px;
     height: 128px;
     border-radius: 8px;

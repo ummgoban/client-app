@@ -6,7 +6,6 @@ const S = {
     margin-bottom: 20px;
 
     padding: 0 16px;
-    box-sizing: border-box;
   `,
   CustomerNameText: styled.Text`
     ${props => props.theme.fonts.titleMedium};

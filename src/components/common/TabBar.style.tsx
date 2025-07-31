@@ -16,7 +16,6 @@ const TabBarItem = styled.View`
   margin: 0 auto;
   height: 56px;
   padding: 4px;
-  box-sizing: border-box;
 
   display: flex;
   gap: 4px;

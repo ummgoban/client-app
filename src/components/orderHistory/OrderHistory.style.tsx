@@ -103,8 +103,6 @@ const S = {
     width: auto;
     height: 26px;
 
-    box-sizing: border-box;
-
     border-radius: 15px;
     border: 1px solid #ebebeb;
   `,
@@ -124,8 +122,6 @@ const S = {
   ReviewCreateButtonContainer: styled.View`
     width: auto;
     height: 26px;
-
-    box-sizing: border-box;
 
     border-radius: 15px;
     border: 1px solid #ebebeb;

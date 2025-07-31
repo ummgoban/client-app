@@ -32,22 +32,10 @@ const MarketDetailScreen = ({navigation, route}: Props) => {
 
   return (
     <MarketDetailPage
-      name={marketDetail.name}
-      hasLike={marketDetail.hasLike}
-      openAt={marketDetail.openAt}
-      closeAt={marketDetail.closeAt}
-      marketOpenHour={marketDetail.marketOpenHour}
-      address={marketDetail.address}
+      {...marketDetail}
       products={marketDetail.products.filter(
         product => product.productStatus !== 'HIDDEN',
       )}
-      id={marketDetail.id}
-      specificAddress={marketDetail.specificAddress}
-      summary={marketDetail.summary}
-      latitude={marketDetail.latitude}
-      longitude={marketDetail.longitude}
-      averageRating={marketDetail.averageRating}
-      reviewNum={marketDetail.reviewNum}
     />
   );
 };

@@ -79,7 +79,13 @@ platform :android do
   lane :dev do
     sh "cp ../.env.development ../.env"
     Dotenv.load('.env') 
-    sh "cd ../android && ./gradlew clean installDebug"
+    sh "cd ../android && ./gradlew clean bundleRelease"
+
+      upload_to_play_store(
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      track: 'internal',
+      json_key: ENV["ANDROID_JSON_KEY_PATH_FASTFILE"]
+    )
   end
 
   desc "Build release aab and upload to internal track"
@@ -91,7 +97,7 @@ platform :android do
 
     upload_to_play_store(
       aab: "android/app/build/outputs/bundle/release/app-release.aab",
-      track: 'internal',
+      track: 'beta',
       json_key: ENV["ANDROID_JSON_KEY_PATH_FASTFILE"]
     )
   end

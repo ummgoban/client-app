@@ -59,7 +59,7 @@ bundle install
 ```
 
 ✅ 개발 서버용 `.env.development` 설정  
-✅ Debug 빌드 (`installDebug`) 후 기기에 설치
+✅ AAB 빌드 후 내부 트랙으로 업로드
 
 ---
 
@@ -70,9 +70,7 @@ bundle install
 ```
 
 🚀 프로덕션 서버용 `.env.release` 설정  
-🚀 AAB 빌드 (`bundleRelease`)  
-🚀 Play Store 내부 테스트 트랙 업로드  
-※ `android/service-account.json` 필요
+🚀 Play Store 베타 트랙으로 업로드  
 
 ---
 

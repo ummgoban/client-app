@@ -3,7 +3,6 @@
   "version": "1.1.2",
   "private": true,
   "scripts": {
-    "ci": "sh ./.script/ci.sh",
     "android": "cp .env.development .env && npx react-native run-android",
     "android:release": "cp .env.release .env && cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",

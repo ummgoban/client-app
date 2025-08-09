@@ -1,6 +1,6 @@
-import React, {useRef, useState, useCallback} from 'react';
-import {BackHandler, Linking} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useRef, useState} from 'react';
+import {BackHandler, Linking} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 type Props = {

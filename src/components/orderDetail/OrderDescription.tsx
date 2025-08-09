@@ -9,6 +9,7 @@ import {to6DigitHash} from '@ummgoban/shared';
 import {DetailStackParamList} from '@/types/StackNavigationType';
 
 import S from './OrderDescription.style';
+import {routeToDetail} from '@/navigation/navigator';
 
 type Props = {
   id: string;
@@ -48,9 +49,7 @@ const OrderCustomerInfo = ({id, navigation, orderDetail}: Props) => {
     <S.Container>
       <S.OrderStatusText>{orderStatusText}</S.OrderStatusText>
       <S.MarketInformation
-        onPress={() =>
-          navigation.navigate('MarketDetail', {marketId: orderDetail.marketId})
-        }>
+        onPress={() => routeToDetail(navigation, orderDetail.marketId)}>
         <S.MarketName>{orderDetail.marketName}</S.MarketName>
         <S.MarketAddress>{orderDetail.address}</S.MarketAddress>
       </S.MarketInformation>

@@ -19,6 +19,7 @@ import useGPSLocation from '@/hooks/useGPSLocation';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './Feed.style';
+import {routeToDetail} from '@/navigation/navigator';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -36,10 +37,7 @@ const FeedScreen = ({navigation}: Props) => {
   const marketList = data ? data.pages.flatMap(page => page.markets) : [];
 
   const onPressStore = (marketId: number) => {
-    navigation.navigate('Detail', {
-      screen: 'MarketDetail',
-      params: {marketId},
-    });
+    routeToDetail(navigation, marketId);
   };
 
   const navigateMap = () => {

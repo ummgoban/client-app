@@ -8,6 +8,7 @@ import S from './CustomerReviewScreen.style';
 import {CustomerReviewCard} from '@/components/common/customerReview';
 import {ActivityIndicator} from 'react-native-paper';
 import EmptyComponent from '@/components/common/EmptyComponent';
+import {routeToDetail} from '@/navigation/navigator';
 
 type CustomerReviewScreenProps = StackScreenProps<
   MyPageStackParamList,
@@ -49,12 +50,7 @@ const CustomerReviewScreen = ({
   }
 
   const navigateMarketDetail = (marketId: number) => {
-    navigation.navigate('Detail', {
-      screen: 'MarketDetail',
-      params: {
-        marketId: marketId,
-      },
-    });
+    routeToDetail(navigation, marketId);
   };
 
   if (reviews.length === 0) {

@@ -6,6 +6,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './MyLocationMap.style';
+import {routeToDetail} from '@/navigation/navigator';
 
 const MyLocationMap = ({
   cords,
@@ -20,10 +21,7 @@ const MyLocationMap = ({
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const handleMarkerClick = (marketId: number) => {
     if (marketId !== -1) {
-      navigation.navigate('Detail', {
-        screen: 'MarketDetail',
-        params: {marketId},
-      });
+      routeToDetail(navigation, marketId);
     }
   };
   return (

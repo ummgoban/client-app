@@ -9,6 +9,7 @@ import {RootStackParamList} from '@/types/StackNavigationType';
 import {Menu} from '@/components/marketDetailPage';
 import {BottomButton} from '@/components/common';
 import {useUpdateBucket} from '@/apis/buckets';
+import {routeToDetail} from '@/navigation/navigator';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -42,10 +43,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
   }, [market.closeAt]);
 
   const onPressStore = () => {
-    navigation.navigate('Detail', {
-      screen: 'MarketDetail',
-      params: {marketId: cartData.market.id},
-    });
+    routeToDetail(navigation, cartData.market.id);
   };
 
   const onPressPayment = () => {

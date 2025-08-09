@@ -17,6 +17,7 @@ import SubscribeMarketCard from '@/components/subscribePage/SubscribeMarketCard'
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './SubscribeScreen.style';
+import {routeToDetail} from '@/navigation/navigator';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Subscribe'>;
@@ -48,10 +49,7 @@ const SubscribeScreen = ({navigation}: Props) => {
   });
 
   const onPressStore = (marketId: number) => {
-    navigation.navigate('Detail', {
-      screen: 'MarketDetail',
-      params: {marketId},
-    });
+    routeToDetail(navigation, marketId);
   };
 
   const handleEndReached = () => {

@@ -15,6 +15,7 @@ import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import {RootStackParamList} from '@/types/StackNavigationType';
 
 import S from './OrderHistory.style';
+import {routeToDetail} from '@/navigation/navigator';
 
 const OrderHistoryScreen = () => {
   const {data: historyList, refetch} = useOrderHistoryQuery();
@@ -60,12 +61,7 @@ const OrderHistoryScreen = () => {
       }>
       <OrderHistory
         historyList={historyList}
-        onPressMarket={marketId =>
-          navigation.navigate('Detail', {
-            screen: 'MarketDetail',
-            params: {marketId: marketId},
-          })
-        }
+        onPressMarket={marketId => routeToDetail(navigation, marketId)}
       />
     </S.OrderHistoryContainer>
   );

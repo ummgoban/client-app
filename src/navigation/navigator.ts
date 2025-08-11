@@ -25,8 +25,8 @@ export function routeToDetail(
     params: {marketId},
     webview: {
       uri: __DEV__
-        ? `http://192.168.0.12:5173/market/${marketId}`
-        : // `http://192.168.0.12:5173`
+        ? `http://172.20.10.6:5173/market/${marketId}`
+        : // `http://172.20.10.6:5173`
           'https://ummgoban.com',
       title: 'webview',
     },

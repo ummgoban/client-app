@@ -13,13 +13,14 @@ import {useMarketList} from '@/apis/markets';
 import FeedBottomFloatingButton from '@/components/common/FeedBottomFloatingButton';
 import {Market} from '@/components/feedPage';
 
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import useGPSLocation from '@/hooks/useGPSLocation';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
 
-import S from './Feed.style';
 import {routeToDetail} from '@/navigation/navigator';
+
+import S from './Feed.style';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;

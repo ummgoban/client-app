@@ -1,11 +1,14 @@
-import {RootStackParamList} from '@/types/StackNavigationType';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {BackHandler, Linking, Platform} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WebView, WebViewMessageEvent} from 'react-native-webview';
+
+import type {RootStackParamList} from '@/types/StackNavigationType';
+
 import {sendToWeb} from './utils';
+import {useWebRefStore} from './useWebRef.store';
 
 import pkg from '../../package.json';
 
@@ -43,7 +46,7 @@ type Props = {
 };
 
 const WebViewScreen = ({uri}: Props) => {
-  const webRef = useRef<WebView>(null);
+  const {webRef} = useWebRefStore();
   const [canGoBack, setCanGoBack] = useState(false);
   const {top, left, right, bottom} = useSafeAreaInsets();
 
@@ -59,7 +62,7 @@ const WebViewScreen = ({uri}: Props) => {
         return false;
       });
       return () => sub.remove();
-    }, [canGoBack]),
+    }, [canGoBack, webRef]),
   );
 
   const onMessage = (e: WebViewMessageEvent) => {

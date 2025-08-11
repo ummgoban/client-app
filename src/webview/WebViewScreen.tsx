@@ -7,8 +7,8 @@ import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
 import type {RootStackParamList} from '@/types/StackNavigationType';
 
-import {sendToWeb} from './utils';
 import {useWebRefStore} from './useWebRef.store';
+import {sendToWeb} from './utils';
 
 import pkg from '../../package.json';
 

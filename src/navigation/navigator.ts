@@ -8,6 +8,7 @@ import {
   RegisterStackParamList,
   RootStackParamList,
 } from '@/types/StackNavigationType';
+import Config from 'react-native-config';
 
 export function routeToDetail(
   navigation: StackNavigationProp<
@@ -25,9 +26,8 @@ export function routeToDetail(
     params: {marketId},
     webview: {
       uri: __DEV__
-        ? `http://172.20.10.6:5173/market/${marketId}`
-        : // `http://172.20.10.6:5173`
-          'https://ummgoban.com',
+        ? `${Config.WEBVIEW_URL}/market/${marketId}`
+        : 'https://ummgoban.com',
       title: 'webview',
     },
   });

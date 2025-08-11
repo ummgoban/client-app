@@ -10,6 +10,7 @@ declare module 'react-native-config' {
     NAVER_CONSUMER_SECRET_KEY: string;
     TOSS_CLIENT_KEY: string;
     TOSS_CUSTOMER_KEY: string;
+    WEBVIEW_URL: string;
   }
 
   export const Config: NativeConfig;

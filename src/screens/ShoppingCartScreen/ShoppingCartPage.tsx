@@ -1,15 +1,19 @@
-import React, {useMemo, useState} from 'react';
-import {Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {BucketType} from '@/types/Bucket';
-import PaymentSummary from '@/components/orderPage/PaymentSummary';
-import S from './ShoppingCartPage.style';
-import MarketInfo from '@/components/CartPage/MarketInfo';
-import {RootStackParamList} from '@/types/StackNavigationType';
-import {Menu} from '@/components/marketDetailPage';
-import {BottomButton} from '@/components/common';
+import React, {useMemo} from 'react';
+import {Alert} from 'react-native';
+
 import {useUpdateBucket} from '@/apis/buckets';
+import MarketInfo from '@/components/CartPage/MarketInfo';
+import {BottomButton} from '@/components/common';
+import {Menu} from '@/components/marketDetailPage';
+import PaymentSummary from '@/components/orderPage/PaymentSummary';
+import {queryClient} from '@/context/ReactQueryProvider';
 import {routeToDetail} from '@/navigation/navigator';
+
+import {BucketType} from '@/types/Bucket';
+import {RootStackParamList} from '@/types/StackNavigationType';
+
+import S from './ShoppingCartPage.style';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
@@ -18,10 +22,8 @@ type Props = {
 
 const ShoppingCartPage = ({navigation, cartData}: Props) => {
   const {mutate: updateBucketProduct} = useUpdateBucket();
-  const [marketData, setMarketData] = useState<BucketType | null>(cartData);
 
-  const market = marketData?.market ?? cartData.market;
-  const products = marketData?.products ?? cartData.products;
+  const {market, products} = cartData;
 
   const {originPrice, discountPrice} = useMemo(() => {
     return products.reduce(
@@ -58,7 +60,7 @@ const ShoppingCartPage = ({navigation, cartData}: Props) => {
       {productId, count},
       {
         onSuccess: data => {
-          setMarketData(data);
+          queryClient.setQueryData(['bucketList'], data);
         },
         onError: () => {
           Alert.alert('네트워크 오류입니다. 다시 시도해주세요.');

@@ -36,21 +36,17 @@ const MenuInfoWrapper = styled.View`
 
 const MenuoriginPrice = styled.Text`
   color: var(--gray-gray5, #979797);
-  font-size: 14px;
-  font-weight: 400;
+  ${({theme}) => theme.fonts.body2}
 
   text-decoration-line: line-through;
 `;
 const MenuDiscountPrice = styled.Text`
   color: #2d3e39;
-  font-size: 16px;
-
-  font-weight: 700;
+  ${({theme}) => theme.fonts.body2}
 `;
 const MenuStockCount = styled.Text`
-  color: green;
-  font-size: 16px;
-  font-weight: 700;
+  color: ${props => props.theme.colors.tertiary};
+  ${({theme}) => theme.fonts.body2}
 `;
 const MenuBoxRight = styled.View`
   display: flex;

@@ -81,15 +81,15 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
         {product.originPrice !== product.discountPrice ? (
           <S.MenuInfoWrapper>
             <S.MenuoriginPrice>
-              {`정가: ${product.originPrice.toLocaleString()}원`}
+              {product.originPrice.toLocaleString()}원
             </S.MenuoriginPrice>
             <S.MenuDiscountPrice>
-              {`할인가: ${product.discountPrice.toLocaleString()}원`}
+              {product.discountPrice.toLocaleString()}원
             </S.MenuDiscountPrice>
           </S.MenuInfoWrapper>
         ) : (
           <S.MenuDiscountPrice>
-            {`정가: ${product.originPrice.toLocaleString()}원`}
+            {product.originPrice.toLocaleString()}원
           </S.MenuDiscountPrice>
         )}
         <S.MenuStockWrapper>
@@ -98,8 +98,6 @@ const Menu = ({product, initCount, onCountChange, isCart}: Props) => {
           ) : (
             <S.MenuSoldOutText>{`현재 재고가 없어요`}</S.MenuSoldOutText>
           )}
-
-          <S.MenuStockCount>{`${!isCart ? '' : `수량: ${product.count}`}`}</S.MenuStockCount>
         </S.MenuStockWrapper>
         {isCart && (
           <S.MenuDeleteButtonWrapper onPress={deleteMenu}>

@@ -1,5 +1,6 @@
 import React from 'react';
-import WebViewScreen from '@/webview/WebViewScreen';
+
+import {WebViewScreen} from '@/webview/WebViewScreen';
 
 type RouteWithWeb = {params: {webview?: {uri: string; title?: string}}};
 

@@ -5,10 +5,18 @@ import {BackHandler, Linking, Platform} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
+import {useSession} from '@/apis/auth';
 import type {RootStackParamList} from '@/types/StackNavigationType';
 
-import {useWebRefStore} from './useWebRef.store';
-import {sendToWeb} from './utils';
+import {useWebRefStore, useWebViewHistoryStore} from './store';
+import type {ReceiveMessagePayloadType} from './types/message.type';
+import {
+  isAuthorizationPayload,
+  isNativeGoBackPayload,
+  isNativeNavigationPayload,
+  isPlainPayload,
+  isUnknownPayload,
+} from './utils';
 
 import pkg from '../../package.json';
 
@@ -45,8 +53,12 @@ type Props = {
   title?: string;
 };
 
-const WebViewScreen = ({uri}: Props) => {
-  const {webRef} = useWebRefStore();
+export const WebViewScreen = ({uri}: Props) => {
+  const {webRef, sendToWeb} = useWebRefStore();
+  const {setHistory} = useWebViewHistoryStore();
+
+  const {data: session} = useSession();
+
   const [canGoBack, setCanGoBack] = useState(false);
   const {top, left, right, bottom} = useSafeAreaInsets();
 
@@ -68,19 +80,24 @@ const WebViewScreen = ({uri}: Props) => {
   const onMessage = (e: WebViewMessageEvent) => {
     try {
       console.info('Web to RN message', e.nativeEvent.data);
-      const msg: {type: string; payload: any} = JSON.parse(e.nativeEvent.data);
-      switch (msg.type) {
-        case 'NATIVE_NAVIGATION':
-          navigation.navigate(msg.payload.screen, msg.payload.params);
-          break;
+      const msg: ReceiveMessagePayloadType = JSON.parse(e.nativeEvent.data);
+
+      if (isNativeNavigationPayload(msg)) {
+        setHistory(msg.payload.callbackState);
+        navigation.navigate(msg.payload.screen, msg.payload.params);
+      } else if (isNativeGoBackPayload(msg)) {
+        navigation.goBack();
+      } else if (isAuthorizationPayload(msg)) {
+      } else if (isPlainPayload(msg)) {
+      } else if (isUnknownPayload(msg)) {
       }
     } catch (err) {
-      console.error(err);
+      console.error(`[WEBVIEW] ${err}`);
     }
   };
 
   const sendInit = () => {
-    sendToWeb(webRef, {
+    sendToWeb({
       type: 'INIT',
       payload: {
         platform: Platform.OS,
@@ -88,7 +105,7 @@ const WebViewScreen = ({uri}: Props) => {
         ts: Date.now(),
       },
     });
-    sendToWeb(webRef, {
+    sendToWeb({
       type: 'SAFE_AREA_INSETS',
       payload: {
         top,
@@ -102,11 +119,17 @@ const WebViewScreen = ({uri}: Props) => {
   return (
     <WebView
       ref={webRef}
-      source={{uri}}
-      onNavigationStateChange={s => setCanGoBack(s.canGoBack)}
+      source={{
+        uri,
+        headers: session
+          ? {Authorization: `Bearer ${session.accessToken}`}
+          : undefined,
+      }}
       javaScriptEnabled
       domStorageEnabled
       setSupportMultipleWindows={false}
+      bounces={false}
+      onNavigationStateChange={s => setCanGoBack(s.canGoBack)}
       onMessage={onMessage}
       // 필요 시 스킴 필터/외부 링크 분리
       onShouldStartLoadWithRequest={req => {
@@ -121,5 +144,3 @@ const WebViewScreen = ({uri}: Props) => {
     />
   );
 };
-
-export default WebViewScreen;

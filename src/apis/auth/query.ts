@@ -22,6 +22,15 @@ import {
 } from './model';
 
 import CustomError from '../CustomError';
+import {getStorage} from '@/utils/storage';
+import {SessionType} from '@ummgoban/shared';
+
+export const useSession = () =>
+  useQuery({
+    queryKey: ['session'],
+    queryFn: async (): Promise<SessionType | null> =>
+      await getStorage('session'),
+  });
 
 export const useProfileQuery = () =>
   useQuery({

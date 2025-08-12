@@ -5,7 +5,7 @@ import {
 import React from 'react';
 
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
-import CartIcon from '@/components/common/CartNavigatorIcon';
+import CartIcon from '@/components/common/Appbar/CartNavigatorIcon';
 import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 
 import MapScreen from '@/screens/MapScreen';

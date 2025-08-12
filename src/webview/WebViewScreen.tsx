@@ -9,9 +9,8 @@ import {useSession} from '@/apis/auth';
 import type {RootStackParamList} from '@/types/StackNavigationType';
 
 import {useWebRefStore, useWebViewHistoryStore} from './store';
-import type {ReceiveMessagePayloadType} from './types/message.type';
+import type {ReceiveMessagePayloadType} from './types/receive-message.type';
 import {
-  isAuthorizationPayload,
   isNativeGoBackPayload,
   isNativeNavigationPayload,
   isPlainPayload,
@@ -87,7 +86,6 @@ export const WebViewScreen = ({uri}: Props) => {
         navigation.navigate(msg.payload.screen, msg.payload.params);
       } else if (isNativeGoBackPayload(msg)) {
         navigation.goBack();
-      } else if (isAuthorizationPayload(msg)) {
       } else if (isPlainPayload(msg)) {
       } else if (isUnknownPayload(msg)) {
       }
@@ -114,6 +112,13 @@ export const WebViewScreen = ({uri}: Props) => {
         bottom,
       },
     });
+    sendToWeb({
+      type: 'AUTHORIZATION',
+      payload: {
+        accessToken: session?.accessToken,
+        refreshToken: session?.refreshToken,
+      },
+    });
   };
 
   return (
@@ -121,9 +126,6 @@ export const WebViewScreen = ({uri}: Props) => {
       ref={webRef}
       source={{
         uri,
-        headers: session
-          ? {Authorization: `Bearer ${session.accessToken}`}
-          : undefined,
       }}
       javaScriptEnabled
       domStorageEnabled

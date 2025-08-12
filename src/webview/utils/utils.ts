@@ -1,7 +1,7 @@
 import type {
   ReceiveMessagePayload,
   ReceiveMessagePayloadType,
-} from '../types/message.type';
+} from '../types/receive-message.type';
 
 export const isNativeNavigationPayload = (
   msg: ReceiveMessagePayloadType,
@@ -11,10 +11,6 @@ export const isNativeGoBackPayload = (
   msg: ReceiveMessagePayloadType,
 ): msg is ReceiveMessagePayload<'NATIVE_GO_BACK'> =>
   msg.type === 'NATIVE_GO_BACK';
-export const isAuthorizationPayload = (
-  msg: ReceiveMessagePayloadType,
-): msg is ReceiveMessagePayload<'AUTHORIZATION'> =>
-  msg.type === 'AUTHORIZATION';
 export const isPlainPayload = (
   msg: ReceiveMessagePayloadType,
 ): msg is ReceiveMessagePayload<'PLAIN'> => msg.type === 'PLAIN';

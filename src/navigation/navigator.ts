@@ -25,10 +25,8 @@ export function routeToDetail(
     screen: 'MarketDetail',
     params: {marketId},
     webview: {
-      uri: __DEV__
-        ? `${Config.WEBVIEW_URL}/market/${marketId}`
-        : 'https://ummgoban.com',
-      title: 'webview',
+      uri: `${Config.WEBVIEW_URL}/market/${marketId}`,
+      title: `맘찬픽 가게`,
     },
   });
 }

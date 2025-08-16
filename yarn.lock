@@ -4453,14 +4453,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ummgoban/shared@npm:^0.0.6-nightly.20250808.a3cf0f6":
-  version: 0.0.6-nightly.20250808.f18a523
-  resolution: "@ummgoban/shared@npm:0.0.6-nightly.20250808.f18a523"
+"@ummgoban/shared@npm:^0.0.6-nightly.20250812.4b293fc":
+  version: 0.0.6-nightly.20250812.4b293fc
+  resolution: "@ummgoban/shared@npm:0.0.6-nightly.20250812.4b293fc"
   peerDependencies:
     axios: ">=1.7.4"
     react: ">=18.0.0"
     react-native: ">=0.79.0"
-  checksum: e7b2817c8e85c7c963997ddd03490c809faf3bd313919902a4236f62bd34c17c619ac1967c6095ebe2cf305689120ef9625b1ad232a9576fd2b6cbfec0000455
+  checksum: 6fd95dbf093a56a9cd921b190510abc696c491ace24fa2e6dfe7b269ce63130b259871ad4d9b35174bcc398320743d428cc4e38426ce1878bd9f5d9636264492
   languageName: node
   linkType: hard
 
@@ -4502,7 +4502,7 @@ __metadata:
     "@types/react": ^18.2.6
     "@types/react-native-vector-icons": ^6.4.18
     "@types/react-test-renderer": ^18.0.0
-    "@ummgoban/shared": ^0.0.6-nightly.20250808.a3cf0f6
+    "@ummgoban/shared": ^0.0.6-nightly.20250812.4b293fc
     axios: ^1.7.4
     babel-jest: ^29.6.3
     babel-plugin-module-resolver: ^5.0.2
@@ -4531,6 +4531,7 @@ __metadata:
     react-native-svg: ^15.8.0
     react-native-svg-transformer: ^1.5.0
     react-native-vector-icons: ^10.1.0
+    react-native-webview: ^13.15.0
     react-test-renderer: 18.3.1
     tosspayments-react-native-webview: ^1.0.0
     typescript: 5.0.4
@@ -10573,6 +10574,19 @@ __metadata:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: fda930df4e63f12533268f5b339ebe4c77c691eae43503328466b3087ed868a06a4593fd246e75ac6b5ec955543eec35608c7922191bdcc3b3a94ed7f3575ef0
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:^13.15.0":
+  version: 13.15.0
+  resolution: "react-native-webview@npm:13.15.0"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 1c843206108358faef5cd8e25834de729a90319c3fa3f765923536fdd99b86b07a3e850b89ebe6503725a022dd9dddd5de76ef6e102d290cc5935dcf9c60198d
   languageName: node
   linkType: hard
 

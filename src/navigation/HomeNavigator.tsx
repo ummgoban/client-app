@@ -6,8 +6,8 @@ import {
 import React from 'react';
 
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
-import CartIcon from '@/components/common/CartNavigatorIcon';
-import SettingsIcon from '@/components/common/SettingsNavigatorIcon';
+import CartIcon from '@/components/common/Appbar/CartNavigatorIcon';
+import SettingsIcon from '@/components/common/Appbar/SettingsNavigatorIcon';
 import {TabBar} from '@components/common';
 
 import OrderHistoryScreen from '@/screens/OrderHistoryScreen';

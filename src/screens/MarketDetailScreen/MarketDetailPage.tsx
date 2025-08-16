@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -10,6 +10,7 @@ import MarketOpenHourModal from '@/components/marketDetailPage/OpenHoursModal';
 import S from './MarketDetail.style';
 import {useCart, useScroll, useMarketDetail} from './hooks';
 import {MarketInfo, ProductList, CartButton} from './components';
+import {routeToDetail} from '@/navigation/navigator';
 
 const MarketDetailPage = ({
   name,
@@ -27,7 +28,16 @@ const MarketDetailPage = ({
   averageRating,
   reviewNum,
 }: Omit<MarketDetailType, 'images' | 'likeNum' | 'cursorDistance'>) => {
+  ////////////////////////////
+  //    웹뷰로 모두 대체    //
+  ////////////////////////////
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    routeToDetail(navigation, id);
+  }, [navigation, id]);
+
   const {profile} = useProfile();
 
   // 커스텀 훅 사용

@@ -13,10 +13,12 @@ import {useMarketList} from '@/apis/markets';
 import FeedBottomFloatingButton from '@/components/common/FeedBottomFloatingButton';
 import {Market} from '@/components/feedPage';
 
-import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 import useGPSLocation from '@/hooks/useGPSLocation';
+import usePullDownRefresh from '@/hooks/usePullDownRefresh';
 
 import {RootStackParamList} from '@/types/StackNavigationType';
+
+import {routeToDetail} from '@/navigation/navigator';
 
 import S from './Feed.style';
 
@@ -36,10 +38,7 @@ const FeedScreen = ({navigation}: Props) => {
   const marketList = data ? data.pages.flatMap(page => page.markets) : [];
 
   const onPressStore = (marketId: number) => {
-    navigation.navigate('Detail', {
-      screen: 'MarketDetail',
-      params: {marketId},
-    });
+    routeToDetail(navigation, marketId);
   };
 
   const navigateMap = () => {

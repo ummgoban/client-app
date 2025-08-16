@@ -6,7 +6,7 @@ import React from 'react';
 
 import {defaultOptions} from '@/components/common/Appbar/AppbarOptions';
 import HeaderTitle from '@/components/common/Appbar/HeaderTitle';
-import CartIcon from '@/components/common/CartNavigatorIcon';
+import CartIcon from '@/components/common/Appbar/CartNavigatorIcon';
 
 import MarketDetailScreen from '@/screens/MarketDetailScreen';
 import OrderDetailScreen from '@/screens/OrderDetailScreen';

@@ -2,9 +2,13 @@ import {ParamListBase} from '@react-navigation/native';
 import {OrderType} from './OrderType';
 import {ProductType} from '@ummgoban/shared/lib';
 
-type StackParamType<T> = {
+export type StackParamType<T> = {
   screen?: keyof T;
   params?: T[keyof T];
+  webview?: {
+    uri: string;
+    title?: string;
+  };
 };
 
 export interface HomeStackParamList extends ParamListBase {

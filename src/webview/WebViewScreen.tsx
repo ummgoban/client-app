@@ -1,7 +1,9 @@
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useCallback, useState} from 'react';
 import {BackHandler, Linking, Platform} from 'react-native';
+
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WebView, WebViewMessageEvent} from 'react-native-webview';
 
@@ -133,6 +135,14 @@ export const WebViewScreen = ({uri}: Props) => {
       bounces={false}
       onNavigationStateChange={s => setCanGoBack(s.canGoBack)}
       onMessage={onMessage}
+      onError={syntheticEvent => {
+        const {nativeEvent} = syntheticEvent;
+        console.error('WebView error: ', nativeEvent);
+      }}
+      onHttpError={syntheticEvent => {
+        const {nativeEvent} = syntheticEvent;
+        console.error('WebView HTTP error: ', nativeEvent);
+      }}
       // 필요 시 스킴 필터/외부 링크 분리
       onShouldStartLoadWithRequest={req => {
         if (!/^https?:/.test(req.url)) {

@@ -1,10 +1,10 @@
 import {create} from 'zustand';
-import {ReceiveMessageNativeNavigationPayload} from '../types/receive-message.type';
+import {WebToAppNativeNavigationPayload} from '../types/web-to-app.type';
 
 interface WebViewHistoryStore {
-  history: ReceiveMessageNativeNavigationPayload['payload']['callbackState'];
+  history: WebToAppNativeNavigationPayload['payload']['callbackState'];
   setHistory: (
-    history: ReceiveMessageNativeNavigationPayload['payload']['callbackState'],
+    history: WebToAppNativeNavigationPayload['payload']['callbackState'],
   ) => void;
 }
 

@@ -11,7 +11,7 @@ import {useSession} from '@/apis/auth';
 import type {RootStackParamList} from '@/types/StackNavigationType';
 
 import {useWebRefStore, useWebViewHistoryStore} from './store';
-import type {ReceiveMessagePayloadType} from './types/receive-message.type';
+import type {WebToAppPayloadType} from './types/web-to-app.type';
 import {
   isNativeGoBackPayload,
   isNativeNavigationPayload,
@@ -80,8 +80,8 @@ export const WebViewScreen = ({uri}: Props) => {
 
   const onMessage = (e: WebViewMessageEvent) => {
     try {
-      console.info('Web to RN message', e.nativeEvent.data);
-      const msg: ReceiveMessagePayloadType = JSON.parse(e.nativeEvent.data);
+      console.info('[Web to APP] message', e.nativeEvent.data);
+      const msg: WebToAppPayloadType = JSON.parse(e.nativeEvent.data);
 
       if (isNativeNavigationPayload(msg)) {
         setHistory(msg.payload.callbackState);
@@ -114,13 +114,15 @@ export const WebViewScreen = ({uri}: Props) => {
         bottom,
       },
     });
-    sendToWeb({
-      type: 'AUTHORIZATION',
-      payload: {
-        accessToken: session?.accessToken,
-        refreshToken: session?.refreshToken,
-      },
-    });
+    if (session && session.accessToken && session.refreshToken) {
+      sendToWeb({
+        type: 'AUTHORIZATION',
+        payload: {
+          accessToken: session.accessToken,
+          refreshToken: session.refreshToken,
+        },
+      });
+    }
   };
 
   return (

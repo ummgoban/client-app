@@ -1,105 +1,61 @@
-# fastlane documentation
+fastlane documentation
+----
 
-> ⚡️ iOS & Android 자동화 배포를 위한 Fastlane 설정 문서입니다.
+# Installation
 
----
+Make sure you have the latest version of the Xcode command line tools installed:
 
-## 🔧 Installation
-
-1. **Xcode Command Line Tools 설치**
 ```sh
 xcode-select --install
 ```
 
-2. **fastlane 설치**
-```sh
-[sudo] brew install bundler
-# 또는 Bundler 사용하는 경우:
-bundle install
-```
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
 
-자세한 설치 가이드는 [fastlane.tools 설치 가이드](https://docs.fastlane.tools/#installing-fastlane)를 참고하세요.
+# Available Actions
 
----
+## iOS
 
-## 🚀 Available Fastlane Lanes
-
-### 📱 iOS
-
-#### `ios develop`
+### ios develop
 
 ```sh
 [bundle exec] fastlane ios develop
 ```
 
-✅ 개발 서버용 `.env.development` 설정  
-✅ build number 증가  
-✅ TestFlight 업로드
+Upload a new build to TestFlight (development server)
 
----
-
-#### `ios release`
+### ios release
 
 ```sh
 [bundle exec] fastlane ios release
 ```
 
-🚀 프로덕션 서버용 `.env.release` 설정  
-🚀 build number 증가  
-🚀 App Store 업로드
+Push a new release build to the App Store (production server)
 
----
+----
 
-### 🤖 Android
 
-#### `android dev`
+## Android
+
+### android dev
 
 ```sh
 [bundle exec] fastlane android dev
 ```
 
-✅ 개발 서버용 `.env.development` 설정  
-✅ AAB 빌드 후 내부 트랙으로 업로드
+Deploy a development build to local device
 
----
-
-#### `android release`
+### android release
 
 ```sh
 [bundle exec] fastlane android release
 ```
 
-🚀 프로덕션 서버용 `.env.release` 설정  
-🚀 Play Store 베타 트랙으로 업로드  
+Build release aab and upload to internal track
 
----
+----
 
-## 📁 환경 변수 파일 (.env)
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 
-- `.env.development` – 개발용 설정
-- `.env.release` – 릴리즈용 설정
-- 환경 변수는 `react-native-config`로 Android/iOS에 자동 주입됩니다.
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
 
----
-
-## 🔐 인증 관련
-
-### iOS
-- `fastlane/AuthKey_XXXX.p8`  
-- `key_id`, `issuer_id`는 `Fastfile`에 설정되어 있음
-
-### Android
-- `android/service-account.json`  
-- 권한: Google Play Console > API Access > 서비스 계정 등록 필수
-
----
-
-## 📚 더 보기
-
-- [Fastlane 공식 문서](https://docs.fastlane.tools)
-- [iOS 배포 가이드](https://docs.fastlane.tools/getting-started/ios/setup/)
-- [Android 배포 가이드](https://docs.fastlane.tools/getting-started/android/setup/)
-
----
-
-_이 README는 Fastlane 실행 시 자동으로 덮어쓰기되지 않으며, 수동 관리 중입니다._
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

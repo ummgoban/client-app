@@ -5,4 +5,6 @@ rootProject.name = 'ClientApp'
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
 include ':react-native-config'
+include ':react-native-image-crop-picker'
 project(':react-native-config').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-config/android')
+project(':react-native-image-crop-picker').projectDir = new File(settingsDir, '../node_modules/react-native-image-crop-picker/android')
